@@ -1,1 +1,5 @@
-# SOEN343_GroupProject-
+# SOEN343_GroupProject
+
+# Prerequesites
+
+- Python 3.4.3 + 
