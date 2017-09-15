@@ -32,3 +32,11 @@ Please do this set up before cloning the project
 ```
   git clone https://github.com/xTEddie/SOEN343_GroupProject.git // or git@github.com:xTEddie/SOEN343_GroupProject.git 
 ```
+
+# Installation
+
+#### Install Python Dependencies
+
+```
+  pip3 install -r backend/requirements/dev.txt 
+```
