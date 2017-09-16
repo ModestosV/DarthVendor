@@ -2,7 +2,6 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-print(BASE_DIR)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '09-3kh9-3wn#ir%ugs$#gu5f$%6ce*v!@at$4=)4=s((8__rp4'
@@ -39,7 +38,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'backend.config.urls'
 
 TEMPLATES = [
     {
@@ -57,7 +56,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'backend.config.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
