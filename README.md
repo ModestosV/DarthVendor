@@ -76,3 +76,15 @@ You should be able to see the web application on http://localhost:3000/
   python3 manage.py collectstatic --no-input
 ```
 
+#### Compile Javascript modules for Frontend
+
+```
+  cd frontend && npm run build 
+```
+
+The REST API URL is located at http://165.227.44.65:8000/
+
+The web application is located at http://165.227.44.65:3000/
+
+
+
