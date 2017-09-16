@@ -4,10 +4,12 @@ import site
 
 VIRTUAL_ENV_DIR = "/home/foobar/venv/darthvendor"  # Root path of the virtual environment directory
 PROJECT_DIR = "/home/foobar/venv/darthvendor/SOEN343_GroupProject"  # Root path of the project directory
+CONFIG_DIR = "/home/foobar/venv/darthvendor/SOEN343_GroupProject/backend/config"  # Root path of the project directory
 PYTHON_VERSION = '3.5'  # Python version in the virtual environment directory
 
 ALLDIRS = [
     PROJECT_DIR,
+    CONFIG_DIR,
     "{}/lib/python{}/site_packages".format(VIRTUAL_ENV_DIR, PYTHON_VERSION)
 ]
 
