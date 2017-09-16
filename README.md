@@ -68,3 +68,11 @@ The Django backend will be served as a REST service on http://localhost:8000/
 You should be able to see the web application on http://localhost:3000/
 
 
+# Deploy Application
+
+#### Collect Static Files
+
+```
+  python3 manage.py collectstatic --no-input
+```
+
