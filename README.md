@@ -5,7 +5,7 @@
 - Linux Virtual Machine (Ubuntu 14.04+) or similar 
 - Python 3.4.3+ 
 - Pip3
-- Node v7.10.1+
+- Node v7.10.1
 
 # Set Up
 
