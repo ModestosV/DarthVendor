@@ -2,26 +2,28 @@
 
 # Prerequesites
 
-- Python 3.4.3 + 
+- Linux Virtual Machine (Ubuntu 14.04+) or similar 
+- Python 3.4.3+ 
 - Pip3
+- Node v7.10.1+
 
 # Set Up
 
 Please do this set up before cloning the project
 
-### Install virtual environment
+### Install Virtual Environment
 
 ```
   pip3 install virtualenv
 ```
 
-### Set up virtual environment
+### Set Up Virtual Environment
 
 ```
   mkdir venv && cd venv && virtualenv -p python3 darthvendor && cd darthvendor
 ```
 
-### Activate virtual environment
+### Activate Virtual Environment
 
 ```
   source bin/activate
@@ -39,4 +41,24 @@ Please do this set up before cloning the project
 
 ```
   pip3 install -r backend/requirements/dev.txt 
+```
+
+#### Install Node Dependecies
+
+```
+  cd frontend && npm install
+```
+
+# Run Application
+
+#### Run Backend
+
+```
+  cd backend && python3 manage.py runserver 0.0.0.0:8000 
+```
+
+#### Run Frontend
+
+```
+  cd frontend && npm run start 
 ```
