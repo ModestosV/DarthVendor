@@ -1,15 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 
-let API_HOST = 'localhost:8000';
+let API_HOST = '';
+if (process.env.NODE_ENV === 'production') API_HOST = 'darthvendor.noip.me';
 
 module.exports = {
-    devServer: {
-        inline: true,
-        host: '0.0.0.0',
-        port: 3000,
-        contentBase: './build'
-    },
     entry: {
         app: './src/index.js'
     },
@@ -35,6 +30,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
+                'NODE_ENV': JSON.stringify('production'),
                 'API_ROOT': JSON.stringify(`http://${API_HOST}`)
             }
         })
