@@ -54,7 +54,7 @@ Please do this set up before cloning the project
 #### Run Backend
 
 ```
-  cd backend && python3 manage.py runserver 0.0.0.0:8000 
+  python3 manage.py runserver 0.0.0.0:8000 
 ```
 
 The Django backend will be served as a REST service on http://localhost:8000/
