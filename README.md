@@ -87,4 +87,12 @@ The REST API URL is located at http://165.227.44.65:8000/ or http://darthvendor.
 The web application is located at http://165.227.44.65:3000/ or http://api.darthvendor.me/
 
 
+# Continuous Integration
+
+#### Jenkins
+
+A Jenkins instance exists to pull new changes, build the application and restart the apache server on every commit.
+
+The Jenkins instance is located at http://165.227.44.65:8080/ or http://jenkins.darthvendor.me/
+
 
