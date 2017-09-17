@@ -96,3 +96,8 @@ A Jenkins instance exists to pull new changes, build the application and restart
 The Jenkins instance is located at http://165.227.44.65:8080/ or http://jenkins.darthvendor.me/
 
 
+# Contribution
+
+- *Dev* branch *MUST* be a working branch
+- *Never* push on dev branch
+- Branch out from the *dev* branch as follow: [username]/[feature]
