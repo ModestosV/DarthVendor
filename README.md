@@ -103,3 +103,14 @@ The Jenkins instance is located at http://165.227.44.65:8080/ or http://jenkins.
 - Any new feature should be branched out from **dev** and be named as follow: [username]/[feature]
 - **ALWAYS** make a pull request to **dev** and assign **ONE** person at minimum to review the new **feature** 
 - **NEVER** merge your own pull request
+
+
+# References
+
+- https://docs.djangoproject.com/en/1.11/
+- http://www.django-rest-framework.org/
+- http://drfdocs.com/
+- https://facebook.github.io/react/
+- http://redux.js.org/docs/introduction/
+- https://egghead.io/courses/getting-started-with-redux
+- https://github.com/creationix/nvm
