@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 let API_HOST = '';
-if (process.env.NODE_ENV === 'production') API_HOST = '165.227.44.65:8000';
+if (process.env.NODE_ENV === 'production') API_HOST = 'api.darthvendor.me';
 
 module.exports = {
     entry: {
