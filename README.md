@@ -112,5 +112,6 @@ The Jenkins instance is located at http://165.227.44.65:8080/ or http://jenkins.
 - http://drfdocs.com/
 - https://facebook.github.io/react/
 - http://redux.js.org/docs/introduction/
+- https://www.youtube.com/watch?v=DiLVAXlVYR0&list=PL6gx4Cwl9DGBbSLZjvleMwldX8jGgXV6a
 - https://egghead.io/courses/getting-started-with-redux
 - https://github.com/creationix/nvm
