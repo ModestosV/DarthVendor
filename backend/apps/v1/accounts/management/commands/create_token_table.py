@@ -4,17 +4,18 @@ from sqlite3 import dbapi2 as Database
 
 
 class Command(BaseCommand):
-    help = 'Create admin table'
+    help = 'Create token table'
 
     def handle(self, *args, **options):
 
         connection = Database.connect(settings.DATABASES['default']['NAME'])
         cursor = connection.cursor()
         query = """
-            CREATE TABLE administrator (
+            CREATE TABLE token (
                 id integer PRIMARY KEY AUTOINCREMENT,
-                username varchar(255) UNIQUE,
-                password varchar(255)
+                token varchar(255) UNIQUE,
+                admin_id integer UNIQUE,                
+                FOREIGN KEY (admin_id) REFERENCES administrator(id)
             );
         """
 
