@@ -1,8 +1,5 @@
-from django.conf import settings
-from django.db import connection
 from rest_framework import serializers
-from sqlite3 import dbapi2 as Database
-from utils.database import dict_factory
+from utils.database import Database
 from .token import TokenSerializer
 
 
@@ -19,19 +16,17 @@ class AdminSerializerLogin(serializers.Serializer):
     token = serializers.SerializerMethodField()
 
     def get_token(self, admin):
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
-        connection.row_factory = dict_factory
-        cursor = connection.cursor()
-        query = """
-            SELECT *
-            FROM token
-            WHERE admin_id={}
-        """.format(admin["id"])
+        with Database() as cursor:            
+            query = """
+                SELECT *
+                FROM token
+                WHERE admin_id={}
+            """.format(admin["id"])
 
-        try:
-            cursor.execute(query)    
-            admin = cursor.fetchone()
-            return admin["token"]
-        except Exception as error: 
-            return None
+            try:
+                cursor.execute(query)    
+                admin = cursor.fetchone()
+                return admin["token"]
+            except Exception as error: 
+                return None
 
