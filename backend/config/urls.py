@@ -4,8 +4,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from rest_framework.documentation import include_docs_urls
 
+
 urlpatterns = [
     
+    # API (v1)
+    url(r'^', include('backend.apps.v1.accounts.urls')),
+
     # Core
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
