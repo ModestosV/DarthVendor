@@ -32,12 +32,15 @@ class AdminView(APIView):
             serializer = AdminSerializer(data=cursor.fetchall(), many=True)
 
             if not serializer.is_valid():
+                connection.close()
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as error: 
             print(error) 
+            connection.close()
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        
+        connection.close()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -65,10 +68,13 @@ class AdminDetail(APIView):
             serializer = AdminSerializer(data=cursor.fetchall(), many=True)
 
             if not serializer.is_valid():
+                connection.close()
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as error: 
             print(error) 
+            connection.close()
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        
+        connection.close()
         return Response(serializer.data, status=status.HTTP_200_OK)
