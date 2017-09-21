@@ -67,6 +67,19 @@ The Django backend will be served as a REST service on http://localhost:8000/
 
 You should be able to see the web application on http://localhost:3000/
 
+# Database
+
+#### Dump Database
+
+```
+  python3 scripts/dump_database.py
+```
+
+#### Set Up Database
+
+```
+  ./scripts/populate_db.sh
+```
 
 # Deploy Application
 
