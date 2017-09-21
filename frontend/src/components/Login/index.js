@@ -15,10 +15,6 @@ class Login extends Component {
         }
     }
 
-    componentDidMount() {
-       console.log("MOPUTN");       
-    }
-
     handleUserNameChange(event) {
         this.setState({username: event.target.value});
     }
@@ -37,7 +33,8 @@ class Login extends Component {
 
         axios.post(`${settings.API_ROOT}/login`, data)
             .then(response => {
-                console.log(response);
+                console.log(response.data);
+                localStorage.setItem('activeUser', JSON.stringify(response.data));
                 history.push('/');
             })
             .catch(error => {
@@ -49,6 +46,10 @@ class Login extends Component {
                     button: "Ok",
                 });                 
             })
+    }
+
+    componentWillMount() {        
+        console.log(JSON.parse(localStorage.activeUser));
     }
 
     render() {
