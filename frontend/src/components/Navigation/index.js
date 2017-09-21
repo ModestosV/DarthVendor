@@ -1,11 +1,31 @@
 import axios from 'axios';
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import settings from '../../config/settings';
 import './Navigation.scss';
 
 
 class Navigation extends Component {
+
+    handleLogOutButton() {
+        const {history} = this.props;
+        let headers = {
+            'authorization': JSON.parse(localStorage.activeUser)['token'] 
+        };        
+        let config = {
+            'headers': headers
+        };
+        
+        axios.get(`${settings.API_ROOT}/logout`, config)
+            .then(response => {
+                console.log(response);
+                localStorage.setItem('activeUser', '');
+                history.push('/login');
+            })
+            .catch(error => {
+                console.log(error);                
+            })
+    }
 
     renderToggleButton() {
         return (
@@ -19,12 +39,14 @@ class Navigation extends Component {
         return (
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <Link className="nav-link btn btn-danger" to={`/logout`}>
+                    <button 
+                        className="btn btn-danger"
+                        onClick={() => this.handleLogOutButton()}
+                    >
                         Log Out
                         {" "} 
-                        <i className="fa fa-sign-out" aria-hidden="true"></i>                        
-                        <span className="sr-only">(current)</span>
-                    </Link>
+                        <i className="fa fa-sign-out" aria-hidden="true"></i>                                                
+                    </button>
                 </li>        
             </ul>
         )
@@ -61,4 +83,4 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+export default withRouter(Navigation);

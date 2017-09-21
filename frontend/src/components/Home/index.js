@@ -6,8 +6,13 @@ import Navigation from '../Navigation';
 
 class Home extends Component {    
 
-    componentWillMount() {        
-        console.log(JSON.parse(localStorage.activeUser));
+    componentWillMount() {  
+        const {history} = this.props;      
+        console.log(localStorage);
+        
+        if (!localStorage.activeUser) {
+            history.push('/login');
+        }
     }
     
     render() {

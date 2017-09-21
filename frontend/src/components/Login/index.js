@@ -49,7 +49,7 @@ class Login extends Component {
     }
 
     componentWillMount() {        
-        console.log(JSON.parse(localStorage.activeUser));
+        console.log(localStorage);
     }
 
     render() {
