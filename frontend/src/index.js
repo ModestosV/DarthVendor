@@ -6,6 +6,8 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';  
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import Login from './components/Login';
+import Admin from './components/Admin';
 import Home from './components/Home';
 
 
@@ -18,7 +20,13 @@ store.subscribe(() => console.log('store', store.getState()));
 
 ReactDOM.render(
     <Provider store={store}>
-        <Home />
+        <Router>
+            <div>
+                <Route exact path="/" component={Home}/>
+                <Route exact path="/admin" component={Admin}/>
+                <Route exact path="/login" component={Login}/>
+            </div>
+        </Router>
     </Provider>,
     document.getElementById('root')
 )
