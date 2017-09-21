@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, {Component} from 'react';
 import swal from 'sweetalert';
 import settings from '../../config/settings';
+import './Login.scss';
 
 
 class Login extends Component {    
@@ -59,38 +60,42 @@ class Login extends Component {
                 <div className="row">                    
                     <div className="col-md-4" />
                     <div className="col-md-4" style={{marginTop: '30%'}}>
-                        <h1> Login </h1>
-                        <form>
-                            <div className="input-group mb-3">
-                                <div className="input-group-addon">
-                                    <i className="fa fa-user"></i>
-                                </div>
-                                <input 
-                                    type="text" 
-                                    className="form-control"                             
-                                    placeholder="Username"
-                                    onChange={(e) => this.handleUserNameChange(e)}
-                                />
+                        <div id="login">
+                            <div>
+                                <h1> Login </h1>
                             </div>
-                            <div className="input-group mb-3">
-                                <div className="input-group-addon">
-                                    <i className="fa fa-lock"></i>
+                            <form>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-addon">
+                                        <i className="fa fa-user"></i>
+                                    </div>
+                                    <input 
+                                        type="text" 
+                                        className="form-control"                             
+                                        placeholder="Username"
+                                        onChange={(e) => this.handleUserNameChange(e)}
+                                    />
                                 </div>
-                                <input 
-                                    type="password" 
-                                    className="form-control"                             
-                                    placeholder="Password"
-                                    onChange={(e) => this.handlePasswordChange(e)}
-                                />
-                            </div>
-                            <button 
-                                type="button" 
-                                className="btn btn-dark btn-block"
-                                onClick={() => this.handleForm()}
-                            >
-                                Login <i className="fa fa-sign-in"></i>
-                            </button>                    
-                        </form>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-addon">
+                                        <i className="fa fa-lock"></i>
+                                    </div>
+                                    <input 
+                                        type="password" 
+                                        className="form-control"                             
+                                        placeholder="Password"
+                                        onChange={(e) => this.handlePasswordChange(e)}
+                                    />
+                                </div>
+                                <button 
+                                    type="button" 
+                                    className="btn btn-dark btn-block"
+                                    onClick={() => this.handleForm()}
+                                >
+                                    Login <i className="fa fa-sign-in"></i>
+                                </button>                    
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
