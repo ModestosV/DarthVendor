@@ -28,6 +28,7 @@ THIRD_PARTY_APPS = [
 INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY_APPS
 
 MIDDLEWARE_CLASSES = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
