@@ -14,7 +14,7 @@
       "es2015",
       "react"
     ]
-  },  
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xTEddie/SOEN343_GroupProject.git"
@@ -44,6 +44,7 @@
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
+    "sweetalert": "^2.0.3",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2"
   }
