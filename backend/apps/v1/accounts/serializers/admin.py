@@ -16,7 +16,7 @@ class AdminSerializerLogin(serializers.Serializer):
     token = serializers.SerializerMethodField()
 
     def get_token(self, admin):
-        with Database() as cursor:            
+        with Database() as cursor:
             query = """
                 SELECT *
                 FROM token
@@ -24,9 +24,8 @@ class AdminSerializerLogin(serializers.Serializer):
             """.format(admin["id"])
 
             try:
-                cursor.execute(query)    
+                cursor.execute(query)
                 admin = cursor.fetchone()
                 return admin["token"]
-            except Exception as error: 
+            except Exception as error:
                 return None
-
