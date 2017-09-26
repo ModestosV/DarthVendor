@@ -81,6 +81,12 @@ You should be able to see the web application on http://localhost:3000/
   ./scripts/populate_db.sh
 ```
 
+#### Connect To Database
+
+```
+  sqlite3 backend/db.sqlite3
+```
+
 # Deploy Application
 
 #### Collect Static Files
