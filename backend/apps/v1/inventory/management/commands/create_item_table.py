@@ -12,7 +12,15 @@ class Command(BaseCommand):
         cursor = connection.cursor()
         query = """
             CREATE TABLE item (
-                id integer PRIMARY KEY AUTOINCREMENT
+                id integer PRIMARY KEY AUTOINCREMENT,
+                quantity integer NOT NULL,
+                weight double NOT NULL,
+                weightFormat string NOT NULL,
+                price double NOT NULL,
+                priceFormat string NOT NULL,
+                //brandName string NOT NULL,
+                type string NOT NULL,
+                modelNumber integer UNIQUE NOT NULL
             );
         """
 
