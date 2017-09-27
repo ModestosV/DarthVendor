@@ -18,7 +18,6 @@ class Command(BaseCommand):
                 weightFormat string NOT NULL,
                 price double NOT NULL,
                 priceFormat string NOT NULL,
-                //brandName string NOT NULL,
                 type string NOT NULL,
                 modelNumber integer UNIQUE NOT NULL
             );
