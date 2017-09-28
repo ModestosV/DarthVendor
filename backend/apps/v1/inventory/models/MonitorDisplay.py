@@ -4,8 +4,7 @@ from ItemSpecification import ItemSpecification
 class MonitorDisplay(ItemSpecification):
 
     """Constructor"""
-    def __init__(self, modelNumber, size):
+    def __init__(self, size):
 
-        super().__init__
-        self.modelNumber = modelNumber
+        super(self, modelNumber, weight, weightFormat, price, priceFormat, brandName).__init__
         self.size = size

@@ -4,7 +4,6 @@ from AbstractComputer import AbstractComputer
 class Desktop(AbstractComputer):
 
     """Constructor"""
-    def __init__(self, modelNumber, dimension):
-        super().__init__()
-        self.modelNumber = modelNumber
+    def __init__(self, dimension):
+        super(self, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat).__init__()
         self.dimension = dimension

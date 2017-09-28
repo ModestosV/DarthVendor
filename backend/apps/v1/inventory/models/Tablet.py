@@ -4,10 +4,9 @@ from AbstractComputer import AbstractComputer
 class Tablet(AbstractComputer):
 
     """Constructor"""
-    def __init__(self, modelNumber, os, dimension, size, cameraInfo, batteryInfo):
+    def __init__(self, os, dimension, size, cameraInfo, batteryInfo):
 
-        super().__init__()
-        self.modelNumber = modelNumber
+        super(self, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat).__init__()
         self.os = os
         self.dimension = dimension
         self.size = size
