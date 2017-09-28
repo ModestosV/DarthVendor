@@ -9,6 +9,7 @@ import rootReducer from './reducers';
 import Login from './components/Login';
 import Admin from './components/Admin';
 import Home from './components/Home';
+import AddItem from './components/Inventory';
 
 
 const store = createStore(
@@ -25,6 +26,7 @@ ReactDOM.render(
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/admin" component={Admin}/>
                 <Route exact path="/login" component={Login}/>
+                <Route exact path="/inventory" component={AddItem}/>
             </div>
         </Router>
     </Provider>,
