@@ -24,7 +24,10 @@ class Inventory extends Component {
                 <div className="col-md-10 float-left col px-5 pl-md-2 pt-2 main">
                     <a href="#" data-target="#sidebar" data-toggle="collapse"><i className="fa fa-navicon fa-2x py-2 p-1"></i></a>
                     <div className="page-header">
-                        <h2>Inventory</h2>
+                        <h5>This is the inventory page and it should show all the products.</h5>
+                        <br />
+                        <br />
+                        <h5>There should be an add new product button that opens a modal?</h5>
                     </div>
                 </div>
 
