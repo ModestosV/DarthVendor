@@ -44,41 +44,18 @@ class AddItem extends Component {
     }
 
     handleSpecChange(event) {
-        event.target.name = event.target.name == 'RAM' ? 'ram' : event.target.name;
         this.setState({[event.target.name]: event.target.value});
         
     }
 
     handleForm() {        
-        // const {dispatch, history} = this.props;
+        const {dispatch, history} = this.props;
 
-        let dataItem = {
-            'type': this.state.type,
-            'modelNumber': this.state.modelNumber, 
-            'price': this.state.price,
-            'quantity': this.state.quantity
-        };
+        let data = this.state;
+        console.log(data);
 
-        let dataType;
-        switch (this.state.type) {
-            case 'Desktop':
-                dataType = {
-                    'processor': this.state.processor,
-                    'RAM': this.state.ram
-                };
-                break;
-            case 'Laptop':
-                dataType = {
-                    'size': this.state.size,
-                    'touch': this.state.touch
-                };
-                break;
-            default:
-                break;
-        }
-
-        Object.assign(dataItem,dataType);
-        console.log(this.state);
+        // TODO: Post data here
+    
     }
 
     componentWillMount() {        
@@ -91,8 +68,6 @@ class AddItem extends Component {
         const itemSpecs = this.state.specs;
         const itemFields = itemBasicSpecs;
         itemFields.push.apply(itemFields, itemSpecs);
-        console.log(this.state);
-        console.log(itemFields);
         return (
             <div className="container">                
                 <div className="row">                    
