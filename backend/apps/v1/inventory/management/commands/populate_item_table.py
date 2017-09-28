@@ -1,13 +1,6 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from sqlite3 import dbapi2 as Database
-from django.contrib.auth.hashers import (
-    check_password, is_password_usable, make_password,
-)
-
-
-#USERNAME = 'foobar'
-#PASSWORD = 'D4rthV3nD0r'
 
 #Test Values
 QUANTITY = 5
