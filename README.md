@@ -1,6 +1,6 @@
 # SOEN343_GroupProject
 
-# Prerequesites
+# Prerequisites
 
 - Linux Virtual Machine (Ubuntu 14.04+) or similar 
 - Python 3.4.3+ 
