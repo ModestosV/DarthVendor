@@ -11,7 +11,7 @@ class Command(BaseCommand):
         connection = Database.connect(settings.DATABASES['default']['NAME'])
         cursor = connection.cursor()
         query = """
-            CREATE TABLE desktop (
+            CREATE TABLE laptop (
                 id integer PRIMARY KEY AUTOINCREMENT,
                 ramSize integer NOT NULL,
                 ramFormat string NOT NULL,
@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 os string NOT NULL,
                 size integer NOT NULL,
                 sizeFormat string NOT NULL,
-                FOREIGN KEY(desktopitem) REFERENCES item(id)
+                FOREIGN KEY(laptopitem) REFERENCES item(id)
             );
         """
 
