@@ -6,7 +6,7 @@ class AbstractComputer(ItemSpecification):
     """Constructor"""
     def __init__(self, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat):
 
-        super(self, modelNumber, weight, weightFormat, price, priceFormat, brandName).__init__()
+        super().__init__(modelNumber, weight, weightFormat, price, priceFormat, brandName)
         self.ramSize = ramSize
         self.ramFormat = ramFormat
         self.processorType = processorType
