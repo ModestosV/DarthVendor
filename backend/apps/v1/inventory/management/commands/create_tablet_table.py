@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 cameraInfo string NOT NULL,
                 sizeFormat string NOT NULL,
                 PRIMARY KEY (modelNumber),
-                FOREIGN KEY (modelNumber) REFERENCES item(modelNumber)
+                FOREIGN KEY (modelNumber) REFERENCES item (modelNumber)
             );
         """
 
