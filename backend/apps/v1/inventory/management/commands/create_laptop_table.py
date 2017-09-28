@@ -27,8 +27,8 @@ class Command(BaseCommand):
                 dy double NOT NULL, 
                 dz double NOT NULL,
                 sizeFormat string NOT NULL,
-                PRIMARY KEY(modelNumber),
-                FOREIGN KEY(modelNumber) REFERENCES item(modelNumber)
+                PRIMARY KEY (modelNumber),
+                FOREIGN KEY (modelNumber) REFERENCES item(modelNumber)
             );
         """
 
