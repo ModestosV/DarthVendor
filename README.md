@@ -120,6 +120,7 @@ The Jenkins instance is located at http://165.227.44.65:8080/ or http://jenkins.
 - **Dev** branch **MUST** be a working branch
 - **NEVER** push directly to **dev** branch
 - Any new feature should be branched out from **dev** and be named as follow: [username]/[feature]
+- **ALWAYS** make sure that your branch has the latest changes from **dev**
 - **ALWAYS** make a pull request to **dev** and assign **ONE** person at minimum to review the new **feature** 
 - **NEVER** merge your own pull request
 
