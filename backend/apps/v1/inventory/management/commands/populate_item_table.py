@@ -8,9 +8,9 @@ WEIGHT = 10.0
 WEIGHTFORMAT = 'lbs'
 PRICE = 9.99
 PRICEFORMAT = 'CAD'
-BRANDFORMAT = 'TEST'
+BRANDNAME = 'SONY'
 TYPE = 'TV'
-MODELNUMBER = 123123
+MODELNUMBER = 'x123123'
 
 class Command(BaseCommand):
     help = 'Populate item table';
@@ -20,21 +20,20 @@ class Command(BaseCommand):
         connection = Database.connect(settings.DATABASES['default']['NAME'])
         cursor = connection.cursor()
         query = """
-            INSERT INTO item (quantity, weight,weightFormat,price, 
-                priceFormat, brandFormat, type, 
-                modelNumber)
+            INSERT INTO item (quantity, weight, weightFormat, price, 
+                priceFormat, brandName, type, modelNumber)
             VALUES (                
                 {},
                 {},
-                '{}',
+               '{}',
                 {},
-                '{}',
-                '{}',
-                '{}',
-                {}
+               '{}',
+               '{}',
+               '{}',
+               '{}'
             );
         """.format(QUANTITY, WEIGHT, WEIGHTFORMAT, PRICE, 
-            PRICEFORMAT, BRANDFORMAT, TYPE, MODELNUMBER)
+            PRICEFORMAT, BRANDNAME, TYPE, MODELNUMBER)
         print()
         try:
             cursor.execute(query)

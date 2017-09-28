@@ -12,23 +12,23 @@ class Command(BaseCommand):
         cursor = connection.cursor()
         query = """
             CREATE TABLE tablet (
-                id integer PRIMARY KEY AUTOINCREMENT,
+                modelNumber string NOT NULL,
                 ramSize integer NOT NULL,
                 ramFormat string NOT NULL,
                 processorType string NOT NULL,
                 numCores integer NOT NULL,
-                hardDriveSize integer NOT NULL,
+                hardDriveSize double NOT NULL,
                 hardDriveFormat string NOT NULL,
-                os  string NOT NULL,
-                dx integer NOT NULL,
-                dy integer NOT NULL,
-                dz integer NOT NULL,
+                os string NOT NULL,
                 batteryInfo string NOT NULL,
+                dx double NOT NULL,
+                dy double NOT NULL,
+                dz double NOT NULL,
                 dimensionFormat string NOT NULL,
-                size integer NOT NULL,
                 cameraInfo string NOT NULL,
                 sizeFormat string NOT NULL,
-                FOREIGN KEY(tabletitem) REFERENCES item(id)
+                PRIMARY KEY (modelNumber),
+                FOREIGN KEY (modelNumber) REFERENCES item (modelNumber)
             );
         """
 
