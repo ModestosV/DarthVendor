@@ -4,7 +4,7 @@ from sqlite3 import dbapi2 as Database
 
 
 class Command(BaseCommand):
-    help = 'Create desktop table'
+    help = 'Create laptop table'
 
     def handle(self, *args, **options):
 
@@ -12,20 +12,23 @@ class Command(BaseCommand):
         cursor = connection.cursor()
         query = """
             CREATE TABLE laptop (
-                id integer PRIMARY KEY AUTOINCREMENT,
+                modelNumber string NOT NULL,
                 ramSize integer NOT NULL,
                 ramFormat string NOT NULL,
                 processorType string NOT NULL,
                 numCores integer NOT NULL,
-                hardDriveSize integer NOT NULL,
+                hardDriveSize double NOT NULL,
                 hardDriveFormat integer NOT NULL,
-                containsCamera string NOT NULL,
-                isTouch string NOT NULL,
+                containsCamera boolean NOT NULL,
+                isTouch boolean NOT NULL,
                 batteryInfo string NOT NULL,
                 os string NOT NULL,
-                size integer NOT NULL,
+                dx double NOT NULL,
+                dy double NOT NULL, 
+                dz double NOT NULL,
                 sizeFormat string NOT NULL,
-                FOREIGN KEY(laptopitem) REFERENCES item(id)
+                PRIMARY KEY(modelNumber),
+                FOREIGN KEY(modelNumber) REFERENCES item(modelNumber)
             );
         """
 
