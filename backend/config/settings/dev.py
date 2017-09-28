@@ -6,6 +6,7 @@ ALLOWED_HOSTS = ['*']
 
 PROJECT_APPS = [
     'backend.apps.v1.accounts.apps.AccountsConfig',
+    'backend.apps.v1.inventory.apps.InventoryConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
