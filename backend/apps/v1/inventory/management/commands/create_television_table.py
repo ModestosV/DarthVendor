@@ -4,23 +4,21 @@ from sqlite3 import dbapi2 as Database
 
 
 class Command(BaseCommand):
-    help = 'Create item table'
+    help = 'Create television table'
 
     def handle(self, *args, **options):
 
         connection = Database.connect(settings.DATABASES['default']['NAME'])
         cursor = connection.cursor()
         query = """
-            CREATE TABLE item (
+            CREATE TABLE television (
                 id integer PRIMARY KEY AUTOINCREMENT,
-                quantity integer NOT NULL,
-                weight double NOT NULL,
-                weightFormat string NOT NULL,
-                price double NOT NULL,
-                priceFormat string NOT NULL,
-                brandFormat string NOT NULL,
-                type string NOT NULL,
-                modelNumber integer NOT NULL
+                tvType string NOT NULL,
+                dimensionFormat string NOT NULL,
+                dx integer NOT NULL,
+                dy integer NOT NULL,
+                dz integer NOT NULL,
+                FOREIGN KEY(televisionitem) REFERENCES item(id)
             );
         """
 

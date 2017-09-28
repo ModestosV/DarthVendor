@@ -9,13 +9,14 @@ from django.contrib.auth.hashers import (
 #USERNAME = 'foobar'
 #PASSWORD = 'D4rthV3nD0r'
 
+#Test Values
 QUANTITY = 5
 WEIGHT = 10.0
 WEIGHTFORMAT = 'lbs'
 PRICE = 9.99
 PRICEFORMAT = 'CAD'
 TYPE = 'TV'
-MODELNUMBER = 123123123
+MODELNUMBER = 123123
 
 class Command(BaseCommand):
     help = 'Populate item table'
@@ -26,7 +27,7 @@ class Command(BaseCommand):
         cursor = connection.cursor()
         query = """
             INSERT INTO item (quantity, weight,weightFormat,price, 
-                priceFormat,type, 
+                priceFormat, brandFormat, type, 
                 modelNumber)
             VALUES (                
                 '{}',
@@ -37,7 +38,7 @@ class Command(BaseCommand):
                 '{}',
                 '{}'
             );
-        """.format(QUANITY, WEIGHT, WEIGHTFORMAT, PRICE, 
+        """.format(QUANTITY, WEIGHT, WEIGHTFORMAT, PRICE, 
             PRICEFORMAT, TYPE, MODELNUMBER)
 
         try:
