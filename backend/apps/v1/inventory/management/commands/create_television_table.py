@@ -12,13 +12,14 @@ class Command(BaseCommand):
         cursor = connection.cursor()
         query = """
             CREATE TABLE television (
-                id integer PRIMARY KEY AUTOINCREMENT,
+                modelNumber string NOT NULL,
                 tvType string NOT NULL,
                 dimensionFormat string NOT NULL,
-                dx integer NOT NULL,
-                dy integer NOT NULL,
-                dz integer NOT NULL,
-                FOREIGN KEY(televisionitem) REFERENCES item(id)
+                dx double NOT NULL,
+                dy double NOT NULL,
+                dz double NOT NULL,
+                PRIMARY KEY (modelNumber),
+                FOREIGN KEY (modelNumber) REFERENCES item (modelNumber)
             );
         """
 
