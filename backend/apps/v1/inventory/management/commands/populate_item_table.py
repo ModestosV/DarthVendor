@@ -15,11 +15,12 @@ WEIGHT = 10.0
 WEIGHTFORMAT = 'lbs'
 PRICE = 9.99
 PRICEFORMAT = 'CAD'
+BRANDFORMAT = 'TEST'
 TYPE = 'TV'
 MODELNUMBER = 123123
 
 class Command(BaseCommand):
-    help = 'Populate item table'
+    help = 'Populate item table';
 
     def handle(self, *args, **options):
 
@@ -30,17 +31,18 @@ class Command(BaseCommand):
                 priceFormat, brandFormat, type, 
                 modelNumber)
             VALUES (                
+                {},
+                {},
+                '{}',
+                {},
                 '{}',
                 '{}',
                 '{}',
-                '{}',
-                '{}',
-                '{}',
-                '{}'
+                {}
             );
         """.format(QUANTITY, WEIGHT, WEIGHTFORMAT, PRICE, 
-            PRICEFORMAT, TYPE, MODELNUMBER)
-
+            PRICEFORMAT, BRANDFORMAT, TYPE, MODELNUMBER)
+        print()
         try:
             cursor.execute(query)
         except Exception as error: 
