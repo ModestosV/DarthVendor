@@ -12,10 +12,11 @@ class Command(BaseCommand):
         cursor = connection.cursor()
         query = """
             CREATE TABLE monitorDisplay (
-                id integer PRIMARY KEY AUTOINCREMENT,
-                size integer NOT NULL,
+                modelNumber string NOT NULL,
+                size double NOT NULL,
                 sizeFormat string NOT NULL,
-                FOREIGN KEY(monitoritem) REFERENCES item(id)
+                PRIMARY KEY (modelNumber),
+                FOREIGN KEY (modelNumber) REFERENCES item (modelNumber)
             );
         """
 
