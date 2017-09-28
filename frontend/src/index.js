@@ -6,10 +6,9 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';  
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-import Login from './components/Login';
-import Admin from './components/Admin';
-import Home from './components/Home';
-
+import AdminLogin from './components/Admin/Login';
+import AdminHome from './components/Admin/Home';
+import AdminInventory from './components/Admin/Inventory'
 
 const store = createStore(
     rootReducer,
@@ -22,11 +21,12 @@ ReactDOM.render(
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/" component={Home}/>
-                <Route exact path="/admin" component={Admin}/>
-                <Route exact path="/login" component={Login}/>
+                <Route exact path="/" component={AdminHome}/>
+                <Route exact path="/inventory" component={AdminInventory} />
+                <Route exact path="/login" component={AdminLogin}/>
             </div>
         </Router>
     </Provider>,
     document.getElementById('root')
 )
+
