@@ -15,7 +15,7 @@ class InventoryView(APIView):
     def get(self, request):
 
         store = Store()
-        inventory = store.getInventory()#NEED TO CHECK IF THIS NAME OF METHOD MATCHES
+        inventory = store.requestInventoryList()
         serializedItems = []
 
         for item in inventory:
