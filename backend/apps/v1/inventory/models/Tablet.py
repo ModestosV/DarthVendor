@@ -4,9 +4,11 @@ from backend.apps.v1.inventory.models.AbstractComputer import AbstractComputer
 class Tablet(AbstractComputer):
 
     """Constructor"""
-    def __init__(self, modelNumber, name, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, dimension, size, cameraInfo, batteryInfo):
 
-        super().__init__(modelNumber, name, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
+    def __init__(self, modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, dimension, size, cameraInfo, batteryInfo):
+
+        super().__init__(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
+
         self.os = os
         self.dimension = dimension
         self.size = size
