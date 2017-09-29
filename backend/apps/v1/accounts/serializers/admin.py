@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from utils.database import Database
+from backend.utils.database import Database
 from .token import TokenSerializer
 
 
@@ -28,4 +28,5 @@ class AdminSerializerLogin(serializers.Serializer):
                 admin = cursor.fetchone()
                 return admin["token"]
             except Exception as error:
+                print(error)
                 return None
