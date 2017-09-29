@@ -28,7 +28,7 @@ class Inventory extends Component {
     }
 
     itemsList() {
-        return axios.get(`${settings.API_ROOT}/itemsList`)
+        return axios.get(`${settings.API_ROOT}/inventory`)
         .then(results => {
             const errorMsg = null;
             const items = results.data.map(item => item);
