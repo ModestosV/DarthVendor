@@ -4,7 +4,7 @@ class Size(object):
     def __init__(self, size, format="inch"):
 
         self.size = size
-        self.format = format
+        self.sizeFormat = sizeFormat
 
         def getFormat(self):
             return self.format

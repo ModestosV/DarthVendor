@@ -8,4 +8,4 @@ class Television(ItemSpecification):
 
         super().__init__(modelNumber, weight, weightFormat, price, priceFormat, brandName)
         self.dimension = dimension
-        self.type = tvType
+        self.tvType = tvType
