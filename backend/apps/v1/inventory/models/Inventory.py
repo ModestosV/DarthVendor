@@ -1,19 +1,14 @@
 from django.conf import settings
 from sqlite3 import dbapi2 as Database
-#from backend.apps.v1.inventory.models.Television import Television
-#from backend.apps.v1.inventory.models.Tablet import Tablet
-#from backend.apps.v1.inventory.models.Laptop import Laptop
-#from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
-#from backend.apps.v1.inventory.models.Desktop import Desktop
-#from backend.apps.v1.inventory.models.Size import Size
-#from backend.apps.v1.inventory.models.Dimension import Dimension
-from Television import Television
-from Tablet import Tablet
-from Laptop import Laptop
-from MonitorDisplay import MonitorDisplay
-from Desktop import Desktop
-from Size import Size
-from Dimension import Dimension
+
+from backend.apps.v1.inventory.models.Size import Size
+from backend.apps.v1.inventory.models.Dimension import Dimension
+
+from backend.apps.v1.inventory.models.Television import Television
+from backend.apps.v1.inventory.models.Tablet import Tablet
+from backend.apps.v1.inventory.models.Laptop import Laptop
+from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
+from backend.apps.v1.inventory.models.Desktop import Desktop
 
 
 class Inventory(object):
