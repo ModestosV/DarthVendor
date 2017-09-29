@@ -4,7 +4,7 @@ from backend.apps.v1.inventory.serializers.DimensionSerializer import DimensionS
 from backend.ackend.apps.v1.inventory.serializers.SizeSerializer import SizeSerializer
 
 
-class TabletSerializers(AbstractSerializers):
+class TabletSerializer(AbstractSerializers):
     os = serializers.CharField()
     dimension = DimensionSerializer()
     size = SizeSerializer()
