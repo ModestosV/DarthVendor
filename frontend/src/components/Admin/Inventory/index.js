@@ -39,8 +39,9 @@ var items = [{
                         <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="price" dataSort={true}>Product Price</TableHeaderColumn>
                     </BootstrapTable>
-                  </div>
-                  <Link to={`/inventory/add`} className="list-group-item d-inline-block collapsed"><i className="fa fa-plus"></i> <span className="d-none d-md-inline">Add Item</span></Link>
+                    <Link to={`/inventory/add`} className="list-group-item d-inline-block collapsed"><i className="fa fa-plus"></i> <span className="d-none d-md-inline">Add Item</span></Link>
+                </div>
+                 
             </div>
         );
     }
