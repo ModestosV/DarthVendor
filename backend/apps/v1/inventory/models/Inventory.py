@@ -1,5 +1,11 @@
 from django.conf import settings
 from sqlite3 import dbapi2 as Database
+from Television import Television
+from Tablet import Tablet
+from Laptop import Laptop
+from MonitorDisplay import MonitorDisplay
+from Desktop import Desktop
+
 
 class Inventory(object):
     """Constructor"""
@@ -91,7 +97,7 @@ class Inventory(object):
 
 
         elif type(itemSpec) is Television:
-            query1 = generateItemQuery("T",itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
+            query1 = generateItemQuery("TV",itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
             query2 = """
                 INSERT INTO television (modelNumber,
                                         tvType, 
@@ -159,26 +165,149 @@ class Inventory(object):
 
     def requestInventoryList(self):
         connection = Database.connect(settings.DATABASES['default']['NAME'])
+
         cursor = connection.cursor()
 
-        query = """
-                SELECT * FROM item 
-                LEFT JOIN tablet ON item.modelNumber = tablet.modelNumber
-                LEFT JOIN desktop ON item.modelNumber = desktop.modelNumber
-                LEFT JOIN monitorDisplay ON item.modelNumber = monitorDisplay.modelNumber
-                LEFT JOIN laptop ON item.modelNumber = laptop.modelNumber
-                LEFT JOIN television ON item.modelNumber = television.modelNumber
+        result = []
+
+        queryTablet = """
+                SELECT * FROM item, tablet 
+                WHERE item.type = "TABLET" 
+                AND item.modelNumber = tablet.modelNumber;
         """
+        queryTv = """
+                SELECT * from item, television 
+                WHERE item.type = "TV"
+                AND item.modelNumber = television.modelNumber;
+        """
+        queryDesktop = """
+                SELECT * from item, desktop 
+                WHERE item.type = "DESKTOP"
+                AND item.modelNumber = television.modelNumber;
+        """
+        queryMonitor = """
+                SELECT * from item, monitorDisplay 
+                WHERE item.type = "MONITOR"
+                AND item.modelNumber = monitorDisplay.modelNumber;
+        """
+        queryLaptop = """
+                SELECT * from item, laptop 
+                WHERE item.type = "LAPTOP"
+                AND item.modelNumber = laptop.modelNumber;
+        """
+        
 
         try:
-            cursor.execute(query)
+            cursor.execute(queryTablet)
+            for(name,
+                modelNumber, 
+                quantity, 
+                weight, 
+                weightFormat, 
+                price, 
+                priceFormat, 
+                brandName,
+                modelNumber,
+                ramSize, 
+                ramFormat, 
+                processorType, 
+                numCores, 
+                hardDriveSize,
+                hardDriveFormat,
+                cameraInfo, 
+                batteryInfo,
+                os,
+                size,
+                sizeFormat,
+                dx,
+                dy,
+                dz,
+                dimensionFormat) in cursor:
+                result.append(Tablet(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, Dimension(dx,dy,dz,dimensionFormat), Size(size, sizeFormat), cameraInfo, batteryInfo))
+
+            cursor.execute(queryDesktop)
+            for(name,
+                modelNumber, 
+                quantity, 
+                weight, 
+                weightFormat, 
+                price, 
+                priceFormat, 
+                brandName,
+                modelNumber,
+                ramSize, 
+                ramFormat, 
+                processorType, 
+                numCores, 
+                hardDriveSize,
+                hardDriveFormat,
+                dx,
+                dy,
+                dz,
+                dimensionFormat) in cursor:
+                result.append(Desktop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, Dimension(dx, dy, dz, dimensionFormat)))
+
+            cursor.execute(queryTv)
+            for(name,
+                modelNumber, 
+                quantity, 
+                weight, 
+                weightFormat, 
+                price, 
+                priceFormat, 
+                brandName,
+                modelNumber,
+                tvType, 
+                dimensionFormat,
+                dx,
+                dy,
+                dz) in cursor:
+                result.append(Television(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, Dimension(dx, dy, dz, dimensionFormat), tvType))
+            
+            cursor.execute(queryMonitor)
+            for(name,
+                modelNumber, 
+                quantity, 
+                weight, 
+                weightFormat, 
+                price, 
+                priceFormat, 
+                brandName,
+                modelNumber,
+                size, sizeFormat) in cursor:
+                result.append(MonitorDisplay(name, quantity, modelNumber, weight, weightFormat, price, priceFormat, brandName, Size(size, sizeFormat)))
+
+            cursor.execute(queryLaptop)
+            for(name,
+                modelNumber, 
+                quantity, 
+                weight, 
+                weightFormat, 
+                price, 
+                priceFormat, 
+                brandName,
+                modelNumber,
+                ramSize, 
+                ramFormat, 
+                processorType, 
+                numCores, 
+                hardDriveSize,
+                hardDriveFormat,
+                containCamera, 
+                isTouch,
+                batteryInfo,
+                os,
+                size,
+                sizeFormat) in cursor:
+                result.append(Laptop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, containCamera, isTouch, batteryInfo, os, Size(size, sizeFormat)))      
+        
         except Exception as error: 
             print(error)    
 
         connection.commit()
         connection.close()
 
-        return cursor
+        return result
 
     def generateItemQuery(self, type, modelNumber, quantity, weight, wf, price, pf, brandname):
         qry = """
@@ -205,5 +334,6 @@ class Inventory(object):
 
 if __name__ == '__main__':
     
-    inv = Inventory()
-    inv.requestInventoryList()
+    #inv = Inventory()
+    #tab = Tablet();
+    #inv.addItem()

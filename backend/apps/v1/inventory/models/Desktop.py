@@ -1,4 +1,4 @@
-from backend.apps.v1.inventory.models.AbstractComputer import AbstractComputer
+from AbstractComputer import AbstractComputer
 
 
 class Desktop(AbstractComputer):
