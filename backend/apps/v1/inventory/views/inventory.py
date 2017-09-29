@@ -13,7 +13,7 @@ class InventoryView(APIView):
 
     def get(self, request):
         dimension = Dimension(1,2,3,"cm")
-        desktop = Desktop(1,2,3,4,5,6,7,8,9,10 ,11, 12, dimension)
+        desktop = Desktop(1,2,3,4.5,5,6,7,8,9,10 ,11, 12, dimension)
         serializer = DesktopSerializer(desktop)
 
         print(serializer.data)

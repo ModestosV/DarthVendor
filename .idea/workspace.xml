@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd576349-4200-4ca5-b463-b62f21c10b43" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/DesktopSerializer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/DimensionSerializer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/LaptopSerializer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/MonitorDisplay.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/apps/v1/inventory/models/Dimension.py" afterPath="$PROJECT_DIR$/backend/apps/v1/inventory/models/Dimension.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/apps/v1/inventory/models/Laptop.py" afterPath="$PROJECT_DIR$/backend/apps/v1/inventory/models/Laptop.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/AbstractSerializers.py" afterPath="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/AbstractSerializers.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/apps/v1/inventory/views/inventory.py" afterPath="$PROJECT_DIR$/backend/apps/v1/inventory/views/inventory.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,21 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="login.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/apps/v1/accounts/views/login.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractSerializers.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AbstractSerializers.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/serializers/AbstractSerializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="39" />
+            <state relative-caret-position="126">
+              <caret line="7" column="51" lean-forward="false" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -45,8 +30,8 @@
       <file leaf-file-name="inventory.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/views/inventory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="360">
+              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -66,7 +51,7 @@
         <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/serializers/LaptopSerializer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
-              <caret line="5" column="61" lean-forward="true" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
+              <caret line="5" column="61" lean-forward="false" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -76,17 +61,47 @@
         <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/MonitorDisplay.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MonitorDisplay.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MonitorDisplay.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/serializers/MonitorDisplay.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="72">
-              <caret line="4" column="27" lean-forward="true" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+              <caret line="4" column="9" lean-forward="false" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Dimension.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/Dimension.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="72">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Desktop.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/Desktop.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractComputer.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/AbstractComputer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -113,10 +128,11 @@
         <option value="$PROJECT_DIR$/backend/apps/v1/inventory/models/Dimension.py" />
         <option value="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/DesktopSerializer.py" />
         <option value="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/DimensionSerializer.py" />
-        <option value="$PROJECT_DIR$/backend/apps/v1/inventory/views/inventory.py" />
         <option value="$PROJECT_DIR$/backend/apps/v1/inventory/models/Laptop.py" />
         <option value="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/LaptopSerializer.py" />
         <option value="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/MonitorDisplay.py" />
+        <option value="$PROJECT_DIR$/backend/apps/v1/inventory/views/inventory.py" />
+        <option value="$PROJECT_DIR$/backend/apps/v1/inventory/serializers/AbstractSerializers.py" />
       </list>
     </option>
   </component>
@@ -238,12 +254,12 @@
       <option name="presentableId" value="Default" />
       <updated>1506639919847</updated>
       <workItem from="1506639923646" duration="2016000" />
-      <workItem from="1506645084524" duration="4238000" />
+      <workItem from="1506645084524" duration="4738000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6254000" />
+    <option name="totallyTimeSpent" value="6754000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1839" height="954" extended-state="6" />
@@ -302,34 +318,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/AbstractComputer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/serializers/DimensionSerializer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/views/inventory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/Dimension.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -342,14 +334,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/serializers/AbstractSerializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/Laptop.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -358,18 +342,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/Desktop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/serializers/LaptopSerializer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="5" column="61" lean-forward="true" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
+          <caret line="5" column="61" lean-forward="false" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
           <folding />
         </state>
       </provider>
@@ -377,7 +353,7 @@
     <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/MonitorDisplay.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -385,7 +361,47 @@
     <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/serializers/MonitorDisplay.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
-          <caret line="4" column="27" lean-forward="true" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+          <caret line="4" column="9" lean-forward="false" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/Dimension.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/AbstractComputer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/models/Desktop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/views/inventory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/apps/v1/inventory/serializers/AbstractSerializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="51" lean-forward="false" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
           <folding />
         </state>
       </provider>

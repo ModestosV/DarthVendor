@@ -5,7 +5,7 @@ class ItemSpecificationSerializer(serializers.Serializer):
     modelNumber = serializers.CharField()
     weight = serializers.FloatField()
     weightFormat = serializers.CharField()
-    price = serializers.FloatField()
+    price = serializers.DecimalField(max_digits=20,decimal_places=2)
     priceFormat = serializers.CharField()
     brandName = serializers.CharField()
 
