@@ -1,10 +1,19 @@
 from django.conf import settings
 from sqlite3 import dbapi2 as Database
+#from backend.apps.v1.inventory.models.Television import Television
+#from backend.apps.v1.inventory.models.Tablet import Tablet
+#from backend.apps.v1.inventory.models.Laptop import Laptop
+#from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
+#from backend.apps.v1.inventory.models.Desktop import Desktop
+#from backend.apps.v1.inventory.models.Size import Size
+#from backend.apps.v1.inventory.models.Dimension import Dimension
 from Television import Television
 from Tablet import Tablet
 from Laptop import Laptop
 from MonitorDisplay import MonitorDisplay
 from Desktop import Desktop
+from Size import Size
+from Dimension import Dimension
 
 
 class Inventory(object):
@@ -14,13 +23,22 @@ class Inventory(object):
 	
     def addItem(self, itemSpec):
 
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
+        #connection = Database.connect(settings.DATABASES['default']['NAME'])
+        connection = Database.connect("/home/andres/venv/darthvendor/SOEN343_GroupProject/backend/db.sqlite3")
+
         cursor = connection.cursor()
 
         
         if type(itemSpec) is Laptop:
-
-            query1 = generateItemQuery("L",itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
+            if itemSpec.isTouch == True:
+                touch = 1
+            else:
+                touch = 0
+            if itemSpec.containCamera == True:
+                cam = 1
+            else:
+                cam = 0
+            query1 = self.generateItemQuery("LAPTOP",itemSpec.modelNumber,itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
             query2 = """
                 INSERT INTO laptop (modelNumber,
                                     ramSize, 
@@ -29,7 +47,7 @@ class Inventory(object):
                                     numCores, 
                                     hardDriveSize,
                                     hardDriveFormat,
-                                    containCamera, 
+                                    containsCamera, 
                                     isTouch,
                                     batteryInfo,
                                     os,
@@ -50,10 +68,11 @@ class Inventory(object):
                      {},
                     '{}'
                 );
-            """.format(itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.containCamera, itemSpec.isTouch, itemSpec.batteryInfo, itemSpec.os, itemSpec.size, itemSpec.sizeFormat)
-
+            """.format(itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, cam, touch, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat)
+            print(query1)
+            print(query2)
         elif type(itemSpec) is Desktop:
-            query1 = generateItemQuery("D",itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
+            query1 = generateItemQuery("DESKTOP",itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
             query2 = """
                 INSERT INTO desktop (modelNumber,
                                      ramSize, 
@@ -84,20 +103,21 @@ class Inventory(object):
 
         elif type(itemSpec) is MonitorDisplay:
 
-            query1 = generateItemQuery("M",itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
+            query1 = self.generateItemQuery("MONITOR",itemSpec.modelNumber,itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
 
             query2 = """
                 INSERT INTO monitorDisplay (modelNumber,size, sizeFormat)
                     VALUES(
-                     {},
-                    '{}',
+                     '{}',
+                    {},
                     '{}'
                 );
-            """.format(itemSpec.size, itemSpec.sizeFormat)
-
+            """.format(itemSpec.modelNumber, itemSpec.size.size, itemSpec.size.sizeFormat)
+            print(query1)
+            print(query2)
 
         elif type(itemSpec) is Television:
-            query1 = generateItemQuery("TV",itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
+            query1 = self.generateItemQuery("TV",itemSpec.modelNumber,itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
             query2 = """
                 INSERT INTO television (modelNumber,
                                         tvType, 
@@ -116,7 +136,8 @@ class Inventory(object):
             """.format(itemSpec.tvType, itemSpec.dimensionFormat, itemSpec.dx, itemSpec.dy, itemSpec.dz)
 
         elif type(itemSpec) is Tablet:
-            query1 = generateItemQuery("T",itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
+            query1 = self.generateItemQuery("TABLET",itemSpec.modelNumber,itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
+            print(query1)
             query2 = """
                 INSERT INTO tablet (modelNumber,
                                     ramSize, 
@@ -152,8 +173,8 @@ class Inventory(object):
                      {},
                     '{}'
                 );
-            """.format(itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.cameraInfo, itemSpec.batteryInfo, itemSpec.os, itemSpec.size, itemSpec.sizeFormat, itemSpec.dx, itemSpec.dy, itemSpec.dz, itemSpec.dimensionFormat)
-
+            """.format(itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.cameraInfo, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat, itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format)
+            print(query2)
         try:
             cursor.execute(query1)
             cursor.execute(query2)
@@ -309,9 +330,10 @@ class Inventory(object):
 
         return result
 
-    def generateItemQuery(self, type, modelNumber, quantity, weight, wf, price, pf, brandname):
+    def generateItemQuery(self, type, name, modelNumber, quantity, weight, wf, price, pf, brandname):
         qry = """
             INSERT INTO item (type, 
+                              name,
                               modelNumber, 
                               quantity, 
                               weight, 
@@ -322,18 +344,20 @@ class Inventory(object):
                 VALUES(
                     '{}',
                     '{}',
+                     '{}',
                      {},
-                     {},
+                    {},
+                     '{}',
+                    {},
                     '{}',
-                     {},
-                    '{}',
-                    '{}',
+                    '{}'
                 );
-        """.format(type, modelNumber, quantity, weight, wf, price, pf, brandname)
+        """.format(type, modelNumber, name, quantity, weight, wf, price, pf, brandname)
         return qry
 
 if __name__ == '__main__':
     
-    #inv = Inventory()
-    #tab = Tablet();
-    #inv.addItem()
+    inv = Inventory()
+    tab = Television("myname", 5, "model10", 4, "kg", 400, "CAD", "brand", Size(4,"cm"));
+    inv.addItem(tab)
+    #print(tab)

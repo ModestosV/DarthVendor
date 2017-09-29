@@ -1,3 +1,4 @@
+#from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 from ItemSpecification import ItemSpecification
 
 
