@@ -13,6 +13,7 @@ class Command(BaseCommand):
         query = """
             CREATE TABLE item (
                 quantity integer NOT NULL,
+                name string NOT NULL,
                 weight double NOT NULL,
                 weightFormat string NOT NULL,
                 price double NOT NULL,

@@ -26,6 +26,7 @@ class Command(BaseCommand):
                 dz double NOT NULL,
                 dimensionFormat string NOT NULL,
                 cameraInfo string NOT NULL,
+                size double NOT NULL,
                 sizeFormat string NOT NULL,
                 PRIMARY KEY (modelNumber),
                 FOREIGN KEY (modelNumber) REFERENCES item (modelNumber)
