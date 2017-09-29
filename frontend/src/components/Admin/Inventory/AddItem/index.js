@@ -38,6 +38,7 @@ class AddItem extends Component {
                 this.setState({specs: ['size','sizeFormat']});
                 break;
             default:
+                this.setState({specs: []});
                 break;
         }
     }
@@ -47,13 +48,23 @@ class AddItem extends Component {
         
     }
 
-    handleForm() {        
-        const {dispatch, history} = this.props;
+    handleForm() {
 
         let data = this.state;
-        console.log(data);
 
-        // TODO: Post data here
+        axios.post(`${settings.API_ROOT}/item`, data)
+        .then(response => {
+            console.log('item added');
+        })
+        .catch(error => {
+            console.log(error);
+            swal({
+                title: "Woops!",
+                text: "Something went wrong!",
+                icon: "error",
+                button: "Ok",
+            });                 
+        })
     
     }
 
@@ -83,7 +94,7 @@ class AddItem extends Component {
                                     className="form-control"
                                     onChange={(e) => this.handleTypeChange(e)}
                                 >
-                                    <option value=""></option>
+                                    <option value="">Choose type</option>
                                     { itemTypes.map((name,index) => {
                                     return (
                                         <option 
