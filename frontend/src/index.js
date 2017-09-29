@@ -8,7 +8,8 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import AdminLogin from './components/Admin/Login';
 import AdminHome from './components/Admin/Home';
-import AdminInventory from './components/Admin/Inventory'
+import AdminInventory from './components/Admin/Inventory';
+import AdminInventoryAddItem from './components/Admin/Inventory/AddItem';
 
 const store = createStore(
     rootReducer,
@@ -24,6 +25,7 @@ ReactDOM.render(
                 <Route exact path="/" component={AdminHome}/>
                 <Route exact path="/inventory" component={AdminInventory} />
                 <Route exact path="/login" component={AdminLogin}/>
+                <Route exact path="/inventory/add" component={AdminInventoryAddItem}/>
             </div>
         </Router>
     </Provider>,

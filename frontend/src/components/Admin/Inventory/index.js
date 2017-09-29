@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
-import {HashRouter as Router, Route} from 'react-router-dom';
+import {Link, HashRouter as Router, Route} from 'react-router-dom';
 import settings from '../../../config/settings';
 import Sidebar from '../Sidebar';
 
@@ -27,10 +27,9 @@ class Inventory extends Component {
                         <h5>This is the inventory page and it should show all the products.</h5>
                         <br />
                         <br />
-                        <h5>There should be an add new product button that opens a modal?</h5>
                     </div>
+                    <Link to={`/inventory/add`} className="list-group-item d-inline-block collapsed"><i className="fa fa-plus"></i> <span className="d-none d-md-inline">Add Item</span></Link>
                 </div>
-
 
             </div>
         )
