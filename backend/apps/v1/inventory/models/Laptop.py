@@ -6,7 +6,7 @@ class Laptop(AbstractComputer):
     """Constructor"""
     def __init__(self, containCamera, isTouch, batteryInfo, os, size, sizeFormat):
 
-        super(self, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat).__init__()
+        super().__init__(ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
         self.containCamera = containCamera
         self.isTouch = isTouch
         self.batteryInfo = batteryInfo
