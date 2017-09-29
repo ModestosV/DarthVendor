@@ -6,9 +6,10 @@ from rest_framework.documentation import include_docs_urls
 
 
 urlpatterns = [
-    
+
     # API (v1)
     url(r'^', include('backend.apps.v1.accounts.urls')),
+    url(r'^', include('backend.apps.v1.inventory.urls')),
 
     # Core
     url(r'^admin/', admin.site.urls),
