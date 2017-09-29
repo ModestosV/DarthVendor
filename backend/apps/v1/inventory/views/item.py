@@ -18,7 +18,6 @@ class ItemView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
-
     def post(self, request):
         store = Store()
         itemData = request.data
@@ -34,7 +33,7 @@ class ItemView(APIView):
                 item = Desktop(itemData["modelNumber"], itemData["name"], itemData["quantity"], itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"], itemData["hardDriveSize"], itemData["hardDriveFormat"], dimension)
             elif itemType == "Monitor Display":
                 size = Size(itemData["size"])
-                item = MonitorDisplay(itemData["modelNumber"], itemData["name"], itemData["quantity"], itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"])
+                item = MonitorDisplay(itemData["modelNumber"], itemData["name"], itemData["quantity"], itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], size)
             elif itemType == "Laptop":
                 dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])
                 size = Size(itemData["size"])
@@ -48,4 +47,4 @@ class ItemView(APIView):
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
         store.confirmItemCreation(item)
-        return Response(item)
+        return Response("It Worked")
