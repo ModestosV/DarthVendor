@@ -127,6 +127,7 @@ The Jenkins instance is located at http://165.227.44.65:8080/ or http://jenkins.
 
 # References
 
+- https://python.swaroopch.com/
 - https://docs.djangoproject.com/en/1.11/
 - http://www.django-rest-framework.org/
 - http://drfdocs.com/
