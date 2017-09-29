@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from utils.database import Database
+from backend.utils.database import Database
 from backend.apps.v1.accounts.serializers.admin import AdminSerializer
 
 
