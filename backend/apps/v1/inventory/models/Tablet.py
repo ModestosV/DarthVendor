@@ -1,4 +1,4 @@
-from AbstractComputer import AbstractComputer
+from backend.apps.v1.inventory.models.AbstractComputer import AbstractComputer
 
 
 class Tablet(AbstractComputer):
@@ -6,7 +6,7 @@ class Tablet(AbstractComputer):
     """Constructor"""
     def __init__(self, os, dimension, size, cameraInfo, batteryInfo):
 
-        super().__init__(ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
+        super(self, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat).__init__()
         self.os = os
         self.dimension = dimension
         self.size = size
