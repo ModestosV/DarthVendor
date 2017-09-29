@@ -4,9 +4,9 @@ from backend.apps.v1.inventory.models.AbstractComputer import AbstractComputer
 class Tablet(AbstractComputer):
 
     """Constructor"""
-    def __init__(self, modelNumber, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, dimension, size, cameraInfo, batteryInfo):
+    def __init__(self, modelNumber, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, dimension, size, cameraInfo, batteryInfo):
 
-        super().__init__(modelNumber, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
+        super().__init__(modelNumber, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
         self.os = os
         self.dimension = dimension
         self.size = size
