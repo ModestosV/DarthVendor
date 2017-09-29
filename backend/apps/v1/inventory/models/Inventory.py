@@ -18,8 +18,8 @@ class Inventory(object):
 
     def addItem(self, itemSpec):
 
-        #connection = Database.connect(settings.DATABASES['default']['NAME'])
-        connection = Database.connect("/home/andres/venv/darthvendor/SOEN343_GroupProject/backend/db.sqlite3")
+        connection = Database.connect(settings.DATABASES['default']['NAME'])
+        # connection = Database.connect("/home/andres/venv/darthvendor/SOEN343_GroupProject/backend/db.sqlite3")
 
         cursor = connection.cursor()
 
@@ -94,7 +94,7 @@ class Inventory(object):
                      {},
                     '{}'
                 );
-            """.format(itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.dx, itemSpec.dy, itemSpec.dz, itemSpec.dimensionFormat)
+            """.format(itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format)
 
         elif type(itemSpec) is MonitorDisplay:
             query1 = self.generateItemQuery("MONITOR",itemSpec.modelNumber,itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
@@ -111,7 +111,7 @@ class Inventory(object):
             print(query2)
 
         elif type(itemSpec) is Television:
-            query1 = self.generateItemQuery("TV", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
+            query1 = self.generateItemQuery("TV", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
 
             query2 = """
                 INSERT INTO television (modelNumber,
@@ -128,7 +128,7 @@ class Inventory(object):
                      {},
                      {}
                 );
-            """.format(itemSpec.tvType, itemSpec.dimensionFormat, itemSpec.dx, itemSpec.dy, itemSpec.dz)
+            """.format(itemSpec.modelNumber, itemSpec.tvType, itemSpec.dimension.format, itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z)
 
         elif type(itemSpec) is Tablet:
             query1 = self.generateItemQuery("TABLET", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
@@ -199,7 +199,7 @@ class Inventory(object):
         queryDesktop = """
                 SELECT * from item, desktop
                 WHERE item.type = "DESKTOP"
-                AND item.modelNumber = television.modelNumber;
+                AND item.modelNumber = desktop.modelNumber;
         """
         queryMonitor = """
                 SELECT * from item, monitorDisplay
@@ -213,7 +213,9 @@ class Inventory(object):
         """
 
 
+
         try:
+
             cursor.execute(queryTablet)
             for(name,
                 modelNumber,
@@ -239,6 +241,7 @@ class Inventory(object):
                 dy,
                 dz,
                 dimensionFormat) in cursor:
+                print(1)
                 result.append(Tablet(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, Dimension(dx,dy,dz,dimensionFormat), Size(size, sizeFormat), cameraInfo, batteryInfo))
 
             cursor.execute(queryDesktop)
@@ -250,7 +253,6 @@ class Inventory(object):
                 price,
                 priceFormat,
                 brandName,
-                modelNumber,
                 ramSize,
                 ramFormat,
                 processorType,
@@ -261,9 +263,11 @@ class Inventory(object):
                 dy,
                 dz,
                 dimensionFormat) in cursor:
+                print(2)
                 result.append(Desktop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, Dimension(dx, dy, dz, dimensionFormat)))
 
             cursor.execute(queryTv)
+            print(cursor)
             for(name,
                 modelNumber,
                 quantity,
@@ -272,12 +276,14 @@ class Inventory(object):
                 price,
                 priceFormat,
                 brandName,
-                modelNumber,
                 tvType,
                 dimensionFormat,
                 dx,
                 dy,
-                dz) in cursor:
+                dz,
+                x,
+                y) in cursor:
+                print(3)
                 result.append(Television(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, Dimension(dx, dy, dz, dimensionFormat), tvType))
 
             cursor.execute(queryMonitor)
@@ -291,6 +297,7 @@ class Inventory(object):
                 brandName,
                 modelNumber,
                 size, sizeFormat) in cursor:
+                print(4)
                 result.append(MonitorDisplay(name, quantity, modelNumber, weight, weightFormat, price, priceFormat, brandName, Size(size, sizeFormat)))
 
             cursor.execute(queryLaptop)
@@ -315,11 +322,14 @@ class Inventory(object):
                 os,
                 size,
                 sizeFormat) in cursor:
+                print(5)
                 result.append(Laptop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, containCamera, isTouch, batteryInfo, os, Size(size, sizeFormat)))
 
         except Exception as error:
+            print("Failed to retrieve Inventory list")
             print(error)
 
+        print(result)
         connection.commit()
         connection.close()
 
