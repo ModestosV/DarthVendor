@@ -4,9 +4,10 @@ from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 class AbstractComputer(ItemSpecification):
 
     """Constructor"""
-    def __init__(self, modelNumber, name, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat):
 
-        super().__init__(modelNumber, weight, weightFormat, price, priceFormat, brandName)
+    def __init__(self, modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat):
+
+        super().__init__(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName)
         self.ramSize = ramSize
         self.ramFormat = ramFormat
         self.processorType = processorType
