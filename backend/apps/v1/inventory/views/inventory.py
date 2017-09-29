@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.Dimension import Dimension
-from backend.apps.v1.inventory.models.Store import Store
+# from backend.apps.v1.inventory.models.Store import Store
 from backend.apps.v1.inventory.serializers.AbstractSerializers import AbstractComputerSerializer, ItemSpecificationSerializer
 from backend.apps.v1.inventory.serializers.DimensionSerializer import DimensionSerializer
 from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
