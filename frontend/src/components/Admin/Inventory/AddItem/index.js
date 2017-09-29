@@ -81,7 +81,7 @@ class AddItem extends Component {
 
     render() {
         const itemTypes = ['Desktop', 'Laptop', 'Tablet', 'Television', 'Monitor Display'];
-        const itemBasicSpecs = ['modelNumber', 'price', 'priceFormat', 'brandName', 'quantity', 'weight', 'weightFormat'];
+        const itemBasicSpecs = ['modelNumber', 'name','price', 'priceFormat', 'brandName', 'quantity', 'weight', 'weightFormat'];
         const itemSpecs = this.state.specs;
         const itemFields = itemBasicSpecs;
         itemFields.push.apply(itemFields, itemSpecs);
