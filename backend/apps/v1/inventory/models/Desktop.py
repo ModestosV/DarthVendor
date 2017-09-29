@@ -5,5 +5,5 @@ class Desktop(AbstractComputer):
 
     """Constructor"""
     def __init__(self, modelNumber, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, dimension):
-        super().__init__(modelNumber, weight, weightFormat, price, priceFormat, brandNameramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
+        super().__init__(modelNumber, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
         self.dimension = dimension

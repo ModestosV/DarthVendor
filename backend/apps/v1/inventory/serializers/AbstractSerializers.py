@@ -13,3 +13,7 @@ class ItemSpecificationSerializer(serializers.Serializer):
 class AbstractComputerSerializer(ItemSpecificationSerializer):
     ramSize = serializers.IntegerField()
     ramFormat = serializers.CharField()
+    processorType = serializers.CharField()
+    numCores = serializers.IntegerField()
+    hardDriveSize = serializers.IntegerField()
+    hardDriveFormat = serializers.CharField()
