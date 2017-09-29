@@ -73,7 +73,13 @@ class Navigation extends Component {
                                 <i className="fa fa-folder" aria-hidden="true"></i>                            
                                 {" "} Catalog
                             </Link>
-                        </li>                                                
+                        </li>  
+                        <li className="nav-item">
+                            <Link className="nav-link" to={`/inventory`}>
+                                <i className="fa fa-folder" aria-hidden="true"></i>                            
+                                {" "} Inventory
+                            </Link>
+                        </li>                                               
                     </ul>   
 
                     {this.renderLogOutButton()}
