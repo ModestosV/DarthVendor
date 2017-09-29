@@ -15,6 +15,6 @@ class InventoryView(APIView):
         dimension = Dimension(1,2,3,"cm")
         desktop = Desktop(1,2,3,4.5,5,6,7,8,9,10 ,11, 12, dimension)
         serializer = DesktopSerializer(desktop)
-
+        l = [serializer.data, serializer.data]
         print(serializer.data)
-        return Response(serializer.data)
+        return Response(l)
