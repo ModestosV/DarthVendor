@@ -4,7 +4,7 @@ import settings from '../../../../config/settings';
 import Sidebar from '../../Sidebar';
 
 
-class AddItem extends Component {    
+class AddItem extends Component {
 
     constructor(props) {
         super(props);
@@ -15,7 +15,7 @@ class AddItem extends Component {
             sizeFormat: 'inch',
             ramFormat: 'GB',
             hardDriveFormat: 'GB',
-            weightFormat: 'lbs'
+            weightFormat: 'lbs',
         }
     }
 
@@ -38,26 +38,44 @@ class AddItem extends Component {
                 this.setState({specs: ['size','sizeFormat']});
                 break;
             default:
+                this.setState({specs: []});
                 break;
         }
     }
 
     handleSpecChange(event) {
         this.setState({[event.target.name]: event.target.value});
-        
+
     }
 
-    handleForm() {        
-        const {dispatch, history} = this.props;
+    handleForm() {
 
         let data = this.state;
-        console.log(data);
 
-        // TODO: Post data here
-    
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/item`,
+            data: data,
+            headers: {
+                Authorization: "Token " + JSON.parse(localStorage.activeUser).token
+            }
+        })
+        .then(response => {
+            console.log('item added');
+        })
+        .catch(error => {
+            console.log(error);
+            swal({
+                title: "Woops!",
+                text: "Something went wrong!",
+                icon: "error",
+                button: "Ok",
+            });
+        })
+
     }
 
-    componentWillMount() {        
+    componentWillMount() {
         console.log(localStorage);
     }
 
@@ -68,7 +86,7 @@ class AddItem extends Component {
         const itemFields = itemBasicSpecs;
         itemFields.push.apply(itemFields, itemSpecs);
         return (
-            <div>                
+            <div>
                 <Sidebar />
                 <div className="col-md-10 float-left col px-5 pl-md-2 pt-2 main">
                     <a href="#" data-target="#sidebar" data-toggle="collapse"><i className="fa fa-navicon fa-2x py-2 p-1"></i></a>
@@ -79,14 +97,14 @@ class AddItem extends Component {
                         <form>
                             {/* SELECT for type */}
                             <div className="input-group mb-3">
-                                <select 
+                                <select
                                     className="form-control"
                                     onChange={(e) => this.handleTypeChange(e)}
                                 >
-                                    <option value=""></option>
+                                    <option value="">Choose type</option>
                                     { itemTypes.map((name,index) => {
                                     return (
-                                        <option 
+                                        <option
                                             key={ index }
                                             value={ name }
                                         >{ name }
@@ -108,33 +126,33 @@ class AddItem extends Component {
                                         return (
                                             <div key={ index } className="input-group mb-3">
                                                 <select name={ name } onLoad={(e) => this.handleSpecChange(e)} onChange={(e) => this.handleSpecChange(e)}>
-                                                    
+
                                                     { unit.map((name2, index2) => {
                                                         return (
                                                             <option key={ index2 } value={ name2 }>{ name2 }</option>)
                                                     })}
                                                 </select>
-                                                
+
                                             </div>);
                                     }else {
                                         return (
                                             <div key={ index } className="input-group mb-3">
-                                                <input 
+                                                <input
                                                     name={ name }
-                                                    type="text" 
-                                                    className="form-control"                             
+                                                    type="text"
+                                                    className="form-control"
                                                     placeholder={ name }
                                                     onChange={(e) => this.handleSpecChange(e)}
                                                 />
                                             </div>);
                                     }
                             })}
-                            <button 
-                                type="button" 
+                            <button
+                                type="button"
                                 className="btn btn-dark btn-block"
                                 onClick={() => this.handleForm()}>
                                     Add <i className="fa fa-plus"></i>
-                            </button>                    
+                            </button>
                         </form>
                     </div>
                 </div>
