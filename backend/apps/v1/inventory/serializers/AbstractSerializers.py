@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 class ItemSpecificationSerializer(serializers.Serializer):
     modelNumber = serializers.CharField()
-    weight = serializers.IntegerField()
+    weight = serializers.FloatField()
     weightFormat = serializers.CharField()
     price = serializers.FloatField()
     priceFormat = serializers.CharField()
