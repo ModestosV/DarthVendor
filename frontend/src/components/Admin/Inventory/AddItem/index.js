@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
-import swal from 'sweetalert';
 import settings from '../../../../config/settings';
-import './Inventory.scss';
 import Sidebar from '../../Sidebar';
 
 
