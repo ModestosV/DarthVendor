@@ -4,7 +4,7 @@ from AbstractComputer import AbstractComputer
 class Laptop(AbstractComputer):
 
     """Constructor"""
-    def __init__(self, containCamera, isTouch, batteryInfo, os, size, sizeFormat):
+    def __init__(self, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, containCamera, isTouch, batteryInfo, os, size, sizeFormat):
 
         super().__init__(ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
         self.containCamera = containCamera
