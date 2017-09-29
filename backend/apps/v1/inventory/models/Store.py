@@ -2,6 +2,7 @@ from django.conf import settings
 from sqlite3 import dbapi2 as Database
 from backend.apps.v1.inventory.models.Inventory import Inventory
 
+
 class Store(object):
     """Constructor"""
 
@@ -9,7 +10,7 @@ class Store(object):
         self.inventory = Inventory()
 
     def confirmItemCreation(self, item):
-        inventory.addItem(item)
+        self.inventory.addItem(item)
 
-    def requestIntentoryList(self):
-        inventory.requestInventoryList()
+    def requestInventoryList(self):
+        return self.inventory.requestInventoryList()
