@@ -15,6 +15,19 @@ monitors = [
         modelNumber='x123131',
         size=30.5,
         sizeFormat='inch'
+    ),
+    dict(
+        quantity=10,
+        weight=5.0,
+        weightFormat='lbs',
+        price=19.99,
+        priceFormat='CAD',
+        brandName='SAMSUNG',
+        name='Curve Display',
+        type='monitor',
+        modelNumber='x80942380942',
+        size=50.5,
+        sizeFormat='inch'
     )
 ]
 
@@ -39,12 +52,12 @@ class Command(BaseCommand):
                 except Exception as error:
                     print(error)
 
-            query = """
-                INSERT INTO monitorDisplay (modelNumber, size, sizeFormat)
-                VALUES ('{modelNumber}', {size}, '{sizeFormat}');
-            """.format(**monitor)
+                query = """
+                    INSERT INTO monitorDisplay (modelNumber, size, sizeFormat)
+                    VALUES ('{modelNumber}', {size}, '{sizeFormat}');
+                """.format(**monitor)
 
-            try:
-                cursor.execute(query)
-            except Exception as error:
-                print(error)
+                try:
+                    cursor.execute(query)
+                except Exception as error:
+                    print(error)
