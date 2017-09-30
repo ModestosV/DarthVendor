@@ -3,16 +3,18 @@ from backend.apps.v1.inventory.models.AbstractComputer import AbstractComputer
 
 class Laptop(AbstractComputer):
 
-    """Constructor"""
+    def __init__(self, modelNumber, name, quantity,
+                 weight, weightFormat, price, priceFormat, brandName,
+                 ramSize, ramFormat, processorType, numCores,
+                 hardDriveSize, hardDriveFormat,
+                 containCamera, isTouch, batteryInfo, os, size):
 
-    def __init__(self, modelNumber, name, 
-                quantity, weight, weightFormat, 
-                price, priceFormat, brandName, 
-                ramSize, ramFormat, processorType, 
-                numCores, hardDriveSize, hardDriveFormat, 
-                containCamera, isTouch, batteryInfo, os, size):
+        """" Constructor """
 
-        super().__init__(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat)
+        super().__init__(modelNumber, name, quantity,
+                         weight, weightFormat, price, priceFormat, brandName,
+                         ramSize, ramFormat, processorType, numCores,
+                         hardDriveSize, hardDriveFormat)
 
         self.containCamera = containCamera
         self.isTouch = isTouch
