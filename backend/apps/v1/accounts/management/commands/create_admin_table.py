@@ -1,6 +1,5 @@
-from django.conf import settings
 from django.core.management.base import BaseCommand
-from sqlite3 import dbapi2 as Database
+from backend.utils.database import Database
 
 
 class Command(BaseCommand):
@@ -8,25 +7,22 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
-        cursor = connection.cursor()
-        query = """
-            CREATE TABLE administrator (
-                id integer PRIMARY KEY AUTOINCREMENT,
-                username varchar(255) UNIQUE,
-                firstname varchar(255) DEFAULT '',
-                lastname varchar(255) DEFAULT '',
-                email varchar(255) DEFAULT '',
-                address varchar(255) DEFAULT '',
-                phone varchar(255) DEFAULT '',
-                password varchar(255)
-            );
-        """
+        with Database() as cursor:
 
-        try:
-            cursor.execute(query)
-        except Exception as error:
-            print(error)
+            query = """
+                CREATE TABLE administrator (
+                    id integer PRIMARY KEY AUTOINCREMENT,
+                    username varchar(255) UNIQUE,
+                    firstname varchar(255) DEFAULT '',
+                    lastname varchar(255) DEFAULT '',
+                    email varchar(255) DEFAULT '',
+                    address varchar(255) DEFAULT '',
+                    phone varchar(255) DEFAULT '',
+                    password varchar(255)
+                );
+            """
 
-        connection.commit()
-        connection.close()
+            try:
+                cursor.execute(query)
+            except Exception as error:
+                print(error)
