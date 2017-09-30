@@ -42,10 +42,7 @@ class LoginView(APIView):
                     token = str(uuid.uuid4()).replace('-','')
                     query = """
                         INSERT INTO token (token, admin_id)
-                        VALUES (                
-                            '{}',
-                            {}
-                        );
+                        VALUES ('{}', {});
                     """.format(token, serializer.data['id'])            
 
                     cursor.execute(query)                   
