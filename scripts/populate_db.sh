@@ -25,6 +25,9 @@ python3 manage.py populate_monitor_display_table
 echo "Create Tablet Table"
 python3 manage.py create_tablet_table
 
+echo "Populate Tablet Table"
+python3 manage.py populate_tablet_table
+
 echo "Create Television Table"
 python3 manage.py create_television_table
 
