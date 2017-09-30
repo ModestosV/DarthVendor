@@ -1,4 +1,3 @@
-from django.conf import settings
 from backend.utils.database import Database
 
 from backend.apps.v1.inventory.models.Size import Size
@@ -132,7 +131,7 @@ class Inventory(object):
 
         queryTablet = """
             SELECT * FROM item, tablet
-            WHERE item.type = "TABLET"
+            WHERE UPPER(item.type) = "TABLET"
             AND item.modelNumber = tablet.modelNumber;
         """
 
@@ -166,32 +165,33 @@ class Inventory(object):
             try:
 
                 cursor.execute(queryTablet)
-                for(name,
-                    modelNumber,
-                    quantity,
-                    weight,
-                    weightFormat,
-                    price,
-                    priceFormat,
-                    brandName,
-                    modelNumber,
-                    ramSize,
-                    ramFormat,
-                    processorType,
-                    numCores,
-                    hardDriveSize,
-                    hardDriveFormat,
-                    cameraInfo,
-                    batteryInfo,
-                    os,
-                    size,
-                    sizeFormat,
-                    dx,
-                    dy,
-                    dz,
-                    dimensionFormat) in cursor:
-                    print(1)
-                    result.append(Tablet(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, Dimension(dx,dy,dz,dimensionFormat), Size(size, sizeFormat), cameraInfo, batteryInfo))
+                for row in cursor.fetchall():                    
+                    result.append(
+                        Tablet(
+                            row.get('modelNumber'),
+                            row.get('name'),
+                            row.get('quantity'),
+                            row.get('weight'),
+                            row.get('weightFormat'),
+                            row.get('price'),
+                            row.get('priceFormat'),
+                            row.get('brandName'),
+                            row.get('ramSize'),
+                            row.get('ramFormat'),
+                            row.get('processorType'),
+                            row.get('numCores'),
+                            row.get('hardDriveSize'),
+                            row.get('hardDriveFormat'),
+                            row.get('os'),
+                            row.get('dimension'),
+                            Size(
+                                row.get('size'), 
+                                row.get('sizeFormat')
+                            ),
+                            row.get('cameraInfo'),
+                            row.get('batteryInfo')
+                        )
+                    )                 
 
                 cursor.execute(queryDesktop)
                 for(name,
