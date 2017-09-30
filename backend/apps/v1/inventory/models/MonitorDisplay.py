@@ -8,7 +8,7 @@ class MonitorDisplay(ItemSpecification):
 
         """Constructor"""
 
-        super().__init__(self, modelNumber, name, quantity,
+        super().__init__(modelNumber, name, quantity,
                          weight, weightFormat, price, priceFormat, brandName)
 
         self.size = size
