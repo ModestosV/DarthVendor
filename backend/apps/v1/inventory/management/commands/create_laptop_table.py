@@ -1,6 +1,5 @@
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from sqlite3 import dbapi2 as Database
+from django.core.management.base import BaseCommand
+from backend.utils.database import Database
 
 
 class Command(BaseCommand):
@@ -8,32 +7,28 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
-        cursor = connection.cursor()
-        query = """
-            CREATE TABLE laptop (
-                modelNumber string NOT NULL,
-                ramSize integer NOT NULL,
-                ramFormat string NOT NULL,
-                processorType string NOT NULL,
-                numCores integer NOT NULL,
-                hardDriveSize double NOT NULL,
-                hardDriveFormat integer NOT NULL,
-                containsCamera int NOT NULL,
-                isTouch int NOT NULL,
-                batteryInfo string NOT NULL,
-                os string NOT NULL,
-                size double NOT NULL,
-                sizeFormat string NOT NULL,
-                PRIMARY KEY (modelNumber),
-                FOREIGN KEY (modelNumber) REFERENCES item(modelNumber)
-            );
-        """
+        with Database() as cursor:
+            query = """
+                CREATE TABLE laptop (
+                    modelNumber varchar(255) NOT NULL,
+                    ramSize integer NOT NULL,
+                    ramFormat varchar(255) NOT NULL,
+                    processorType varchar(255) NOT NULL,
+                    numCores integer NOT NULL,
+                    hardDriveSize double NOT NULL,
+                    hardDriveFormat integer NOT NULL,
+                    containsCamera integer NOT NULL,
+                    isTouch integer NOT NULL,
+                    batteryInfo varchar(255) NOT NULL,
+                    os varchar(255) NOT NULL,
+                    size double NOT NULL,
+                    sizeFormat varchar(255) NOT NULL,
+                    PRIMARY KEY (modelNumber),
+                    FOREIGN KEY (modelNumber) REFERENCES item(modelNumber)
+                );
+            """
 
-        try:
-            cursor.execute(query)
-        except Exception as error: 
-            print(error)  
-
-        connection.commit()
-        connection.close()
+            try:
+                cursor.execute(query)
+            except Exception as error:
+                print(error)
