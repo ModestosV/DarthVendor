@@ -3,7 +3,6 @@ from sqlite3 import dbapi2 as Database
 
 from backend.apps.v1.inventory.models.Size import Size
 from backend.apps.v1.inventory.models.Dimension import Dimension
-
 from backend.apps.v1.inventory.models.Television import Television
 from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.apps.v1.inventory.models.Laptop import Laptop
@@ -19,159 +18,113 @@ class Inventory(object):
     def addItem(self, itemSpec):
 
         connection = Database.connect(settings.DATABASES['default']['NAME'])
-        # connection = Database.connect("/home/andres/venv/darthvendor/SOEN343_GroupProject/backend/db.sqlite3")
 
         cursor = connection.cursor()
 
-
         if type(itemSpec) is Laptop:
-            if itemSpec.isTouch == True:
-                touch = 1
-            else:
-                touch = 0
-            if itemSpec.containCamera == True:
-                cam = 1
-            else:
-                cam = 0
-            query1 = self.generateItemQuery("LAPTOP", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
-            query2 = """
-                INSERT INTO laptop (modelNumber,
-                                    ramSize,
-                                    ramFormat,
-                                    processorType,
-                                    numCores,
-                                    hardDriveSize,
-                                    hardDriveFormat,
-                                    containsCamera,
-                                    isTouch,
-                                    batteryInfo,
-                                    os,
-                                    size,
-                                    sizeFormat)
-                    VALUES(
-                    '{}',
-                     {},
-                    '{}',
-                    '{}',
-                     {},
-                     {},
-                    '{}',
-                     {},
-                     {},
-                    '{}',
-                    '{}',
-                     {},
-                    '{}'
-                );
-            """.format(itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, cam, touch, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat)
-            print(query1)
-            print(query2)
-        elif type(itemSpec) is Desktop:
-            query1 = self.generateItemQuery("DESKTOP", itemSpec.modelNumber, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSPec.price, itemSpec.priceFormat, itemSpec.brandName)
+
+            touch = 1 if itemSpec.isTouch else 0
+            cam = 1 if itemSpec.containCamera else 0
+
+            query1 = self.generateItemQuery(
+                "LAPTOP", itemSpec.modelNumber, itemSpec.name,
+                itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
+                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+            )
 
             query2 = """
-                INSERT INTO desktop (modelNumber,
-                                     ramSize,
-                                     ramFormat,
-                                     processorType,
-                                     numCores,
-                                     hardDriveSize,
-                                     hardDriveFormat,
-                                     dx,
-                                     dy,
-                                     dz,
-                                     dimensionFormat)
-                    VALUES(
-                    '{}',
-                     {},
-                    '{}',
-                    '{}',
-                     {},
-                     {},
-                    '{}',
-                     {},
-                     {},
-                     {},
-                    '{}'
-                );
-            """.format(itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format)
+                INSERT INTO laptop (modelNumber, ramSize, ramFormat,
+                    processorType, numCores, hardDriveSize, hardDriveFormat,
+                    containsCamera, isTouch, batteryInfo, os, size, sizeFormat)
+                VALUES('{}', {}, '{}',
+                    '{}', {}, {}, '{}',
+                    {}, {}, '{}', '{}', {}, '{}');
+            """.format(
+                    itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat,
+                    itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
+                    cam, touch, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat
+            )
+
+        elif type(itemSpec) is Desktop:
+            query1 = self.generateItemQuery(
+                "DESKTOP", itemSpec.modelNumber, itemSpec.quantity,
+                itemSpec.weight, itemSpec.weightFormat,
+                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+            )
+
+            query2 = """
+                INSERT INTO desktop (modelNumber, ramSize, ramFormat,
+                    processorType, numCores, hardDriveSize, hardDriveFormat,
+                    dx ,dy, dz, dimensionFormat)
+                VALUES('{}', {}, '{}',
+                    '{}', {}, {}, '{}',
+                    {}, {}, {}, '{}');
+            """.format(
+                    itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, 
+                    itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.dimension.x, 
+                    itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
+                )
 
         elif type(itemSpec) is MonitorDisplay:
-            query1 = self.generateItemQuery("MONITOR",itemSpec.modelNumber,itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
+            query1 = self.generateItemQuery(
+                "MONITOR", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, 
+                itemSpec.weight, itemSpec.weightFormat, 
+                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+            )
 
             query2 = """
                 INSERT INTO monitorDisplay (modelNumber,size, sizeFormat)
-                    VALUES(
-                     '{}',
-                    {},
-                    '{}'
-                );
+                VALUES('{}', {}, '{}');
             """.format(itemSpec.modelNumber, itemSpec.size.size, itemSpec.size.sizeFormat)
-            print(query1)
-            print(query2)
 
         elif type(itemSpec) is Television:
-            query1 = self.generateItemQuery("TV", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
+            query1 = self.generateItemQuery(
+                "TV", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
+                itemSpec.weight, itemSpec.weightFormat,
+                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+            )
 
             query2 = """
-                INSERT INTO television (modelNumber,
-                                        tvType,
-                                        dimensionFormat,
-                                        dx,
-                                        dy,
-                                        dz)
-                    VALUES(
-                    '{}',
-                    '{}',
-                    '{}',
-                     {},
-                     {},
-                     {}
-                );
-            """.format(itemSpec.modelNumber, itemSpec.tvType, itemSpec.dimension.format, itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z)
+                INSERT INTO television (modelNumber, tvType, dimensionFormat, dx, dy, dz)
+                VALUES('{}', '{}', '{}', {}, {}, {});
+            """.format(
+                itemSpec.modelNumber, itemSpec.tvType, itemSpec.dimension.format,
+                itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z
+            )
 
         elif type(itemSpec) is Tablet:
-            query1 = self.generateItemQuery("TABLET", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, itemSpec.price, itemSpec.priceFormat, itemSpec.brandName)
-            print(query1)
+            query1 = self.generateItemQuery(
+                "TABLET", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
+                itemSpec.weight, itemSpec.weightFormat, 
+                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+            )
+
             query2 = """
-                INSERT INTO tablet (modelNumber,
-                                    ramSize,
-                                    ramFormat,
-                                    processorType,
-                                    numCores,
-                                    hardDriveSize,
-                                    hardDriveFormat,
-                                    cameraInfo,
-                                    batteryInfo,
-                                    os,
-                                    size,
-                                    sizeFormat,
-                                    dx,
-                                    dy,
-                                    dz,
-                                    dimensionFormat)
-                    VALUES(
-                    '{}',
-                     {},
-                    '{}',
-                    '{}',
-                     {},
-                     {},
-                    '{}',
-                    '{}',
-                    '{}',
-                    '{}',
-                     {},
-                    '{}',
-                     {},
-                     {},
-                     {},
-                    '{}'
+                INSERT INTO tablet (modelNumber, ramSize, ramFormat, processorType, numCores,
+                    hardDriveSize, hardDriveFormat, cameraInfo, batteryInfo, os,
+                    size, sizeFormat, dx, dy, dz, dimensionFormat)
+                VALUES('{}', {}, '{}', '{}', {},
+                    {}, '{}', '{}', '{}', '{}',
+                    {}, '{}', {}, {}, {}, '{}'
                 );
-            """.format(itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.cameraInfo, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat, itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format)
-            print(query2)
+            """.format(
+                itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat,
+                itemSpec.processorType, itemSpec.numCores,
+                itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
+                itemSpec.cameraInfo, itemSpec.batteryInfo, itemSpec.os,
+                itemSpec.size.size, itemSpec.size.sizeFormat,
+                itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
+            )
+
+        print(query1)
+        print(query2)
+
         try:
             cursor.execute(query1)
+        except Exception as error:
+            print(error)
+
+        try:
             cursor.execute(query2)
         except Exception as error:
             print(error)
@@ -187,32 +140,30 @@ class Inventory(object):
         result = []
 
         queryTablet = """
-                SELECT * FROM item, tablet
-                WHERE item.type = "TABLET"
-                AND item.modelNumber = tablet.modelNumber;
+            SELECT * FROM item, tablet
+            WHERE item.type = "TABLET"
+            AND item.modelNumber = tablet.modelNumber;
         """
         queryTv = """
-                SELECT * from item, television
-                WHERE item.type = "TV"
-                AND item.modelNumber = television.modelNumber;
+            SELECT * from item, television
+            WHERE item.type = "TV"
+            AND item.modelNumber = television.modelNumber;
         """
         queryDesktop = """
-                SELECT * from item, desktop
-                WHERE item.type = "DESKTOP"
-                AND item.modelNumber = desktop.modelNumber;
+            SELECT * from item, desktop
+            WHERE item.type = "DESKTOP"
+            AND item.modelNumber = desktop.modelNumber;
         """
         queryMonitor = """
-                SELECT * from item, monitorDisplay
-                WHERE item.type = "MONITOR"
-                AND item.modelNumber = monitorDisplay.modelNumber;
+            SELECT * from item, monitorDisplay
+            WHERE item.type = "MONITOR"
+            AND item.modelNumber = monitorDisplay.modelNumber;
         """
         queryLaptop = """
-                SELECT * from item, laptop
-                WHERE item.type = "LAPTOP"
-                AND item.modelNumber = laptop.modelNumber;
+            SELECT * from item, laptop
+            WHERE item.type = "LAPTOP"
+            AND item.modelNumber = laptop.modelNumber;
         """
-
-
 
         try:
 
@@ -335,29 +286,19 @@ class Inventory(object):
 
         return result
 
-    def generateItemQuery(self, type, name, modelNumber, quantity, weight, wf, price, pf, brandname):
+    def generateItemQuery(self, itemtype, name, modelNumber, quantity,
+                          weight, wf, price, pf, brandname):
         qry = """
-            INSERT INTO item (type,
-                              name,
-                              modelNumber,
-                              quantity,
-                              weight,
-                              weightFormat,
-                              price,
-                              priceFormat,
-                              brandName)
-                VALUES(
-                    '{}',
-                    '{}',
-                     '{}',
-                     {},
-                    {},
-                     '{}',
-                    {},
-                    '{}',
-                    '{}'
-                );
-        """.format(type, modelNumber, name, quantity, weight, wf, price, pf, brandname)
+            INSERT INTO item (type, name, modelNumber, quantity,
+                weight, weightFormat, price, priceFormat, brandName)
+            VALUES(
+                '{}', '{}', '{}', {},
+                {}, '{}', {}, '{}', '{}'
+            );
+        """.format(
+            itemtype, modelNumber, name, quantity,
+            weight, wf, price, pf, brandname
+        )
         return qry
 
 if __name__ == '__main__':
