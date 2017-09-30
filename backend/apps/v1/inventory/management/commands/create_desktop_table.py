@@ -1,6 +1,5 @@
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from sqlite3 import dbapi2 as Database
+from django.core.management.base import BaseCommand
+from backend.utils.database import Database
 
 
 class Command(BaseCommand):
@@ -8,30 +7,27 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
-        cursor = connection.cursor()
-        query = """
-            CREATE TABLE desktop (
-                modelNumber string NOT NULL,
-                ramSize int NOT NULL,
-                ramFormat string NOT NULL,
-                processorType string NOT NULL,
-                numCores integer NOT NULL,
-                hardDriveSize double NOT NULL,
-                hardDriveFormat string NOT NULL,
-                dx double NOT NULL,
-                dy double NOT NULL,
-                dz double NOT NULL,
-                dimensionFormat string NOT NULL,
-                PRIMARY KEY (modelNumber),
-                FOREIGN KEY(modelNumber) REFERENCES item(modelNumber)
-            );
-        """
+        with Database() as cursor:
 
-        try:
-            cursor.execute(query)
-        except Exception as error: 
-            print(error)  
+            query = """
+                CREATE TABLE desktop (
+                    modelNumber varchar(255) NOT NULL,
+                    ramSize integer NOT NULL,
+                    ramFormat varchar(255) NOT NULL,
+                    processorType varchar(255) NOT NULL,
+                    numCores integer NOT NULL,
+                    hardDriveSize double NOT NULL,
+                    hardDriveFormat varchar(255) NOT NULL,
+                    dx double NOT NULL,
+                    dy double NOT NULL,
+                    dz double NOT NULL,
+                    dimensionFormat varchar(255) NOT NULL,
+                    PRIMARY KEY (modelNumber),
+                    FOREIGN KEY(modelNumber) REFERENCES item(modelNumber)
+                );
+            """
 
-        connection.commit()
-        connection.close()
+            try:
+                cursor.execute(query)
+            except Exception as error:
+                print(error)

@@ -1,6 +1,5 @@
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from sqlite3 import dbapi2 as Database
+from django.core.management.base import BaseCommand
+from backend.utils.database import Database
 
 
 class Command(BaseCommand):
@@ -8,22 +7,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
-        cursor = connection.cursor()
-        query = """
-            CREATE TABLE monitorDisplay (
-                modelNumber string NOT NULL,
-                size double NOT NULL,
-                sizeFormat string NOT NULL,
-                PRIMARY KEY (modelNumber),
-                FOREIGN KEY (modelNumber) REFERENCES item (modelNumber)
-            );
-        """
+        with Database() as cursor:
+            query = """
+                CREATE TABLE monitorDisplay (
+                    modelNumber varchar(255) NOT NULL,
+                    size double NOT NULL,
+                    sizeFormat varchar(255) NOT NULL,
+                    PRIMARY KEY (modelNumber),
+                    FOREIGN KEY (modelNumber) REFERENCES item (modelNumber)
+                );
+            """
 
-        try:
-            cursor.execute(query)
-        except Exception as error: 
-            print(error)  
-
-        connection.commit()
-        connection.close()
+            try:
+                cursor.execute(query)
+            except Exception as error:
+                print(error)
