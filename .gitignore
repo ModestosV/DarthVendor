@@ -11,6 +11,7 @@ db.sqlite3
 backend/static/
 
 node_modules/
+package-lock.json
 
 frontend/build/*
 !frontend/build/index.html

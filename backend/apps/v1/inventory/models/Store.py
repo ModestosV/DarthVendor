@@ -1,5 +1,3 @@
-from django.conf import settings
-from sqlite3 import dbapi2 as Database
 from backend.apps.v1.inventory.models.Inventory import Inventory
 
 
