@@ -1,7 +1,9 @@
 class Administrator(object):
 
-    """Constructor"""
-    def __init__(self, id, username, password, firstname, lastname, address, email, phone):
+    def __init__(self, id, username, password,
+                 firstname, lastname, address, email, phone):
+
+        """Constructor"""
 
         self.id = id
         self.username = username
@@ -11,9 +13,3 @@ class Administrator(object):
         self.address = address
         self.email = email
         self.phone = phone
-
-    def getUsername(self):
-        return self.username
-
-    def getPassword(self):
-        return self.password
