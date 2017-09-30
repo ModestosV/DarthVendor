@@ -12,6 +12,7 @@ from backend.apps.v1.inventory.serializers.AbstractSerializers import AbstractCo
 from backend.apps.v1.inventory.serializers.DimensionSerializer import DimensionSerializer
 from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
 
+
 class InventoryView(APIView):
 
     def get(self, request):
@@ -19,6 +20,9 @@ class InventoryView(APIView):
         store = Store()
         inventory = store.requestInventoryList()
         serializedItems = []
+
+        for item in inventory: 
+            print(item)
 
         print(inventory)
         for item in inventory:
