@@ -7,12 +7,14 @@ from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.Dimension import Dimension
 from backend.apps.v1.inventory.models.Store import Store
 from backend.apps.v1.inventory.models.Laptop import Laptop
+from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.apps.v1.inventory.models.Dimension import Dimension
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.serializers.AbstractSerializers import AbstractComputerSerializer, ItemSpecificationSerializer
 from backend.apps.v1.inventory.serializers.DimensionSerializer import DimensionSerializer
 from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
 from backend.apps.v1.inventory.serializers.MonitorDisplay import MonitorDisplaySerializer
+from backend.apps.v1.inventory.serializers.TabletSerializer import TabletSerializer
 
 
 class InventoryView(APIView):
@@ -36,7 +38,7 @@ class InventoryView(APIView):
                 serializedItems.append(item)                
             elif isinstance(item, Tablet):
                 item = TabletSerializer(item).data
-                serializedItems.append(item)
+                serializedItems.append(item)                
             elif isinstance(item, Television):
                 item = TelevisionSerializer(item)
                 serializedItems.append(item)
