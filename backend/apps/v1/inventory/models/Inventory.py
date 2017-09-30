@@ -1,5 +1,5 @@
 from django.conf import settings
-from sqlite3 import dbapi2 as Database
+from backend.utils.database import Database
 
 from backend.apps.v1.inventory.models.Size import Size
 from backend.apps.v1.inventory.models.Dimension import Dimension
@@ -17,133 +17,125 @@ class Inventory(object):
 
     def addItem(self, itemSpec):
 
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
+        with Database() as cursor:
 
-        cursor = connection.cursor()
+            if type(itemSpec) is Laptop:
 
-        if type(itemSpec) is Laptop:
+                touch = 1 if itemSpec.isTouch else 0
+                cam = 1 if itemSpec.containCamera else 0
 
-            touch = 1 if itemSpec.isTouch else 0
-            cam = 1 if itemSpec.containCamera else 0
-
-            query1 = self.generateItemQuery(
-                "LAPTOP", itemSpec.modelNumber, itemSpec.name,
-                itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
-                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
-            )
-
-            query2 = """
-                INSERT INTO laptop (modelNumber, ramSize, ramFormat,
-                    processorType, numCores, hardDriveSize, hardDriveFormat,
-                    containsCamera, isTouch, batteryInfo, os, size, sizeFormat)
-                VALUES('{}', {}, '{}',
-                    '{}', {}, {}, '{}',
-                    {}, {}, '{}', '{}', {}, '{}');
-            """.format(
-                    itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat,
-                    itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
-                    cam, touch, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat
-            )
-
-        elif type(itemSpec) is Desktop:
-            query1 = self.generateItemQuery(
-                "DESKTOP", itemSpec.modelNumber, itemSpec.quantity,
-                itemSpec.weight, itemSpec.weightFormat,
-                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
-            )
-
-            query2 = """
-                INSERT INTO desktop (modelNumber, ramSize, ramFormat,
-                    processorType, numCores, hardDriveSize, hardDriveFormat,
-                    dx ,dy, dz, dimensionFormat)
-                VALUES('{}', {}, '{}',
-                    '{}', {}, {}, '{}',
-                    {}, {}, {}, '{}');
-            """.format(
-                    itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, 
-                    itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.dimension.x, 
-                    itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
+                query1 = self.generateItemQuery(
+                    "LAPTOP", itemSpec.modelNumber, itemSpec.name,
+                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
+                    itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
-        elif type(itemSpec) is MonitorDisplay:
-            query1 = self.generateItemQuery(
-                "MONITOR", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, 
-                itemSpec.weight, itemSpec.weightFormat, 
-                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
-            )
+                query2 = """
+                    INSERT INTO laptop (modelNumber, ramSize, ramFormat,
+                        processorType, numCores, hardDriveSize, hardDriveFormat,
+                        containsCamera, isTouch, batteryInfo, os, size, sizeFormat)
+                    VALUES('{}', {}, '{}',
+                        '{}', {}, {}, '{}',
+                        {}, {}, '{}', '{}', {}, '{}');
+                """.format(
+                        itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat,
+                        itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
+                        cam, touch, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat
+                )
 
-            query2 = """
-                INSERT INTO monitorDisplay (modelNumber,size, sizeFormat)
-                VALUES('{}', {}, '{}');
-            """.format(itemSpec.modelNumber, itemSpec.size.size, itemSpec.size.sizeFormat)
+            elif type(itemSpec) is Desktop:
+                query1 = self.generateItemQuery(
+                    "DESKTOP", itemSpec.modelNumber, itemSpec.quantity,
+                    itemSpec.weight, itemSpec.weightFormat,
+                    itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+                )
 
-        elif type(itemSpec) is Television:
-            query1 = self.generateItemQuery(
-                "TV", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
-                itemSpec.weight, itemSpec.weightFormat,
-                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
-            )
+                query2 = """
+                    INSERT INTO desktop (modelNumber, ramSize, ramFormat,
+                        processorType, numCores, hardDriveSize, hardDriveFormat,
+                        dx ,dy, dz, dimensionFormat)
+                    VALUES('{}', {}, '{}',
+                        '{}', {}, {}, '{}',
+                        {}, {}, {}, '{}');
+                """.format(
+                        itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, 
+                        itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.dimension.x, 
+                        itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
+                    )
 
-            query2 = """
-                INSERT INTO television (modelNumber, tvType, dimensionFormat, dx, dy, dz)
-                VALUES('{}', '{}', '{}', {}, {}, {});
-            """.format(
-                itemSpec.modelNumber, itemSpec.tvType, itemSpec.dimension.format,
-                itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z
-            )
+            elif type(itemSpec) is MonitorDisplay:
+                query1 = self.generateItemQuery(
+                    "MONITOR", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, 
+                    itemSpec.weight, itemSpec.weightFormat, 
+                    itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+                )
 
-        elif type(itemSpec) is Tablet:
-            query1 = self.generateItemQuery(
-                "TABLET", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
-                itemSpec.weight, itemSpec.weightFormat, 
-                itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
-            )
+                query2 = """
+                    INSERT INTO monitorDisplay (modelNumber,size, sizeFormat)
+                    VALUES('{}', {}, '{}');
+                """.format(itemSpec.modelNumber, itemSpec.size.size, itemSpec.size.sizeFormat)
 
-            query2 = """
-                INSERT INTO tablet (modelNumber, ramSize, ramFormat, processorType, numCores,
-                    hardDriveSize, hardDriveFormat, cameraInfo, batteryInfo, os,
-                    size, sizeFormat, dx, dy, dz, dimensionFormat)
-                VALUES('{}', {}, '{}', '{}', {},
-                    {}, '{}', '{}', '{}', '{}',
-                    {}, '{}', {}, {}, {}, '{}'
-                );
-            """.format(
-                itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat,
-                itemSpec.processorType, itemSpec.numCores,
-                itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
-                itemSpec.cameraInfo, itemSpec.batteryInfo, itemSpec.os,
-                itemSpec.size.size, itemSpec.size.sizeFormat,
-                itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
-            )
+            elif type(itemSpec) is Television:
+                query1 = self.generateItemQuery(
+                    "TV", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
+                    itemSpec.weight, itemSpec.weightFormat,
+                    itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+                )
 
-        print(query1)
-        print(query2)
+                query2 = """
+                    INSERT INTO television (modelNumber, tvType, dimensionFormat, dx, dy, dz)
+                    VALUES('{}', '{}', '{}', {}, {}, {});
+                """.format(
+                    itemSpec.modelNumber, itemSpec.tvType, itemSpec.dimension.format,
+                    itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z
+                )
 
-        try:
-            cursor.execute(query1)
-        except Exception as error:
-            print(error)
+            elif type(itemSpec) is Tablet:
+                query1 = self.generateItemQuery(
+                    "TABLET", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
+                    itemSpec.weight, itemSpec.weightFormat, 
+                    itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
+                )
 
-        try:
-            cursor.execute(query2)
-        except Exception as error:
-            print(error)
+                query2 = """
+                    INSERT INTO tablet (modelNumber, ramSize, ramFormat, processorType, numCores,
+                        hardDriveSize, hardDriveFormat, cameraInfo, batteryInfo, os,
+                        size, sizeFormat, dx, dy, dz, dimensionFormat)
+                    VALUES('{}', {}, '{}', '{}', {},
+                        {}, '{}', '{}', '{}', '{}',
+                        {}, '{}', {}, {}, {}, '{}'
+                    );
+                """.format(
+                    itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat,
+                    itemSpec.processorType, itemSpec.numCores,
+                    itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
+                    itemSpec.cameraInfo, itemSpec.batteryInfo, itemSpec.os,
+                    itemSpec.size.size, itemSpec.size.sizeFormat,
+                    itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
+                )
 
-        connection.commit()
-        connection.close()
+            print(query1)
+            print(query2)
+
+            try:
+                cursor.execute(query1)
+            except Exception as error:
+                print(error)
+
+            try:
+                cursor.execute(query2)
+            except Exception as error:
+                print(error)
+
 
     def requestInventoryList(self):
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
-
-        cursor = connection.cursor()
-
-        result = []
 
         queryTablet = """
             SELECT * FROM item, tablet
             WHERE item.type = "TABLET"
             AND item.modelNumber = tablet.modelNumber;
         """
+
         queryTv = """
             SELECT * from item, television
             WHERE item.type = "TV"
@@ -154,135 +146,143 @@ class Inventory(object):
             WHERE item.type = "DESKTOP"
             AND item.modelNumber = desktop.modelNumber;
         """
+
         queryMonitor = """
             SELECT * from item, monitorDisplay
-            WHERE item.type = "MONITOR"
+            WHERE UPPER(item.type) = "MONITOR"
             AND item.modelNumber = monitorDisplay.modelNumber;
         """
+
         queryLaptop = """
             SELECT * from item, laptop
             WHERE item.type = "LAPTOP"
             AND item.modelNumber = laptop.modelNumber;
         """
 
-        try:
+        result = []
 
-            cursor.execute(queryTablet)
-            for(name,
-                modelNumber,
-                quantity,
-                weight,
-                weightFormat,
-                price,
-                priceFormat,
-                brandName,
-                modelNumber,
-                ramSize,
-                ramFormat,
-                processorType,
-                numCores,
-                hardDriveSize,
-                hardDriveFormat,
-                cameraInfo,
-                batteryInfo,
-                os,
-                size,
-                sizeFormat,
-                dx,
-                dy,
-                dz,
-                dimensionFormat) in cursor:
-                print(1)
-                result.append(Tablet(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, Dimension(dx,dy,dz,dimensionFormat), Size(size, sizeFormat), cameraInfo, batteryInfo))
+        with Database() as cursor:
 
-            cursor.execute(queryDesktop)
-            for(name,
-                modelNumber,
-                quantity,
-                weight,
-                weightFormat,
-                price,
-                priceFormat,
-                brandName,
-                ramSize,
-                ramFormat,
-                processorType,
-                numCores,
-                hardDriveSize,
-                hardDriveFormat,
-                dx,
-                dy,
-                dz,
-                dimensionFormat) in cursor:
-                print(2)
-                result.append(Desktop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, Dimension(dx, dy, dz, dimensionFormat)))
+            try:
 
-            cursor.execute(queryTv)
-            print(cursor)
-            for(name,
-                modelNumber,
-                quantity,
-                weight,
-                weightFormat,
-                price,
-                priceFormat,
-                brandName,
-                tvType,
-                dimensionFormat,
-                dx,
-                dy,
-                dz,
-                x,
-                y) in cursor:
-                print(3)
-                result.append(Television(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, Dimension(dx, dy, dz, dimensionFormat), tvType))
+                cursor.execute(queryTablet)
+                for(name,
+                    modelNumber,
+                    quantity,
+                    weight,
+                    weightFormat,
+                    price,
+                    priceFormat,
+                    brandName,
+                    modelNumber,
+                    ramSize,
+                    ramFormat,
+                    processorType,
+                    numCores,
+                    hardDriveSize,
+                    hardDriveFormat,
+                    cameraInfo,
+                    batteryInfo,
+                    os,
+                    size,
+                    sizeFormat,
+                    dx,
+                    dy,
+                    dz,
+                    dimensionFormat) in cursor:
+                    print(1)
+                    result.append(Tablet(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, os, Dimension(dx,dy,dz,dimensionFormat), Size(size, sizeFormat), cameraInfo, batteryInfo))
 
-            cursor.execute(queryMonitor)
-            for(name,
-                modelNumber,
-                quantity,
-                weight,
-                weightFormat,
-                price,
-                priceFormat,
-                brandName,
-                modelNumber,
-                size, sizeFormat) in cursor:
-                print(4)
-                result.append(MonitorDisplay(name, quantity, modelNumber, weight, weightFormat, price, priceFormat, brandName, Size(size, sizeFormat)))
+                cursor.execute(queryDesktop)
+                for(name,
+                    modelNumber,
+                    quantity,
+                    weight,
+                    weightFormat,
+                    price,
+                    priceFormat,
+                    brandName,
+                    ramSize,
+                    ramFormat,
+                    processorType,
+                    numCores,
+                    hardDriveSize,
+                    hardDriveFormat,
+                    dx,
+                    dy,
+                    dz,
+                    dimensionFormat) in cursor:
+                    print(2)
+                    result.append(Desktop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, Dimension(dx, dy, dz, dimensionFormat)))
 
-            cursor.execute(queryLaptop)
-            for(name,
-                modelNumber,
-                quantity,
-                weight,
-                weightFormat,
-                price,
-                priceFormat,
-                brandName,
-                modelNumber,
-                ramSize,
-                ramFormat,
-                processorType,
-                numCores,
-                hardDriveSize,
-                hardDriveFormat,
-                containCamera,
-                isTouch,
-                batteryInfo,
-                os,
-                size,
-                sizeFormat) in cursor:
-                print(5)
-                result.append(Laptop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, containCamera, isTouch, batteryInfo, os, Size(size, sizeFormat)))
+                cursor.execute(queryTv)                
+                for(name,
+                    modelNumber,
+                    quantity,
+                    weight,
+                    weightFormat,
+                    price,
+                    priceFormat,
+                    brandName,
+                    tvType,
+                    dimensionFormat,
+                    dx,
+                    dy,
+                    dz,
+                    x,
+                    y) in cursor:
+                    print(3)
+                    result.append(Television(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, Dimension(dx, dy, dz, dimensionFormat), tvType))
 
-        except Exception as error:
-            print("Failed to retrieve Inventory list")
-            print(error)
+                cursor.execute(queryMonitor)
+                for row in cursor.fetchall():                    
+                    result.append(
+                        MonitorDisplay(
+                            row.get('modelNumber'), 
+                            row.get('name'), 
+                            row.get('quantity'),                             
+                            row.get('weight'),
+                            row.get('weightFormat'), 
+                            row.get('price'), 
+                            row.get('priceFormat'), 
+                            row.get('brandName'), 
+                            Size(
+                                row.get('size'), 
+                                row.get('sizeFormat')
+                            )
+                        )
+                    )                
 
-        print(result)
-        connection.commit()
-        connection.close()
+                cursor.execute(queryLaptop)
+                for(name,
+                    modelNumber,
+                    quantity,
+                    weight,
+                    weightFormat,
+                    price,
+                    priceFormat,
+                    brandName,
+                    modelNumber,
+                    ramSize,
+                    ramFormat,
+                    processorType,
+                    numCores,
+                    hardDriveSize,
+                    hardDriveFormat,
+                    containCamera,
+                    isTouch,
+                    batteryInfo,
+                    os,
+                    size,
+                    sizeFormat) in cursor:
+                    print(5)
+                    result.append(Laptop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, containCamera, isTouch, batteryInfo, os, Size(size, sizeFormat)))
+
+            except Exception as error:
+                print("Failed to retrieve Inventory list")
+                print(error)
+
+            print(result)
 
         return result
 
