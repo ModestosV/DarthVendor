@@ -13,6 +13,9 @@ python3 manage.py create_item_table
 echo "Create Desktop Table"
 python3 manage.py create_desktop_table
 
+echo "Populate Desktop Table"
+python3 manage.py populate_desktop_table
+
 echo "Create Laptop Table"
 python3 manage.py create_laptop_table
 
