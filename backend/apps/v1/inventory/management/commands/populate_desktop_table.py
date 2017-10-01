@@ -2,76 +2,66 @@ from django.core.management.base import BaseCommand
 from backend.utils.database import Database
 
 
-tablets = [
+desktops = [
     dict(
-        quantity=5,
-        weight=10.0,
+        quantity=46,
+        weight=15.0,
         weightFormat='lbs',
-        price=299.99,
+        price=2299.99,
         priceFormat='CAD',
-        brandName='SAMSUNG',
-        name='Galaxy Tab S2',
-        type='tablet',
-        modelNumber='GGGGGG',
+        brandName='RAZER',
+        name='Razer Desktop',
+        type='DESKTOP',
+        modelNumber='ZZZZZZZ',
         ramSize=16,
         ramFormat='GB',
-        processorType='ARM',
-        numCores=2,
-        hardDriveSize=128,
-        hardDriveFormat='GB',
-        os='Android',
-        batteryInfo='3000mAH',
-        dx=10,
-        dy=10,
-        dz=1.5,
-        dimensionFormat='CM',
-        cameraInfo='10.2 MP',
-        size=12.5,
-        sizeFormat='PX'
+        processorType='INTEL',
+        numCores=4,
+        hardDriveSize=2,
+        hardDriveFormat='TB',
+        dx=15,
+        dy=30,
+        dz=1,
+        dimensionFormat='INCH',
     ),
     dict(
-        quantity=10,
-        weight=5.0,
+        quantity=5,
+        weight=17.0,
         weightFormat='lbs',
-        price=699.99,
+        price=2699.99,
         priceFormat='CAD',
         brandName='APPLE',
-        name='Ipad Pro',
-        type='tablet',
-        modelNumber='AAAAAAAA',
+        name='Apple Desktop',
+        type='desktop',
+        modelNumber='PPPPPPPPPPPPP',
         ramSize=16,
         ramFormat='GB',
         processorType='APPLE',
         numCores=4,
-        hardDriveSize=512,
-        hardDriveFormat='GB',
-        os='iOS',
-        batteryInfo='6000mAH',
+        hardDriveSize=1,
+        hardDriveFormat='TB',
         dx=20,
         dy=20,
         dz=1,
         dimensionFormat='INCH',
-        cameraInfo='15.5 MP',
-        size=20.5,
-        sizeFormat='PX'
     )
 ]
 
 
 class Command(BaseCommand):
-    help = 'Populate tablet table'
+    help = 'Populate desktop table'
 
     def handle(self, *args, **options):
 
         with Database() as cursor:
 
-            for tablet in tablets:
+            for desktop in desktops:
                 query = """
                     INSERT INTO item (quantity, name, weight, weightFormat, price,
                         priceFormat, brandName, type, modelNumber)
                     VALUES ({quantity}, '{name}', {weight}, '{weightFormat}', 
                         {price}, '{priceFormat}', '{brandName}', '{type}', '{modelNumber}');
-                """.format(**tablet)
+                """.format(**desktop)
 
                 try:
                     cursor.execute(query)
@@ -79,15 +69,13 @@ class Command(BaseCommand):
                     print(error)
 
                 query = """
-                    INSERT INTO tablet (modelNumber, ramSize, ramFormat,
+                    INSERT INTO desktop (modelNumber, ramSize, ramFormat,
                         processorType, numCores, hardDriveSize, hardDriveFormat,
-                        os, batteryInfo, dx, dy, dz, dimensionFormat, cameraInfo,
-                        size, sizeFormat)
+                        dx, dy, dz, dimensionFormat)
                     VALUES ('{modelNumber}', {ramSize}, '{ramFormat}',
                         '{processorType}', {numCores}, {hardDriveSize}, '{hardDriveFormat}',
-                        '{os}', '{batteryInfo}', {dx}, {dy}, {dz}, '{dimensionFormat}', '{cameraInfo}',
-                        {size}, '{sizeFormat}');
-                """.format(**tablet)
+                        {dx}, {dy}, {dz}, '{dimensionFormat}');
+                """.format(**desktop)
 
                 try:
                     cursor.execute(query)
