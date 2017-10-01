@@ -142,7 +142,7 @@ class Inventory(object):
         """
         queryDesktop = """
             SELECT * from item, desktop
-            WHERE item.type = "DESKTOP"
+            WHERE UPPER(item.type) = "DESKTOP"
             AND item.modelNumber = desktop.modelNumber;
         """
 
@@ -194,26 +194,26 @@ class Inventory(object):
                     )                 
 
                 cursor.execute(queryDesktop)
-                for(name,
-                    modelNumber,
-                    quantity,
-                    weight,
-                    weightFormat,
-                    price,
-                    priceFormat,
-                    brandName,
-                    ramSize,
-                    ramFormat,
-                    processorType,
-                    numCores,
-                    hardDriveSize,
-                    hardDriveFormat,
-                    dx,
-                    dy,
-                    dz,
-                    dimensionFormat) in cursor:
-                    print(2)
-                    result.append(Desktop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, Dimension(dx, dy, dz, dimensionFormat)))
+                for row in cursor.fetchall():                    
+                    result.append(
+                        Desktop(
+                            row.get('modelNumber'),
+                            row.get('name'),
+                            row.get('quantity'),
+                            row.get('weight'),
+                            row.get('weightFormat'),
+                            row.get('price'),
+                            row.get('priceFormat'),
+                            row.get('brandName'),
+                            row.get('ramSize'),
+                            row.get('ramFormat'),
+                            row.get('processorType'),
+                            row.get('numCores'),
+                            row.get('hardDriveSize'),
+                            row.get('hardDriveFormat'),
+                            row.get('dimension'),
+                        )
+                    )    
 
                 cursor.execute(queryTv)                
                 for(name,
