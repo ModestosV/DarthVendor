@@ -34,4 +34,7 @@ python3 manage.py populate_tablet_table
 echo "Create Television Table"
 python3 manage.py create_television_table
 
+echo "Populate Television Table"
+python3 manage.py populate_television_table
+
 echo "Done"
