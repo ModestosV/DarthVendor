@@ -24,7 +24,7 @@ class InventoryView(APIView):
         inventory = store.requestInventoryList()
         serializedItems = []
 
-        print(inventory)
+        # print(inventory)
         for item in inventory:
             if isinstance(item, Desktop):
                 item = DesktopSerializer(item).data

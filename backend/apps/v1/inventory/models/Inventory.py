@@ -158,7 +158,7 @@ class Inventory(object):
             AND item.modelNumber = laptop.modelNumber;
         """
 
-        result = []
+        result = list()
 
         with Database() as cursor:
 
@@ -248,8 +248,7 @@ class Inventory(object):
                     )   
 
                 cursor.execute(queryMonitor)
-                for row in cursor.fetchall():                    
-                    print(row)
+                for row in cursor.fetchall():                                        
                     result.append(
                         MonitorDisplay(
                             row.get('modelNumber'), 
@@ -268,6 +267,34 @@ class Inventory(object):
                     )                
 
                 cursor.execute(queryLaptop)
+                for row in cursor.fetchall():
+                    result.append(
+                        Laptop(
+                            row.get('modelNumber'),
+                            row.get('name'),
+                            row.get('quantity'),
+                            row.get('weight'),
+                            row.get('weightFormat'),
+                            row.get('price'),
+                            row.get('priceFormat'),
+                            row.get('brandName'),
+                            row.get('ramSize'),
+                            row.get('ramFormat'),
+                            row.get('processorType'),
+                            row.get('numCores'),
+                            row.get('hardDriveSize'),
+                            row.get('hardDriveFormat'),
+                            row.get('containsCamera'),
+                            row.get('isTouch'),
+                            row.get('batteryInfo'),
+                            row.get('os'),
+                            Size(
+                                row.get('size'), 
+                                row.get('sizeFormat')
+                            )                            
+                        )                        
+                    )
+
 
             except Exception as error:
                 print("Failed to retrieve Inventory list")
