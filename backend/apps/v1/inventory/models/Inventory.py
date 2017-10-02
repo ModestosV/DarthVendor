@@ -137,7 +137,7 @@ class Inventory(object):
 
         queryTv = """
             SELECT * from item, television
-            WHERE UPPER(item.type) = "TELEVISION"
+            WHERE (UPPER(item.type) = "TELEVISION" OR UPPER(item.type) = "TV")
             AND item.modelNumber = television.modelNumber;
         """
         queryDesktop = """
