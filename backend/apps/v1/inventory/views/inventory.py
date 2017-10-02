@@ -1,20 +1,19 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from backend.apps.v1.inventory.models.Desktop import Desktop
-from backend.apps.v1.inventory.models.Dimension import Dimension
-from backend.apps.v1.inventory.models.Store import Store
 from backend.apps.v1.inventory.models.Laptop import Laptop
-from backend.apps.v1.inventory.models.Tablet import Tablet
-from backend.apps.v1.inventory.models.Dimension import Dimension
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
-from backend.apps.v1.inventory.serializers.AbstractSerializers import AbstractComputerSerializer, ItemSpecificationSerializer
-from backend.apps.v1.inventory.serializers.DimensionSerializer import DimensionSerializer
+from backend.apps.v1.inventory.models.Store import Store
+from backend.apps.v1.inventory.models.Tablet import Tablet
+from backend.apps.v1.inventory.models.Television import Television
+
 from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
+from backend.apps.v1.inventory.serializers.LaptopSerializer import LaptopSerializer
 from backend.apps.v1.inventory.serializers.MonitorDisplay import MonitorDisplaySerializer
 from backend.apps.v1.inventory.serializers.TabletSerializer import TabletSerializer
+from backend.apps.v1.inventory.serializers.TelevisionSerializer import TelevisionSerializer
 
 
 class InventoryView(APIView):
@@ -35,12 +34,12 @@ class InventoryView(APIView):
                 serializedItems.append(item)
             elif isinstance(item, MonitorDisplay):
                 item = MonitorDisplaySerializer(item).data
-                serializedItems.append(item)                
+                serializedItems.append(item)
             elif isinstance(item, Tablet):
                 item = TabletSerializer(item).data
-                serializedItems.append(item)                
+                serializedItems.append(item)
             elif isinstance(item, Television):
-                item = TelevisionSerializer(item)
+                item = TelevisionSerializer(item).data
                 serializedItems.append(item)
 
         return Response(serializedItems)
