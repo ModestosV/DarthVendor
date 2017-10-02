@@ -19,6 +19,9 @@ python3 manage.py populate_desktop_table
 echo "Create Laptop Table"
 python3 manage.py create_laptop_table
 
+echo "Populate Laptop Table"
+python3 manage.py populate_laptop_table
+
 echo "Create Monitor Display Table"
 python3 manage.py create_monitor_display_table
 
