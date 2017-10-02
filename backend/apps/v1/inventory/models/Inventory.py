@@ -226,26 +226,10 @@ class Inventory(object):
                     )    
 
                 cursor.execute(queryTv)                
-                for(name,
-                    modelNumber,
-                    quantity,
-                    weight,
-                    weightFormat,
-                    price,
-                    priceFormat,
-                    brandName,
-                    tvType,
-                    dimensionFormat,
-                    dx,
-                    dy,
-                    dz,
-                    x,
-                    y) in cursor:
-                    print(3)
-                    result.append(Television(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, Dimension(dx, dy, dz, dimensionFormat), tvType))
 
                 cursor.execute(queryMonitor)
                 for row in cursor.fetchall():                    
+                    print(row)
                     result.append(
                         MonitorDisplay(
                             row.get('modelNumber'), 
@@ -264,29 +248,6 @@ class Inventory(object):
                     )                
 
                 cursor.execute(queryLaptop)
-                for(name,
-                    modelNumber,
-                    quantity,
-                    weight,
-                    weightFormat,
-                    price,
-                    priceFormat,
-                    brandName,
-                    modelNumber,
-                    ramSize,
-                    ramFormat,
-                    processorType,
-                    numCores,
-                    hardDriveSize,
-                    hardDriveFormat,
-                    containCamera,
-                    isTouch,
-                    batteryInfo,
-                    os,
-                    size,
-                    sizeFormat) in cursor:
-                    print(5)
-                    result.append(Laptop(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat, containCamera, isTouch, batteryInfo, os, Size(size, sizeFormat)))
 
             except Exception as error:
                 print("Failed to retrieve Inventory list")
