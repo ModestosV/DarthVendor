@@ -299,7 +299,7 @@ class Inventory(object):
                 print("Failed to retrieve Inventory list")
                 print(error)
 
-            print(result)
+            print("{} UNIQUE items found".format(len(result)))
 
         return result
 
