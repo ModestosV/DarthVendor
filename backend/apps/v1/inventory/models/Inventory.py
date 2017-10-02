@@ -1,12 +1,12 @@
 from backend.utils.database import Database
 
-from backend.apps.v1.inventory.models.Size import Size
+from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.Dimension import Dimension
-from backend.apps.v1.inventory.models.Television import Television
-from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
-from backend.apps.v1.inventory.models.Desktop import Desktop
+from backend.apps.v1.inventory.models.Size import Size
+from backend.apps.v1.inventory.models.Tablet import Tablet
+from backend.apps.v1.inventory.models.Television import Television
 
 
 class Inventory(object):
@@ -183,7 +183,12 @@ class Inventory(object):
                             row.get('hardDriveSize'),
                             row.get('hardDriveFormat'),
                             row.get('os'),
-                            row.get('dimension'),
+                            Dimension(
+                                row.get('dx'),
+                                row.get('dy'),
+                                row.get('dz'),
+                                row.get('dimensionFormat'),
+                            ),
                             Size(
                                 row.get('size'), 
                                 row.get('sizeFormat')
@@ -211,7 +216,12 @@ class Inventory(object):
                             row.get('numCores'),
                             row.get('hardDriveSize'),
                             row.get('hardDriveFormat'),
-                            row.get('dimension'),
+                            Dimension(
+                                row.get('dx'),
+                                row.get('dy'),
+                                row.get('dz'),
+                                row.get('dimensionFormat'),
+                            ),
                         )
                     )    
 
