@@ -226,6 +226,26 @@ class Inventory(object):
                     )    
 
                 cursor.execute(queryTv)                
+                for row in cursor.fetchall():                    
+                    result.append(
+                        Television(
+                            row.get('modelNumber'),
+                            row.get('name'),
+                            row.get('quantity'),
+                            row.get('weight'),
+                            row.get('weightFormat'),
+                            row.get('price'),
+                            row.get('priceFormat'),
+                            row.get('brandName'),
+                            Dimension(
+                                row.get('dx'),
+                                row.get('dy'),
+                                row.get('dz'),
+                                row.get('dimensionFormat'),
+                            ),
+                            row.get('tvType')
+                        )
+                    )   
 
                 cursor.execute(queryMonitor)
                 for row in cursor.fetchall():                    
