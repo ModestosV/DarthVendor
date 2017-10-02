@@ -23,13 +23,13 @@ class Inventory(object):
                 touch = 1 if itemSpec.isTouch else 0
                 cam = 1 if itemSpec.containCamera else 0
 
-                query1 = self.generateItemQuery(
+                itemQuery = self.generateItemQuery(
                     "LAPTOP", itemSpec.modelNumber, itemSpec.name,
                     itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
-                query2 = """
+                query = """
                     INSERT INTO laptop (modelNumber, ramSize, ramFormat,
                         processorType, numCores, hardDriveSize, hardDriveFormat,
                         containsCamera, isTouch, batteryInfo, os, size, sizeFormat)
@@ -43,13 +43,13 @@ class Inventory(object):
                 )
 
             elif type(itemSpec) is Desktop:
-                query1 = self.generateItemQuery(
+                itemQuery = self.generateItemQuery(
                     "DESKTOP", itemSpec.modelNumber, itemSpec.quantity,
                     itemSpec.weight, itemSpec.weightFormat,
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
-                query2 = """
+                query = """
                     INSERT INTO desktop (modelNumber, ramSize, ramFormat,
                         processorType, numCores, hardDriveSize, hardDriveFormat,
                         dx ,dy, dz, dimensionFormat)
@@ -63,25 +63,25 @@ class Inventory(object):
                     )
 
             elif type(itemSpec) is MonitorDisplay:
-                query1 = self.generateItemQuery(
+                itemQuery = self.generateItemQuery(
                     "MONITOR", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, 
                     itemSpec.weight, itemSpec.weightFormat, 
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
-                query2 = """
+                query = """
                     INSERT INTO monitorDisplay (modelNumber,size, sizeFormat)
                     VALUES('{}', {}, '{}');
                 """.format(itemSpec.modelNumber, itemSpec.size.size, itemSpec.size.sizeFormat)
 
             elif type(itemSpec) is Television:
-                query1 = self.generateItemQuery(
+                itemQuery = self.generateItemQuery(
                     "TV", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
                     itemSpec.weight, itemSpec.weightFormat,
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
-                query2 = """
+                query = """
                     INSERT INTO television (modelNumber, tvType, dimensionFormat, dx, dy, dz)
                     VALUES('{}', '{}', '{}', {}, {}, {});
                 """.format(
@@ -90,13 +90,13 @@ class Inventory(object):
                 )
 
             elif type(itemSpec) is Tablet:
-                query1 = self.generateItemQuery(
+                itemQuery = self.generateItemQuery(
                     "TABLET", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
                     itemSpec.weight, itemSpec.weightFormat, 
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
-                query2 = """
+                query = """
                     INSERT INTO tablet (modelNumber, ramSize, ramFormat, processorType, numCores,
                         hardDriveSize, hardDriveFormat, cameraInfo, batteryInfo, os,
                         size, sizeFormat, dx, dy, dz, dimensionFormat)
@@ -113,16 +113,16 @@ class Inventory(object):
                     itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
                 )
 
-            print(query1)
-            print(query2)
+            print(itemQuery)
+            print(query)
 
             try:
-                cursor.execute(query1)
+                cursor.execute(itemQuery)
             except Exception as error:
                 print(error)
 
             try:
-                cursor.execute(query2)
+                cursor.execute(query)
             except Exception as error:
                 print(error)
 
@@ -190,7 +190,7 @@ class Inventory(object):
                                 row.get('dimensionFormat'),
                             ),
                             Size(
-                                row.get('size'), 
+                                row.get('size'),
                                 row.get('sizeFormat')
                             ),
                             row.get('cameraInfo'),
