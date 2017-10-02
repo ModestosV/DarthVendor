@@ -81,10 +81,11 @@ class AddItem extends Component {
 
     render() {
         const itemTypes = ['Desktop', 'Laptop', 'Tablet', 'Television', 'Monitor Display'];
-        const itemBasicSpecs = ['modelNumber', 'name','price', 'priceFormat', 'brandName', 'quantity', 'weight', 'weightFormat'];
+        const itemBasicSpecs = ['modelNumber', 'name', 'price', 'priceFormat', 'brandName', 'quantity', 'weight', 'weightFormat'];
         const itemSpecs = this.state.specs;
         const itemFields = itemBasicSpecs;
         itemFields.push.apply(itemFields, itemSpecs);
+
         return (
             <div>
                 <Sidebar />
@@ -102,51 +103,78 @@ class AddItem extends Component {
                                     onChange={(e) => this.handleTypeChange(e)}
                                 >
                                     <option value="">Choose type</option>
-                                    { itemTypes.map((name,index) => {
-                                    return (
-                                        <option
-                                            key={ index }
-                                            value={ name }
-                                        >{ name }
-                                        </option>);
-                                    })}
+                                    { 
+                                        itemTypes.map((name,index) => {
+                                            return (
+                                                <option key={index} value={name}>
+                                                    {name}
+                                                </option>
+                                            );
+                                        })
+                                    }
                                 </select>
                             </div>
 
-                            {/* creates fields for every attributes  */}
-                            { itemFields.map((name,index) => {
-                                    if(name.includes('Format')){
+                            {/* Creates fields for every attributes  */}
+                            { 
+                                itemFields.map((name,index) => {
+                                    if(name.includes('Format')) {
                                         let unit = [];
-                                        if(name == 'dimensionFormat'){ unit = ['cm'];}
-                                        else{if(name == 'sizeFormat'){ unit = ['inch'];}
-                                            else{if(name == 'ramFormat'){ unit = ['GB'];}
-                                                else{if(name == 'hardDriveFormat'){ unit = ['GB', 'TB'];}
-                                                    else{if(name == 'weightFormat'){ unit = ['lbs'];}
-                                                        else{unit = ['CAD'];}}}}}
+                                        if(name == 'dimensionFormat') { 
+                                            unit = ['cm'];
+                                        } else {
+                                            if(name == 'sizeFormat') { 
+                                                unit = ['inch'];
+                                            } else {
+                                                if(name == 'ramFormat') { 
+                                                    unit = ['GB'];
+                                                } else {
+                                                    if(name == 'hardDriveFormat') { 
+                                                        unit = ['GB', 'TB'];
+                                                    } else {
+                                                        if(name == 'weightFormat') { 
+                                                            unit = ['lbs'];
+                                                        } else {
+                                                            unit = ['CAD'];
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                         return (
-                                            <div key={ index } className="input-group mb-3">
-                                                <select name={ name } onLoad={(e) => this.handleSpecChange(e)} onChange={(e) => this.handleSpecChange(e)}>
-
-                                                    { unit.map((name2, index2) => {
-                                                        return (
-                                                            <option key={ index2 } value={ name2 }>{ name2 }</option>)
-                                                    })}
+                                            <div key={index} className="input-group mb-3">
+                                                <select 
+                                                    name={name} 
+                                                    onLoad={(e) => this.handleSpecChange(e)} 
+                                                    onChange={(e) => this.handleSpecChange(e)}
+                                                >
+                                                    {
+                                                        unit.map((name2, index2) => {
+                                                            return (
+                                                                <option key={index2} value={name2}>
+                                                                    {name2}
+                                                                </option>
+                                                            )
+                                                        })
+                                                    }
                                                 </select>
-
-                                            </div>);
-                                    }else {
+                                            </div>
+                                        );
+                                    } else {
                                         return (
-                                            <div key={ index } className="input-group mb-3">
+                                            <div key={index} className="input-group mb-3">
                                                 <input
-                                                    name={ name }
+                                                    name={name}
                                                     type="text"
                                                     className="form-control"
-                                                    placeholder={ name }
+                                                    placeholder={name}
                                                     onChange={(e) => this.handleSpecChange(e)}
                                                 />
-                                            </div>);
+                                            </div>
+                                        );
                                     }
-                            })}
+                                })
+                            }
                             <button
                                 type="button"
                                 className="btn btn-dark btn-block"
