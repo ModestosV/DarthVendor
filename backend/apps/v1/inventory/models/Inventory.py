@@ -137,7 +137,7 @@ class Inventory(object):
 
         queryTv = """
             SELECT * from item, television
-            WHERE item.type = "TV"
+            WHERE UPPER(item.type) = "TELEVISION"
             AND item.modelNumber = television.modelNumber;
         """
         queryDesktop = """
@@ -154,7 +154,7 @@ class Inventory(object):
 
         queryLaptop = """
             SELECT * from item, laptop
-            WHERE item.type = "LAPTOP"
+            WHERE UPPER(item.type) = "LAPTOP"
             AND item.modelNumber = laptop.modelNumber;
         """
 

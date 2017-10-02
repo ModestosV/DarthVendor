@@ -12,11 +12,11 @@ class Command(BaseCommand):
             query = """
                 CREATE TABLE television (
                     modelNumber varchar(255) NOT NULL,
-                    tvType varchar(255) NOT NULL,
-                    dimensionFormat varchar(255) NOT NULL,
+                    tvType varchar(255) NOT NULL,          
                     dx double NOT NULL,
                     dy double NOT NULL,
                     dz double NOT NULL,
+                    dimensionFormat varchar(255) NOT NULL,
                     PRIMARY KEY (modelNumber),
                     FOREIGN KEY (modelNumber) REFERENCES item (modelNumber)
                 );
