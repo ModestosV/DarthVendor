@@ -1,5 +1,3 @@
-from backend.utils.database import Database
-
 from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.Dimension import Dimension
 from backend.apps.v1.inventory.models.Laptop import Laptop
@@ -7,11 +5,13 @@ from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Size import Size
 from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.apps.v1.inventory.models.Television import Television
+from backend.utils.database import Database
 
 
 class Inventory(object):
-    """Constructor"""
+
     def __init__(self):
+        """ Constructor. """
         pass
 
     def addItem(self, itemSpec):
@@ -113,16 +113,15 @@ class Inventory(object):
                     itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
                 )
 
-            print(itemQuery)
-            print(query)
-
             try:
                 cursor.execute(itemQuery)
+                print("Item Added")
             except Exception as error:
                 print(error)
 
             try:
-                cursor.execute(query)
+                cursor.execute(query)                
+                print("{} Added".format(itemSpec.__class__.__name__))
             except Exception as error:
                 print(error)
 
@@ -318,10 +317,4 @@ class Inventory(object):
             weight, wf, price, pf, brandname
         )
         return qry
-
-if __name__ == '__main__':
-
-    inv = Inventory()
-    tab = Television("myname", 5, "model10", 4, "kg", 400, "CAD", "brand", Size(4,"cm"));
-    inv.addItem(tab)
-    #print(tab)
+        
