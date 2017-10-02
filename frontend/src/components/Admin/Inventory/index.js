@@ -42,10 +42,20 @@ class Inventory extends Component {
          this.setState({errorMsg});
        })
     }
+
     render() {
         function cellFormat(cell, row){
             return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
         }
+
+        function sortFunc(a, b, order) {   
+            if (order === 'desc') {
+                return a.price - b.price;
+            } else {
+                return b.price - a.price;
+            }
+        }
+
         return (
             <div>
                 <Sidebar />
@@ -55,16 +65,19 @@ class Inventory extends Component {
                     <h1> Inventory </h1>
                     { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                     <br />
-                    <Link to={`/inventory/add`} className="list-group-item d-inline-block collapsed"><i className="fa fa-plus"></i> <span className="d-none d-md-inline">Add Item</span></Link>
+                    <Link to={`/inventory/add`} className="list-group-item d-inline-block collapsed">
+                        <i className="fa fa-plus"></i> 
+                        <span className="d-none d-md-inline">Add Item</span>
+                    </Link>
                     <BootstrapTable data={this.state.items} striped condensed hover pagination search>
-                        <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Quantity</TableHeaderColumn>
-                        <TableHeaderColumn dataField="brandName" isKey={true} dataSort={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>
-                        <TableHeaderColumn dataField="weight" dataSort={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight</TableHeaderColumn>
-                        <TableHeaderColumn dataField="weightFormat" dataSort={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight Format</TableHeaderColumn>
-                        <TableHeaderColumn dataField="price" dataSort={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price</TableHeaderColumn>
-                        <TableHeaderColumn dataField="priceFormat" dataSort={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price Format</TableHeaderColumn>
-                        <TableHeaderColumn dataField="type" dataSort={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
+                        <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>                        
+                        <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>                        
+                        <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
+                        <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight</TableHeaderColumn>
+                        <TableHeaderColumn dataField="weightFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight Format</TableHeaderColumn>
+                        <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price</TableHeaderColumn>
+                        <TableHeaderColumn dataField="priceFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price Format</TableHeaderColumn>                        
+                        <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Quantity</TableHeaderColumn>                        
                     </BootstrapTable>
                 </div>
             </div>
