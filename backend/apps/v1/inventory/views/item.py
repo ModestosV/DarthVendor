@@ -26,21 +26,44 @@ class ItemView(APIView):
         try:
             if itemType == "Television":
                 dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])
-                item = Television(itemData["modelNumber"], itemData["name"], itemData["quantity"], itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], dimension, itemData["tvType"])
+                item = Television(
+                    itemData["modelNumber"], itemData["name"], itemData["quantity"], 
+                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], 
+                    dimension, itemData["tvType"]
+                )
             elif itemType == "Desktop":
                 dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])
-                item = Desktop(itemData["modelNumber"], itemData["name"], itemData["quantity"], itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"], itemData["hardDriveSize"], itemData["hardDriveFormat"], dimension)
+                item = Desktop(
+                    itemData["modelNumber"], itemData["name"], itemData["quantity"], 
+                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], 
+                    itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"],
+                    itemData["hardDriveSize"], itemData["hardDriveFormat"], dimension
+                )
             elif itemType == "Monitor Display":
                 size = Size(itemData["size"])
-                item = MonitorDisplay(itemData["modelNumber"], itemData["name"], itemData["quantity"], itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], size)
-            elif itemType == "Laptop":
-                dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])
+                item = MonitorDisplay(
+                    itemData["modelNumber"], itemData["name"], itemData["quantity"],
+                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], size
+                )
+            elif itemType == "Laptop":                
                 size = Size(itemData["size"])
-                item = Laptop(itemData["modelNumber"], itemData["name"], itemData["quantity"], itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"], itemData["hardDriveSize"], itemData["hardDriveFormat"], itemData["containCamera"], itemData["isTouch"], itemData["batteryInfo"], itemData["os"], itemData["size"])
+                item = Laptop(
+                    itemData["modelNumber"], itemData["name"], itemData["quantity"], 
+                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], 
+                    itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"], 
+                    itemData["hardDriveSize"], itemData["hardDriveFormat"], 
+                    itemData["containCamera"], itemData["isTouch"], itemData["batteryInfo"], itemData["os"], size
+                )
             elif itemType == "Tablet":            
                 dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])
                 size = Size(itemData["size"])
-                item = Tablet(itemData["modelNumber"], itemData["name"], itemData["quantity"], itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"], itemData["hardDriveSize"], itemData["hardDriveFormat"], itemData["os"], dimension, size, itemData["cameraInfo"], itemData["batteryInfo"])
+                item = Tablet(
+                    itemData["modelNumber"], itemData["name"], itemData["quantity"], 
+                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], 
+                    itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"], 
+                    itemData["hardDriveSize"], itemData["hardDriveFormat"], itemData["os"], dimension,
+                    size, itemData["cameraInfo"], itemData["batteryInfo"] 
+                )
         except Exception as error:
             print(error)
             return Response({}, status=status.HTTP_400_BAD_REQUEST)

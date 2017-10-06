@@ -41,14 +41,15 @@ class Inventory(object):
                         itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
                         cam, touch, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat
                 )
-
+                
             elif type(itemSpec) is Desktop:
+                
                 itemQuery = self.generateItemQuery(
-                    "DESKTOP", itemSpec.modelNumber, itemSpec.quantity,
-                    itemSpec.weight, itemSpec.weightFormat,
+                    "DESKTOP", itemSpec.modelNumber, itemSpec.name,
+                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
-
+                                
                 query = """
                     INSERT INTO desktop (modelNumber, ramSize, ramFormat,
                         processorType, numCores, hardDriveSize, hardDriveFormat,
@@ -57,15 +58,15 @@ class Inventory(object):
                         '{}', {}, {}, '{}',
                         {}, {}, {}, '{}');
                 """.format(
-                        itemSpec.ramSize, itemSpec.ramFormat, itemSpec.processorType, 
-                        itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, itemSpec.dimension.x, 
-                        itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
+                        itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat, 
+                        itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, 
+                        itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
                     )
 
             elif type(itemSpec) is MonitorDisplay:
                 itemQuery = self.generateItemQuery(
-                    "MONITOR", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity, 
-                    itemSpec.weight, itemSpec.weightFormat, 
+                    "MONITOR", itemSpec.modelNumber, itemSpec.name, 
+                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, 
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
@@ -76,8 +77,8 @@ class Inventory(object):
 
             elif type(itemSpec) is Television:
                 itemQuery = self.generateItemQuery(
-                    "TV", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
-                    itemSpec.weight, itemSpec.weightFormat,
+                    "TV", itemSpec.modelNumber, itemSpec.name, 
+                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
@@ -91,8 +92,8 @@ class Inventory(object):
 
             elif type(itemSpec) is Tablet:
                 itemQuery = self.generateItemQuery(
-                    "TABLET", itemSpec.modelNumber, itemSpec.name, itemSpec.quantity,
-                    itemSpec.weight, itemSpec.weightFormat, 
+                    "TABLET", itemSpec.modelNumber, itemSpec.name,
+                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, 
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
@@ -303,10 +304,10 @@ class Inventory(object):
 
         return result
 
-    def generateItemQuery(self, itemtype, name, modelNumber, quantity,
-                          weight, wf, price, pf, brandname):
+    def generateItemQuery(self, itemtype, modelNumber, name, quantity,
+                          weight, wf, price, pf, brandName):
         qry = """
-            INSERT INTO item (type, name, modelNumber, quantity,
+            INSERT INTO item (type, modelNumber, name, quantity,
                 weight, weightFormat, price, priceFormat, brandName)
             VALUES(
                 '{}', '{}', '{}', {},
@@ -314,7 +315,7 @@ class Inventory(object):
             );
         """.format(
             itemtype, modelNumber, name, quantity,
-            weight, wf, price, pf, brandname
+            weight, wf, price, pf, brandName
         )
         return qry
         
