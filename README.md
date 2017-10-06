@@ -101,9 +101,9 @@ You should be able to see the web application on http://localhost:3000/
   cd frontend && npm run build 
 ```
 
-The REST API URL is located at http://darthvendor.me/
+The REST API URL is located at http://api.darthvendor.me/
 
-The web application is located at http://api.darthvendor.me/
+The web application is located at http://darthvendor.me/ 
 
 
 # Continuous Integration
