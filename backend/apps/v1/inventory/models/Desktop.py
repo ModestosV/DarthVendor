@@ -16,3 +16,4 @@ class Desktop(AbstractComputer):
                          hardDriveSize, hardDriveFormat)
 
         self.dimension = dimension
+        
