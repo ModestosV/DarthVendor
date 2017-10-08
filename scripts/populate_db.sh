@@ -1,8 +1,8 @@
-echo "Create Admin Table"
-python3 manage.py create_admin_table
+echo "Create User Table"
+python3 manage.py create_user_table
 
-echo "Populate Admin Table"
-python3 manage.py populate_admin_table
+echo "Populate User Table"
+python3 manage.py populate_user_table
 
 echo "Create Token Table"
 python3 manage.py create_token_table

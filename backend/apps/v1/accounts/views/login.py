@@ -20,7 +20,7 @@ class LoginView(APIView):
         with Database() as cursor:
             query = """
                 SELECT *
-                FROM administrator
+                FROM user
                 WHERE username='{}'
             """.format(request.data.get('username'))
 
