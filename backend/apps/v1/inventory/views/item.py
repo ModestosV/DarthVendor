@@ -54,7 +54,8 @@ class ItemView(APIView):
                     itemData["hardDriveSize"], itemData["hardDriveFormat"], 
                     itemData["containCamera"], itemData["isTouch"], itemData["batteryInfo"], itemData["os"], size
                 )
-            elif itemType == "Tablet":                            
+            elif itemType == "Tablet":     
+                dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])                       
                 size = Size(itemData["size"])
                 item = Tablet(
                     itemData["modelNumber"], itemData["name"], itemData["quantity"], 
