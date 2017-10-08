@@ -16,11 +16,13 @@ from backend.apps.v1.inventory.serializers.TabletSerializer import TabletSeriali
 from backend.apps.v1.inventory.serializers.TelevisionSerializer import TelevisionSerializer
 
 
+store = Store()
+
+
 class InventoryView(APIView):
 
     def get(self, request):
 
-        store = Store()
         inventory = store.requestInventoryList()
         serializedItems = []
 
