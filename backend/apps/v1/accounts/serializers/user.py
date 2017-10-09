@@ -3,30 +3,32 @@ from backend.utils.database import Database
 from .token import TokenSerializer
 
 
-class AdminSerializer(serializers.Serializer):
+class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     username = serializers.CharField(max_length=255)
     password = serializers.HiddenField(default='')
+    isAdmin = serializers.BooleanField(default='')
 
 
-class AdminSerializerLogin(serializers.Serializer):
+class UserSerializerLogin(serializers.Serializer):
     id = serializers.IntegerField()
     username = serializers.CharField(max_length=255)
     password = serializers.HiddenField(default='')
+    isAdmin = serializers.BooleanField(default='')
     token = serializers.SerializerMethodField()
 
-    def get_token(self, admin):
+    def get_token(self, user):
         with Database() as cursor:
             query = """
                 SELECT *
                 FROM token
-                WHERE admin_id={}
-            """.format(admin["id"])
+                WHERE user_id={}
+            """.format(user["id"])
 
             try:
                 cursor.execute(query)
-                admin = cursor.fetchone()
-                return admin["token"]
+                user = cursor.fetchone()                
+                return user["token"] if user else None
             except Exception as error:
                 print(error)
                 return None

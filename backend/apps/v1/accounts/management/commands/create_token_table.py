@@ -13,8 +13,8 @@ class Command(BaseCommand):
                 CREATE TABLE token (
                     id integer PRIMARY KEY AUTOINCREMENT,
                     token varchar(255) UNIQUE,
-                    admin_id integer UNIQUE,
-                    FOREIGN KEY (admin_id) REFERENCES administrator(id)
+                    user_id integer UNIQUE,
+                    FOREIGN KEY (user_id) REFERENCES user(id)
                 );
             """
 
