@@ -41,7 +41,7 @@ class LoginView(APIView):
                 if not bool(token):
                     token = str(uuid.uuid4()).replace('-','')
                     query = """
-                        INSERT INTO token (token, admin_id)
+                        INSERT INTO token (token, user_id)
                         VALUES ('{}', {});
                     """.format(token, serializer.data['id'])            
 

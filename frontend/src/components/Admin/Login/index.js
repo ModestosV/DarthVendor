@@ -42,7 +42,7 @@ class Login extends Component {
                 console.log(error);
                 swal({
                     title: "Woops!",
-                    text: "Please provide a valid credentials.",
+                    text: "Please provide valid credentials.",
                     icon: "error",
                     button: "Ok",
                 });                 
