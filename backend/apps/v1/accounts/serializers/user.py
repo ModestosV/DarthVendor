@@ -17,18 +17,18 @@ class UserSerializerLogin(serializers.Serializer):
     isAdmin = serializers.BooleanField(default='')
     token = serializers.SerializerMethodField()
 
-    def get_token(self, admin):
+    def get_token(self, user):
         with Database() as cursor:
             query = """
                 SELECT *
                 FROM token
                 WHERE user_id={}
-            """.format(admin["id"])
+            """.format(user["id"])
 
             try:
                 cursor.execute(query)
-                admin = cursor.fetchone()
-                return admin["token"]
+                user = cursor.fetchone()
+                return user["token"]
             except Exception as error:
                 print(error)
                 return None
