@@ -20,7 +20,7 @@ class AdminSerializerLogin(serializers.Serializer):
             query = """
                 SELECT *
                 FROM token
-                WHERE admin_id={}
+                WHERE user_id={}
             """.format(admin["id"])
 
             try:
