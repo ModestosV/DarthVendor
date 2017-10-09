@@ -1,33 +1,43 @@
-from django.conf import settings
 from django.core.management.base import BaseCommand
-from sqlite3 import dbapi2 as Database
+from backend.utils.database import Database
 from django.contrib.auth.hashers import make_password
 
 
-FIRSTNAME = 'foo'
-LASTNAME = 'bar'
-USERNAME = 'foobar'
-EMAIL = 'foobar@darthvendor.com'
-PASSWORD = 'D4rthV3nD0r'
-ISADMIN = 1
+users = [
+    dict(
+        firstname='foo',
+        lastname='bar',
+        username='foobar',
+        email='foobar@darthvendor.com',
+        password=make_password('D4rthV3nD0r'),
+        isAdmin=1
+    ),
+    dict(
+        firstname='lorem',
+        lastname='ipsum',
+        username='client',
+        email='client@loremipsum.com',
+        password=make_password('01010101'),
+        isAdmin=0
+    )
+]
 
 
 class Command(BaseCommand):
-    help = 'Populate user table with 1 admin'
+    help = 'Populate user table'
 
     def handle(self, *args, **options):
 
-        connection = Database.connect(settings.DATABASES['default']['NAME'])
-        cursor = connection.cursor()
-        query = """
-            INSERT INTO user (username, firstname, lastname, email, password, isAdmin)
-            VALUES ('{}', '{}', '{}', '{}', '{}', {});
-        """.format(USERNAME, FIRSTNAME, LASTNAME, EMAIL, make_password(PASSWORD), ISADMIN)
+        with Database() as cursor:
 
-        try:
-            cursor.execute(query)
-        except Exception as error:
-            print(error)
+            for user in users:
+                print(user)
+                query = """
+                    INSERT INTO user (username, firstname, lastname, email, password, isAdmin)
+                    VALUES ('{username}', '{firstname}', '{lastname}', '{email}', '{password}', {isAdmin});
+                """.format(**user)
 
-        connection.commit()
-        connection.close()
+                try:
+                    cursor.execute(query)
+                except Exception as error:
+                    print(error)
