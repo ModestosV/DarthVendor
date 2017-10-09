@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from backend.utils.database import Database
-from backend.apps.v1.accounts.serializers.admin import AdminSerializerLogin
+from backend.apps.v1.accounts.serializers.user import UserSerializerLogin
 
 
 class LoginView(APIView):
@@ -20,33 +20,32 @@ class LoginView(APIView):
         with Database() as cursor:
             query = """
                 SELECT *
-                FROM administrator
+                FROM user
                 WHERE username='{}'
             """.format(request.data.get('username'))
 
             try:
                 cursor.execute(query)    
-                user = cursor.fetchone()
-                serializer = AdminSerializerLogin(data=user)                        
-               
+                user = cursor.fetchone()                
+                serializer = UserSerializerLogin(data=user)                                        
                 if not serializer.is_valid():
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
 
                 if not check_password(request.data.get('password'), user["password"]):
                     return Response('Invalid username/password.', status=status.HTTP_400_BAD_REQUEST)
 
-                token = serializer.data["token"]
+                token = serializer.data["token"] if serializer.data else None
 
                 # Create token if does not exist
                 if not bool(token):
                     token = str(uuid.uuid4()).replace('-','')
                     query = """
-                        INSERT INTO token (token, admin_id)
+                        INSERT INTO token (token, user_id)
                         VALUES ('{}', {});
-                    """.format(token, serializer.data['id'])            
+                    """.format(token, serializer.data['id'])
 
                     cursor.execute(query)                   
-                    serializer = AdminSerializerLogin(serializer.data)
+                    serializer = UserSerializerLogin(serializer.data)
 
             except Exception as error: 
                 print(error) 
