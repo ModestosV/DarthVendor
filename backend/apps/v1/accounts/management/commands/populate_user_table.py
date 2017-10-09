@@ -30,8 +30,8 @@ class Command(BaseCommand):
 
         with Database() as cursor:
 
-            for user in users:
-                print(user)
+            for user in users:      
+                      
                 query = """
                     INSERT INTO user (username, firstname, lastname, email, password, isAdmin)
                     VALUES ('{username}', '{firstname}', '{lastname}', '{email}', '{password}', {isAdmin});
