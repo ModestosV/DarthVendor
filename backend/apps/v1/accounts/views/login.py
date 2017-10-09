@@ -26,16 +26,15 @@ class LoginView(APIView):
 
             try:
                 cursor.execute(query)    
-                user = cursor.fetchone()
-                serializer = UserSerializerLogin(data=user)                        
-               
+                user = cursor.fetchone()                
+                serializer = UserSerializerLogin(data=user)                                        
                 if not serializer.is_valid():
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
 
                 if not check_password(request.data.get('password'), user["password"]):
                     return Response('Invalid username/password.', status=status.HTTP_400_BAD_REQUEST)
 
-                token = serializer.data["token"]
+                token = serializer.data["token"] if serializer.data else None
 
                 # Create token if does not exist
                 if not bool(token):
@@ -43,7 +42,7 @@ class LoginView(APIView):
                     query = """
                         INSERT INTO token (token, user_id)
                         VALUES ('{}', {});
-                    """.format(token, serializer.data['id'])            
+                    """.format(token, serializer.data['id'])
 
                     cursor.execute(query)                   
                     serializer = UserSerializerLogin(serializer.data)

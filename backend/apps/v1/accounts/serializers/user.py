@@ -27,8 +27,8 @@ class UserSerializerLogin(serializers.Serializer):
 
             try:
                 cursor.execute(query)
-                user = cursor.fetchone()
-                return user["token"]
+                user = cursor.fetchone()                
+                return user["token"] if user else None
             except Exception as error:
                 print(error)
                 return None
