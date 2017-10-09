@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from backend.utils.database import Database
-from backend.apps.v1.accounts.serializers.admin import AdminSerializerLogin
+from backend.apps.v1.accounts.serializers.user import UserSerializerLogin
 
 
 class LoginView(APIView):
@@ -27,7 +27,7 @@ class LoginView(APIView):
             try:
                 cursor.execute(query)    
                 user = cursor.fetchone()
-                serializer = AdminSerializerLogin(data=user)                        
+                serializer = UserSerializerLogin(data=user)                        
                
                 if not serializer.is_valid():
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
@@ -46,7 +46,7 @@ class LoginView(APIView):
                     """.format(token, serializer.data['id'])            
 
                     cursor.execute(query)                   
-                    serializer = AdminSerializerLogin(serializer.data)
+                    serializer = UserSerializerLogin(serializer.data)
 
             except Exception as error: 
                 print(error) 

@@ -3,16 +3,18 @@ from backend.utils.database import Database
 from .token import TokenSerializer
 
 
-class AdminSerializer(serializers.Serializer):
+class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     username = serializers.CharField(max_length=255)
     password = serializers.HiddenField(default='')
+    isAdmin = serializers.BooleanField(default='')
 
 
-class AdminSerializerLogin(serializers.Serializer):
+class UserSerializerLogin(serializers.Serializer):
     id = serializers.IntegerField()
     username = serializers.CharField(max_length=255)
     password = serializers.HiddenField(default='')
+    isAdmin = serializers.BooleanField(default='')
     token = serializers.SerializerMethodField()
 
     def get_token(self, admin):
