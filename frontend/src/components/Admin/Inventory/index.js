@@ -59,26 +59,27 @@ class Inventory extends Component {
         return (
             <div>
                 <Sidebar />
-                <div className="col-md-10 float-left col px-5 pl-md-2 pt-2 main">
-                    <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
-                    <a href="#" data-target="#sidebar" data-toggle="collapse"><i className="fa fa-navicon fa-2x py-2 p-1"></i></a>
-                    <h1> Inventory </h1>
-                    { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
-                    <br />
-                    <Link to={`/inventory/add`} className="list-group-item d-inline-block collapsed">
-                        <i className="fa fa-plus"></i> 
-                        <span className="d-none d-md-inline">Add Item</span>
-                    </Link>
-                    <BootstrapTable data={this.state.items} striped condensed hover pagination search>
-                        <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>                        
-                        <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>                        
-                        <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
-                        <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight</TableHeaderColumn>
-                        <TableHeaderColumn dataField="weightFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight Format</TableHeaderColumn>
-                        <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price</TableHeaderColumn>
-                        <TableHeaderColumn dataField="priceFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price Format</TableHeaderColumn>                        
-                        <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Quantity</TableHeaderColumn>                        
-                    </BootstrapTable>
+                <div className="pusher">
+                    <div className="mt-4">
+                        <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
+                        <h1 className="m-0"> Inventory </h1>
+                        { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
+                        <br />
+                        <Link to={`/inventory/add`} className="list-group-item d-inline-block collapsed">
+                            <i className="fa fa-plus pr-2"></i> 
+                            <span className="">Add Item</span>
+                        </Link>
+                        <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling>
+                            <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>                        
+                            <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>                        
+                            <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
+                            <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight</TableHeaderColumn>
+                            <TableHeaderColumn dataField="weightFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight Format</TableHeaderColumn>
+                            <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price</TableHeaderColumn>
+                            <TableHeaderColumn dataField="priceFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price Format</TableHeaderColumn>                        
+                            <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Quantity</TableHeaderColumn>                        
+                        </BootstrapTable>
+                    </div>    
                 </div>
             </div>
         );

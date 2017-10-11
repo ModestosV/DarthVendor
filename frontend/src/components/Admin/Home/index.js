@@ -21,15 +21,16 @@ class Home extends Component {
             <div>
                 <Sidebar />
 
-                <div className="col-md-10 float-left col px-5 pl-md-2 pt-2 main">
-                    <a href="#" data-target="#sidebar" data-toggle="collapse"><i className="fa fa-navicon fa-2x py-2 p-1"></i></a>
-                    <div className="page-header">
-                        <h2>Home</h2>
+                <div className="pusher">
+
+                    <div className="mt-4 text-center">
+                     <h1>Darth Vendor Admin Panel</h1>
                     </div>
+              
                 </div>
 
-
             </div>
+     
         )
     }
 }
