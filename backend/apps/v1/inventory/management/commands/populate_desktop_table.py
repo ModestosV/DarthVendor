@@ -4,15 +4,14 @@ from backend.utils.database import Database
 
 desktops = [
     dict(
+        modelNumber='ZZZZZZZ',
         quantity=46,
+        name='Razer Desktop',
         weight=15.0,
         weightFormat='lbs',
         price=2299.99,
         priceFormat='CAD',
-        brandName='RAZER',
-        name='Razer Desktop',
-        type='DESKTOP',
-        modelNumber='ZZZZZZZ',
+        brandName='RAZER', 
         ramSize=16,
         ramFormat='GB',
         processorType='INTEL',
@@ -22,28 +21,27 @@ desktops = [
         dx=15,
         dy=30,
         dz=1,
-        dimensionFormat='INCH',
+        dimensionFormat='INCH'
     ),
     dict(
+        modelNumber='PPPPPP',
         quantity=5,
-        weight=17.0,
-        weightFormat='lbs',
-        price=2699.99,
-        priceFormat='CAD',
-        brandName='APPLE',
         name='Apple Desktop',
-        type='desktop',
-        modelNumber='PPPPPPPPPPPPP',
+        weight=12.0,
+        weightFormat='lbs',
+        price=3299.99,
+        priceFormat='CAD',
+        brandName='APPLE', 
         ramSize=16,
         ramFormat='GB',
-        processorType='APPLE',
+        processorType='INTEL',
         numCores=4,
         hardDriveSize=1,
         hardDriveFormat='TB',
-        dx=20,
-        dy=20,
+        dx=12,
+        dy=33,
         dz=1,
-        dimensionFormat='INCH',
+        dimensionFormat='INCH'
     )
 ]
 
@@ -57,24 +55,12 @@ class Command(BaseCommand):
 
             for desktop in desktops:
                 query = """
-                    INSERT INTO item (quantity, name, weight, weightFormat, price,
-                        priceFormat, brandName, type, modelNumber)
-                    VALUES ({quantity}, '{name}', {weight}, '{weightFormat}', 
-                        {price}, '{priceFormat}', '{brandName}', '{type}', '{modelNumber}');
-                """.format(**desktop)
-
-                try:
-                    cursor.execute(query)
-                except Exception as error:
-                    print(error)
-
-                query = """
-                    INSERT INTO desktop (modelNumber, ramSize, ramFormat,
-                        processorType, numCores, hardDriveSize, hardDriveFormat,
-                        dx, dy, dz, dimensionFormat)
-                    VALUES ('{modelNumber}', {ramSize}, '{ramFormat}',
-                        '{processorType}', {numCores}, {hardDriveSize}, '{hardDriveFormat}',
-                        {dx}, {dy}, {dz}, '{dimensionFormat}');
+                    INSERT INTO desktop (modelNumber, quantity, name, weight, weightFormat, price,
+                        priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize,
+                        hardDriveFormat, dx, dy, dz, dimensionFormat)
+                    VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price},
+                        '{priceFormat}', '{brandName}', {ramSize}, '{ramFormat}', '{processorType}', {numCores}, {hardDriveSize},
+                        '{hardDriveFormat}', {dx}, {dy}, {dz}, '{dimensionFormat}');
                 """.format(**desktop)
 
                 try:
