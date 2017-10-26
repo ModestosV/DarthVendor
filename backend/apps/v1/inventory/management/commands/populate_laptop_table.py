@@ -4,15 +4,15 @@ from backend.utils.database import Database
 
 laptops = [
     dict(
+        modelNumber='XPXPXPXPXPXP',
         quantity=987,
+        name='XPS',
         weight=15.0,
         weightFormat='lbs',
         price=1299.99,
         priceFormat='CAD',
         brandName='DELL',
-        name='XPS',
         type='laptop',
-        modelNumber='XPXPXPXPXPXP',
         ramSize=16,
         ramFormat='GB',
         processorType='INTEL',
@@ -27,27 +27,40 @@ laptops = [
         sizeFormat='PX'
     ),
     dict(
-        quantity=671,
-        weight=12.0,
+        modelNumber='QWERTERTERRK',
+        quantity=23,
+        name='Test',
+        weight=25.0,
         weightFormat='lbs',
-        price=1699.99,
+        price=3299.99,
         priceFormat='CAD',
-        brandName='MICROSOFT',
-        name='Surface NoteBook',
+        brandName='Apple',
         type='laptop',
-        modelNumber='SSSSSSSSSS',
         ramSize=16,
         ramFormat='GB',
         processorType='INTEL',
-        numCores=4,
-        hardDriveSize=2,
+        numCores=16,
+        hardDriveSize=3,
         hardDriveFormat='TB',
         containsCamera=1,
-        isTouch=1,
-        batteryInfo='13000mAH',
-        os='Windows',
-        size=14.5,
-        sizeFormat='PX'
+        isTouch=0,
+        batteryInfo='10000mAH',
+        os='iOS',
+        size=17,
+        sizeFormat='in'
+    )
+]
+
+laptopIDs = [
+    dict(
+        serialNum='f569s79874',
+        modelNum='XPXPXPXPXPXP',
+        isLocked=0
+    ),
+    dict(
+        serialNum='QWERTERTERRK',
+        modelNum='PPPPPP',
+        isLocked=0
     )
 ]
 
@@ -61,10 +74,15 @@ class Command(BaseCommand):
 
             for laptop in laptops:
                 query = """
-                    INSERT INTO item (quantity, name, weight, weightFormat, price,
-                        priceFormat, brandName, type, modelNumber)
-                    VALUES ({quantity}, '{name}', {weight}, '{weightFormat}', 
-                        {price}, '{priceFormat}', '{brandName}', '{type}', '{modelNumber}');
+                    INSERT INTO laptop (modelNumber, quantity, name, weight, weightFormat, price,
+                    priceFormat, brandName, type, ramSize, ramFormat, processorType, numCores,
+                    hardDriveSize, hardDriveFormat, containsCamera, isTouch, batteryInfo, os,
+                           size, sizeFormat)
+                    VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price},
+                            '{priceFormat}', '{brandName}', '{type}', {ramSize}, '{ramFormat}',
+                            '{processorType}', {numCores}, {hardDriveSize}, '{hardDriveFormat}',
+                             {containsCamera}, {isTouch}, '{batteryInfo}', '{os}',
+                             {size}, '{sizeFormat}');
                 """.format(**laptop)
 
                 try:
@@ -72,16 +90,11 @@ class Command(BaseCommand):
                 except Exception as error:
                     print(error)
 
+            for laptopID in laptopIDs:
                 query = """
-                    INSERT INTO laptop (modelNumber, ramSize, ramFormat,
-                        processorType, numCores, hardDriveSize, hardDriveFormat,
-                        containsCamera, isTouch, batteryInfo, os,
-                        size, sizeFormat)
-                    VALUES ('{modelNumber}', {ramSize}, '{ramFormat}',
-                        '{processorType}', {numCores}, {hardDriveSize}, '{hardDriveFormat}',
-                        {containsCamera}, {isTouch}, '{batteryInfo}', '{os}',
-                        {size}, '{sizeFormat}');
-                """.format(**laptop)
+                    INSERT INTO laptopID (serialNum, modelNum, isLocked)
+                    VALUES ('{serialNum}', '{modelNum}', {isLocked});
+                """.format(**laptopID)
 
                 try:
                     cursor.execute(query)
