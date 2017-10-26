@@ -89,20 +89,24 @@ class AddItem extends Component {
         return (
             <div>
                 <Sidebar />
-                <div className="col-md-10 float-left col px-5 pl-md-2 pt-2 main">
-                    <a href="#" data-target="#sidebar" data-toggle="collapse"><i className="fa fa-navicon fa-2x py-2 p-1"></i></a>
-                    <div id="addItem">
-                        <div>
-                            <h1>Add New Item </h1>
-                        </div>
-                        <form>
+                <div className="pusher">
+
+                    <div className="container p-0 mt-4">
+                    <h1>Add New Item </h1>
+                    </div>
+               
+                    <div id="addItem" className="mt-4 container">
+                   
+                    
+                       
+                        <form className="row ui-form">
                             {/* SELECT for type */}
-                            <div className="input-group mb-3">
+                            <div className="field mb-3 mr-3 ">
                                 <select
-                                    className="form-control"
+                                    className="ui fluid dropdown"
                                     onChange={(e) => this.handleTypeChange(e)}
                                 >
-                                    <option value="">Choose type</option>
+                                    <option value="">Default</option>
                                     { 
                                         itemTypes.map((name,index) => {
                                             return (
@@ -142,8 +146,9 @@ class AddItem extends Component {
                                             }
                                         }
                                         return (
-                                            <div key={index} className="input-group mb-3">
+                                            <div key={index} className="field mb-3 mr-3 ">
                                                 <select 
+                                                    className="ui fluid dropdown"
                                                     name={name} 
                                                     onLoad={(e) => this.handleSpecChange(e)} 
                                                     onChange={(e) => this.handleSpecChange(e)}
@@ -162,11 +167,12 @@ class AddItem extends Component {
                                         );
                                     } else {
                                         return (
-                                            <div key={index} className="input-group mb-3">
+                                            
+                                            <div key={index} className="mb-3 mr-3 ">
                                                 <input
                                                     name={name}
-                                                    type="text"
                                                     className="form-control"
+                                                    type="text"
                                                     placeholder={name}
                                                     onChange={(e) => this.handleSpecChange(e)}
                                                 />
@@ -175,12 +181,16 @@ class AddItem extends Component {
                                     }
                                 })
                             }
-                            <button
-                                type="button"
-                                className="btn btn-dark btn-block"
-                                onClick={() => this.handleForm()}>
-                                    Add <i className="fa fa-plus"></i>
-                            </button>
+
+                            <div className="max-width">
+                                <button
+                                    type="button"
+                                    className="ui secondary button float-right mt-5"
+                                    onClick={() => this.handleForm()}>
+                                        Done 
+                                </button>
+                            </div>
+              
                         </form>
                     </div>
                 </div>

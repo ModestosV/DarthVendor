@@ -6,6 +6,13 @@ import './sidebar.scss';
 
 class Sidebar extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: true
+        }
+    }
+
     handleLogOutButton() {
         const {history} = this.props;
         let headers = {
@@ -38,61 +45,49 @@ class Sidebar extends Component {
         return (
    
             <button 
-                className="btn btn-danger"
+                className="ui inverted basic button"
                 onClick={() => this.handleLogOutButton()}
             >
+        
 
-            <span className="d-none d-md-inline">Log Out</span>
             
                 {" "} 
-                <i className="fa fa-sign-out" aria-hidden="true"></i>                                                
+                <i className="external icon" aria-hidden="true"></i>    
+                Logout                                            
             </button>
 
         )
     }
 
     render() {
+
+        let sidebarClass = "ui left vertical inverted sidebar labeled icon menu d-flex flex-column";
+        
+        if(this.state.visible) {
+            sidebarClass += " visible";
+        }
+
         return (    
-            <div className="col-md-2 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
-                <div className="list-group border-0 card text-center text-md-left d-flex flex-column">
-                    <h5 className="pt-3">
-                        <span className="list-group-item d-none d-md-inline">Darth Vendor Admin</span>
-                    </h5>
-                
-                    <Link to={`/`} className="list-group-item d-inline-block collapsed">
-                        <i className="fa fa-home"></i>
-                        <span className="d-none d-md-inline">Home</span>
-                    </Link>
-                    <Link to={`/inventory`} className="list-group-item d-inline-block collapsed">
-                        <i className="fa fa-shopping-bag"></i>
-                        <span className="d-none d-md-inline">Inventory</span>
-                    </Link>
-                    {/* 
-                        <a href="#products-menu" className="list-group-item d-inline-block collapsed" data-toggle="collapse" aria-expanded="false">
-                            <i className="fa fa-shopping-cart"></i> 
-                            <span className="d-none d-md-inline">Products</span>
-                        </a>
-                        <div className="collapse" id="products-menu">
-                            <Link to={`/inventory`} className="list-group-item">Inventory</Link>
-                            <Link to={`/add`} className="list-group-item">Add new</Link>
-                        </div> 
-                    */}
+            <div className={sidebarClass}>
+                <Link to={`/`} className="item">
+                    <i className="home icon"></i>
+                    Home
+                </Link>
+                <Link to={`/inventory`} className="item">
+                    <i className="shopping bag icon"></i>
+                    Inventory
+                </Link>
 
-                    <div className="mt-auto p-2">
+
+
+               <div className="mt-auto p-2">
                         {this.renderLogOutButton()}
-                    </div>
-     
-                    {/* 
-                        <a href="#" className="list-group-item d-inline-block collapsed" data-parent="#sidebar">
-                            <i className="fa fa-list"></i> 
-                            <span className="d-none d-md-inline"></span>
-                        </a> 
-                    */}
-
-                </div>
+                </div> 
             </div>
+
         
         )
+        
     }
 }
 
