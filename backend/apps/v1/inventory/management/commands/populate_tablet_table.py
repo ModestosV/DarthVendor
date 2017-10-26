@@ -4,15 +4,15 @@ from backend.utils.database import Database
 
 tablets = [
     dict(
+        modelNumber='GGGGGG',
         quantity=5,
+        name='test',
         weight=10.0,
         weightFormat='lbs',
         price=299.99,
         priceFormat='CAD',
         brandName='SAMSUNG',
-        name='Galaxy Tab S2',
         type='tablet',
-        modelNumber='GGGGGG',
         ramSize=16,
         ramFormat='GB',
         processorType='ARM',
@@ -30,32 +30,46 @@ tablets = [
         sizeFormat='PX'
     ),
     dict(
-        quantity=10,
-        weight=5.0,
+        modelNumber='GAGGGGG',
+        quantity=50,
+        name='test0',
+        weight=11.0,
         weightFormat='lbs',
-        price=699.99,
+        price=2299.99,
         priceFormat='CAD',
-        brandName='APPLE',
-        name='Ipad Pro',
+        brandName='SAMSUNG',
         type='tablet',
-        modelNumber='AAAAAAAA',
         ramSize=16,
         ramFormat='GB',
-        processorType='APPLE',
-        numCores=4,
-        hardDriveSize=512,
+        processorType='ARM',
+        numCores=2,
+        hardDriveSize=1284,
         hardDriveFormat='GB',
-        os='iOS',
-        batteryInfo='6000mAH',
-        dx=20,
-        dy=20,
-        dz=1,
-        dimensionFormat='INCH',
-        cameraInfo='15.5 MP',
-        size=20.5,
+        os='Android',
+        batteryInfo='300043mAH',
+        dx=10,
+        dy=10,
+        dz=1.5,
+        dimensionFormat='CM',
+        cameraInfo='10.2 MP',
+        size=12.5,
         sizeFormat='PX'
     )
 ]
+
+tabletIDs = [
+	dict(
+	    serialNum='f569g79874',
+	    modelNum='GGGGGG',
+	    isLocked=0
+	),
+	dict(
+	    serialNum='bWERTERTERRK',
+	    modelNum='GAGGGGG',
+	    isLocked=0
+	)
+]
+
 
 
 class Command(BaseCommand):
@@ -67,29 +81,27 @@ class Command(BaseCommand):
 
             for tablet in tablets:
                 query = """
-                    INSERT INTO item (quantity, name, weight, weightFormat, price,
-                        priceFormat, brandName, type, modelNumber)
-                    VALUES ({quantity}, '{name}', {weight}, '{weightFormat}', 
-                        {price}, '{priceFormat}', '{brandName}', '{type}', '{modelNumber}');
+                    INSERT INTO tablet (modelNumber, quantity, name, weight, weightFormat, price, priceFormat, brandName, 
+                                        type, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat,
+                                        os, batteryInfo, dx, dy, dz, dimensionFormat, cameraInfo, size, sizeFormat)
+                    VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price}, '{priceFormat}',
+                                        '{brandName}', '{type}', {ramSize}, '{ramFormat}', '{processorType}', {numCores},
+                                        {hardDriveSize}, '{hardDriveFormat}', '{os}', '{batteryInfo}', {dx}, {dy}, {dz}, 
+                                        '{dimensionFormat}', '{cameraInfo}', {size}, '{sizeFormat}');
                 """.format(**tablet)
 
                 try:
                     cursor.execute(query)
                 except Exception as error:
                     print(error)
-
-                query = """
-                    INSERT INTO tablet (modelNumber, ramSize, ramFormat,
-                        processorType, numCores, hardDriveSize, hardDriveFormat,
-                        os, batteryInfo, dx, dy, dz, dimensionFormat, cameraInfo,
-                        size, sizeFormat)
-                    VALUES ('{modelNumber}', {ramSize}, '{ramFormat}',
-                        '{processorType}', {numCores}, {hardDriveSize}, '{hardDriveFormat}',
-                        '{os}', '{batteryInfo}', {dx}, {dy}, {dz}, '{dimensionFormat}', '{cameraInfo}',
-                        {size}, '{sizeFormat}');
-                """.format(**tablet)
-
-                try:
+                
+            for tabletID in tabletIDs:
+                 query = """
+		            INSERT INTO tabletID (serialNum, modelNum, isLocked)
+		            VALUES ('{serialNum}', '{modelNum}', {isLocked});
+		         """.format(**tabletID)
+				
+	             try:
                     cursor.execute(query)
                 except Exception as error:
                     print(error)
