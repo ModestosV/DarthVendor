@@ -19,7 +19,9 @@ class Command(BaseCommand):
                     address varchar(255) DEFAULT '',
                     phone varchar(255) DEFAULT '',
                     password varchar(255),
-                    isAdmin boolean
+                    isAdmin tinyint(1) DEFAULT 0,
+                    isLoggedIn tinyint(1) DEFAULT 0,
+                    timeStamp varchar(255) DEFAULT 'FunctionToBeImplemented'
                 );
             """
 

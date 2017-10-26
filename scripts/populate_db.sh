@@ -7,9 +7,6 @@ python3 manage.py populate_user_table
 echo "Create Token Table"
 python3 manage.py create_token_table
 
-echo "Create Item Table"
-python3 manage.py create_item_table
-
 echo "Create Desktop Table"
 python3 manage.py create_desktop_table
 
@@ -33,11 +30,5 @@ python3 manage.py create_tablet_table
 
 echo "Populate Tablet Table"
 python3 manage.py populate_tablet_table
-
-echo "Create Television Table"
-python3 manage.py create_television_table
-
-echo "Populate Television Table"
-python3 manage.py populate_television_table
 
 echo "Done"
