@@ -19,6 +19,7 @@ class Command(BaseCommand):
                     price double NOT NULL,
                     priceFormat varchar(255) NOT NULL,
                     brandName varchar(255) NOT NULL,
+                    type varchar(255) NOT NULL,
                     ramSize integer(11) NOT NULL,
                     ramFormat varchar(255) NOT NULL,
                     processorType varchar(255) NOT NULL,
@@ -42,8 +43,9 @@ class Command(BaseCommand):
                 CREATE TABLE desktopID (
                     serialNum varchar(255) NOT NULL,
                     modelNum varchar(255) NOT NULL,
+                    isLocked tinyint(1) DEFAULT 0,
                     PRIMARY KEY (serialNum),
-                    FOREIGN KEY(modelNum) REFERENCES desktop(modelNumber)
+                    FOREIGN KEY (modelNum) REFERENCES desktop (modelNumber)
                 );
             """
 
@@ -51,3 +53,4 @@ class Command(BaseCommand):
                 cursor.execute(query)
             except Exception as error:
                 print(error)
+                
