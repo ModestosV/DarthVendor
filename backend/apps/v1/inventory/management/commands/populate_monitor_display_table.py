@@ -32,17 +32,18 @@ monitors = [
 ]
 
 monitorDisplayIDs = [
-	dict(
-	    serialNum='g569s79874',
-	    modelNum='x123131',
-	    isLocked=0
-	),
-	dict(
-	    serialNum='TWERTERTERRK',
-	    modelNum='v123131',
-	    isLocked=0
-	)
+    dict(
+        serialNum='g569s79874',
+        modelNum='x123131',
+        isLocked=0
+    ),
+    dict(
+        serialNum='TWERTERTERRK',
+        modelNum='v123131',
+        isLocked=0
+    )
 ]
+
 
 class Command(BaseCommand):
     help = 'Populate monitor display table'
@@ -53,9 +54,9 @@ class Command(BaseCommand):
 
             for monitor in monitors:
                 query = """
-                    INSERT INTO monitorDisplay (modelNumber, quantity, name, weight, weightFormat, price, priceFormat, 
+                    INSERT INTO monitorDisplay (modelNumber, quantity, name, weight, weightFormat, price, priceFormat,
                                                 brandName, type, size, sizeFormat)
-                    VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price}, '{priceFormat}', 
+                    VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price}, '{priceFormat}',
                              '{brandName}', '{type}', {size}, '{sizeFormat}');
                 """.format(**monitor)
 
@@ -63,14 +64,14 @@ class Command(BaseCommand):
                     cursor.execute(query)
                 except Exception as error:
                     print(error)
-                    
+
             for monitorDisplayID in monitorDisplayIDs:
-                 query = """
-		            INSERT INTO monitorDisplayID (serialNum, modelNum, isLocked)
-		            VALUES ('{serialNum}', '{modelNum}', {isLocked});
-		         """.format(**monitorDisplayID)
-				
-	             try:
+                query = """
+                    INSERT INTO monitorDisplayID (serialNum, modelNum, isLocked)
+                    VALUES ('{serialNum}', '{modelNum}', {isLocked});
+                """.format(**monitorDisplayID)
+
+                try:
                     cursor.execute(query)
                 except Exception as error:
-                    print(error)                    
+                    print(error)
