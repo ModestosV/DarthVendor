@@ -11,7 +11,8 @@ desktops = [
         weightFormat='lbs',
         price=2299.99,
         priceFormat='CAD',
-        brandName='RAZER', 
+        brandName='RAZER',
+        type='Desktop',
         ramSize=16,
         ramFormat='GB',
         processorType='INTEL',
@@ -31,7 +32,8 @@ desktops = [
         weightFormat='lbs',
         price=3299.99,
         priceFormat='CAD',
-        brandName='APPLE', 
+        brandName='APPLE',
+        type='Desktop',
         ramSize=16,
         ramFormat='GB',
         processorType='INTEL',
@@ -46,17 +48,18 @@ desktops = [
 ]
 
 desktopIDs = [
-	dict(
-	serialNum='4569s79874',
-	    modelNum='ZZZZZZZ',
-	    isLocked=0
-	),
-	dict(
-	    serialNum='45698756x4',
-	    modelNum='PPPPPP',
-	    isLocked=0
-	)
+    dict(
+        serialNum='4569s79874',
+        modelNum='ZZZZZZZ',
+        isLocked=0
+    ),
+    dict(
+        serialNum='45698756x4',
+        modelNum='PPPPPP',
+        isLocked=0
+    )
 ]
+
 
 class Command(BaseCommand):
     help = 'Populate desktop table'
@@ -68,10 +71,10 @@ class Command(BaseCommand):
             for desktop in desktops:
                 query = """
                     INSERT INTO desktop (modelNumber, quantity, name, weight, weightFormat, price,
-                        priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize,
+                        priceFormat, brandName, type, ramSize, ramFormat, processorType, numCores, hardDriveSize,
                         hardDriveFormat, dx, dy, dz, dimensionFormat)
                     VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price},
-                        '{priceFormat}', '{brandName}', {ramSize}, '{ramFormat}', '{processorType}', {numCores}, {hardDriveSize},
+                        '{priceFormat}', '{brandName}', '{type}', {ramSize}, '{ramFormat}', '{processorType}', {numCores}, {hardDriveSize},
                         '{hardDriveFormat}', {dx}, {dy}, {dz}, '{dimensionFormat}');
                 """.format(**desktop)
 
@@ -79,15 +82,14 @@ class Command(BaseCommand):
                     cursor.execute(query)
                 except Exception as error:
                     print(error)
-					
-	    for desktopID in desktopIDs:
-	        query = """
-		    INSERT INTO desktopID (serialNum, modelNum, isLocked)
-		    VALUES ('{serialNum}', '{modelNum}', {isLocked});
-		""".format(**desktopID)
-				
-	        try:
+
+            for desktopID in desktopIDs:
+                query = """
+                INSERT INTO desktopID (serialNum, modelNum, isLocked)
+                VALUES ('{serialNum}', '{modelNum}', {isLocked});
+            """.format(**desktopID)
+
+                try:
                     cursor.execute(query)
                 except Exception as error:
-                    print(error)
-		
+                        print(error)

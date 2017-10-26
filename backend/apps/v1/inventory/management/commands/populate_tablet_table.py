@@ -58,18 +58,17 @@ tablets = [
 ]
 
 tabletIDs = [
-	dict(
-	    serialNum='f569g79874',
-	    modelNum='GGGGGG',
-	    isLocked=0
-	),
-	dict(
-	    serialNum='bWERTERTERRK',
-	    modelNum='GAGGGGG',
-	    isLocked=0
-	)
+    dict(
+        serialNum='f569g79874',
+        modelNum='GGGGGG',
+        isLocked=0
+    ),
+    dict(
+        serialNum='bWERTERTERRK',
+        modelNum='GAGGGGG',
+        isLocked=0
+    )
 ]
-
 
 
 class Command(BaseCommand):
@@ -81,12 +80,12 @@ class Command(BaseCommand):
 
             for tablet in tablets:
                 query = """
-                    INSERT INTO tablet (modelNumber, quantity, name, weight, weightFormat, price, priceFormat, brandName, 
+                    INSERT INTO tablet (modelNumber, quantity, name, weight, weightFormat, price, priceFormat, brandName,
                                         type, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat,
                                         os, batteryInfo, dx, dy, dz, dimensionFormat, cameraInfo, size, sizeFormat)
                     VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price}, '{priceFormat}',
                                         '{brandName}', '{type}', {ramSize}, '{ramFormat}', '{processorType}', {numCores},
-                                        {hardDriveSize}, '{hardDriveFormat}', '{os}', '{batteryInfo}', {dx}, {dy}, {dz}, 
+                                        {hardDriveSize}, '{hardDriveFormat}', '{os}', '{batteryInfo}', {dx}, {dy}, {dz},
                                         '{dimensionFormat}', '{cameraInfo}', {size}, '{sizeFormat}');
                 """.format(**tablet)
 
@@ -94,14 +93,14 @@ class Command(BaseCommand):
                     cursor.execute(query)
                 except Exception as error:
                     print(error)
-                
+
             for tabletID in tabletIDs:
-                 query = """
-		            INSERT INTO tabletID (serialNum, modelNum, isLocked)
-		            VALUES ('{serialNum}', '{modelNum}', {isLocked});
-		         """.format(**tabletID)
-				
-	             try:
+                query = """
+                    INSERT INTO tabletID (serialNum, modelNum, isLocked)
+                    VALUES ('{serialNum}', '{modelNum}', {isLocked});
+                """.format(**tabletID)
+
+                try:
                     cursor.execute(query)
                 except Exception as error:
                     print(error)

@@ -18,6 +18,7 @@ class Command(BaseCommand):
                     weightFormat varchar(255) NOT NULL,
                     price double NOT NULL,
                     priceFormat varchar(255) NOT NULL,
+                    brandName varchar(255) NOT NULL,
                     type varchar(255) NOT NULL,
                     ramSize integer(11) NOT NULL,
                     ramFormat varchar(255) NOT NULL,
@@ -40,9 +41,9 @@ class Command(BaseCommand):
 
             try:
                 cursor.execute(query)
-            except Exception as error: 
+            except Exception as error:
                 print(error)
-                
+
             query = """
                 CREATE TABLE tabletID (
                     serialNum varchar(255) NOT NULL,

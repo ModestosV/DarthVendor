@@ -52,17 +52,18 @@ laptops = [
 ]
 
 laptopIDs = [
-	dict(
-	    serialNum='f569s79874',
-	    modelNum='XPXPXPXPXPXP',
-	    isLocked=0
-	),
-	dict(
-	    serialNum='QWERTERTERRK',
-	    modelNum='PPPPPP',
-	    isLocked=0
-	)
+    dict(
+        serialNum='f569s79874',
+        modelNum='XPXPXPXPXPXP',
+        isLocked=0
+    ),
+    dict(
+        serialNum='QWERTERTERRK',
+        modelNum='PPPPPP',
+        isLocked=0
+    )
 ]
+
 
 class Command(BaseCommand):
     help = 'Populate laptop table'
@@ -74,7 +75,7 @@ class Command(BaseCommand):
             for laptop in laptops:
                 query = """
                     INSERT INTO laptop (modelNumber, quantity, name, weight, weightFormat, price,
-                    priceFormat, brandName, type, ramSize, ramFormat, processorType, numCores, 
+                    priceFormat, brandName, type, ramSize, ramFormat, processorType, numCores,
                     hardDriveSize, hardDriveFormat, containsCamera, isTouch, batteryInfo, os,
                            size, sizeFormat)
                     VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price},
@@ -88,14 +89,14 @@ class Command(BaseCommand):
                     cursor.execute(query)
                 except Exception as error:
                     print(error)
-                    
-             for laptopID in laptopIDs:
-                 query = """
-		            INSERT INTO laptopID (serialNum, modelNum, isLocked)
-		            VALUES ('{serialNum}', '{modelNum}', {isLocked});
-		         """.format(**laptopID)
-				
-	             try:
+
+            for laptopID in laptopIDs:
+                query = """
+                    INSERT INTO laptopID (serialNum, modelNum, isLocked)
+                    VALUES ('{serialNum}', '{modelNum}', {isLocked});
+                """.format(**laptopID)
+
+                try:
                     cursor.execute(query)
                 except Exception as error:
                     print(error)
