@@ -72,7 +72,7 @@ class TabletTDG:
                     type = '{type}',
                     size = {size},
                     sizeFormat = '{sizeFormat}'
-                    WHERE modelNumber = '{modelNumber}';                  
+                    WHERE modelNumber = '{modelNumber}';
                 """.format(**tablet)
 
             try:
