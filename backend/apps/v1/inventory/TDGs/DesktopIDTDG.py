@@ -71,7 +71,7 @@ class DesktopIDTDG:
 
     def unlock(uow):
         if owner is uow:
-            owner is None
+            owner = None
             return True
         else:
             return False
