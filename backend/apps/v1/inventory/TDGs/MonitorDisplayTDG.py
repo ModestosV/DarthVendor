@@ -2,6 +2,7 @@ from backend.utils.database import Database
 
 
 class MonitorDisplayTDG:
+
     owner = None
 
     @staticmethod
@@ -58,12 +59,13 @@ class MonitorDisplayTDG:
 
             try:
                 cursor.execute(query)
+
             except Exception as error:
                 print(error)
 
     @staticmethod
     def lock(uow):
-        if owner is None:
+        if MonitorDisplayTDG.owner is None:
             owner = uow
             return True
         else:
@@ -71,7 +73,7 @@ class MonitorDisplayTDG:
 
     @staticmethod
     def unlock(uow):
-        if owner is uow:
+        if MonitorDisplayTDG.owner is uow:
             owner = None
             return True
         else:
