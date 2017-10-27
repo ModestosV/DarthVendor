@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 from backend.utils.database import Database
 from django.contrib.auth.hashers import make_password
 
-
 users = [
     dict(
         firstname='foo',
@@ -12,6 +11,25 @@ users = [
         password=make_password('D4rthV3nD0r'),
         isAdmin=1
     ),
+
+    dict(
+        firstname='Modestos',
+        lastname='Glykis-Vergados',
+        username='modestos',
+        email='modestos@darthvendor.com',
+        password=make_password('qwerty'),
+        isAdmin=1
+    ),
+
+    dict(
+        firstname='test',
+        lastname='test',
+        username='test',
+        email='test@darthvendor.com',
+        password=make_password('test'),
+        isAdmin=1
+    ),
+
     dict(
         firstname='lorem',
         lastname='ipsum',
@@ -21,7 +39,6 @@ users = [
         isAdmin=0
     )
 ]
-
 
 class Command(BaseCommand):
     help = 'Populate user table'
