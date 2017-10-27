@@ -5,6 +5,23 @@ class LaptopTDG:
     owner = None
 
     @staticmethod
+    def find(modelNumber):
+
+        with Database() as cursor:
+            query = """
+                SELECT * FROM laptop WHERE modelNumber = '{modelNumber}';
+            """
+
+            try:
+                cursor.execute(query)
+
+                result = cursor.fetchone()
+                return result
+            except Exception as error:
+                print(error)
+                return None
+
+    @staticmethod
     def insert(laptop):
 
         with Database() as cursor:
@@ -22,3 +39,57 @@ class LaptopTDG:
                 cursor.execute(query)
             except Exception as error:
                 print(error)
+
+    @staticmethod
+    def update(laptop):
+
+        with Database() as cursor:
+            query = """
+                    UPDATE laptop SET
+                    quantity = {quantity},
+                    name = '{name}',
+                    weight = {weight},
+                    weightFormat = '{weightFormat}',
+                    price = {price},
+                    priceFormat = '{priceFormat}',
+                    brandName = '{brandName}',
+                    ramSize = '{ramSize}',
+                    ramFormat = {ramFormat},
+                    processorType = '{processorType}',
+                    numCores = '{numCores}',
+                    hardDriveSize = '{hardDriveSize}',
+                    hardDriveFormat = '{hardDriveFormat}',
+                    os ='{os}',
+                    batteryInfo ='{batteryInfo}',
+                    dx = '{dx}',
+                    dy = '{dy}',
+                    dz = '{dz}',
+                    dimensionFormat = '{dimensionFormat}',
+                    cameraInfo = '{cameraInfo}',
+                    type = '{type}',
+                    size = {size},
+                    sizeFormat = '{sizeFormat}'
+                    WHERE modelNumber = '{modelNumber}';                  
+                """.format(**laptop)
+
+            try:
+                cursor.execute(query)
+
+            except Exception as error:
+                print(error)
+
+    @staticmethod
+    def lock(uow):
+        if LaptopTDG.owner is None:
+            owner = uow
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def unlock(uow):
+        if LaptopTDG.owner is uow:
+            owner = None
+            return True
+        else:
+            return False
