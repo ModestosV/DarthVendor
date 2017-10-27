@@ -120,7 +120,6 @@ class ItemSpecMapper.py:
                     
 
             elif(filterlist['type'] = "LAPTOP"):
-                result = LaptopTDG.find(filterlist)
                 item = Laptop(
                             row.get('modelNumber'),
                             row.get('name'),
@@ -148,7 +147,6 @@ class ItemSpecMapper.py:
                 qty = LaptopIDTDG.getQuantity(item.modelNumber)
         
             elif(filterlist['type'] = "TABLET"):
-                result = TabletTDG.find(filterlist)
                 item = Tablet(
                             row.get('modelNumber'),
                             row.get('name'),
@@ -181,7 +179,6 @@ class ItemSpecMapper.py:
                 qty = TabletIDTDG.getQuantity(item.modelNumber)
         
             elif(filterlist['type'] = "MONITOR"):
-                result = MonitorDisplayTDG.find(filterlist)
                 item = MonitorDisplay(
                             row.get('modelNumber'), 
                             row.get('name'), 
