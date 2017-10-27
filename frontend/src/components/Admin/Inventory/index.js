@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, {Component} from 'react';
+import ReactModal from 'react-modal';
 import {Link, HashRouter as Router, Route} from 'react-router-dom';
 import settings from '../../../config/settings';
 import Sidebar from '../Sidebar';
+import ModifyItem from './ModifyItem';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class Inventory extends Component {
@@ -11,8 +13,14 @@ class Inventory extends Component {
         super(props);
         this.state = {
             items: [],
-            errorMsg: null
+            errorMsg: null,
+            showModal: false
         };
+
+        this.test = this.test.bind(this);
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+
     }
 
     componentWillMount() {  
@@ -25,6 +33,14 @@ class Inventory extends Component {
 
     componentDidMount() {
         this.itemsList();
+    }
+
+    handleOpenModal () {
+        this.setState({ showModal: true });
+    }
+    
+    handleCloseModal () {
+        this.setState({ showModal: false });
     }
 
     itemsList() {
@@ -43,9 +59,15 @@ class Inventory extends Component {
        })
     }
 
+    test(row) {
+        this.setState({item: row});
+        this.handleOpenModal();
+        console.log(this.state);
+    }
+
     render() {
         function cellFormat(cell, row){
-            return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+            return '<i className="glyphicon glyphicon-usd"></i> ' + cell;
         }
 
         function sortFunc(a, b, order) {   
@@ -54,6 +76,15 @@ class Inventory extends Component {
             } else {
                 return b.price - a.price;
             }
+        }
+
+        function displaySpecs(row){
+            console.log('aa')
+            
+        }
+
+        const options = { 
+            onRowClick: this.test
         }
 
         return (
@@ -69,18 +100,24 @@ class Inventory extends Component {
                             <i className="fa fa-plus pr-2"></i> 
                             <span className="">Add Item</span>
                         </Link>
-                        <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling>
+
+                        <BootstrapTable data={this.state.items} options={options} striped condensed hover pagination search scrolling >
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>                        
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>                        
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
-                            <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight</TableHeaderColumn>
-                            <TableHeaderColumn dataField="weightFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight Format</TableHeaderColumn>
-                            <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price</TableHeaderColumn>
-                            <TableHeaderColumn dataField="priceFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price Format</TableHeaderColumn>                        
+                            <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight (lbs)</TableHeaderColumn>
+                            <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price (CAD)</TableHeaderColumn>                      
                             <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Quantity</TableHeaderColumn>                        
                         </BootstrapTable>
                     </div>    
                 </div>
+                <ReactModal 
+                isOpen={this.state.showModal}
+                contentLabel="Minimal Modal Example"
+                >
+                    <button onClick={this.handleCloseModal}>Close Modal</button>
+                    <ModifyItem item={this.state.item}/>
+                </ReactModal>
             </div>
         );
     }
