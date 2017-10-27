@@ -1,7 +1,7 @@
 class ItemSpecification(object):
 
     def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName):
+                 weight, weightFormat, price, priceFormat, brandName, type):
 
         """Constructor"""
 
@@ -13,3 +13,4 @@ class ItemSpecification(object):
         self.price = price
         self.priceFormat = priceFormat
         self.brandName = brandName
+        self.type = type
