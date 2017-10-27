@@ -4,7 +4,6 @@ from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Size import Size
 from backend.apps.v1.inventory.models.Tablet import Tablet
-from backend.apps.v1.inventory.models.Television import Television
 from backend.utils.database import Database
 
 
@@ -41,15 +40,15 @@ class Inventory(object):
                         itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
                         cam, touch, itemSpec.batteryInfo, itemSpec.os, itemSpec.size.size, itemSpec.size.sizeFormat
                 )
-                
+
             elif type(itemSpec) is Desktop:
-                
+
                 itemQuery = self.generateItemQuery(
                     "DESKTOP", itemSpec.modelNumber, itemSpec.name,
                     itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
-                                
+
                 query = """
                     INSERT INTO desktop (modelNumber, ramSize, ramFormat,
                         processorType, numCores, hardDriveSize, hardDriveFormat,
@@ -58,15 +57,15 @@ class Inventory(object):
                         '{}', {}, {}, '{}',
                         {}, {}, {}, '{}');
                 """.format(
-                        itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat, 
-                        itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat, 
+                        itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat,
+                        itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
                         itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
                     )
 
             elif type(itemSpec) is MonitorDisplay:
                 itemQuery = self.generateItemQuery(
-                    "MONITOR", itemSpec.modelNumber, itemSpec.name, 
-                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, 
+                    "MONITOR", itemSpec.modelNumber, itemSpec.name,
+                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
@@ -75,25 +74,10 @@ class Inventory(object):
                     VALUES('{}', {}, '{}');
                 """.format(itemSpec.modelNumber, itemSpec.size.size, itemSpec.size.sizeFormat)
 
-            elif type(itemSpec) is Television:
-                itemQuery = self.generateItemQuery(
-                    "TV", itemSpec.modelNumber, itemSpec.name, 
-                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
-                    itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
-                )
-
-                query = """
-                    INSERT INTO television (modelNumber, tvType, dimensionFormat, dx, dy, dz)
-                    VALUES('{}', '{}', '{}', {}, {}, {});
-                """.format(
-                    itemSpec.modelNumber, itemSpec.tvType, itemSpec.dimension.format,
-                    itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z
-                )
-
             elif type(itemSpec) is Tablet:
                 itemQuery = self.generateItemQuery(
                     "TABLET", itemSpec.modelNumber, itemSpec.name,
-                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat, 
+                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
                     itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
                 )
 
@@ -121,7 +105,7 @@ class Inventory(object):
                 print(error)
 
             try:
-                cursor.execute(query)                
+                cursor.execute(query)
                 print("{} Added".format(itemSpec.__class__.__name__))
             except Exception as error:
                 print(error)
@@ -135,11 +119,6 @@ class Inventory(object):
             AND item.modelNumber = tablet.modelNumber;
         """
 
-        queryTv = """
-            SELECT * from item, television
-            WHERE (UPPER(item.type) = "TELEVISION" OR UPPER(item.type) = "TV")
-            AND item.modelNumber = television.modelNumber;
-        """
         queryDesktop = """
             SELECT * from item, desktop
             WHERE UPPER(item.type) = "DESKTOP"
@@ -165,7 +144,7 @@ class Inventory(object):
             try:
 
                 cursor.execute(queryTablet)
-                for row in cursor.fetchall():                    
+                for row in cursor.fetchall():
                     result.append(
                         Tablet(
                             row.get('modelNumber'),
@@ -196,10 +175,10 @@ class Inventory(object):
                             row.get('cameraInfo'),
                             row.get('batteryInfo')
                         )
-                    )                 
+                    )
 
                 cursor.execute(queryDesktop)
-                for row in cursor.fetchall():                    
+                for row in cursor.fetchall():
                     result.append(
                         Desktop(
                             row.get('modelNumber'),
@@ -223,12 +202,12 @@ class Inventory(object):
                                 row.get('dimensionFormat'),
                             ),
                         )
-                    )    
+                    )
 
-                cursor.execute(queryTv)                
-                for row in cursor.fetchall():                    
+                cursor.execute(queryMonitor)
+                for row in cursor.fetchall():
                     result.append(
-                        Television(
+                        MonitorDisplay(
                             row.get('modelNumber'),
                             row.get('name'),
                             row.get('quantity'),
@@ -237,34 +216,12 @@ class Inventory(object):
                             row.get('price'),
                             row.get('priceFormat'),
                             row.get('brandName'),
-                            Dimension(
-                                row.get('dx'),
-                                row.get('dy'),
-                                row.get('dz'),
-                                row.get('dimensionFormat'),
-                            ),
-                            row.get('tvType')
-                        )
-                    )   
-
-                cursor.execute(queryMonitor)
-                for row in cursor.fetchall():                                        
-                    result.append(
-                        MonitorDisplay(
-                            row.get('modelNumber'), 
-                            row.get('name'), 
-                            row.get('quantity'),                             
-                            row.get('weight'),
-                            row.get('weightFormat'), 
-                            row.get('price'), 
-                            row.get('priceFormat'), 
-                            row.get('brandName'), 
                             Size(
-                                row.get('size'), 
+                                row.get('size'),
                                 row.get('sizeFormat')
                             )
                         )
-                    )                
+                    )
 
                 cursor.execute(queryLaptop)
                 for row in cursor.fetchall():
@@ -289,10 +246,10 @@ class Inventory(object):
                             row.get('batteryInfo'),
                             row.get('os'),
                             Size(
-                                row.get('size'), 
+                                row.get('size'),
                                 row.get('sizeFormat')
-                            )                            
-                        )                        
+                            )
+                        )
                     )
 
 
@@ -318,4 +275,3 @@ class Inventory(object):
             weight, wf, price, pf, brandName
         )
         return qry
-        
