@@ -9,6 +9,10 @@ from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
 from backend.apps.v1.inventory.TDGs.LaptopTDG import LaptopTDG
 from backend.apps.v1.inventory.TDGs.MonitorDisplayTDG import MonitorDisplayTDG
 from backend.apps.v1.inventory.TDGs.TabletTDG import TabletTDG
+from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopIDTDG
+from backend.apps.v1.inventory.TDGs.LaptopTDG import LaptopIDTDG
+from backend.apps.v1.inventory.TDGs.MonitorDisplayTDG import MonitorDisplayIDTDG
+from backend.apps.v1.inventory.TDGs.TabletTDG import TabletIDTDG
 
 
 class ItemSpecMapper.py:
@@ -86,6 +90,8 @@ class ItemSpecMapper.py:
         elif(filterlist['type'] = "MONITOR"):
             result = MonitorDisplayTDG.find(filterlist)
         
+        itemSpecList = list()
+
         for row in result:
             if (filterlist['type'] = "DESKTOP"):
                 item = Desktop(
@@ -110,6 +116,8 @@ class ItemSpecMapper.py:
                                 row.get('dimensionFormat'),
                             ),
                         )
+                qty = DesktopIDTDG.getQuantity(item.modelNumber)
+                    
 
             elif(filterlist['type'] = "LAPTOP"):
                 result = LaptopTDG.find(filterlist)
@@ -137,6 +145,7 @@ class ItemSpecMapper.py:
                                 row.get('sizeFormat')
                             )                            
                         )
+                qty = LaptopIDTDG.getQuantity(item.modelNumber)
         
             elif(filterlist['type'] = "TABLET"):
                 result = TabletTDG.find(filterlist)
@@ -169,6 +178,7 @@ class ItemSpecMapper.py:
                             row.get('cameraInfo'),
                             row.get('batteryInfo')
                         )
+                qty = TabletIDTDG.getQuantity(item.modelNumber)
         
             elif(filterlist['type'] = "MONITOR"):
                 result = MonitorDisplayTDG.find(filterlist)
@@ -186,3 +196,8 @@ class ItemSpecMapper.py:
                                 row.get('sizeFormat')
                             )
                         )
+                qty = MonitorDisplayIDTDG.getQuantity(item.modelNumber)
+            
+            itemSpecList.append(item)
+
+        return itemSpecList, qty
