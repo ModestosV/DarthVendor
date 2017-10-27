@@ -48,7 +48,7 @@ class DesktopTDG:
 
         with Database() as cursor:
             query = """
-                    UPDATE laptop SET
+                    UPDATE desktop SET
                     quantity = {quantity},
                     name = '{name}',
                     weight = {weight},
