@@ -1,7 +1,8 @@
 from backend.utils.database import Database
 
 
-class monitorDisplayTDG:
+class MonitorDisplayTDG:
+
     owner = None
 
     @staticmethod
@@ -64,7 +65,7 @@ class monitorDisplayTDG:
 
     @staticmethod
     def lock(uow):
-        if monitorDisplayTDG.owner is None:
+        if MonitorDisplayTDG.owner is None:
             owner = uow
             return True
         else:
@@ -72,7 +73,7 @@ class monitorDisplayTDG:
 
     @staticmethod
     def unlock(uow):
-        if monitorDisplayTDG.owner is uow:
+        if MonitorDisplayTDG.owner is uow:
             owner = None
             return True
         else:
