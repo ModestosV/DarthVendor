@@ -1,7 +1,7 @@
 from backend.utils.database import Database
 
 
-class TabletTDG:
+class MonitorDisplayTDG:
     owner = None
 
     @staticmethod
