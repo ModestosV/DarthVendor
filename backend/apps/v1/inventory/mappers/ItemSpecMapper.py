@@ -19,10 +19,36 @@ class ItemSpecMapper.py:
     
     @staticmethod
     def insert(itemspec):
+        if(itemspec is Desktop):
+            result = DesktopTDG.insert(itemspec)
+
+        elif(itemspec is Laptop):
+            result = LaptopTDG.insert(itemspec)
+
+        elif(itemspec is MonitorDisplay):
+            result = MonitorDisplayTDG.insert(itemspec)
+
+        elif(itemspec is Tablet):
+            result = TabletTDG.insert(itemspec)
+        
+        return result
 
     
     @staticmethod
     def update(itemspec):
+        if(itemspec is Desktop):
+            result = DesktopTDG.update(itemspec)
+
+        elif(itemspec is Laptop):
+            result = LaptopTDG.update(itemspec)
+
+        elif(itemspec is MonitorDisplay):
+            result = MonitorDisplayTDG.update(itemspec)
+
+        elif(itemspec is Tablet):
+            result = TabletTDG.update(itemspec)
+        
+        return result
     
     @staticmethod
     def lock(type, uow):
@@ -42,22 +68,20 @@ class ItemSpecMapper.py:
     
     @staticmethod
     def unlock(type):
-        
-    @staticmethod
-    def deleteItem(id):
-        if(id.spec is Desktop):
-            result = DesktopTDG.find(itemspec.modelNumber)
+        if(type = "DESKTOP"):
+            result = DesktopTDG.unlock()
 
-        elif(id.spec is Laptop):
-            result = LaptopTDG.find(itemspec.modelNumber)
+        elif(type = "LAPTOP"):
+            result = LaptopTDG.unlock()
 
-        elif(id.spec is MonitorDisplay):
-            result = MonitorDisplayTDG.find(itemspec.modelNumber)
+        elif(type = "MONITOR"):
+            result = MonitorDisplayTDG.unlock()
 
-        elif(id.spec is Tablet):
-            result = TabletTDG.find(itemspec.modelNumber)
-        
+        elif(type = "TABLET"):
+            result = TabletTDG.unlock()
+
         return result
+        
         
     @staticmethod
     def find(itemspec):
