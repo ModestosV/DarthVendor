@@ -4,7 +4,7 @@ from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 class Tablet(ItemSpecification):
 
     def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName, type
+                 weight, weightFormat, price, priceFormat, brandName, type,
                  ramSize, ramFormat, processorType, numCores,
                  hardDriveSize, hardDriveFormat, os, dimension,
                  size, cameraInfo, batteryInfo):
@@ -12,7 +12,7 @@ class Tablet(ItemSpecification):
         """Constructor"""
 
         super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName, type
+                         weight, weightFormat, price, priceFormat, brandName, type,
                          ramSize, ramFormat, processorType, numCores,
                          hardDriveSize, hardDriveFormat)
 

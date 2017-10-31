@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from backend.apps.v1.inventory.models.Store import Store
-from backend.apps.v1.inventory.models.Television import Television
 from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Laptop import Laptop
@@ -24,14 +23,7 @@ class ItemView(APIView):
         item = None
         print(itemData)
         try:
-            if itemType == "Television":
-                dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])
-                item = Television(
-                    itemData["modelNumber"], itemData["name"], itemData["quantity"], 
-                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], 
-                    dimension, itemData["tvType"]
-                )
-            elif itemType == "Desktop":
+            if itemType == "Desktop":
                 dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])
                 item = Desktop(
                     itemData["modelNumber"], itemData["name"], itemData["quantity"], 
