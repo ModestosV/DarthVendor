@@ -14,7 +14,7 @@ class ModifyItem extends Component {
         }
     }
 
-    handleForm() {
+    confirmModifications() {
 
         let data = this.state;
 
@@ -27,7 +27,7 @@ class ModifyItem extends Component {
             }
         })
         .then(response => {
-            console.log('item added');
+            console.log('item modified');
         })
         .catch(error => {
             console.log(error);
@@ -41,14 +41,21 @@ class ModifyItem extends Component {
 
     }
 
+    handleChange(event){
+        this.setState({[event.target.name]: event.target.value});
+    }
+
     displaySpecs() {
             return (                
                 <div>
                     {Object.keys(this.props.item).map((name,index) => {
-                        console.log(this.props.item[name]);
-                        return (
-                            <p key={index}>{name}: {this.props.item[name]}</p>
-                        );
+                        if(typeof this.props.item[name] != 'object'){
+                            return (
+                                <div key={index}>
+                                    {name}: <input type="text" name={name} onChange={ (e) => this.handleChange(e) }/>{this.props.item[name]}
+                                </div>
+                            );
+                        }
                     })
                     }
                 </div>  
@@ -56,15 +63,16 @@ class ModifyItem extends Component {
     }
 
     componentWillMount() {
+        this.state = this.props.item;
         console.log(localStorage);
     }
 
     render() {
-        console.log(this.props);
+        console.log(this.state);
         return (
             <div>
                 <div className="pusher">
-
+                    <button onClick={() => {this.confirmModifications(); this.props.closeModal}}>Confirm</button>
                     <div className="container p-0 mt-4">
                     <h1>Modify Item</h1>
                     { this.displaySpecs() }

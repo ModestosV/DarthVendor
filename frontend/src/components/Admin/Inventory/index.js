@@ -17,9 +17,9 @@ class Inventory extends Component {
             showModal: false
         };
 
-        this.test = this.test.bind(this);
-        this.handleOpenModal = this.handleOpenModal.bind(this);
-        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.showSpecs = this.showSpecs.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
 
     }
 
@@ -35,11 +35,11 @@ class Inventory extends Component {
         this.itemsList();
     }
 
-    handleOpenModal () {
+    openModal () {
         this.setState({ showModal: true });
     }
     
-    handleCloseModal () {
+    closeModal () {
         this.setState({ showModal: false });
     }
 
@@ -59,9 +59,9 @@ class Inventory extends Component {
        })
     }
 
-    test(row) {
+    showSpecs(row) {
         this.setState({item: row});
-        this.handleOpenModal();
+        this.openModal();
         console.log(this.state);
     }
 
@@ -84,7 +84,7 @@ class Inventory extends Component {
         }
 
         const options = { 
-            onRowClick: this.test
+            onRowClick: this.showSpecs
         }
 
         return (
@@ -115,8 +115,8 @@ class Inventory extends Component {
                 isOpen={this.state.showModal}
                 contentLabel="Minimal Modal Example"
                 >
-                    <button onClick={this.handleCloseModal}>Close Modal</button>
-                    <ModifyItem item={this.state.item}/>
+                    <button onClick={this.closeModal}>Close Modal</button>
+                    <ModifyItem item={this.state.item} closeModal={this.closeModal}/>
                 </ReactModal>
             </div>
         );
