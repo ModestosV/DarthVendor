@@ -1,7 +1,7 @@
 from backend.utils.database import Database
 
 
-class DesktopIDTDG:
+class MonitorDisplayIDTDG:
 
     owner = None
 
@@ -10,7 +10,7 @@ class DesktopIDTDG:
         with Database() as cursor:
 
             query = """
-                SELECT * FROM desktopID WHERE modelNum = '{spec.modelNum}';
+                SELECT * FROM monitorDisplayID WHERE modelNum = '{spec.modelNum}';
             """
             try:
                 cursor.execute(query)
@@ -20,29 +20,15 @@ class DesktopIDTDG:
                 print(error)
                 return None
 
-    def findBySerialNum(serialNum):
+
+    def insert(monitorDisplayID):
 
         with Database() as cursor:
 
             query = """
-                SELECT * FROM desktopID WHERE serialNum = '{serialNum}';
-            """
-            try:
-                cursor.execute(query)
-                result = cursor.fetchone()
-                return result
-            except Exception as error:
-                print(error)
-                return None
-
-    def insert(desktopID):
-
-        with Database() as cursor:
-
-            query = """
-                INSERT INTO desktopID (serialNum, modelNum, isLocked)
+                INSERT INTO monitorDisplayID (serialNum, modelNum, isLocked)
                 VALUES ('{serialNum}', '{spec.modelNum}', 0);
-            """.format(**desktopID)
+            """.format(**monitorDisplayID)
 
             try:
                 cursor.execute(query)
@@ -54,7 +40,7 @@ class DesktopIDTDG:
         with Database() as cursor:
 
             query = """
-                DELETE FROM desktopID WHERE serialNum = '{serialNum}';
+                DELETE FROM monitorDisplayID WHERE serialNum = '{serialNum}';
             """
 
             try:
