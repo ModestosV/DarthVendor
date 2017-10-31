@@ -1,13 +1,16 @@
-class Administrator(object):
+from backend.apps.v1.accounts.models import Client
+
+class Administrator(Client):
 
     def __init__(self, id, username, password,
+                 isAdmin, isLoggedIn, timeStamp,
                  firstname, lastname, address, email, phone):
 
         """Constructor"""
+        
+        super().__init__(id, username, password,
+                 isAdmin, isLoggedIn, timeStamp)
 
-        self.id = id
-        self.username = username
-        self.password = password
         self.firstname = firstname
         self.lastname = lastname
         self.address = address
