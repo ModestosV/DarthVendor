@@ -4,7 +4,6 @@ from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Size import Size
 from backend.apps.v1.inventory.models.Tablet import Tablet
-from backend.apps.v1.inventory.models.Television import Television
 from backend.utils.database import Database
 
 
@@ -75,20 +74,6 @@ class Inventory(object):
                     VALUES('{}', {}, '{}');
                 """.format(itemSpec.modelNumber, itemSpec.size.size, itemSpec.size.sizeFormat)
 
-            elif type(itemSpec) is Television:
-                itemQuery = self.generateItemQuery(
-                    "TV", itemSpec.modelNumber, itemSpec.name, 
-                    itemSpec.quantity, itemSpec.weight, itemSpec.weightFormat,
-                    itemSpec.price, itemSpec.priceFormat, itemSpec.brandName
-                )
-
-                query = """
-                    INSERT INTO television (modelNumber, tvType, dimensionFormat, dx, dy, dz)
-                    VALUES('{}', '{}', '{}', {}, {}, {});
-                """.format(
-                    itemSpec.modelNumber, itemSpec.tvType, itemSpec.dimension.format,
-                    itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z
-                )
 
             elif type(itemSpec) is Tablet:
                 itemQuery = self.generateItemQuery(
@@ -135,11 +120,6 @@ class Inventory(object):
             AND item.modelNumber = tablet.modelNumber;
         """
 
-        queryTv = """
-            SELECT * from item, television
-            WHERE (UPPER(item.type) = "TELEVISION" OR UPPER(item.type) = "TV")
-            AND item.modelNumber = television.modelNumber;
-        """
         queryDesktop = """
             SELECT * from item, desktop
             WHERE UPPER(item.type) = "DESKTOP"
@@ -223,29 +203,7 @@ class Inventory(object):
                                 row.get('dimensionFormat'),
                             ),
                         )
-                    )    
-
-                cursor.execute(queryTv)                
-                for row in cursor.fetchall():                    
-                    result.append(
-                        Television(
-                            row.get('modelNumber'),
-                            row.get('name'),
-                            row.get('quantity'),
-                            row.get('weight'),
-                            row.get('weightFormat'),
-                            row.get('price'),
-                            row.get('priceFormat'),
-                            row.get('brandName'),
-                            Dimension(
-                                row.get('dx'),
-                                row.get('dy'),
-                                row.get('dz'),
-                                row.get('dimensionFormat'),
-                            ),
-                            row.get('tvType')
-                        )
-                    )   
+                    )     
 
                 cursor.execute(queryMonitor)
                 for row in cursor.fetchall():                                        
