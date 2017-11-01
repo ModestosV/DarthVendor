@@ -9,26 +9,26 @@ from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
 from backend.apps.v1.inventory.TDGs.LaptopTDG import LaptopTDG
 from backend.apps.v1.inventory.TDGs.MonitorDisplayTDG import MonitorDisplayTDG
 from backend.apps.v1.inventory.TDGs.TabletTDG import TabletTDG
-from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopIDTDG
-from backend.apps.v1.inventory.TDGs.LaptopTDG import LaptopIDTDG
-from backend.apps.v1.inventory.TDGs.MonitorDisplayTDG import MonitorDisplayIDTDG
-from backend.apps.v1.inventory.TDGs.TabletTDG import TabletIDTDG
+from backend.apps.v1.inventory.TDGs.DesktopIDTDG import DesktopIDTDG
+from backend.apps.v1.inventory.TDGs.LaptopIDTDG import LaptopIDTDG
+from backend.apps.v1.inventory.TDGs.MonitorDisplayIDTDG import MonitorDisplayIDTDG
+from backend.apps.v1.inventory.TDGs.TabletIDTDG import TabletIDTDG
 
 
-class ItemSpecMapper.py:
+class ItemSpecMapper():
     
     @staticmethod
     def insert(itemspec):
-        if(itemspec is Desktop):
+        if(type(itemspec) is Desktop):
             result = DesktopTDG.insert(itemspec)
 
-        elif(itemspec is Laptop):
+        elif(type(itemspec) is Laptop):
             result = LaptopTDG.insert(itemspec)
 
-        elif(itemspec is MonitorDisplay):
+        elif(type(itemspec) is MonitorDisplay):
             result = MonitorDisplayTDG.insert(itemspec)
 
-        elif(itemspec is Tablet):
+        elif(type(itemspec) is Tablet):
             result = TabletTDG.insert(itemspec)
         
         return result
@@ -36,48 +36,48 @@ class ItemSpecMapper.py:
     
     @staticmethod
     def update(itemspec):
-        if(itemspec is Desktop):
+        if(type(itemspec) is Desktop):
             result = DesktopTDG.update(itemspec)
 
-        elif(itemspec is Laptop):
+        elif(type(itemspec) is Laptop):
             result = LaptopTDG.update(itemspec)
 
-        elif(itemspec is MonitorDisplay):
+        elif(type(itemspec) is MonitorDisplay):
             result = MonitorDisplayTDG.update(itemspec)
 
-        elif(itemspec is Tablet):
+        elif(type(itemspec) is Tablet):
             result = TabletTDG.update(itemspec)
         
         return result
     
     @staticmethod
     def lock(type, uow):
-        if(itemspec is Desktop):
+        if(type == "DESKTOP"):
             result = DesktopTDG.lock(uow)
 
-        elif(itemspec is Laptop):
+        elif(type == "LAPTOP"):
             result = LaptopTDG.lock(uow)
 
-        elif(itemspec is MonitorDisplay):
+        elif(type == "MONITOR"):
             result = MonitorDisplayTDG.lock(uow)
 
-        elif(itemspec is Tablet):
+        elif(type == "TABLET"):
             result = TabletTDG.lock(uow)
         
         return result
     
     @staticmethod
     def unlock(type):
-        if(type = "DESKTOP"):
+        if(type == "DESKTOP"):
             result = DesktopTDG.unlock()
 
-        elif(type = "LAPTOP"):
+        elif(type == "LAPTOP"):
             result = LaptopTDG.unlock()
 
-        elif(type = "MONITOR"):
+        elif(type == "MONITOR"):
             result = MonitorDisplayTDG.unlock()
 
-        elif(type = "TABLET"):
+        elif(type == "TABLET"):
             result = TabletTDG.unlock()
 
         return result
@@ -85,39 +85,38 @@ class ItemSpecMapper.py:
         
     @staticmethod
     def find(itemspec):
-        if(itemspec is Desktop):
+        if(type(itemspec) is Desktop):
             result = DesktopTDG.find(itemspec.modelNumber)
 
-        elif(itemspec is Laptop):
+        elif(type(itemspec) is Laptop):
             result = LaptopTDG.find(itemspec.modelNumber)
 
-        elif(itemspec is MonitorDisplay):
+        elif(type(itemspec) is MonitorDisplay):
             result = MonitorDisplayTDG.find(itemspec.modelNumber)
 
-        elif(itemspec is Tablet):
+        elif(type(itemspec) is Tablet):
             result = TabletTDG.find(itemspec.modelNumber)
-        
         return result
     
     @staticmethod
     def findAll(filterlist):
         
-        if (filterlist['type'] = "DESKTOP"):
+        if (filterlist['type'] == "DESKTOP"):
             result = DesktopTDG.find(filterlist)
 
-        elif(filterlist['type'] = "LAPTOP"):
+        elif(filterlist['type'] == "LAPTOP"):
             result = LaptopTDG.find(filterlist)
         
-        elif(filterlist['type'] = "TABLET"):
+        elif(filterlist['type'] == "TABLET"):
             result = TabletTDG.find(filterlist)
         
-        elif(filterlist['type'] = "MONITOR"):
+        elif(filterlist['type'] == "MONITOR"):
             result = MonitorDisplayTDG.find(filterlist)
         
         itemSpecList = list()
 
         for row in result:
-            if (filterlist['type'] = "DESKTOP"):
+            if (filterlist['type'] == "DESKTOP"):
                 item = Desktop(
                             row.get('modelNumber'),
                             row.get('name'),
@@ -143,7 +142,7 @@ class ItemSpecMapper.py:
                 qty = DesktopIDTDG.getQuantity(item.modelNumber)
                     
 
-            elif(filterlist['type'] = "LAPTOP"):
+            elif(filterlist['type'] == "LAPTOP"):
                 item = Laptop(
                             row.get('modelNumber'),
                             row.get('name'),
@@ -170,7 +169,7 @@ class ItemSpecMapper.py:
                         )
                 qty = LaptopIDTDG.getQuantity(item.modelNumber)
         
-            elif(filterlist['type'] = "TABLET"):
+            elif(filterlist['type'] == "TABLET"):
                 item = Tablet(
                             row.get('modelNumber'),
                             row.get('name'),
@@ -202,7 +201,7 @@ class ItemSpecMapper.py:
                         )
                 qty = TabletIDTDG.getQuantity(item.modelNumber)
         
-            elif(filterlist['type'] = "MONITOR"):
+            elif(filterlist['type'] == "MONITOR"):
                 item = MonitorDisplay(
                             row.get('modelNumber'), 
                             row.get('name'), 
