@@ -1,12 +1,14 @@
 from rest_framework import serializers
 from backend.apps.v1.inventory.serializers.AbstractSerializers import AbstractComputerSerializer
-from backend.apps.v1.inventory.serializers.DimensionSerializer import DimensionSerializer
-from backend.apps.v1.inventory.serializers.SizeSerializer import SizeSerializer
 
 
 class TabletSerializer(AbstractComputerSerializer):
     os = serializers.CharField()
-    dimension = DimensionSerializer()
-    size = SizeSerializer()
+    dx = serializers.FloatField()
+    dy = serializers.FloatField()
+    dz = serializers.FloatField()
+    dimensionFormat = serializers.CharField()
+    size = serializers.FloatField()
+    sizeFormat = serializers.CharField()
     cameraInfo = serializers.CharField()
     batteryInfo = serializers.CharField()
