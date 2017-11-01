@@ -9,4 +9,5 @@ class LaptopSerializer(AbstractComputerSerializer):
     isTouch = serializers.BooleanField()
     batteryInfo = serializers.CharField()
     os = serializers.CharField()
-    size = SizeSerializer()
+    size = serializers.FloatField()
+    sizeFormat = serializers.CharField()
