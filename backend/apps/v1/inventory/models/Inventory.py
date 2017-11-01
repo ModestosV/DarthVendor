@@ -205,6 +205,7 @@ class Inventory(object):
                     )
 
                 cursor.execute(queryMonitor)
+
                 for row in cursor.fetchall():
                     result.append(
                         MonitorDisplay(

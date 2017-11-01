@@ -11,7 +11,25 @@ from backend.apps.v1.inventory.TDGs.TabletIDTDG import TabletIDTDG
 
 
 class ItemIDMapper:
-
+    self.serialNum = serialNum
+    self.spec = spec
+    self.isLocked = isLocked
     @staticmethod
     def findAllForSpec(spec):
-        
+
+
+    @staticmethod
+    def insert(serialNumber):
+        if
+
+    @staticmethod
+    def delete(serialNumber):
+
+
+    @staticmethod
+    def lock(type, uow):
+
+
+    @staticmethod
+    def unlock(type):
+
