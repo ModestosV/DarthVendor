@@ -10,8 +10,8 @@ class MonitorDisplayTDG:
 
         with Database() as cursor:
             query = """
-                SELECT * FROM monitorDisplay WHERE modelNumber = '{modelNumber}';
-            """
+                SELECT * FROM monitorDisplay WHERE modelNumber = '{}';
+            """.format(modelNumber)
 
             try:
                 cursor.execute(query)
@@ -31,7 +31,7 @@ class MonitorDisplayTDG:
                                             brandName, type, size, sizeFormat)
                 VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price}, '{priceFormat}',
                          '{brandName}', '{type}', {size}, '{sizeFormat}');
-            """.format(**monitor)
+            """.format(**(monitor.__dict__))
 
             try:
                 cursor.execute(query)
@@ -55,7 +55,7 @@ class MonitorDisplayTDG:
                 size = {size},
                 sizeFormat = '{sizeFormat}'
                 WHERE modelNumber = '{modelNumber}';
-            """.format(**monitor)
+            """.format(**(monitor.__dict__))
 
             try:
                 cursor.execute(query)

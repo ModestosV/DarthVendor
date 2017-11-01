@@ -7,7 +7,7 @@ class Laptop(AbstractComputer):
                  weight, weightFormat, price, priceFormat, brandName,
                  ramSize, ramFormat, processorType, numCores,
                  hardDriveSize, hardDriveFormat,
-                 containCamera, isTouch, batteryInfo, os, size):
+                 containCamera, isTouch, batteryInfo, os, size, sizeFormat):
 
         """" Constructor """
 
@@ -21,3 +21,4 @@ class Laptop(AbstractComputer):
         self.batteryInfo = batteryInfo
         self.os = os
         self.size = size
+        self.sizeFormat = sizeFormat

@@ -13,8 +13,8 @@ class DesktopTDG:
 
         with Database() as cursor:
             query = """
-                    SELECT * FROM desktop WHERE modelNumber = '{modelNumber}';
-                """
+                    SELECT * FROM desktop WHERE modelNumber = '{}';
+                """.format(modelNumber)
 
             try:
                 cursor.execute(query)
@@ -36,7 +36,7 @@ class DesktopTDG:
                 VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price},
                     '{priceFormat}', '{brandName}', '{type}', {ramSize}, '{ramFormat}', '{processorType}', {numCores}, {hardDriveSize},
                     '{hardDriveFormat}', {dx}, {dy}, {dz}, '{dimensionFormat}');
-            """.format(**desktop)
+            """.format(**(desktop.__dict__))
 
             try:
                 cursor.execute(query)
@@ -72,8 +72,8 @@ class DesktopTDG:
                     type = '{type}',
                     size = {size},
                     sizeFormat = '{sizeFormat}'
-                    WHERE modelNumber = '{modelNumber}';                  
-                """.format(**desktop)
+                    WHERE modelNumber = '{modelNumber}';
+                """.format(**(desktop.__dict__))
 
             try:
                 cursor.execute(query)
