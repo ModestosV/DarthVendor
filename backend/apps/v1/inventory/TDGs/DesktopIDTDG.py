@@ -10,8 +10,8 @@ class DesktopIDTDG:
         with Database() as cursor:
 
             query = """
-                SELECT * FROM desktopID WHERE modelNum = '{spec.modelNum}';
-            """
+                SELECT * FROM desktopID WHERE modelNum = '{}';
+            """.format(spec.modelNumber)
             try:
                 cursor.execute(query)
                 resultSet = cursor.fetchall()
@@ -26,7 +26,7 @@ class DesktopIDTDG:
 
             query = """
                 SELECT * FROM desktopID WHERE serialNum = '{serialNum}';
-            """
+            """.format()
             try:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -41,8 +41,8 @@ class DesktopIDTDG:
 
             query = """
                 INSERT INTO desktopID (serialNum, modelNum, isLocked)
-                VALUES ('{serialNum}', '{spec.modelNum}', 0);
-            """.format(**desktopID)
+                VALUES ('{}', '{}', 0);
+            """.format(desktopID.serialNum, desktopID.spec.modelNum)
 
             try:
                 cursor.execute(query)
@@ -54,8 +54,8 @@ class DesktopIDTDG:
         with Database() as cursor:
 
             query = """
-                DELETE FROM desktopID WHERE serialNum = '{serialNum}';
-            """
+                DELETE FROM desktopID WHERE serialNum = '{}';
+            """.format(serialNum)
 
             try:
                 cursor.execute(query)

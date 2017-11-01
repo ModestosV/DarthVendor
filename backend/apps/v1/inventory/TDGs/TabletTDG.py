@@ -12,8 +12,8 @@ class TabletTDG:
 
         with Database() as cursor:
             query = """
-                    SELECT * FROM tablet WHERE modelNumber = '{modelNumber}';
-                """
+                    SELECT * FROM tablet WHERE modelNumber = '{}';
+                """.format(modelNumber)
 
             try:
                 cursor.execute(query)
@@ -36,7 +36,7 @@ class TabletTDG:
                                     '{brandName}', '{type}', {ramSize}, '{ramFormat}', '{processorType}', {numCores},
                                     {hardDriveSize}, '{hardDriveFormat}', '{os}', '{batteryInfo}', {dx}, {dy}, {dz},
                                     '{dimensionFormat}', '{cameraInfo}', {size}, '{sizeFormat}');
-            """.format(**tablet)
+            """.format(**(tablet.__dict__))
 
             try:
                 cursor.execute(query)
@@ -73,7 +73,7 @@ class TabletTDG:
                     size = {size},
                     sizeFormat = '{sizeFormat}'
                     WHERE modelNumber = '{modelNumber}';
-                """.format(**tablet)
+                """.format(**(tablet.__dict__))
 
             try:
                 cursor.execute(query)

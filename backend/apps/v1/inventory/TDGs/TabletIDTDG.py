@@ -10,8 +10,8 @@ class TabletIDTDG:
         with Database() as cursor:
 
             query = """
-                SELECT * FROM tabletID WHERE modelNum = '{spec.modelNum}';
-            """
+                SELECT * FROM tabletID WHERE modelNum = '{}';
+            """.format(spec.modelNum)
             try:
                 cursor.execute(query)
                 resultSet = cursor.fetchall()
@@ -20,15 +20,14 @@ class TabletIDTDG:
                 print(error)
                 return None
 
-
     def insert(tabletID):
 
         with Database() as cursor:
 
             query = """
                 INSERT INTO tabletID (serialNum, modelNum, isLocked)
-                VALUES ('{serialNum}', '{spec.modelNum}', 0);
-            """.format(**tabletID)
+                VALUES ('{}', '{}', 0);
+            """.format(tabletID.serialNum, tabletID.spec.serialNum)
 
             try:
                 cursor.execute(query)
@@ -40,8 +39,8 @@ class TabletIDTDG:
         with Database() as cursor:
 
             query = """
-                DELETE FROM tabletID WHERE serialNum = '{serialNum}';
-            """
+                DELETE FROM tabletID WHERE serialNum = '{}';
+            """.format(serialNum)
 
             try:
                 cursor.execute(query)

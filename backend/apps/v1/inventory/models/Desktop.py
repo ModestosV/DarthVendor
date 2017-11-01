@@ -6,7 +6,7 @@ class Desktop(AbstractComputer):
     def __init__(self, modelNumber, name, quantity,
                  weight, weightFormat, price, priceFormat, brandName,
                  ramSize, ramFormat, processorType, numCores,
-                 hardDriveSize, hardDriveFormat, dimension):
+                 hardDriveSize, hardDriveFormat, dx, dy, dz, dimensionFormat):
 
         """" Constructor """
 
@@ -15,5 +15,7 @@ class Desktop(AbstractComputer):
                          ramSize, ramFormat, processorType, numCores,
                          hardDriveSize, hardDriveFormat)
 
-        self.dimension = dimension
-        
+        self.dx = dx
+        self.dy = dy
+        self.dz = dz
+        self.dimensionFormat = dimensionFormat

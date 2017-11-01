@@ -4,7 +4,7 @@ from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 class MonitorDisplay(ItemSpecification):
 
     def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName, size):
+                 weight, weightFormat, price, priceFormat, brandName, size, sizeFormat):
 
         """Constructor"""
 
@@ -12,3 +12,4 @@ class MonitorDisplay(ItemSpecification):
                          weight, weightFormat, price, priceFormat, brandName)
 
         self.size = size
+        self.sizeFormat = sizeFormat
