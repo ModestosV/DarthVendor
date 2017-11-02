@@ -6,7 +6,7 @@ class Desktop(ItemSpecification):
     def __init__(self, modelNumber, name, quantity,
                  weight, weightFormat, price, priceFormat, brandName, type,
                  ramSize, ramFormat, processorType, numCores,
-                 hardDriveSize, hardDriveFormat, x, y, z, format):
+                 hardDriveSize, hardDriveFormat, dx, dy, dz, dimensionFormat):
 
         """" Constructor """
 
@@ -19,8 +19,8 @@ class Desktop(ItemSpecification):
         self.numCores = numCores
         self.hardDriveSize = hardDriveSize
         self.hardDriveFormat = hardDriveFormat
-        self.x = x
-        self.y = y
-        self.z = z
-        self.format = "cm"
+        self.dx = dx
+        self.dy = dy
+        self.dz = dz
+        self.dimensionFormat = "cm"
         
