@@ -12,11 +12,9 @@ class Laptop(ItemSpecification):
         """" Constructor """
 
         super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName,
-                         ramSize, ramFormat, processorType, numCores,
-                         hardDriveSize, hardDriveFormat)
+                         weight, weightFormat, price, priceFormat, brandName, "Laptop")
 
-        
+
         self.ramSize = ramSize
         self.ramFormat = ramFormat
         self.processorType = processorType
@@ -28,4 +26,4 @@ class Laptop(ItemSpecification):
         self.batteryInfo = batteryInfo
         self.os = os
         self.size = size
-        self.sizeFormat = sizeFormat
+        self.sizeFormat = "inch"
