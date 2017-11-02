@@ -25,8 +25,8 @@ class DesktopIDTDG:
         with Database() as cursor:
 
             query = """
-                SELECT * FROM desktopID WHERE serialNum = '{serialNum}';
-            """.format()
+                SELECT * FROM desktopID WHERE serialNum = '{}';
+            """.format(serialNum)
             try:
                 cursor.execute(query)
                 result = cursor.fetchone()
