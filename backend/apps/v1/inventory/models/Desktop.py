@@ -13,9 +13,10 @@ class Desktop(ItemSpecification):
         super().__init__(modelNumber, name, quantity,
                          weight, weightFormat, price, priceFormat, brandName, type,
                          ramSize, ramFormat, processorType, numCores,
-                         hardDriveSize, hardDriveFormat)
+                         hardDriveSize, hardDriveFormat )
 
         self.dx = dx
         self.dy = dy
         self.dz = dz
         self.dimensionFormat = dimensionFormat
+
