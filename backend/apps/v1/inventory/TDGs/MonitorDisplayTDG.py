@@ -2,6 +2,7 @@ from backend.utils.database import Database
 
 
 class MonitorDisplayTDG:
+
     owner = None
 
     @staticmethod
@@ -9,8 +10,8 @@ class MonitorDisplayTDG:
 
         with Database() as cursor:
             query = """
-                SELECT * FROM monitorDisplay WHERE modelNumber = '{modelNumber}';
-            """
+                SELECT * FROM monitorDisplay WHERE modelNumber = '{}';
+            """.format(modelNumber)
 
             try:
                 cursor.execute(query)
@@ -29,8 +30,8 @@ class MonitorDisplayTDG:
                 INSERT INTO monitorDisplay (modelNumber, quantity, name, weight, weightFormat, price, priceFormat,
                                             brandName, type, size, sizeFormat)
                 VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price}, '{priceFormat}',
-                         '{brandName}', '{type}', {size}, '{sizeFormat}');
-            """.format(**monitor)
+                         '{brandName}', 'monitor', {size}, '{sizeFormat}');
+            """.format(**(monitor.__dict__))
 
             try:
                 cursor.execute(query)
@@ -54,16 +55,17 @@ class MonitorDisplayTDG:
                 size = {size},
                 sizeFormat = '{sizeFormat}'
                 WHERE modelNumber = '{modelNumber}';
-            """.format(**monitor)
+            """.format(**(monitor.__dict__))
 
             try:
                 cursor.execute(query)
+
             except Exception as error:
                 print(error)
 
     @staticmethod
     def lock(uow):
-        if owner is None:
+        if MonitorDisplayTDG.owner is None:
             owner = uow
             return True
         else:
@@ -71,7 +73,7 @@ class MonitorDisplayTDG:
 
     @staticmethod
     def unlock(uow):
-        if owner is uow:
+        if MonitorDisplayTDG.owner is uow:
             owner = None
             return True
         else:
