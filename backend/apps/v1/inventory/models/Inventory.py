@@ -1,8 +1,4 @@
 from backend.apps.v1.inventory.models.Desktop import Desktop
-<<<<<<< HEAD
-#from backend.apps.v1.inventory.models.Dimension import Dimension
-=======
->>>>>>> 86f94c4bde0a83cc6aa0e8b315b7ea554ab7f6bd
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Tablet import Tablet
