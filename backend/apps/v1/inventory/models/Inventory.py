@@ -57,8 +57,7 @@ class Inventory(object):
                 """.format(
                         itemSpec.modelNumber, itemSpec.ramSize, itemSpec.ramFormat,
                         itemSpec.processorType, itemSpec.numCores, itemSpec.hardDriveSize, itemSpec.hardDriveFormat,
-                        itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format
-                    )
+                        itemSpec.dimension.x, itemSpec.dimension.y, itemSpec.dimension.z, itemSpec.dimension.format)
 
             elif type(itemSpec) is MonitorDisplay:
                 itemQuery = self.generateItemQuery(
@@ -200,6 +199,7 @@ class Inventory(object):
                                 row.get('dimensionFormat'),
                             ),
                         )
+<<<<<<< HEAD
                     )
 
                 cursor.execute(queryMonitor)
@@ -214,6 +214,22 @@ class Inventory(object):
                             row.get('price'),
                             row.get('priceFormat'),
                             row.get('brandName'),
+=======
+                    )
+
+                cursor.execute(queryMonitor)
+                for row in cursor.fetchall():
+                    result.append(
+                        MonitorDisplay(
+                            row.get('modelNumber'),
+                            row.get('name'),
+                            row.get('quantity'),
+                            row.get('weight'),
+                            row.get('weightFormat'),
+                            row.get('price'),
+                            row.get('priceFormat'),
+                            row.get('brandName'),
+>>>>>>> e417c198f763d76e6c75a90301d753530d40c72a
                             Size(
                                 row.get('size'),
                                 row.get('sizeFormat')
