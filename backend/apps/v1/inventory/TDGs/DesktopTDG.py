@@ -32,7 +32,7 @@ class DesktopTDG:
                     priceFormat, brandName, type, ramSize, ramFormat, processorType, numCores, hardDriveSize,
                     hardDriveFormat, dx, dy, dz, dimensionFormat)
                 VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price},
-                    '{priceFormat}', '{brandName}', 'Desktop', {ramSize}, '{ramFormat}', '{processorType}', {numCores}, {hardDriveSize},
+                    '{priceFormat}', '{brandName}', 'desktop', {ramSize}, '{ramFormat}', '{processorType}', {numCores}, {hardDriveSize},
                     '{hardDriveFormat}', {dx}, {dy}, {dz}, '{dimensionFormat}');
             """.format(**(desktop.__dict__))
 

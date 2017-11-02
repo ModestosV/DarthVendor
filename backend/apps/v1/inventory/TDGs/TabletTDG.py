@@ -31,7 +31,7 @@ class TabletTDG:
                                     type, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat,
                                     os, batteryInfo, dx, dy, dz, dimensionFormat, cameraInfo, size, sizeFormat)
                 VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price}, '{priceFormat}',
-                                    '{brandName}', '{type}', {ramSize}, '{ramFormat}', '{processorType}', {numCores},
+                                    '{brandName}', 'tablet', {ramSize}, '{ramFormat}', '{processorType}', {numCores},
                                     {hardDriveSize}, '{hardDriveFormat}', '{os}', '{batteryInfo}', {dx}, {dy}, {dz},
                                     '{dimensionFormat}', '{cameraInfo}', {size}, '{sizeFormat}');
             """.format(**(tablet.__dict__))
