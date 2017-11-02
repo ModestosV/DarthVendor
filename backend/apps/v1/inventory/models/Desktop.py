@@ -11,7 +11,7 @@ class Desktop(ItemSpecification):
         """" Constructor """
 
         super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName, "Desktop")
+                         weight, weightFormat, price, priceFormat, brandName,"Desktop")
 
         self.ramSize = ramSize
         self.ramFormat = ramFormat
