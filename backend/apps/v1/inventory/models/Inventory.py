@@ -74,10 +74,6 @@ class Inventory(object):
                     VALUES('{}', {}, '{}');
                 """.format(itemSpec.modelNumber, itemSpec.size.size, itemSpec.size.sizeFormat)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f72f98152af49fee39e74c6b2ffa76a5a022bb44
             elif type(itemSpec) is Tablet:
                 itemQuery = self.generateItemQuery(
                     "TABLET", itemSpec.modelNumber, itemSpec.name,
@@ -206,11 +202,6 @@ class Inventory(object):
                                 row.get('dimensionFormat'),
                             ),
                         )
-<<<<<<< HEAD
-                    )     
-=======
-                    )    
->>>>>>> f72f98152af49fee39e74c6b2ffa76a5a022bb44
 
                 cursor.execute(queryMonitor)
                 for row in cursor.fetchall():                                        
