@@ -63,14 +63,14 @@ class DesktopIDTDG:
                 print(error)
 
     def lock(uow):
-        if owner is None:
+        if DesktopIDTDG.owner is None:
             owner = uow
             return True
         else:
             return False
 
     def unlock(uow):
-        if owner is uow:
+        if DesktopIDTDG.owner is uow:
             owner = None
             return True
         else:
