@@ -10,8 +10,8 @@ class MonitorDisplayIDTDG:
         with Database() as cursor:
 
             query = """
-                SELECT * FROM monitorDisplayID WHERE modelNum = '{spec.modelNum}';
-            """
+                SELECT * FROM monitorDisplayID WHERE modelNum = '{}';
+            """.format(spec.modelNum)
             try:
                 cursor.execute(query)
                 resultSet = cursor.fetchall()
@@ -20,15 +20,14 @@ class MonitorDisplayIDTDG:
                 print(error)
                 return None
 
-
     def insert(monitorDisplayID):
 
         with Database() as cursor:
 
             query = """
                 INSERT INTO monitorDisplayID (serialNum, modelNum, isLocked)
-                VALUES ('{serialNum}', '{spec.modelNum}', 0);
-            """.format(**monitorDisplayID)
+                VALUES ('{}', '{}', 0);
+            """.format(monitorDisplayID.serialNum, monitorDisplayID.spec.modelNum)
 
             try:
                 cursor.execute(query)
@@ -40,8 +39,8 @@ class MonitorDisplayIDTDG:
         with Database() as cursor:
 
             query = """
-                DELETE FROM monitorDisplayID WHERE serialNum = '{serialNum}';
-            """
+                DELETE FROM monitorDisplayID WHERE serialNum = '{}';
+            """.format(serialNum)
 
             try:
                 cursor.execute(query)
