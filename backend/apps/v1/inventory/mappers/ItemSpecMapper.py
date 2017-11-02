@@ -111,6 +111,7 @@ class ItemSpecMapper():
             result = MonitorDisplayTDG.find(filterlist)
         
         itemSpecList = list()
+        qtyList = list()
 
         for row in result:
             if (filterlist['type'] == "DESKTOP"):
@@ -206,5 +207,6 @@ class ItemSpecMapper():
                 qty = MonitorDisplayIDTDG.getQuantity(item.modelNumber)
             
             itemSpecList.append(item)
+            qtyList.append(qty)
 
         return itemSpecList, qty
