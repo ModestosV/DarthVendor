@@ -202,20 +202,20 @@ class Inventory(object):
                                 row.get('dimensionFormat'),
                             ),
                         )
-                    )
+
+                    )     
 
                 cursor.execute(queryMonitor)
-
-                for row in cursor.fetchall():
+                for row in cursor.fetchall():                                        
                     result.append(
                         MonitorDisplay(
-                            row.get('modelNumber'),
-                            row.get('name'),
-                            row.get('quantity'),
+                            row.get('modelNumber'), 
+                            row.get('name'), 
+                            row.get('quantity'),                             
                             row.get('weight'),
-                            row.get('weightFormat'),
-                            row.get('price'),
-                            row.get('priceFormat'),
+                            row.get('weightFormat'), 
+                            row.get('price'), 
+                            row.get('priceFormat'), 
                             row.get('brandName'),
                             Size(
                                 row.get('size'),

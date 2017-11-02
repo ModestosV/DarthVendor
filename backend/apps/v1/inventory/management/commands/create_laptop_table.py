@@ -24,7 +24,7 @@ class Command(BaseCommand):
                     processorType varchar(255) NOT NULL,
                     numCores integer(11) NOT NULL,
                     hardDriveSize double NOT NULL,
-                    hardDriveFormat integer(11) NOT NULL,
+                    hardDriveFormat varchar(255) NOT NULL,
                     containsCamera tinyint(1) NOT NULL,
                     isTouch tinyint(1) NOT NULL,
                     batteryInfo varchar(255) NOT NULL,
