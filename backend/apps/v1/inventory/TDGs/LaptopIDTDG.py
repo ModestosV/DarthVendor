@@ -10,8 +10,8 @@ class LaptopIDTDG:
         with Database() as cursor:
 
             query = """
-                SELECT * FROM laptopID WHERE modelNum = '{spec.modelNum}';
-            """
+                SELECT * FROM laptopID WHERE modelNum = '{}';
+            """.format(spec.modelNum)
             try:
                 cursor.execute(query)
                 resultSet = cursor.fetchall()
@@ -20,15 +20,14 @@ class LaptopIDTDG:
                 print(error)
                 return None
 
-
     def insert(laptopID):
 
         with Database() as cursor:
 
             query = """
                 INSERT INTO laptopID (serialNum, modelNum, isLocked)
-                VALUES ('{serialNum}', '{spec.modelNum}', 0);
-            """.format(**laptopID)
+                VALUES ('{}', '{}', 0);
+            """.format(laptopID.serialNum, laptopID.spec.modelNum)
 
             try:
                 cursor.execute(query)
@@ -40,9 +39,8 @@ class LaptopIDTDG:
         with Database() as cursor:
 
             query = """
-                DELETE FROM laptopID WHERE serialNum = '{serialNum}';
-            """
-
+                DELETE FROM laptopID WHERE serialNum = '{}';
+            """.format(serialNum)
             try:
                 cursor.execute(query)
             except Exception as error:
