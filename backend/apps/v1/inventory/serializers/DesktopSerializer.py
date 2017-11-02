@@ -1,6 +1,10 @@
 from backend.apps.v1.inventory.serializers.AbstractSerializers import AbstractComputerSerializer
-from backend.apps.v1.inventory.serializers.DimensionSerializer import DimensionSerializer
+from rest_framework import serializers
+
 
 
 class DesktopSerializer(AbstractComputerSerializer):
-    dimension = DimensionSerializer()
+    dx = serializers.FloatField()
+    dy = serializers.FloatField()
+    dz = serializers.FloatField()
+    dimensionFormat = serializers.CharField()
