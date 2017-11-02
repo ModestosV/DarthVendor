@@ -1,9 +1,7 @@
 from backend.utils.database import Database
 from backend.apps.v1.inventory.models.Desktop import Desktop
-from backend.apps.v1.inventory.models.Dimension import Dimension
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
-from backend.apps.v1.inventory.models.Size import Size
 from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
 from backend.apps.v1.inventory.TDGs.LaptopTDG import LaptopTDG
@@ -33,7 +31,6 @@ class ItemSpecMapper():
         
         return result
 
-    
     @staticmethod
     def update(itemspec):
         if(type(itemspec) is Desktop):
@@ -67,18 +64,18 @@ class ItemSpecMapper():
         return result
     
     @staticmethod
-    def unlock(type):
+    def unlock(type,uow):
         if(type == "DESKTOP"):
-            result = DesktopTDG.unlock()
+            result = DesktopTDG.unlock(uow)
 
         elif(type == "LAPTOP"):
-            result = LaptopTDG.unlock()
+            result = LaptopTDG.unlock(uow)
 
         elif(type == "MONITOR"):
-            result = MonitorDisplayTDG.unlock()
+            result = MonitorDisplayTDG.unlock(uow)
 
         elif(type == "TABLET"):
-            result = TabletTDG.unlock()
+            result = TabletTDG.unlock(uow)
 
         return result
         
@@ -114,6 +111,7 @@ class ItemSpecMapper():
             result = MonitorDisplayTDG.find(filterlist)
         
         itemSpecList = list()
+        qtyList = list()
 
         for row in result:
             if (filterlist['type'] == "DESKTOP"):
@@ -132,12 +130,10 @@ class ItemSpecMapper():
                             row.get('numCores'),
                             row.get('hardDriveSize'),
                             row.get('hardDriveFormat'),
-                            Dimension(
-                                row.get('dx'),
-                                row.get('dy'),
-                                row.get('dz'),
-                                row.get('dimensionFormat'),
-                            ),
+                            row.get('dx'),
+                            row.get('dy'),
+                            row.get('dz'),
+                            row.get('dimensionFormat'),
                         )
                 qty = DesktopIDTDG.getQuantity(item.modelNumber)
                     
@@ -162,10 +158,8 @@ class ItemSpecMapper():
                             row.get('isTouch'),
                             row.get('batteryInfo'),
                             row.get('os'),
-                            Size(
-                                row.get('size'), 
-                                row.get('sizeFormat')
-                            )                            
+                            row.get('size'), 
+                            row.get('sizeFormat')
                         )
                 qty = LaptopIDTDG.getQuantity(item.modelNumber)
         
@@ -186,16 +180,12 @@ class ItemSpecMapper():
                             row.get('hardDriveSize'),
                             row.get('hardDriveFormat'),
                             row.get('os'),
-                            Dimension(
-                                row.get('dx'),
-                                row.get('dy'),
-                                row.get('dz'),
-                                row.get('dimensionFormat'),
-                            ),
-                            Size(
-                                row.get('size'),
-                                row.get('sizeFormat')
-                            ),
+                            row.get('dx'),
+                            row.get('dy'),
+                            row.get('dz'),
+                            row.get('dimensionFormat'),
+                            row.get('size'),
+                            row.get('sizeFormat'),
                             row.get('cameraInfo'),
                             row.get('batteryInfo')
                         )
@@ -211,13 +201,12 @@ class ItemSpecMapper():
                             row.get('price'), 
                             row.get('priceFormat'), 
                             row.get('brandName'), 
-                            Size(
-                                row.get('size'), 
-                                row.get('sizeFormat')
-                            )
+                            row.get('size'), 
+                            row.get('sizeFormat')
                         )
                 qty = MonitorDisplayIDTDG.getQuantity(item.modelNumber)
             
             itemSpecList.append(item)
+            qtyList.append(qty)
 
         return itemSpecList, qty

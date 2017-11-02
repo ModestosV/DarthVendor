@@ -159,16 +159,12 @@ class Inventory(object):
                             row.get('hardDriveSize'),
                             row.get('hardDriveFormat'),
                             row.get('os'),
-                            Dimension(
-                                row.get('dx'),
-                                row.get('dy'),
-                                row.get('dz'),
-                                row.get('dimensionFormat'),
-                            ),
-                            Size(
-                                row.get('size'),
-                                row.get('sizeFormat')
-                            ),
+                            row.get('dx'),
+                            row.get('dy'),
+                            row.get('dz'),
+                            row.get('dimensionFormat'),
+                            row.get('size'),
+                            row.get('sizeFormat'),
                             row.get('cameraInfo'),
                             row.get('batteryInfo')
                         )
@@ -192,14 +188,12 @@ class Inventory(object):
                             row.get('numCores'),
                             row.get('hardDriveSize'),
                             row.get('hardDriveFormat'),
-                            Dimension(
-                                row.get('dx'),
-                                row.get('dy'),
-                                row.get('dz'),
-                                row.get('dimensionFormat'),
-                            ),
+                            row.get('dx'),
+                            row.get('dy'),
+                            row.get('dz'),
+                            row.get('dimensionFormat')
                         )
-
+                    )
                 cursor.execute(queryMonitor)
                 for row in cursor.fetchall():
                     result.append(
@@ -212,10 +206,8 @@ class Inventory(object):
                             row.get('price'),
                             row.get('priceFormat'),
                             row.get('brandName'),
-                            Size(
-                                row.get('size'),
-                                row.get('sizeFormat')
-                            )
+                            row.get('size'),
+                            row.get('sizeFormat')
                         )
                     )
 
@@ -241,10 +233,8 @@ class Inventory(object):
                             row.get('isTouch'),
                             row.get('batteryInfo'),
                             row.get('os'),
-                            Size(
-                                row.get('size'),
-                                row.get('sizeFormat')
-                            )
+                            row.get('size'),
+                            row.get('sizeFormat')
                         )
                     )
 
