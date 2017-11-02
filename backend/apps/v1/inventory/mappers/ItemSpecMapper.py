@@ -14,7 +14,7 @@ from backend.apps.v1.inventory.TDGs.TabletIDTDG import TabletIDTDG
 
 
 class ItemSpecMapper():
-
+    
     @staticmethod
     def insert(itemspec):
         if(type(itemspec) is Desktop):
@@ -94,7 +94,7 @@ class ItemSpecMapper():
         elif(type(itemspec) is Tablet):
             result = TabletTDG.find(itemspec.modelNumber)
         return result
-
+    
     @staticmethod
     def findAll(filterlist):
         

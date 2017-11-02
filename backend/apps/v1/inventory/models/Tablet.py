@@ -6,15 +6,13 @@ class Tablet(AbstractComputer):
     def __init__(self, modelNumber, name, quantity,
                  weight, weightFormat, price, priceFormat, brandName, type,
                  ramSize, ramFormat, processorType, numCores,
-                 hardDriveSize, hardDriveFormat, os, dx, dy, dz, dimensionFormat,
-                 size, sizeFormat, cameraInfo, batteryInfo):
+                 hardDriveSize, hardDriveFormat, os, dx, dy, dz,
+                 size, cameraInfo, batteryInfo):
 
         """Constructor"""
 
         super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName, type,
-                         ramSize, ramFormat, processorType, numCores,
-                         hardDriveSize, hardDriveFormat)
+                         weight, weightFormat, price, priceFormat, brandName, "Tablet")
 
         self.ramSize = ramSize
         self.ramFormat = ramFormat
@@ -26,8 +24,8 @@ class Tablet(AbstractComputer):
         self.dx = dx
         self.dy = dy
         self.dz = dz
-        self.dimensionFormat = dimensionFormat
+        self.dimensionFormat = "cm"
         self.size = size
-        self.sizeFormat = sizeFormat
+        self.sizeFormat = "inch"
         self.cameraInfo = cameraInfo
         self.batteryInfo = batteryInfo
