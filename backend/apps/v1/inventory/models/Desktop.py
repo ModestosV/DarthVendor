@@ -4,14 +4,14 @@ from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 class Desktop(ItemSpecification):
 
     def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName, type,
+                 weight, weightFormat, price, priceFormat, brandName,
                  ramSize, ramFormat, processorType, numCores,
                  hardDriveSize, hardDriveFormat, dx, dy, dz):
 
         """" Constructor """
 
         super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName,"Desktop")
+                         weight, weightFormat, price, priceFormat, brandName, "Desktop")
 
         self.ramSize = ramSize
         self.ramFormat = ramFormat
