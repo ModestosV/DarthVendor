@@ -12,7 +12,7 @@ class Tablet(ItemSpecification):
         """Constructor"""
 
         super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName, "Tablet")
+                         weight, weightFormat, price, priceFormat, brandName, "TABLET")
 
         self.ramSize = ramSize
         self.ramFormat = ramFormat
