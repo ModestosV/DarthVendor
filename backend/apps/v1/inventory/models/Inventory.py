@@ -1,5 +1,5 @@
 from backend.apps.v1.inventory.models.Desktop import Desktop
-from backend.apps.v1.inventory.models.Dimension import Dimension
+#from backend.apps.v1.inventory.models.Dimension import Dimension
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Size import Size
