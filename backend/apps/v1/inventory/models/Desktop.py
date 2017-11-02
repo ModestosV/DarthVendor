@@ -1,17 +1,17 @@
-from backend.apps.v1.inventory.models.AbstractComputer import AbstractComputer
+from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 
 
-class Desktop(AbstractComputer):
+class Desktop(ItemSpecification):
 
     def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName,
+                 weight, weightFormat, price, priceFormat, brandName, type,
                  ramSize, ramFormat, processorType, numCores,
                  hardDriveSize, hardDriveFormat, dx, dy, dz, dimensionFormat):
 
         """" Constructor """
 
         super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName,
+                         weight, weightFormat, price, priceFormat, brandName, type,
                          ramSize, ramFormat, processorType, numCores,
                          hardDriveSize, hardDriveFormat)
 
