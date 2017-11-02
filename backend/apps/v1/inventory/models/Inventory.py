@@ -255,9 +255,8 @@ class Inventory(object):
         #         print(error)
         #
         #     print("{} UNIQUE items found".format(len(result)))
->>>>>>> 86f94c4bde0a83cc6aa0e8b315b7ea554ab7f6bd
-
-        return result
+        #
+        #return result
 
     def generateItemQuery(self, itemtype, modelNumber, name, quantity,
                           weight, wf, price, pf, brandName):
