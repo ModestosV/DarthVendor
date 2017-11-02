@@ -6,7 +6,7 @@ class Tablet(ItemSpecification):
     def __init__(self, modelNumber, name, quantity,
                  weight, weightFormat, price, priceFormat, brandName, type,
                  ramSize, ramFormat, processorType, numCores,
-                 hardDriveSize, hardDriveFormat, os, x, y, z, format,
+                 hardDriveSize, hardDriveFormat, os, dx, dy, dz, dimensionFormat,
                  size, sizeFormat, cameraInfo, batteryInfo):
 
         """Constructor"""
@@ -21,10 +21,10 @@ class Tablet(ItemSpecification):
         self.hardDriveSize = hardDriveSize
         self.hardDriveFormat = hardDriveFormat
         self.os = os
-        self.x = x
-        self.y = y
-        self.z = z
-        self.format = "cm"
+        self.dx = dx
+        self.dy = dy
+        self.dz = dz
+        self.dimensionFormat = "cm"
         self.size = size
         self.sizeFormat = "inch"
         self.cameraInfo = cameraInfo
