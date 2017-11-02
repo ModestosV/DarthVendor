@@ -1,7 +1,5 @@
 from backend.utils.database import Database
 from backend.apps.v1.inventory.models.Desktop import Desktop
-from backend.apps.v1.inventory.models.Dimension import Dimension
-from backend.apps.v1.inventory.models.Size import Size
 
 
 class DesktopTDG:
@@ -34,7 +32,7 @@ class DesktopTDG:
                     priceFormat, brandName, type, ramSize, ramFormat, processorType, numCores, hardDriveSize,
                     hardDriveFormat, dx, dy, dz, dimensionFormat)
                 VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price},
-                    '{priceFormat}', '{brandName}', '{type}', {ramSize}, '{ramFormat}', '{processorType}', {numCores}, {hardDriveSize},
+                    '{priceFormat}', '{brandName}', 'desktop', {ramSize}, '{ramFormat}', '{processorType}', {numCores}, {hardDriveSize},
                     '{hardDriveFormat}', {dx}, {dy}, {dz}, '{dimensionFormat}');
             """.format(**(desktop.__dict__))
 

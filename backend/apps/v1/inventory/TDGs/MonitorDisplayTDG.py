@@ -30,7 +30,7 @@ class MonitorDisplayTDG:
                 INSERT INTO monitorDisplay (modelNumber, quantity, name, weight, weightFormat, price, priceFormat,
                                             brandName, type, size, sizeFormat)
                 VALUES ('{modelNumber}', {quantity}, '{name}', {weight}, '{weightFormat}', {price}, '{priceFormat}',
-                         '{brandName}', '{type}', {size}, '{sizeFormat}');
+                         '{brandName}', 'monitor', {size}, '{sizeFormat}');
             """.format(**(monitor.__dict__))
 
             try:
