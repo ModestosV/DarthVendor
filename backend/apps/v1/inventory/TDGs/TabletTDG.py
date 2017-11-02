@@ -1,5 +1,3 @@
-from backend.apps.v1.inventory.models.Dimension import Dimension
-from backend.apps.v1.inventory.models.Size import Size
 from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.utils.database import Database
 
