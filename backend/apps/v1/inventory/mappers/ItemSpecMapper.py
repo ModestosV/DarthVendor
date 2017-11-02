@@ -111,7 +111,6 @@ class ItemSpecMapper():
             result = MonitorDisplayTDG.find(filterlist)
         
         itemSpecList = list()
-        qtyList = list()
 
         for row in result:
             if (filterlist['type'] == "DESKTOP"):
@@ -135,7 +134,6 @@ class ItemSpecMapper():
                             row.get('dz'),
                             row.get('dimensionFormat'),
                         )
-                qty = DesktopIDTDG.getQuantity(item.modelNumber)
                     
 
             elif(filterlist['type'] == "LAPTOP"):
@@ -161,7 +159,6 @@ class ItemSpecMapper():
                             row.get('size'), 
                             row.get('sizeFormat')
                         )
-                qty = LaptopIDTDG.getQuantity(item.modelNumber)
         
             elif(filterlist['type'] == "TABLET"):
                 item = Tablet(
@@ -189,7 +186,6 @@ class ItemSpecMapper():
                             row.get('cameraInfo'),
                             row.get('batteryInfo')
                         )
-                qty = TabletIDTDG.getQuantity(item.modelNumber)
         
             elif(filterlist['type'] == "MONITOR"):
                 item = MonitorDisplay(
@@ -204,9 +200,7 @@ class ItemSpecMapper():
                             row.get('size'), 
                             row.get('sizeFormat')
                         )
-                qty = MonitorDisplayIDTDG.getQuantity(item.modelNumber)
             
             itemSpecList.append(item)
-            qtyList.append(qty)
 
-        return itemSpecList, qty
+        return itemSpecList
