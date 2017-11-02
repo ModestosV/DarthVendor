@@ -64,18 +64,18 @@ class ItemSpecMapper():
         return result
     
     @staticmethod
-    def unlock(type):
+    def unlock(type,uow):
         if(type == "DESKTOP"):
-            result = DesktopTDG.unlock()
+            result = DesktopTDG.unlock(uow)
 
         elif(type == "LAPTOP"):
-            result = LaptopTDG.unlock()
+            result = LaptopTDG.unlock(uow)
 
         elif(type == "MONITOR"):
-            result = MonitorDisplayTDG.unlock()
+            result = MonitorDisplayTDG.unlock(uow)
 
         elif(type == "TABLET"):
-            result = TabletTDG.unlock()
+            result = TabletTDG.unlock(uow)
 
         return result
         
