@@ -14,7 +14,7 @@ from backend.apps.v1.inventory.TDGs.TabletIDTDG import TabletIDTDG
 
 
 class ItemSpecMapper():
-    
+
     @staticmethod
     def insert(itemspec):
         if(type(itemspec) is Desktop):
@@ -28,7 +28,7 @@ class ItemSpecMapper():
 
         elif(type(itemspec) is Tablet):
             result = TabletTDG.insert(itemspec)
-        
+
         return result
 
     @staticmethod
@@ -44,9 +44,9 @@ class ItemSpecMapper():
 
         elif(type(itemspec) is Tablet):
             result = TabletTDG.update(itemspec)
-        
+
         return result
-    
+
     @staticmethod
     def lock(type, uow):
         if(type == "DESKTOP"):
@@ -60,9 +60,9 @@ class ItemSpecMapper():
 
         elif(type == "TABLET"):
             result = TabletTDG.lock(uow)
-        
+
         return result
-    
+
     @staticmethod
     def unlock(type,uow):
         if(type == "DESKTOP"):
@@ -78,8 +78,7 @@ class ItemSpecMapper():
             result = TabletTDG.unlock(uow)
 
         return result
-        
-        
+
     @staticmethod
     def find(itemspec):
         if(type(itemspec) is Desktop):
@@ -94,22 +93,22 @@ class ItemSpecMapper():
         elif(type(itemspec) is Tablet):
             result = TabletTDG.find(itemspec.modelNumber)
         return result
-    
+
     @staticmethod
     def findAll(filterlist):
-        
+
         if (filterlist['type'] == "DESKTOP"):
             result = DesktopTDG.find(filterlist)
 
         elif(filterlist['type'] == "LAPTOP"):
             result = LaptopTDG.find(filterlist)
-        
+
         elif(filterlist['type'] == "TABLET"):
             result = TabletTDG.find(filterlist)
-        
+
         elif(filterlist['type'] == "MONITOR"):
             result = MonitorDisplayTDG.find(filterlist)
-        
+
         itemSpecList = list()
         qtyList = list()
 
@@ -134,9 +133,10 @@ class ItemSpecMapper():
                             row.get('dy'),
                             row.get('dz'),
                             row.get('dimensionFormat'),
+
                         )
                 qty = DesktopIDTDG.getQuantity(item.modelNumber)
-                    
+
 
             elif(filterlist['type'] == "LAPTOP"):
                 item = Laptop(
@@ -158,11 +158,11 @@ class ItemSpecMapper():
                             row.get('isTouch'),
                             row.get('batteryInfo'),
                             row.get('os'),
-                            row.get('size'), 
+                            row.get('size'),
                             row.get('sizeFormat')
                         )
                 qty = LaptopIDTDG.getQuantity(item.modelNumber)
-        
+
             elif(filterlist['type'] == "TABLET"):
                 item = Tablet(
                             row.get('modelNumber'),
@@ -190,22 +190,22 @@ class ItemSpecMapper():
                             row.get('batteryInfo')
                         )
                 qty = TabletIDTDG.getQuantity(item.modelNumber)
-        
+
             elif(filterlist['type'] == "MONITOR"):
                 item = MonitorDisplay(
-                            row.get('modelNumber'), 
-                            row.get('name'), 
-                            row.get('quantity'),                             
+                            row.get('modelNumber'),
+                            row.get('name'),
+                            row.get('quantity'),
                             row.get('weight'),
-                            row.get('weightFormat'), 
-                            row.get('price'), 
-                            row.get('priceFormat'), 
-                            row.get('brandName'), 
-                            row.get('size'), 
+                            row.get('weightFormat'),
+                            row.get('price'),
+                            row.get('priceFormat'),
+                            row.get('brandName'),
+                            row.get('size'),
                             row.get('sizeFormat')
                         )
                 qty = MonitorDisplayIDTDG.getQuantity(item.modelNumber)
-            
+
             itemSpecList.append(item)
             qtyList.append(qty)
 
