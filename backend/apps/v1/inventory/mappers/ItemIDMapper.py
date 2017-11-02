@@ -82,17 +82,24 @@ class ItemIDMapper():
         return result
 
     @staticmethod
-    def find(itemID):
-        if(type(itemID.spec) is Desktop):
-            result = DesktopIDTDG.find(itemID.modelNumber)
+    def find(itemSpecification):
 
-        elif(type(itemID.spec) is Laptop):
-            result = LaptopIDTDG.find(itemID.modelNumber)
+        itemIDList = list()
 
-        elif(type(itemID.spec) is MonitorDisplay):
-            result = MonitorDisplayIDTDG.find(itemID.modelNumber)
+        if(type(itemSpecification.type) is Desktop):
+            result = DesktopIDTDG.findBySpec(itemSpecification)
 
-        elif(type(itemID.spec) is Tablet):
-            result = TabletIDTDG.find(itemID.modelNumber)
+        elif(type(itemSpecification.type) is Laptop):
+            result = LaptopIDTDG.findBySpec(itemSpecification)
 
-        return result
+        elif(type(itemSpecification.type) is MonitorDisplay):
+            result = MonitorDisplayIDTDG.findBySpec(itemSpecification)
+
+        elif(type(itemSpecification.type) is Tablet):
+            result = TabletIDTDG.findBySpec(itemSpecification)
+
+        for row in result:
+            newItemID = ItemID(row.get('serialNumber'), row.get('isLocked'), itemSpecification)
+            itemIDList.append(newItemID)
+
+        return itemIDList
