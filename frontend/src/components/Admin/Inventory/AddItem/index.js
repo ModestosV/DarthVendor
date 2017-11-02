@@ -31,9 +31,6 @@ class AddItem extends Component {
             case 'Tablet':
                 this.setState({specs: ['ramSize', 'ramFormat', 'processorType', 'numCores', 'hardDriveSize', 'hardDriveFormat', 'dx', 'dy', 'dz', 'dimensionFormat', 'os', 'batteryInfo', 'size', 'sizeFormat', 'cameraInfo']});
                 break;
-            case 'Television':
-                this.setState({specs: ['tvType', 'dimensionFormat', 'dx', 'dy', 'dz']});
-                break;
             case 'Monitor Display':
                 this.setState({specs: ['size','sizeFormat']});
                 break;
@@ -80,7 +77,7 @@ class AddItem extends Component {
     }
 
     render() {
-        const itemTypes = ['Desktop', 'Laptop', 'Tablet', 'Television', 'Monitor Display'];
+        const itemTypes = ['Desktop', 'Laptop', 'Tablet', 'Monitor Display'];
         const itemBasicSpecs = ['modelNumber', 'name', 'price', 'priceFormat', 'brandName', 'quantity', 'weight', 'weightFormat'];
         const itemSpecs = this.state.specs;
         const itemFields = itemBasicSpecs;
@@ -94,11 +91,11 @@ class AddItem extends Component {
                     <div className="container p-0 mt-4">
                     <h1>Add New Item </h1>
                     </div>
-               
+
                     <div id="addItem" className="mt-4 container">
-                   
-                    
-                       
+
+
+
                         <form className="row ui-form">
                             {/* SELECT for type */}
                             <div className="field mb-3 mr-3 ">
@@ -107,7 +104,7 @@ class AddItem extends Component {
                                     onChange={(e) => this.handleTypeChange(e)}
                                 >
                                     <option value="">Default</option>
-                                    { 
+                                    {
                                         itemTypes.map((name,index) => {
                                             return (
                                                 <option key={index} value={name}>
@@ -120,23 +117,23 @@ class AddItem extends Component {
                             </div>
 
                             {/* Creates fields for every attributes  */}
-                            { 
+                            {
                                 itemFields.map((name,index) => {
                                     if(name.includes('Format')) {
                                         let unit = [];
-                                        if(name == 'dimensionFormat') { 
+                                        if(name == 'dimensionFormat') {
                                             unit = ['cm'];
                                         } else {
-                                            if(name == 'sizeFormat') { 
+                                            if(name == 'sizeFormat') {
                                                 unit = ['inch'];
                                             } else {
-                                                if(name == 'ramFormat') { 
+                                                if(name == 'ramFormat') {
                                                     unit = ['GB'];
                                                 } else {
-                                                    if(name == 'hardDriveFormat') { 
+                                                    if(name == 'hardDriveFormat') {
                                                         unit = ['GB', 'TB'];
                                                     } else {
-                                                        if(name == 'weightFormat') { 
+                                                        if(name == 'weightFormat') {
                                                             unit = ['lbs'];
                                                         } else {
                                                             unit = ['CAD'];
@@ -147,10 +144,10 @@ class AddItem extends Component {
                                         }
                                         return (
                                             <div key={index} className="field mb-3 mr-3 ">
-                                                <select 
+                                                <select
                                                     className="ui fluid dropdown"
-                                                    name={name} 
-                                                    onLoad={(e) => this.handleSpecChange(e)} 
+                                                    name={name}
+                                                    onLoad={(e) => this.handleSpecChange(e)}
                                                     onChange={(e) => this.handleSpecChange(e)}
                                                 >
                                                     {
@@ -167,7 +164,7 @@ class AddItem extends Component {
                                         );
                                     } else {
                                         return (
-                                            
+
                                             <div key={index} className="mb-3 mr-3 ">
                                                 <input
                                                     name={name}
@@ -187,10 +184,10 @@ class AddItem extends Component {
                                     type="button"
                                     className="ui secondary button float-right mt-5"
                                     onClick={() => this.handleForm()}>
-                                        Done 
+                                        Done
                                 </button>
                             </div>
-              
+
                         </form>
                     </div>
                 </div>

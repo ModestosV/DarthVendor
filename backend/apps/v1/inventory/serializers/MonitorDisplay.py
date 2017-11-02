@@ -1,6 +1,7 @@
 from backend.apps.v1.inventory.serializers.AbstractSerializers import ItemSpecificationSerializer
-from backend.apps.v1.inventory.serializers.SizeSerializer import SizeSerializer
+from rest_framework import serializers
 
 
 class MonitorDisplaySerializer(ItemSpecificationSerializer):
-    size = SizeSerializer()
+    size = serializers.FloatField()
+    sizeFormat = serializers.CharField()
