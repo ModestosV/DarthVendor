@@ -5,9 +5,12 @@ class AbstractComputer(ItemSpecification):
 
     """Constructor"""
 
-    def __init__(self, modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName, ramSize, ramFormat, processorType, numCores, hardDriveSize, hardDriveFormat):
+    def __init__(self, modelNumber, name, quantity, weight, 
+                 weightFormat, price, priceFormat, brandName,type,
+                 ramSize, ramFormat, processorType, numCores, 
+                 hardDriveSize, hardDriveFormat):
 
-        super().__init__(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName)
+        super().__init__(modelNumber, name, quantity, weight, weightFormat, price, priceFormat, brandName,type)
         self.ramSize = ramSize
         self.ramFormat = ramFormat
         self.processorType = processorType

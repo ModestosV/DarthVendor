@@ -1,7 +1,7 @@
-from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
+from backend.apps.v1.inventory.models.AbstractComputer import AbstractComputer
 
 
-class Tablet(ItemSpecification):
+class Tablet(AbstractComputer):
 
     def __init__(self, modelNumber, name, quantity,
                  weight, weightFormat, price, priceFormat, brandName, type,
@@ -26,7 +26,7 @@ class Tablet(ItemSpecification):
         self.dx = dx
         self.dy = dy
         self.dz = dz
-        self.dimensionFormat
+        self.dimensionFormat = dimensionFormat
         self.size = size
         self.sizeFormat = sizeFormat
         self.cameraInfo = cameraInfo
