@@ -23,6 +23,10 @@ class ItemView(APIView):
         item = None
         print(itemData)
         try:
+<<<<<<< HEAD
+=======
+            
+>>>>>>> f72f98152af49fee39e74c6b2ffa76a5a022bb44
             if itemType == "Desktop":
                 dimension = Dimension(itemData["dx"], itemData["dy"], itemData["dz"])
                 item = Desktop(

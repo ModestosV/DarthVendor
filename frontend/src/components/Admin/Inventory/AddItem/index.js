@@ -31,9 +31,6 @@ class AddItem extends Component {
             case 'Tablet':
                 this.setState({specs: ['ramSize', 'ramFormat', 'processorType', 'numCores', 'hardDriveSize', 'hardDriveFormat', 'dx', 'dy', 'dz', 'dimensionFormat', 'os', 'batteryInfo', 'size', 'sizeFormat', 'cameraInfo']});
                 break;
-            case 'Television':
-                this.setState({specs: ['tvType', 'dimensionFormat', 'dx', 'dy', 'dz']});
-                break;
             case 'Monitor Display':
                 this.setState({specs: ['size','sizeFormat']});
                 break;
@@ -80,7 +77,7 @@ class AddItem extends Component {
     }
 
     render() {
-        const itemTypes = ['Desktop', 'Laptop', 'Tablet', 'Television', 'Monitor Display'];
+        const itemTypes = ['Desktop', 'Laptop', 'Tablet', 'Monitor Display'];
         const itemBasicSpecs = ['modelNumber', 'name', 'price', 'priceFormat', 'brandName', 'quantity', 'weight', 'weightFormat'];
         const itemSpecs = this.state.specs;
         const itemFields = itemBasicSpecs;
