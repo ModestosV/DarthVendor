@@ -1,7 +1,7 @@
-from backend.apps.v1.inventory.models.AbstractComputer import AbstractComputer
+from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 
 
-class Tablet(AbstractComputer):
+class Tablet(ItemSpecification):
 
     def __init__(self, modelNumber, name, quantity,
                  weight, weightFormat, price, priceFormat, brandName, type,
