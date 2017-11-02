@@ -64,21 +64,20 @@ class ItemSpecMapper():
         return result
 
     @staticmethod
-    def unlock(type):
+    def unlock(type,uow):
         if(type == "DESKTOP"):
-            result = DesktopTDG.unlock()
+            result = DesktopTDG.unlock(uow)
 
         elif(type == "LAPTOP"):
-            result = LaptopTDG.unlock()
+            result = LaptopTDG.unlock(uow)
 
         elif(type == "MONITOR"):
-            result = MonitorDisplayTDG.unlock()
+            result = MonitorDisplayTDG.unlock(uow)
 
         elif(type == "TABLET"):
-            result = TabletTDG.unlock()
+            result = TabletTDG.unlock(uow)
 
         return result
-
 
     @staticmethod
     def find(itemspec):
@@ -111,6 +110,7 @@ class ItemSpecMapper():
             result = MonitorDisplayTDG.find(filterlist)
 
         itemSpecList = list()
+        qtyList = list()
 
         for row in result:
             if (filterlist['type'] == "DESKTOP"):
@@ -133,7 +133,8 @@ class ItemSpecMapper():
                             row.get('dy'),
                             row.get('dz'),
                             row.get('dimensionFormat'),
-                            )
+
+                        )
                 qty = DesktopIDTDG.getQuantity(item.modelNumber)
 
 
@@ -206,5 +207,6 @@ class ItemSpecMapper():
                 qty = MonitorDisplayIDTDG.getQuantity(item.modelNumber)
 
             itemSpecList.append(item)
+            qtyList.append(qty)
 
         return itemSpecList, qty
