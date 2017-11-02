@@ -7,7 +7,7 @@ class Laptop(ItemSpecification):
                  weight, weightFormat, price, priceFormat, brandName, type,
                  ramSize, ramFormat, processorType, numCores,
                  hardDriveSize, hardDriveFormat,
-                 containCamera, isTouch, batteryInfo, os, size, sizeFormat):
+                 containCamera, isTouch, batteryInfo, os, size):
 
         """" Constructor """
 

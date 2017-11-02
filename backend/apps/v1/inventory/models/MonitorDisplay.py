@@ -5,7 +5,7 @@ class MonitorDisplay(ItemSpecification):
 
     def __init__(self, modelNumber, name, quantity,
                  weight, weightFormat, price, priceFormat, brandName, type,
-                 size, sizeFormat):
+                 size):
 
         """Constructor"""
 

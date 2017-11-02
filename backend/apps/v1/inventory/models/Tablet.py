@@ -6,8 +6,8 @@ class Tablet(ItemSpecification):
     def __init__(self, modelNumber, name, quantity,
                  weight, weightFormat, price, priceFormat, brandName, type,
                  ramSize, ramFormat, processorType, numCores,
-                 hardDriveSize, hardDriveFormat, os, dx, dy, dz, dimensionFormat,
-                 size, sizeFormat, cameraInfo, batteryInfo):
+                 hardDriveSize, hardDriveFormat, os, dx, dy, dz,
+                 size, cameraInfo, batteryInfo):
 
         """Constructor"""
 
