@@ -257,6 +257,7 @@ class Inventory(object):
         #     print("{} UNIQUE items found".format(len(result)))
         #
         #return result
+        return
 
     def generateItemQuery(self, itemtype, modelNumber, name, quantity,
                           weight, wf, price, pf, brandName):
