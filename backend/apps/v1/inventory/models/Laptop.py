@@ -7,14 +7,12 @@ class Laptop(ItemSpecification):
                  weight, weightFormat, price, priceFormat, brandName, type,
                  ramSize, ramFormat, processorType, numCores,
                  hardDriveSize, hardDriveFormat,
-                 containCamera, isTouch, batteryInfo, os, size):
+                 containCamera, isTouch, batteryInfo, os, size, sizeFormat):
 
         """" Constructor """
 
         super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName,
-                         ramSize, ramFormat, processorType, numCores,
-                         hardDriveSize, hardDriveFormat)
+                         weight, weightFormat, price, priceFormat, brandName, "Laptop")
 
         
         self.ramSize = ramSize
@@ -28,3 +26,4 @@ class Laptop(ItemSpecification):
         self.batteryInfo = batteryInfo
         self.os = os
         self.size = size
+        self.sizeFormat = "inch"
