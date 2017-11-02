@@ -7,12 +7,11 @@ class MonitorDisplayTDG:
 
     @staticmethod
     def find(modelNumber):
-
+        
         with Database() as cursor:
             query = """
                 SELECT * FROM monitorDisplay WHERE modelNumber = '{}';
             """.format(modelNumber)
-
             try:
                 cursor.execute(query)
 

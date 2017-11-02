@@ -12,7 +12,7 @@ class TabletTDG:
             query = """
                     SELECT * FROM tablet WHERE modelNumber = '{}';
                 """.format(modelNumber)
-
+            
             try:
                 cursor.execute(query)
 
