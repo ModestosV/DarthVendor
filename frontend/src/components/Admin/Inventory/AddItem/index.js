@@ -20,6 +20,7 @@ class AddItem extends Component {
 
     }
 
+    //set state on type select
     handleTypeChange(event) {
         this.setState({type: event.target.value});
         switch (event.target.value) {
@@ -46,8 +47,8 @@ class AddItem extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
-    // 
-    handleForm() {
+    // add item post request
+    confirmAddItem() {
         let data = this.state;
 
         axios({
@@ -68,7 +69,7 @@ class AddItem extends Component {
             swal({
                 title: "Woops!",
                 text: "Something went wrong!",
-                icon: "error",
+                ilcon: "error",
                 button: "Ok",
             });
         })
@@ -139,8 +140,7 @@ class AddItem extends Component {
         return (
             <div>
                 <Sidebar />
-                <div className="col-md-10 float-left col px-5 pl-md-2 pt-2 main">
-                    <a href="#" data-target="#sidebar" data-toggle="collapse"><i className="fa fa-navicon fa-2x py-2 p-1"></i></a>
+                <div className="pusher">
                     <div id="addItem">
                         <div>
                             <h1>Add New Item </h1>
@@ -148,13 +148,12 @@ class AddItem extends Component {
                         <form id="addItemForm">
                             { this.typeSelect(itemTypes) }
 
-                            {/* Creates fields for every attributes  */}
                             { this.attributeFields(itemFields) }
                             
                             <button
                                 type="button"
                                 className="btn btn-dark btn-block"
-                                onClick={() => this.handleForm()}
+                                onClick={() => this.confirmAddItem()}
                             >
                                 Add <i className="fa fa-plus"></i>
                             </button>
