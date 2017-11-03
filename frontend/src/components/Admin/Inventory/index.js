@@ -41,16 +41,8 @@ class Inventory extends Component {
 
     }
 
-    componentWillMount() {  
-        const {history} = this.props;      
-        console.log(localStorage);
-        if (!localStorage.activeUser) {
-            history.push('/login');
-        }
-    }
-
     componentDidMount() {
-        this.itemsList();
+        //this.itemsList();
     }
 
     openModal () {
