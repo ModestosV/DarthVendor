@@ -38,13 +38,16 @@ class ModifyItem extends Component {
                 button: "Ok",
             });
         })
+        this.props.closeModal();
 
     }
 
+    // set state on spec value change
     handleChange(event){
         this.setState({[event.target.name]: event.target.value});
     }
 
+    // display specs of selected item
     displaySpecs() {
             return (                
                 <div>
@@ -72,7 +75,7 @@ class ModifyItem extends Component {
         return (
             <div>
                 <div className="pusher">
-                    <button onClick={() => {this.confirmModifications(); this.props.closeModal}}>Confirm</button>
+                    <button onClick={() => {this.confirmModifications()}}>Confirm</button>
                     <div className="container p-0 mt-4">
                     <h1>Modify Item</h1>
                     { this.displaySpecs() }
