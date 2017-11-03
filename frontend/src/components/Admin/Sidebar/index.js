@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import settings from '../../../config/settings';
 import './sidebar.scss';
+import logo from '../../../assets/images/logo-50.png';
 
 class Sidebar extends Component {
 
@@ -53,13 +54,11 @@ class Sidebar extends Component {
             <div>
                 <div className="ui huge menu stackable">
 
-                <div className="item active">
-                    <img src={require('../../../assets/images/logo-50.png')} className="mr-2"/><strong>Admin</strong>
-                </div>
+                <Link to={`/`} className="item active">
+                    <img src={logo} className="mr-2"/><strong>Admin</strong>
+                </Link>
 
-                <Link to={`/`} className="item">Inventory</Link>
-
-                <Link to={`/add`} className="item">Add Item</Link>
+                <Link to={`/update`} className="item">Update Inventory</Link>
 
 
             <div className="right menu">
