@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import settings from '../../../config/settings';
 import './sidebar.scss';
+import logo from '../../../assets/images/logo-50.png';
 
 class Sidebar extends Component {
 
@@ -33,26 +34,14 @@ class Sidebar extends Component {
             })
     }
 
-    renderToggleButton() {
-        return (
-            <button className="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#myNavbar" aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>   
-        )
-    }
-
     renderLogOutButton() {
         return (
    
             <button 
-                className="ui inverted basic button"
+                className="ui primary button"
                 onClick={() => this.handleLogOutButton()}
             >
-        
-
-            
-                {" "} 
-                <i className="external icon" aria-hidden="true"></i>    
+                {" "}    
                 Logout                                            
             </button>
 
@@ -61,30 +50,31 @@ class Sidebar extends Component {
 
     render() {
 
-        let sidebarClass = "ui left vertical inverted sidebar labeled icon menu d-flex flex-column";
-        
-        if(this.state.visible) {
-            sidebarClass += " visible";
-        }
-
         return (    
-            <div className={sidebarClass}>
-                <Link to={`/`} className="item">
-                    <i className="home icon"></i>
-                    Home
-                </Link>
-                <Link to={`/inventory`} className="item">
-                    <i className="shopping bag icon"></i>
-                    Inventory
+            <div>
+                <div className="ui huge menu stackable">
+
+                <Link to={`/`} className="item active">
+                    <img src={logo} className="mr-2"/><strong>Admin</strong>
                 </Link>
 
+                <Link to={`/update`} className="item">Update Inventory</Link>
 
 
-               <div className="mt-auto p-2">
-                        {this.renderLogOutButton()}
-                </div> 
+            <div className="right menu">
+
+            {/* <div className="item">
+                <div className="ui icon input form-group form-group-sm react-bs-table-search-form">
+                    <input type="text" placeholder="Search..." className="form-control"/>
+                    <i className="search icon"></i>
+                </div>
+            </div> */}
+                <div className="item">
+                    {this.renderLogOutButton()}
+                </div>
             </div>
-
+        </div>
+    </div>   
         
         )
         
