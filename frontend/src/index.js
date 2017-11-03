@@ -22,7 +22,8 @@ ReactDOM.render(
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/" component={AdminInventory}/>
+                <Route exact path="/" component={AdminHome}/>
+                <Route exact path="/update" component={AdminInventory}/>
                 <Route exact path="/login" component={AdminLogin}/>
                 <Route exact path="/add" component={AdminInventoryAddItem}/>
             </div>

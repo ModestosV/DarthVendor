@@ -10,21 +10,32 @@ class Inventory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: [],
-            errorMsg: null
+            items:[{'modelNumber':'ZZZZZZZ',
+            'quantity':46,
+            'name':'Razer Desktop',
+            'weight':15.0,
+            'weightFormat':'lbs',
+            'price':2299.99,
+            'priceFormat':'CAD',
+            'brandName':'RAZER',
+            'type':'Desktop',
+            'ramSize':16,
+            'ramFormat':'GB',
+            'processorType':'INTEL',
+            'numCores':4,
+            'hardDriveSize':2,
+            'hardDriveFormat':'TB',
+            'dx':15,
+            'dy':30,
+            'dz':1,
+            'dimensionFormat':'INCH'}],
+            errorMsg: null,
+            showModal: false
         };
     }
 
-    componentWillMount() {  
-        const {history} = this.props;      
-        console.log(localStorage);
-        if (!localStorage.activeUser) {
-            history.push('/login');
-        }
-    }
-
     componentDidMount() {
-        this.itemsList();
+        //this.itemsList();
     }
 
     itemsList() {
