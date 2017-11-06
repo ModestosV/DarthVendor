@@ -7,15 +7,16 @@ class UserTDG:
 
         with Database() as cursor:
             query = """
-                INSERT INTO user (username, firstname, lastname, email, address, phone, password)
-                VALUES ('{username}', '{firstname}', '{lastname}', '{email}',
-                        '{address}', '{phone}', '{password}');
+                INSERT INTO user (email, password, isAdmin, isLoggedIn, username, firstname, lastname, address, phone)
+                VALUES ('{email}', '{password}', 0, 0, '{username}', '{firstname}', '{lastname}',
+                        '{address}', '{phone}');
             """.format(**(customer.__dict__))
 
             try:
                 cursor.execute(query)
             except Exception as error:
                 print(error)
+
 
     @staticmethod
     def update(user):
@@ -34,38 +35,14 @@ class UserTDG:
             except Exception as error:
                 print(error)
 
-    @staticmethod
-    def findUser(username):
+    def findUser(useremail):
 
         with Database() as cursor:
-            query = """
-                SELECT *
-                FROM user 
-                WHERE username = '{}';
-            """
 
             try:
-                cursor.execute(query)
-                resultSet = cursor.fetchone()
-                    return resultSet
-            except Exception as error:
-                print(error)
-                return None
-
-    @staticmethod
-    def findEmail(email):
-
-        with Database() as cursor:
-            query = """
-                SELECT *
-                FROM user 
-                WHERE email = '{}';
-            """
-
-            try:
-                cursor.execute(query)
-                resultSet = cursor.fetchone()
-                    return resultSet
+                cursor.execute("SELECT * FROM user WHERE email = '"+useremail+"';")
+                resultSet = cursor.fetchall()
+                return resultSet
             except Exception as error:
                 print(error)
                 return None

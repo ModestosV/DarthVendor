@@ -1,26 +1,14 @@
-from backend.apps.v1.accounts.models import Customer
-from backend.apps.v1.accounts.models import Administrator
-from backend.apps.v1.accounts.models import Client
-from backend.apps.v1.accounts.TDG import UserTDG
+from backend.apps.v1.accounts.models.Customer import Customer
+from backend.apps.v1.accounts.models.Client import Client
+from backend.apps.v1.accounts.TDG.UserTDG import UserTDG
 
 class UserMapper:
 
-    @staticmethod
-    def validUsernameToRegister(username):
-
-        resultSet = UserTDG.findUser(username);
-
-        if(resultSet.rowcount() is 0):
-        	return True
-        else:
-        	return False
-
-    @staticmethod
     def validEmailToRegister(email):
 
-        resultSet = UserTDG.findEmail(email);
+        resultSet = UserTDG.findUser(email)
 
-        if(resultSet.rowcount() is 0):
+        if not resultSet:
             return True
         else:
             return False
@@ -30,31 +18,29 @@ class UserMapper:
 
         try:
             UserTDG.insert(customer)
-            return True
         except Exception as error:
             print(error)
-            return False
 
     @staticmethod
-    def existUser(username):
+    def existUser(email):
 
-        resultSet = UserTDG.findUser(username);
+        resultSet = UserTDG.findUser(email)
 
-        if(resultSet.rowcount() is 0):
+        if not resultSet:
             return False
         else:
             return True
 
     @staticmethod
-    def find(username):
+    def find(email):
 
-        resultSet = UserTDG.findUser(username);
+        resultSet = UserTDG.findUser(email)
 
-        user = Client()
+        user = Client("","","",0,0,"")
         
         for row in resultSet:
-        	user.id = row['id']
-            user.username = row['username']
+            user.id = row['id']
+            user.email = row['email']
             user.password = row['password']
             user.isAdmin = row['isAdmin']
             user.isLoggedIn = row['isLoggedIn']
@@ -67,7 +53,14 @@ class UserMapper:
 
         try:
             UserTDG.update(client)
-            return True
         except Exception as error:
             print(error)
-            return False        
+
+    @staticmethod
+    def isLogged(email):
+
+        user = UserMapper.find(email)
+        if(user.isLoggedIn is 1):
+            return True
+        else:
+            return False
