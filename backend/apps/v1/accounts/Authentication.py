@@ -1,7 +1,6 @@
-from backend.apps.v1.accounts.models import Customer
-from backend.apps.v1.accounts.models import Administrator
-from backend.apps.v1.accounts.models import Client
-from backend.apps.v1.accounts.TDG import UserMapper
+from backend.apps.v1.accounts.models.Customer import Customer
+from backend.apps.v1.accounts.models.Client import Client
+from backend.apps.v1.accounts.mapper.UserMapper import UserMapper
 import datetime
 
 class Authentication:
@@ -9,36 +8,36 @@ class Authentication:
     @staticmethod
     def register(customer):
 
-        if(UserMapper.validUsernameToRegister(customer.username)):
-            if(UserMapper.validEmailToRegister(customer.email)):
-                return UserMapper.insert(customer)
-            else:
-                return False
-        else:
-            return False
-
-    @staticmethod
-    def islogged(client):
-
-        if(client.isLoggedIn is 1):
+        if(UserMapper.validEmailToRegister(customer.email)):
+            UserMapper.insert(customer)
             return True
         else:
             return False
 
-    @staticmethod
-    def login(client, isAdmin):
+    def login(client):
 
-        if(client.isLoggedIn is 0):
-        	client.isAdmin = isAdmin
-            client.isLoggedIn = 1
-            client.timeStamp = datetime.datetime.now()
+        if(UserMapper.existUser(client.email) is True):
+            user = UserMapper.find(client.email)
+            if(client.password == user.password):
+                if(user.isLoggedIn is 0):
+                    user.isAdmin = client.isAdmin
+                    user.isLoggedIn = 1
+                    client.timeStamp = datetime.datetime.now()
 
-            try:
-                UserTDG.update(client)
-            except Exception as error:
-                print(error)
+                    try:
+                        UserMapper.update(user)
+                        return user
+                    except Exception as error:
+                        print(error)
+                else:
+                    print("User has logged in.")
+                    return None
+            else:
+                print("Password does not match.")
+                return None
         else:
-        	print("User has logged in.")
+            print("User does not exist.")
+            return None
 
     
     @staticmethod
@@ -49,8 +48,8 @@ class Authentication:
             client.timeStamp = None
 
             try:
-                UserTDG.update(client)
+                UserMapper.update(client)
             except Exception as error:
                 print(error)
         else:
-        	print("User has already logged out.")
+            print("User has already logged out.")
