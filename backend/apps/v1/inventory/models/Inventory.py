@@ -199,7 +199,7 @@ class Inventory(object):
                                 row.get('dimensionFormat'),
                             ),
                         )
-
+                    )
                 cursor.execute(queryMonitor)
                 for row in cursor.fetchall():
                     result.append(
