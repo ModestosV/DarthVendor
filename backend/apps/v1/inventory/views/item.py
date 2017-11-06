@@ -7,9 +7,7 @@ from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.Tablet import Tablet
-
 from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
-
 
 
 class ItemView(APIView):
