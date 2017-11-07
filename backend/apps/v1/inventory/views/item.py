@@ -10,6 +10,7 @@ from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
 
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
+from backend.apps.v1.inventory.ItemAdminUOW import ItemAdminUOW
 
 
 class ItemView(APIView):
@@ -18,8 +19,29 @@ class ItemView(APIView):
     permission_classes = ()
 
     def get(self, request):
-        desktop = Desktop({
+
+        uow = ItemAdminUOW()
+        desktop1 = Desktop({
             'modelNumber': 'ZZZZZZT',
+            'name': 'Razer Desktop',
+            'quantity': 46,
+            'weight': 15.0,
+            'weightFormat': 'LBS',
+            'price': 2299.99,
+            'priceFormat': 'CAD',
+            'brandName': 'RAZER',
+            'ramSize': 16,
+            'ramFormat': 'GB',
+            'processorType': 'DELL',
+            'numCores': 4,
+            'hardDriveSize': 2,
+            'hardDriveFormat': 'GB',
+            'dx': 15,
+            'dy': 30,
+            'dz': 1
+        })
+        desktop2 = Desktop({
+            'modelNumber': 'ZZZZZZW',
             'name': 'Razer Desktop',
             'quantity': 46,
             'weight': 15.0,
@@ -37,7 +59,9 @@ class ItemView(APIView):
             'dy': 30,
             'dz': 1
         })
-        ItemSpecMapper.insert(desktop)
+        print(uow.registerDirtySpec(desktop1))
+        print(uow.registerNewSpec(desktop2))
+        uow.commit()
         result = ItemSpecMapper.findAll({'type': 'DESKTOP'})
         print(result)
 

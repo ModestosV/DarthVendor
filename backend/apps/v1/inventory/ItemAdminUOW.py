@@ -24,7 +24,7 @@ class ItemAdminUOW:
             lockStatus = ItemSpecMapper.lock(spec.type, self)
 
             if lockStatus:
-                lockedSpecTDGs.append(spec.type)
+                self.lockedSpecTDGs.append(spec.type)
             else:
                 return False
 
@@ -32,15 +32,15 @@ class ItemAdminUOW:
         if spec.type in self.lockedSpecTDGs:
             # check if an spec with this modelnumber was already added to the UOW
             for newSpec in self.newSpecs:
-                if spec.modelnumber == newSpec.modelnumber:
+                if spec.modelNumber == newSpec.modelNumber:
                     return False
 
             for dirtySpec in self.dirtySpecs:
-                if spec.modelnumber == dirtySpec.modelnumber:
+                if spec.modelNumber == dirtySpec.modelNumber:
                     return False
 
             # check if a spec with this modelnumber exists in the database, if not add to newSpecs
-            existingSpec = ItemSpecMapper.find(spec)
+            existingSpec = ItemSpecMapper.find(spec.modelNumber, spec.type)
 
             if existingSpec is not None:
                 return False
@@ -53,21 +53,21 @@ class ItemAdminUOW:
             lockStatus = ItemSpecMapper.lock(spec.type, self)
 
             if lockStatus:
-                lockedSpecTDGs.append(spec.type)
+                self.lockedSpecTDGs.append(spec.type)
             else:
                 return False
 
         if spec.type in self.lockedSpecTDGs:
             # if a spec with this modelnumber was already added to the UOW as a new spec, if so, replace it with the new version
             for newSpec in self.newSpecs:
-                if spec.modelnumber == newSpec.modelnumber:
+                if spec.modelNumber == newSpec.modelNumber:
                     self.newSpecs.remove(newSpec)
                     self.newSpecs.append(spec)
                     return True
 
             # if a spec with this modelnumber was already added as dirty, replace it with the new one
             for dirtySpec in self.dirtySpecs:
-                if spec.modelnumber == dirtySpec.modelnumber:
+                if spec.modelNumber == dirtySpec.modelNumber:
                     self.dirtySpecs.remove(dirtySpec)
                     self.dirtySpecs.append(spec)
                     return True
@@ -81,7 +81,7 @@ class ItemAdminUOW:
             lockStatus = ItemIDMapper.lock(itemID.spec.type)
 
             if lockStatus:
-                lockedItemIDTDGs.append(itemID.spec.type)
+                self.lockedItemIDTDGs.append(itemID.spec.type)
             else:
                 return False
 
@@ -94,16 +94,15 @@ class ItemAdminUOW:
             lockStatus = ItemIDMapper.lock(itemID.spec.type)
 
             if lockStatus:
-                lockedItemIDTDGs.append(itemID.spec.type)
+                self.lockedItemIDTDGs.append(itemID.spec.type)
             else:
                 return False
 
-        if itemId.spec.type in self.lockedItemIDTDGs:
+        if itemID.spec.type in self.lockedItemIDTDGs:
+            self.deletedItemIDs.append(itemID)
+            return True
 
-            for newItem
-        return True
-
-    def commit():
+    def commit(self):
 
         for spec in self.newSpecs:
             ItemSpecMapper.insert(spec)
@@ -111,8 +110,10 @@ class ItemAdminUOW:
         for spec in self.dirtySpecs:
             ItemSpecMapper.update(spec)
 
-        for tdgType in lockedSpecTDGs:
+        for tdgType in self.lockedSpecTDGs:
             ItemSpecMapper.unlock(tdgType, self)
+
+        selflockedSpecTDGs = []
 
         for itemID in self.newItemIDs:
             ItemIDMapper.insert(itemID)
@@ -120,7 +121,9 @@ class ItemAdminUOW:
         for itemID in self.deletedItemIDs:
             ItemIDMapper.delete(itemID)
 
-        for tdgType in lockedItemIDTDGs:
+        for tdgType in self.lockedItemIDTDGs:
             ItemIDMapper.unlock(tdgType, self)
+
+        self.lockedItemIDTDGs = []
 
         return

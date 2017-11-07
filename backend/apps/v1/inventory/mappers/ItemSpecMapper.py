@@ -116,16 +116,16 @@ class ItemSpecMapper():
         elif(filterlist['type'] == "MONITOR"):
             result = MonitorDisplayTDG.findAll()
 
-        print(result)
         itemSpecList = ItemSpecMapper.resultSetToItemSpec(result, filterlist['type'])
-        print(itemSpecList)
         return itemSpecList
 
     @staticmethod
     def resultSetToItemSpec(result, specType):
         itemSpecList = list()
         for row in result:
-            if (specType == "DESKTOP"):
+            if row is None:
+                break
+            elif (specType == "DESKTOP"):
                 item = Desktop({
                     'modelNumber': row.get('modelNumber'),
                     'name': row.get('name'),
