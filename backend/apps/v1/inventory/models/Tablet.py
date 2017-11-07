@@ -3,29 +3,30 @@ from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 
 class Tablet(ItemSpecification):
 
-    def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName,
-                 ramSize, ramFormat, processorType, numCores,
-                 hardDriveSize, hardDriveFormat, os, dx, dy, dz,
-                 size, cameraInfo, batteryInfo):
+    # params should contain the following keys: modelNumber, name, quantity,
+    # weight, weightFormat, price, priceFormat, brandName,
+    # ramSize, ramFormat, processorType, numCores,
+    # hardDriveSize, hardDriveFormat, os, dx, dy, dz,
+    # size, cameraInfo, batteryInfo
+    def __init__(self, params):
 
         """Constructor"""
 
-        super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName, "TABLET")
+        super().__init__(params['modelNumber'], params['name'], params['quantity'],
+                         params['weight'], params['weightFormat'], params['price'], params['priceFormat'], params['brandName'], "TABLET")
 
-        self.ramSize = ramSize
-        self.ramFormat = ramFormat
-        self.processorType = processorType
-        self.numCores = numCores
-        self.hardDriveSize = hardDriveSize
-        self.hardDriveFormat = hardDriveFormat
-        self.os = os
-        self.dx = dx
-        self.dy = dy
-        self.dz = dz
+        self.ramSize = params['ramSize']
+        self.ramFormat = params['ramFormat']
+        self.processorType = params['processorType']
+        self.numCores = params['numCores']
+        self.hardDriveSize = params['hardDriveSize']
+        self.hardDriveFormat = params['hardDriveFormat']
+        self.os = params['os']
+        self.dx = params['dx']
+        self.dy = params['dy']
+        self.dz = params['dz']
         self.dimensionFormat = "cm"
-        self.size = size
+        self.size = params['size']
         self.sizeFormat = "inch"
-        self.cameraInfo = cameraInfo
-        self.batteryInfo = batteryInfo
+        self.cameraInfo = params['cameraInfo']
+        self.batteryInfo = params['batteryInfo']

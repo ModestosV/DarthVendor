@@ -7,6 +7,22 @@ class DesktopTDG:
     owner = None
 
     @staticmethod
+    def findAll():
+        with Database() as cursor:
+            query = """
+                    SELECT * FROM desktop;
+                """
+
+            try:
+                cursor.execute(query)
+
+                result = cursor.fetchall()
+                return result
+            except Exception as error:
+                print(error)
+                return None
+
+    @staticmethod
     def find(modelNumber):
 
         with Database() as cursor:

@@ -9,6 +9,8 @@ from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
 
+from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
+
 
 class ItemView(APIView):
 
@@ -16,28 +18,27 @@ class ItemView(APIView):
     permission_classes = ()
 
     def get(self, request):
-        desktop = Desktop(
-            'ZZZZZZd',
-            'Razer Desktop',
-            46,
-            15.0,
-            'LBS',
-            2299.99,
-            'CAD',
-            'RAZER',
-            16,
-            'GB',
-            'INTEL',
-            4,
-            2,
-            'TB',
-            15,
-            30,
-            1,
-        )
-        print(desktop.ramFormat)
-        DesktopTDG.update(desktop)
-        result = DesktopTDG.find(desktop.modelNumber)
+        desktop = Desktop({
+            'modelNumber': 'ZZZZZZT',
+            'name': 'Razer Desktop',
+            'quantity': 46,
+            'weight': 15.0,
+            'weightFormat': 'LBS',
+            'price': 2299.99,
+            'priceFormat': 'CAD',
+            'brandName': 'RAZER',
+            'ramSize': 16,
+            'ramFormat': 'GB',
+            'processorType': 'DELL',
+            'numCores': 4,
+            'hardDriveSize': 2,
+            'hardDriveFormat': 'TB',
+            'dx': 15,
+            'dy': 30,
+            'dz': 1
+        })
+        ItemSpecMapper.insert(desktop)
+        result = ItemSpecMapper.findAll({'type': 'DESKTOP'})
         print(result)
 
         return Response()
