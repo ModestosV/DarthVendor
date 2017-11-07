@@ -64,7 +64,7 @@ class ItemSpecMapper():
         return result
 
     @staticmethod
-    def unlock(type,uow):
+    def unlock(type, uow):
         if(type == "DESKTOP"):
             result = DesktopTDG.unlock(uow)
 
@@ -92,7 +92,13 @@ class ItemSpecMapper():
 
         elif(type(itemspec) is Tablet):
             result = TabletTDG.find(itemspec.modelNumber)
-        return result
+
+        spec = resultSetToItemSpec(result)
+
+        if len(spec) == 0:
+            return None
+        else:
+            return spec[0]
 
     @staticmethod
     def findAll(filterlist):
@@ -109,97 +115,101 @@ class ItemSpecMapper():
         elif(filterlist['type'] == "MONITOR"):
             result = MonitorDisplayTDG.find(filterlist)
 
+        itemSpecList = resultSetToItemSpec(result)
+
+        return itemSpecList
+
+    def resultSetToItemSpec(result):
         itemSpecList = list()
 
         for row in result:
             if (filterlist['type'] == "DESKTOP"):
                 item = Desktop(
-                            row.get('modelNumber'),
-                            row.get('name'),
-                            row.get('quantity'),
-                            row.get('weight'),
-                            row.get('weightFormat'),
-                            row.get('price'),
-                            row.get('priceFormat'),
-                            row.get('brandName'),
-                            row.get('ramSize'),
-                            row.get('ramFormat'),
-                            row.get('processorType'),
-                            row.get('numCores'),
-                            row.get('hardDriveSize'),
-                            row.get('hardDriveFormat'),
-                            row.get('dx'),
-                            row.get('dy'),
-                            row.get('dz'),
-                            row.get('dimensionFormat'),
-
-                        )
+                    row.get('modelNumber'),
+                    row.get('name'),
+                    row.get('quantity'),
+                    row.get('weight'),
+                    row.get('weightFormat'),
+                    row.get('price'),
+                    row.get('priceFormat'),
+                    row.get('brandName'),
+                    row.get('ramSize'),
+                    row.get('ramFormat'),
+                    row.get('processorType'),
+                    row.get('numCores'),
+                    row.get('hardDriveSize'),
+                    row.get('hardDriveFormat'),
+                    row.get('dx'),
+                    row.get('dy'),
+                    row.get('dz'),
+                    row.get('dimensionFormat'),
+                )
 
             elif(filterlist['type'] == "LAPTOP"):
                 item = Laptop(
-                            row.get('modelNumber'),
-                            row.get('name'),
-                            row.get('quantity'),
-                            row.get('weight'),
-                            row.get('weightFormat'),
-                            row.get('price'),
-                            row.get('priceFormat'),
-                            row.get('brandName'),
-                            row.get('ramSize'),
-                            row.get('ramFormat'),
-                            row.get('processorType'),
-                            row.get('numCores'),
-                            row.get('hardDriveSize'),
-                            row.get('hardDriveFormat'),
-                            row.get('containsCamera'),
-                            row.get('isTouch'),
-                            row.get('batteryInfo'),
-                            row.get('os'),
-                            row.get('size'),
-                            row.get('sizeFormat')
-                        )
+                    row.get('modelNumber'),
+                    row.get('name'),
+                    row.get('quantity'),
+                    row.get('weight'),
+                    row.get('weightFormat'),
+                    row.get('price'),
+                    row.get('priceFormat'),
+                    row.get('brandName'),
+                    row.get('ramSize'),
+                    row.get('ramFormat'),
+                    row.get('processorType'),
+                    row.get('numCores'),
+                    row.get('hardDriveSize'),
+                    row.get('hardDriveFormat'),
+                    row.get('containsCamera'),
+                    row.get('isTouch'),
+                    row.get('batteryInfo'),
+                    row.get('os'),
+                    row.get('size'),
+                    row.get('sizeFormat')
+                )
 
             elif(filterlist['type'] == "TABLET"):
                 item = Tablet(
-                            row.get('modelNumber'),
-                            row.get('name'),
-                            row.get('quantity'),
-                            row.get('weight'),
-                            row.get('weightFormat'),
-                            row.get('price'),
-                            row.get('priceFormat'),
-                            row.get('brandName'),
-                            row.get('ramSize'),
-                            row.get('ramFormat'),
-                            row.get('processorType'),
-                            row.get('numCores'),
-                            row.get('hardDriveSize'),
-                            row.get('hardDriveFormat'),
-                            row.get('os'),
-                            row.get('dx'),
-                            row.get('dy'),
-                            row.get('dz'),
-                            row.get('dimensionFormat'),
-                            row.get('size'),
-                            row.get('sizeFormat'),
-                            row.get('cameraInfo'),
-                            row.get('batteryInfo')
-                        )
+                    row.get('modelNumber'),
+                    row.get('name'),
+                    row.get('quantity'),
+                    row.get('weight'),
+                    row.get('weightFormat'),
+                    row.get('price'),
+                    row.get('priceFormat'),
+                    row.get('brandName'),
+                    row.get('ramSize'),
+                    row.get('ramFormat'),
+                    row.get('processorType'),
+                    row.get('numCores'),
+                    row.get('hardDriveSize'),
+                    row.get('hardDriveFormat'),
+                    row.get('os'),
+                    row.get('dx'),
+                    row.get('dy'),
+                    row.get('dz'),
+                    row.get('dimensionFormat'),
+                    row.get('size'),
+                    row.get('sizeFormat'),
+                    row.get('cameraInfo'),
+                    row.get('batteryInfo')
+                )
 
             elif(filterlist['type'] == "MONITOR"):
                 item = MonitorDisplay(
-                            row.get('modelNumber'),
-                            row.get('name'),
-                            row.get('quantity'),
-                            row.get('weight'),
-                            row.get('weightFormat'),
-                            row.get('price'),
-                            row.get('priceFormat'),
-                            row.get('brandName'),
-                            row.get('size'),
-                            row.get('sizeFormat')
-                        )
+                    row.get('modelNumber'),
+                    row.get('name'),
+                    row.get('quantity'),
+                    row.get('weight'),
+                    row.get('weightFormat'),
+                    row.get('price'),
+                    row.get('priceFormat'),
+                    row.get('brandName'),
+                    row.get('size'),
+                    row.get('sizeFormat')
+                )
 
             itemSpecList.append(item)
 
-        return itemSpecList
+            return itemSpecList

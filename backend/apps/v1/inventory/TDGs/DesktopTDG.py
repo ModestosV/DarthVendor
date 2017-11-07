@@ -54,22 +54,17 @@ class DesktopTDG:
                     price = {price},
                     priceFormat = '{priceFormat}',
                     brandName = '{brandName}',
-                    ramSize = '{ramSize}',
-                    ramFormat = {ramFormat},
+                    ramSize = {ramSize},
+                    ramFormat = '{ramFormat}',
                     processorType = '{processorType}',
                     numCores = '{numCores}',
                     hardDriveSize = '{hardDriveSize}',
                     hardDriveFormat = '{hardDriveFormat}',
-                    os ='{os}',
-                    batteryInfo ='{batteryInfo}',
                     dx = '{dx}',
                     dy = '{dy}',
                     dz = '{dz}',
                     dimensionFormat = '{dimensionFormat}',
-                    cameraInfo = '{cameraInfo}',
-                    type = '{type}',
-                    size = {size},
-                    sizeFormat = '{sizeFormat}'
+                    type = '{type}'
                     WHERE modelNumber = '{modelNumber}';
                 """.format(**(desktop.__dict__))
 

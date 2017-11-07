@@ -16,7 +16,7 @@ class ItemView(APIView):
     permission_classes = ()
 
     def get(self, request):
-        self.desktop = Desktop(
+        desktop = Desktop(
             'ZZZZZZd',
             'Razer Desktop',
             46,
@@ -34,10 +34,10 @@ class ItemView(APIView):
             15,
             30,
             1,
-            'INCH'
         )
-        DesktopTDG.insert(self.desktop)
-        result = DesktopTDG.find(self.desktop.modelNumber)
+        print(desktop.ramFormat)
+        DesktopTDG.update(desktop)
+        result = DesktopTDG.find(desktop.modelNumber)
         print(result)
 
         return Response()
