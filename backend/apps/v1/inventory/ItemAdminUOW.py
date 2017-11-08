@@ -78,7 +78,7 @@ class ItemAdminUOW:
 
     def registerNewItemID(self, itemID):
         if itemID.spec.type not in self.lockedItemIDTDGs:
-            lockStatus = ItemIDMapper.lock(itemID.spec.type)
+            lockStatus = ItemIDMapper.lock(itemID.spec.type, self)
 
             if lockStatus:
                 self.lockedItemIDTDGs.append(itemID.spec.type)
@@ -91,7 +91,7 @@ class ItemAdminUOW:
 
     def registerDeletedItemID(self, itemID):
         if itemID.spec.type not in self.lockedItemIDTDGs:
-            lockStatus = ItemIDMapper.lock(itemID.spec.type)
+            lockStatus = ItemIDMapper.lock(itemID.spec.type, self)
 
             if lockStatus:
                 self.lockedItemIDTDGs.append(itemID.spec.type)
