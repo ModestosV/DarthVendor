@@ -32,12 +32,16 @@ class Inventory extends Component {
             'dz':1,
             'dimensionFormat':'INCH'}],
             errorMsg: null,
-            showModal: false
+            showModifyModal: false,
+            showDeleteModal: false,
         };
 
-        this.showSpecs = this.showSpecs.bind(this);
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
+        this.modifySpecs = this.modifySpecs.bind(this);
+        this.openModifyModal = this.openModifyModal.bind(this);
+        this.closeModifyModal = this.closeModifyModal.bind(this);
+        this.openDeleteModal = this.openDeleteModal.bind(this);
+        this.closeDeleteModal = this.closeDeleteModal.bind(this);
+        this.deleteItems = this.deleteItems.bind(this);
 
     }
 
@@ -45,13 +49,20 @@ class Inventory extends Component {
         //this.itemsList();
     }
 
-    openModal () {
-        this.setState({ showModal: true });
+    openModifyModal () {
+        this.setState({ showModifyModal: true });
     }
     
-    closeModal () {
-        this.setState({ showModal: false });
-        
+    closeModifyModal () {
+        this.setState({ showModifyModal: false });     
+    }
+
+    openDeleteModal () {
+        this.setState({ showDeleteModal: true });
+    }
+    
+    closeDeleteModal () {
+        this.setState({ showDeleteModal: false });     
     }
 
     itemsList() {
@@ -70,11 +81,9 @@ class Inventory extends Component {
     //    })
     }
 
-    showSpecs(row, columnIndex, rowIndex) {
-        console.log(columnIndex);
+    modifySpecs(row) {
         this.setState({item: row});
-        this.openModal();
-        console.log(this.state);
+        this.openModifyModal();
     }
 
     createDeleteBtn(onClick) {
@@ -89,23 +98,23 @@ class Inventory extends Component {
         onClick();
     }
 
-    render() {
-        
-        function cellFormat(cell, row){
-            return '<div onClick=hey()></div>' +cell;
-        }
+    deleteItems(row) {
+        this.openDeleteModal();
+        console.log("in delete Items")
+    }
 
+    render() {
+        const self = this;
+
+        function modifyCellFormat(cell, row){
+            const modifyBtn = <i onClick={() => self.modifySpecs(row)} className="fa fa-pencil-square-o fa-5" aria-hidden="true"></i>;
+            return modifyBtn;
+        }
+            
         function deleteCellFormat(cell, row){
-            
-            return '<i class="fa fa-trash fa-5" aria-hidden="true"></i>';
-            
-            }
-            
-            function modifyCellFormat(cell, row){
-            
-            return '<i class="fa fa-pencil-square-o fa-5" aria-hidden="true"></i>';
-            
-            }
+            const deleteBtn = <i onClick={() => self.deleteItems(row)} className="fa fa-trash fa-5" aria-hidden="true"></i>;
+            return deleteBtn;
+        }
 
         function sortFunc(a, b, order) {   
             if (order === 'desc') {
@@ -116,8 +125,7 @@ class Inventory extends Component {
         }
 
         const options = { 
-            onRowClick: this.showSpecs,
-            deleteBtn: this.createDeleteBtn
+            // onRowClick: this.showSpecs
         }
 
         return (
@@ -148,9 +156,15 @@ class Inventory extends Component {
                 </div>
 
                 {/* Modal for Modify item */}
-                <ReactModal isOpen={this.state.showModal}>
-                    <button onClick={this.closeModal}>Close Modal</button>
-                    <ModifyItem item={this.state.item} closeModal={this.closeModal}/>
+                <ReactModal isOpen={this.state.showModifyModal}>
+                    <button onClick={this.closeModifyModal}>Close Modal</button>
+                    <ModifyItem item={this.state.item} closeModal={this.closeModifyModal}/>
+                </ReactModal>
+
+                {/* Modal for Delete item */}
+                <ReactModal isOpen={this.state.showDeleteModal}>
+                    <button onClick={this.closeDeleteModal}>Close Modal</button>
+                    {/* <DeleteItem item={this.state.item} closeModal={this.closeDeleteModal}/> */}
                 </ReactModal>
 
             </div>
