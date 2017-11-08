@@ -42,7 +42,7 @@ class DesktopIDTDG:
             query = """
                 INSERT INTO desktopID (serialNum, modelNum, isLocked)
                 VALUES ('{}', '{}', 0);
-            """.format(desktopID.serialNum, desktopID.spec.modelNum)
+            """.format(desktopID.serialNumber, desktopID.spec.modelNumber)
 
             try:
                 cursor.execute(query)

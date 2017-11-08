@@ -11,7 +11,7 @@ class LaptopIDTDG:
 
             query = """
                 SELECT * FROM laptopID WHERE modelNum = '{}';
-            """.format(spec.modelNum)
+            """.format(spec.modelNumber)
             try:
                 cursor.execute(query)
                 resultSet = cursor.fetchall()
@@ -27,7 +27,7 @@ class LaptopIDTDG:
             query = """
                 INSERT INTO laptopID (serialNum, modelNum, isLocked)
                 VALUES ('{}', '{}', 0);
-            """.format(laptopID.serialNum, laptopID.spec.modelNum)
+            """.format(laptopID.serialNumber, laptopID.spec.modelNumber)
 
             try:
                 cursor.execute(query)

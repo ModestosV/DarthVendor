@@ -10,7 +10,11 @@ from backend.apps.v1.inventory.models.Tablet import Tablet
 from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
 
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
+from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
+
 from backend.apps.v1.inventory.ItemAdminUOW import ItemAdminUOW
+
+from backend.apps.v1.inventory.ItemAdministration import ItemAdministration
 
 
 class ItemView(APIView):
@@ -20,7 +24,7 @@ class ItemView(APIView):
 
     def get(self, request):
 
-        uow = ItemAdminUOW()
+        itemAdmin = ItemAdministration()
         desktop1 = Desktop({
             'modelNumber': 'ZZZZZZT',
             'name': 'Razer Desktop',
@@ -59,11 +63,13 @@ class ItemView(APIView):
             'dy': 30,
             'dz': 1
         })
-        print(uow.registerDirtySpec(desktop1))
-        print(uow.registerNewSpec(desktop2))
-        uow.commit()
-        result = ItemSpecMapper.findAll({'type': 'DESKTOP'})
-        print(result)
+
+        itemAdmin.initiateEdit()
+        itemAdmin.addQuantity(desktop2.modelNumber, "DESKTOP", 5)
+        itemAdmin.terminateEdit()
+        result = ItemIDMapper.find(desktop2)
+
+        print(len(result))
 
         return Response()
 
