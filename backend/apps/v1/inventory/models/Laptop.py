@@ -4,7 +4,7 @@ from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 class Laptop(ItemSpecification):
 
     def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName, type,
+                 weight, weightFormat, price, priceFormat, brandName,
                  ramSize, ramFormat, processorType, numCores,
                  hardDriveSize, hardDriveFormat,
                  containCamera, isTouch, batteryInfo, os, size, sizeFormat):
@@ -13,7 +13,6 @@ class Laptop(ItemSpecification):
 
         super().__init__(modelNumber, name, quantity,
                          weight, weightFormat, price, priceFormat, brandName, "Laptop")
-
 
         self.ramSize = ramSize
         self.ramFormat = ramFormat
