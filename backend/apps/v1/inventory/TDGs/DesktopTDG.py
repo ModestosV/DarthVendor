@@ -7,6 +7,22 @@ class DesktopTDG:
     owner = None
 
     @staticmethod
+    def findAll():
+        with Database() as cursor:
+            query = """
+                    SELECT * FROM desktop;
+                """
+
+            try:
+                cursor.execute(query)
+
+                result = cursor.fetchall()
+                return result
+            except Exception as error:
+                print(error)
+                return None
+
+    @staticmethod
     def find(modelNumber):
 
         with Database() as cursor:
@@ -54,22 +70,17 @@ class DesktopTDG:
                     price = {price},
                     priceFormat = '{priceFormat}',
                     brandName = '{brandName}',
-                    ramSize = '{ramSize}',
-                    ramFormat = {ramFormat},
+                    ramSize = {ramSize},
+                    ramFormat = '{ramFormat}',
                     processorType = '{processorType}',
                     numCores = '{numCores}',
                     hardDriveSize = '{hardDriveSize}',
                     hardDriveFormat = '{hardDriveFormat}',
-                    os ='{os}',
-                    batteryInfo ='{batteryInfo}',
                     dx = '{dx}',
                     dy = '{dy}',
                     dz = '{dz}',
                     dimensionFormat = '{dimensionFormat}',
-                    cameraInfo = '{cameraInfo}',
-                    type = '{type}',
-                    size = {size},
-                    sizeFormat = '{sizeFormat}'
+                    type = '{type}'
                     WHERE modelNumber = '{modelNumber}';
                 """.format(**(desktop.__dict__))
 
