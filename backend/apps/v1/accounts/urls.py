@@ -11,5 +11,5 @@ urlpatterns = [
     url(r'^logout$', LogoutView.as_view()),
 
     url(r'^users$', UserView.as_view()),
-    url(r'^users/(?P<user_id>[\d]+)$', UserDetail.as_view()),
+    url(r'^users/(?P<user_id>[\d]+)$', UserDetail.as_view())
 ]
