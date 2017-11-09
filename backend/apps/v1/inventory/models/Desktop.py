@@ -3,23 +3,24 @@ from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 
 class Desktop(ItemSpecification):
 
-    def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName,
-                 ramSize, ramFormat, processorType, numCores,
-                 hardDriveSize, hardDriveFormat, dx, dy, dz):
+    # param dict should contain these keys: modelNumber, name, quantity,
+    # weight, weightFormat, price, priceFormat, brandName,
+    # ramSize, ramFormat, processorType, numCores,
+    # hardDriveSize, hardDriveFormat, dx, dy, dz
+    def __init__(self, params):
 
         """" Constructor """
 
-        super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName, "Desktop")
+        super().__init__(params['modelNumber'], params['name'], params['quantity'],
+                         params['weight'], params['weightFormat'], params['price'], params['priceFormat'], params['brandName'], "DESKTOP")
 
-        self.ramSize = ramSize
-        self.ramFormat = ramFormat
-        self.processorType = processorType
-        self.numCores = numCores
-        self.hardDriveSize = hardDriveSize
-        self.hardDriveFormat = hardDriveFormat
-        self.dx = dx
-        self.dy = dy
-        self.dz = dz
+        self.ramSize = params['ramSize']
+        self.ramFormat = params['ramFormat']
+        self.processorType = params['processorType']
+        self.numCores = params['numCores']
+        self.hardDriveSize = params['hardDriveSize']
+        self.hardDriveFormat = params['hardDriveFormat']
+        self.dx = params['dx']
+        self.dy = params['dy']
+        self.dz = params['dz']
         self.dimensionFormat = "cm"

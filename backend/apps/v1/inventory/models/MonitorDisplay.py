@@ -3,13 +3,15 @@ from backend.apps.v1.inventory.models.ItemSpecification import ItemSpecification
 
 class MonitorDisplay(ItemSpecification):
 
-    def __init__(self, modelNumber, name, quantity,
-                 weight, weightFormat, price, priceFormat, brandName, size, sizeFormat):
+    # params should contain the following keys: modelNumber, name, quantity,
+    # weight, weightFormat, price, priceFormat, brandName, size, sizeFormat
+    def __init__(self, params):
 
         """Constructor"""
 
-        super().__init__(modelNumber, name, quantity,
-                         weight, weightFormat, price, priceFormat, brandName, "MonitorDisplay")
+        super().__init__(params['modelNumber'], params['name'], params['quantity'],
+                         params['weight'], params['weightFormat'], params['price'],
+                         params['priceFormat'], params['brandName'], "MONTIORDISPLAY")
 
-        self.size = size
+        self.size = params['size']
         self.sizeFormat = "inch"
