@@ -1,6 +1,9 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import serializers
+from django.utils.six import BytesIO
+from rest_framework.parsers import JSONParser
 
 from backend.apps.v1.inventory.models.Store import Store
 from backend.apps.v1.inventory.models.Desktop import Desktop
@@ -15,15 +18,52 @@ from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 from backend.apps.v1.inventory.ItemAdminUOW import ItemAdminUOW
 
 from backend.apps.v1.inventory.ItemAdministration import ItemAdministration
+from backend.apps.v1.accounts.ObjectSession import ObjectSession
 
 
-class ItemView(APIView):
+class InitiateEdit(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+    def post(self, request):
+        print('initiateEdit')
+
+        try:
+            print(ObjectSession.sessions)
+            itemAdministration = ObjectSession.sessions[request.session['token']]
+            itemAdministration.initiateEdit()
+            return Response({}, status=status.HTTP_200_OK)
+        except Exception as error:
+            print(error)
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TerminateEdit(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        print('terminateEdit')
+        try:
+            itemAdministration = ObjectSession.sessions[request.session['token']]
+            itemAdministration.terminateEdit()
+            return Response({}, status=status.HTTP_200_OK)
+        except:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddItemSpecView(APIView):
 
     authentication_classes = ()
     permission_classes = ()
 
     def get(self, request):
+        print(request.session['userID'])
+        try:
+            request.session['count'] += 1
+        except:
+            request.session['count'] = 0
 
+        print(request.session['count'])
         itemAdmin = ItemAdministration()
         desktop1 = Desktop({
             'modelNumber': 'ZZZZZZT',
@@ -74,43 +114,46 @@ class ItemView(APIView):
         return Response()
 
     def post(self, request):
-        store = Store()
+        itemAdministration = ObjectSession.sessions[request.session['token']]
         itemData = request.data
         itemType = itemData["type"]
         item = None
-        print(itemData)
         try:
             if itemType == "Desktop":
-                item = Desktop(
-                    itemData["modelNumber"], itemData["name"], itemData["quantity"],
-                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"],
-                    itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"],
-                    itemData["hardDriveSize"], itemData["hardDriveFormat"], itemData["dx"], itemData["dy"], itemData["dz"]
-                )
+                item = Desktop(itemData)
             elif itemType == "Monitor Display":
-                item = MonitorDisplay(
-                    itemData["modelNumber"], itemData["name"], itemData["quantity"],
-                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"], itemData["size"]
-                )
+                item = MonitorDisplay(itemData)
             elif itemType == "Laptop":
-                item = Laptop(
-                    itemData["modelNumber"], itemData["name"], itemData["quantity"],
-                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"],
-                    itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"],
-                    itemData["hardDriveSize"], itemData["hardDriveFormat"],
-                    itemData["containCamera"], itemData["isTouch"], itemData["batteryInfo"], itemData["os"], itemData["size"]
-                )
+                item = Laptop(itemData)
             elif itemType == "Tablet":
-                item = Tablet(
-                    itemData["modelNumber"], itemData["name"], itemData["quantity"],
-                    itemData["weight"], itemData["weightFormat"], itemData["price"], itemData["priceFormat"], itemData["brandName"],
-                    itemData["ramSize"], itemData["ramFormat"], itemData["processorType"], itemData["numCores"],
-                    itemData["hardDriveSize"], itemData["hardDriveFormat"], itemData["os"], itemData["dx"], itemData["dy"], itemData["dz"],
-                    itemData["size"], itemData["cameraInfo"], itemData["batteryInfo"]
-                )
+                item = Tablet(itemData)
         except Exception as error:
             print(error)
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
-        store.confirmItemCreation(item)
+        itemAdministration.addItemSpec(item)
+        return Response("It Worked")
+
+
+class ModifyItemSpecView(APIView):
+
+    def post(self, request):
+        itemAdministration = ObjectSession.sessions[request.session['token']]
+        itemData = request.data
+        itemType = itemData["type"]
+        item = None
+        try:
+            if itemType == "Desktop":
+                item = Desktop(itemData)
+            elif itemType == "Monitor Display":
+                item = MonitorDisplay(itemData)
+            elif itemType == "Laptop":
+                item = Laptop(itemData)
+            elif itemType == "Tablet":
+                item = Tablet(itemData)
+        except Exception as error:
+            print(error)
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+        itemAdministration.modifyItemSpec(item)
         return Response("It Worked")
