@@ -12,25 +12,26 @@ class Inventory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items:[{'modelNumber':'ZZZZZZZ',
-            'quantity':46,
-            'name':'Razer Desktop',
-            'weight':15.0,
-            'weightFormat':'lbs',
-            'price':2299.99,
-            'priceFormat':'CAD',
-            'brandName':'RAZER',
-            'type':'Desktop',
-            'ramSize':16,
-            'ramFormat':'GB',
-            'processorType':'INTEL',
-            'numCores':4,
-            'hardDriveSize':2,
-            'hardDriveFormat':'TB',
-            'dx':15,
-            'dy':30,
-            'dz':1,
-            'dimensionFormat':'INCH'}],
+            // items:[{'modelNumber':'ZZZZZZZ',
+            // 'quantity':46,
+            // 'name':'Razer Desktop',
+            // 'weight':15.0,
+            // 'weightFormat':'lbs',
+            // 'price':2299.99,
+            // 'priceFormat':'CAD',
+            // 'brandName':'RAZER',
+            // 'type':'Desktop',
+            // 'ramSize':16,
+            // 'ramFormat':'GB',
+            // 'processorType':'INTEL',
+            // 'numCores':4,
+            // 'hardDriveSize':2,
+            // 'hardDriveFormat':'TB',
+            // 'dx':15,
+            // 'dy':30,
+            // 'dz':1,
+            // 'dimensionFormat':'INCH'}],
+            items:[],
             errorMsg: null,
             showModifyModal: false,
             showDeleteModal: false,
@@ -66,19 +67,19 @@ class Inventory extends Component {
     }
 
     itemsList() {
-    //     return axios.get(`${settings.API_ROOT}/inventory`)
-    //     .then(results => {
-    //         const errorMsg = null;
-    //         const items = results.data.map(item => item);
-    //         this.setState({items});
-    //         this.setState({errorMsg});
-    //         console.log(items);
-    //     })
-    //     .catch(error => {
-    //      console.log(error);
-    //      const errorMsg = "Oops, something went wrong while fetching items!";
-    //      this.setState({errorMsg});
-    //    })
+        return axios.get(`${settings.API_ROOT}/inventory`)
+        .then(results => {
+            const errorMsg = null;
+            const items = results.data.map(item => item);
+            this.setState({items});
+            this.setState({errorMsg});
+            console.log(items);
+        })
+        .catch(error => {
+         console.log(error);
+         const errorMsg = "Oops, something went wrong while fetching items!";
+         this.setState({errorMsg});
+       })
     }
 
     modifySpecs(row) {
@@ -145,7 +146,6 @@ class Inventory extends Component {
 
                 {/* Modal for Modify item */}
                 <ReactModal isOpen={this.state.showModifyModal}>
-                    <button onClick={this.closeModifyModal}>Close Modal</button>
                     <ModifyItem item={this.state.item} closeModal={this.closeModifyModal}/>
                 </ReactModal>
 
