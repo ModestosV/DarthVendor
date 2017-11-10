@@ -86,18 +86,6 @@ class Inventory extends Component {
         this.openModifyModal();
     }
 
-    createDeleteBtn(onClick) {
-        console.log('in createdelete')
-        return(
-            <button onClick={e => handleDelete(onClick)}>Delete</button>
-        );
-    }
-
-    handleDelete(onClick){
-        console.log('in handle');
-        onClick();
-    }
-
     deleteItems(row) {
         this.openDeleteModal();
         console.log("in delete Items")
