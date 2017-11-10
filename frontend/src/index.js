@@ -25,9 +25,9 @@ ReactDOM.render(
             <div>
             <Route exact path="/merchant" component={MerchantHome}/>
                 <Route exact path="/" component={AdminHome}/>
-                <Route exact path="/inventory" component={AdminInventory} />
+                <Route exact path="/update" component={AdminInventory}/>
                 <Route exact path="/login" component={AdminLogin}/>
-                <Route exact path="/inventory/add" component={AdminInventoryAddItem}/>
+                <Route exact path="/add" component={AdminInventoryAddItem}/>
             </div>
         </Router>
     </Provider>,
