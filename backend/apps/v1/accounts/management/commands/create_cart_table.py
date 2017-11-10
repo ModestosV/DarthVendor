@@ -16,7 +16,6 @@ class Command(BaseCommand):
                     status varchar(255) NOT NULL,
                     total double NOT NULL,
                     totalFormat varchar(255) NOT NULL,
-                    timeStamp datetime DEFAULT '',
                     PRIMARY KEY (cartID),
                     FOREIGN KEY (userID) REFERENCES user (id)
                 );
