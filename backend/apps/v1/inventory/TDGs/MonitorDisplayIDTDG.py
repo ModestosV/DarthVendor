@@ -11,7 +11,7 @@ class MonitorDisplayIDTDG:
 
             query = """
                 SELECT * FROM monitorDisplayID WHERE modelNum = '{}';
-            """.format(spec.modelNum)
+            """.format(spec.modelNumber)
             try:
                 cursor.execute(query)
                 resultSet = cursor.fetchall()
@@ -27,7 +27,7 @@ class MonitorDisplayIDTDG:
             query = """
                 INSERT INTO monitorDisplayID (serialNum, modelNum, isLocked)
                 VALUES ('{}', '{}', 0);
-            """.format(monitorDisplayID.serialNum, monitorDisplayID.spec.modelNum)
+            """.format(monitorDisplayID.serialNumber, monitorDisplayID.spec.modelNumber)
 
             try:
                 cursor.execute(query)

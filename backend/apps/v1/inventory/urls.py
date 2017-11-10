@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.conf.urls import url
 from .views.inventory import InventoryView
-from .views.item import ItemView
+from .views.item import AddItemSpecView, InitiateEdit, TerminateEdit, ModifyItemSpecView
 
 
 urlpatterns = [
     url(r'^inventory$', InventoryView.as_view()),
-    url(r'^item', ItemView.as_view())
-
+    url(r'^addItemSpec', AddItemSpecView.as_view()),
+    url(r'^modifyItemSpec', ModifyItemSpecView.as_view()),
+    url(r'^initiateEdit', InitiateEdit.as_view()),
+    url(r'^terminateEdit', TerminateEdit.as_view())
 ]
