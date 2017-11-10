@@ -21,7 +21,7 @@ class Command(BaseCommand):
                     password varchar(255),
                     isAdmin tinyint(1) DEFAULT 0,
                     isLoggedIn tinyint(1) DEFAULT 0,
-                    timeStamp varchar(255) DEFAULT 'FunctionToBeImplemented'
+                    timeStamp datetime DEFAULT ''
                 );
             """
 
