@@ -7,9 +7,10 @@ from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.Tablet import Tablet
-
 from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
 
+from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
+from backend.apps.v1.inventory.ItemAdminUOW import ItemAdminUOW
 
 
 class ItemView(APIView):
@@ -18,28 +19,50 @@ class ItemView(APIView):
     permission_classes = ()
 
     def get(self, request):
-        self.desktop = Desktop(
-            'ZZZZZZd',
-            'Razer Desktop',
-            46,
-            15.0,
-            'LBS',
-            2299.99,
-            'CAD',
-            'RAZER',
-            16,
-            'GB',
-            'INTEL',
-            4,
-            2,
-            'TB',
-            15,
-            30,
-            1,
-            'INCH'
-        )
-        DesktopTDG.insert(self.desktop)
-        result = DesktopTDG.find(self.desktop.modelNumber)
+
+        uow = ItemAdminUOW()
+        desktop1 = Desktop({
+            'modelNumber': 'ZZZZZZT',
+            'name': 'Razer Desktop',
+            'quantity': 46,
+            'weight': 15.0,
+            'weightFormat': 'LBS',
+            'price': 2299.99,
+            'priceFormat': 'CAD',
+            'brandName': 'RAZER',
+            'ramSize': 16,
+            'ramFormat': 'GB',
+            'processorType': 'DELL',
+            'numCores': 4,
+            'hardDriveSize': 2,
+            'hardDriveFormat': 'GB',
+            'dx': 15,
+            'dy': 30,
+            'dz': 1
+        })
+        desktop2 = Desktop({
+            'modelNumber': 'ZZZZZZW',
+            'name': 'Razer Desktop',
+            'quantity': 46,
+            'weight': 15.0,
+            'weightFormat': 'LBS',
+            'price': 2299.99,
+            'priceFormat': 'CAD',
+            'brandName': 'RAZER',
+            'ramSize': 16,
+            'ramFormat': 'GB',
+            'processorType': 'DELL',
+            'numCores': 4,
+            'hardDriveSize': 2,
+            'hardDriveFormat': 'TB',
+            'dx': 15,
+            'dy': 30,
+            'dz': 1
+        })
+        print(uow.registerDirtySpec(desktop1))
+        print(uow.registerNewSpec(desktop2))
+        uow.commit()
+        result = ItemSpecMapper.findAll({'type': 'DESKTOP'})
         print(result)
 
         return Response()
