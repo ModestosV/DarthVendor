@@ -7,6 +7,15 @@ python3 manage.py populate_user_table
 echo "Create Token Table"
 python3 manage.py create_token_table
 
+echo "Create Cart Table"
+python3 manage.py create_cart_table
+
+echo "Create Cart Item Table"
+python3 manage.py create_cart_item_table
+
+echo "Create Purchase Collection Table"
+python3 manage.py create_purchase_collection_table
+
 echo "Create Desktop Table"
 python3 manage.py create_desktop_table
 
