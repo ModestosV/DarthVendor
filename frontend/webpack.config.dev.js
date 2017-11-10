@@ -17,19 +17,11 @@ module.exports = {
         loaders: [
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
-<<<<<<< HEAD
-                    loaders: [
-                        'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
-                        'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                    ]
-                },
-=======
                 loaders: [
                     'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
                     'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
                 ]
             },
->>>>>>> 98b300a09056059e2d1b7008bdb550823968410a
             {
                 test: /\.js$/,
                 loaders: ['babel-loader'],

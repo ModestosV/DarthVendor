@@ -120,13 +120,13 @@ class Inventory extends Component {
         return (
             <div>
                 <Sidebar />
-                <div className="pusher">
+                <div className="container">
                     <div className="mt-4">
                         <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
                         <h1 className="m-0"> Inventory </h1>
                         { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                         <br />
-                        <Link to={`/inventory/add`} className="list-group-item d-inline-block collapsed">
+                        <Link to={`/add`} className="list-group-item d-inline-block collapsed">
                             <i className="fa fa-plus pr-2"></i> 
                             <span className="">Add Item</span>
                         </Link>
