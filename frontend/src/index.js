@@ -10,6 +10,7 @@ import AdminLogin from './components/Admin/Login';
 import AdminHome from './components/Admin/Home';
 import AdminInventory from './components/Admin/Inventory';
 import AdminInventoryAddItem from './components/Admin/Inventory/AddItem';
+import MerchantHome from './components/Merchant/Catalog';
 
 const store = createStore(
     rootReducer,
@@ -22,10 +23,11 @@ ReactDOM.render(
     <Provider store={store}>
         <Router>
             <div>
+            <Route exact path="/merchant" component={MerchantHome}/>
                 <Route exact path="/" component={AdminHome}/>
-                <Route exact path="/inventory" component={AdminInventory} />
+                <Route exact path="/update" component={AdminInventory}/>
                 <Route exact path="/login" component={AdminLogin}/>
-                <Route exact path="/inventory/add" component={AdminInventoryAddItem}/>
+                <Route exact path="/add" component={AdminInventoryAddItem}/>
             </div>
         </Router>
     </Provider>,
