@@ -11,7 +11,7 @@ class MonitorDisplay(ItemSpecification):
 
         super().__init__(params['modelNumber'], params['name'], params['quantity'],
                          params['weight'], params['weightFormat'], params['price'],
-                         params['priceFormat'], params['brandName'], "MONTIORDISPLAY")
+                         params['priceFormat'], params['brandName'], "MONITOR")
 
         self.size = params['size']
         self.sizeFormat = "inch"

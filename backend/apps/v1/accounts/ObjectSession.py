@@ -1,0 +1,4 @@
+
+
+class ObjectSession:
+    sessions = dict()
