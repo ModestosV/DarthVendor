@@ -15,6 +15,7 @@ class Command(BaseCommand):
                     serialNum varchar(255) NOT NULL,
                     price double NOT NULL,
                     priceFormat varchar(255) NOT NULL,
+                    timeStamp datetime DEFAULT '',
                     PRIMARY KEY (cartID),
                     FOREIGN KEY (serialNum) REFERENCES cart (cartID)
                 );
