@@ -158,3 +158,12 @@ class ModifyItemSpecView(APIView):
 
         itemAdministration.modifyItemSpec(item)
         return Response("It Worked")
+
+
+class getEditStateView(APIView):
+
+    def get(self, request):
+        itemAdministration = ObjectSession.sessions[request.session['token']]
+
+        if itemAdministration.uow is None:
+            return Response({''})
