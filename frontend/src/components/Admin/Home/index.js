@@ -35,11 +35,15 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        //this.itemsList();
+        this.itemsList();
     }
 
     itemsList() {
-        return axios.get(`${settings.API_ROOT}/inventory`)
+        return axios({
+            method:'get',
+            url: `${settings.API_ROOT}/inventory`,
+            withCredentials: true
+        })
         .then(results => {
             const errorMsg = null;
             const items = results.data.map(item => item);
@@ -59,7 +63,7 @@ class Home extends Component {
             return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
         }
 
-        function sortFunc(a, b, order) {   
+        function sortFunc(a, b, order) {
             if (order === 'desc') {
                 return a.price - b.price;
             } else {
@@ -76,14 +80,14 @@ class Home extends Component {
                     { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                     <br />
                     <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling>
-                        <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>                        
-                        <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>                        
+                        <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>
+                        <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
                         <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight</TableHeaderColumn>
                         <TableHeaderColumn dataField="weightFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight Format</TableHeaderColumn>
                         <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price</TableHeaderColumn>
-                        <TableHeaderColumn dataField="priceFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price Format</TableHeaderColumn>                        
-                        <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Quantity</TableHeaderColumn>                        
+                        <TableHeaderColumn dataField="priceFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price Format</TableHeaderColumn>
+                        <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Quantity</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>

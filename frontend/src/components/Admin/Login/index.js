@@ -5,7 +5,7 @@ import settings from '../../../config/settings';
 import './Login.scss';
 
 
-class Login extends Component {    
+class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -24,40 +24,45 @@ class Login extends Component {
         this.setState({password: event.target.value});
     }
 
-    handleForm() {        
+    handleForm() {
         const {dispatch, history} = this.props;
 
         let data = {
-            'username': this.state.username, 
+            'username': this.state.username,
             'password': this.state.password
         };
 
-        axios.post(`${settings.API_ROOT}/login`, data)
-            .then(response => {
-                console.log(response.data);
-                localStorage.setItem('activeUser', JSON.stringify(response.data));
-                history.push('/');
-            })
-            .catch(error => {
-                console.log(error);
-                swal({
-                    title: "Woops!",
-                    text: "Please provide valid credentials.",
-                    icon: "error",
-                    button: "Ok",
-                });                 
-            })
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/login`,
+            data: data,
+            withCredentials: true
+        })
+        .then(response => {
+            console.log(response.data);
+            localStorage.setItem('activeUser', JSON.stringify(response.data));
+            history.push('/');
+        })
+        .catch(error => {
+            console.log(error);
+            swal({
+                title: "Woops!",
+                text: "Please provide valid credentials.",
+                icon: "error",
+                button: "Ok",
+            });
+        })
     }
 
-    componentWillMount() {        
+    componentWillMount() {
         console.log(localStorage);
     }
 
     render() {
 
         return (
-            <div className="container">                
-                <div className="row">                    
+            <div className="container">
+                <div className="row">
                     <div className="col-md-4" />
                     <div className="col-md-4" style={{marginTop: '30%'}}>
                         <div id="login">
@@ -69,9 +74,9 @@ class Login extends Component {
                                     <div className="input-group-addon">
                                         <i className="fa fa-user"></i>
                                     </div>
-                                    <input 
-                                        type="text" 
-                                        className="form-control"                             
+                                    <input
+                                        type="text"
+                                        className="form-control"
                                         placeholder="Username"
                                         onChange={(e) => this.handleUserNameChange(e)}
                                     />
@@ -80,20 +85,20 @@ class Login extends Component {
                                     <div className="input-group-addon">
                                         <i className="fa fa-lock"></i>
                                     </div>
-                                    <input 
-                                        type="password" 
-                                        className="form-control"                             
+                                    <input
+                                        type="password"
+                                        className="form-control"
                                         placeholder="Password"
                                         onChange={(e) => this.handlePasswordChange(e)}
                                     />
                                 </div>
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     className="btn btn-dark btn-block"
                                     onClick={() => this.handleForm()}
                                 >
                                     Login <i className="fa fa-sign-in"></i>
-                                </button>                    
+                                </button>
                             </form>
                         </div>
                     </div>
