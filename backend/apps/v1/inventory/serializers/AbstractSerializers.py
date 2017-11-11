@@ -9,27 +9,11 @@ class ItemSpecificationSerializer(serializers.Serializer):
     price = serializers.DecimalField(max_digits=20, decimal_places=2)
     priceFormat = serializers.CharField()
     brandName = serializers.CharField()
-    type = serializers.SerializerMethodField()
+    type = serializers.CharField()
     quantity = serializers.SerializerMethodField()
 
-    def get_type(self, item):
-        with Database() as cursor:            
-            query = """
-                SELECT *
-                FROM item
-                WHERE modelNumber='{}'
-            """.format(item.modelNumber)
-
-            try:
-                cursor.execute(query)
-                item = cursor.fetchone()                
-                return item["type"].upper()
-            except Exception as error:
-                print(error)
-                return None
-
     def get_quantity(self, item):
-        with Database() as cursor:            
+        with Database() as cursor:
             query = """
                 SELECT *
                 FROM item
@@ -38,7 +22,7 @@ class ItemSpecificationSerializer(serializers.Serializer):
 
             try:
                 cursor.execute(query)
-                item = cursor.fetchone()                
+                item = cursor.fetchone()
                 return item["quantity"]
             except Exception as error:
                 print(error)

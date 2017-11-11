@@ -2,7 +2,6 @@ from backend.apps.v1.inventory.serializers.AbstractSerializers import AbstractCo
 from rest_framework import serializers
 
 
-
 class DesktopSerializer(AbstractComputerSerializer):
     dx = serializers.FloatField()
     dy = serializers.FloatField()

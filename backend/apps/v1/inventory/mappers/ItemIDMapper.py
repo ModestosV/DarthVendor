@@ -12,10 +12,6 @@ from backend.apps.v1.inventory.models.ItemID import ItemID
 class ItemIDMapper():
 
     @staticmethod
-    def findAllForSpec(spec):
-        return
-
-    @staticmethod
     def insert(itemID):
 
         if (type(itemID.spec) is Desktop):
@@ -85,17 +81,17 @@ class ItemIDMapper():
     def find(itemSpecification):
 
         itemIDList = list()
-
-        if(type(itemSpecification.type) is Desktop):
+        result = []
+        if(itemSpecification.type == "DESKTOP"):
             result = DesktopIDTDG.findBySpec(itemSpecification)
 
-        elif(type(itemSpecification.type) is Laptop):
+        elif(itemSpecification.type == "LAPTOP"):
             result = LaptopIDTDG.findBySpec(itemSpecification)
 
-        elif(type(itemSpecification.type) is MonitorDisplay):
+        elif(itemSpecification.type == "MONITOR"):
             result = MonitorDisplayIDTDG.findBySpec(itemSpecification)
 
-        elif(type(itemSpecification.type) is Tablet):
+        elif(itemSpecification.type == "TABLET"):
             result = TabletIDTDG.findBySpec(itemSpecification)
 
         for row in result:
