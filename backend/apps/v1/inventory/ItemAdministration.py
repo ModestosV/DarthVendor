@@ -1,3 +1,5 @@
+from backend.apps.v1.inventory.models.Catalog import Catalog
+
 from backend.apps.v1.inventory.ItemAdminUOW import ItemAdminUOW
 from backend.apps.v1.inventory.models.ItemID import ItemID
 
@@ -34,17 +36,10 @@ class ItemAdministration:
     def addQuantity(self, modelNumber, specType, quantity):
         spec = ItemSpecMapper.find(modelNumber, specType)
         for i in range(0, quantity):
-            serialNumber = uuid.uuid1().hex
+            serialNumber = uuid.uuid4().hex
             itemID = ItemID(serialNumber, False, spec)
             self.uow.registerNewItemID(itemID)
         return
 
-    def viewInventory(self):
-        types = ["DESKTOP", "MONITOR", "TABLET", "LAPTOP"]
-
-        result = []
-        for specType in types:
-            result += ItemSpecMapper.findAll({'type': specType})
-
-        print(result)
-        return
+    def getCatalog(self):
+        return Catalog.getAllSpecs()

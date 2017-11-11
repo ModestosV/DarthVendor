@@ -47,27 +47,31 @@ class Inventory extends Component {
     }
 
     componentDidMount() {
-        //this.itemsList();
+        this.itemsList();
     }
 
     openModifyModal () {
         this.setState({ showModifyModal: true });
     }
-    
+
     closeModifyModal () {
-        this.setState({ showModifyModal: false });     
+        this.setState({ showModifyModal: false });
     }
 
     openDeleteModal () {
         this.setState({ showDeleteModal: true });
     }
-    
+
     closeDeleteModal () {
-        this.setState({ showDeleteModal: false });     
+        this.setState({ showDeleteModal: false });
     }
 
     itemsList() {
-        return axios.get(`${settings.API_ROOT}/inventory`)
+        return axios({
+            method:'get',
+            url:`${settings.API_ROOT}/inventory`,
+            withCredentials: true
+        })
         .then(results => {
             const errorMsg = null;
             const items = results.data.map(item => item);
@@ -99,13 +103,13 @@ class Inventory extends Component {
             const modifyBtn = <i onClick={() => self.modifySpecs(row)} className="fa fa-pencil-square-o fa-5" aria-hidden="true"></i>;
             return modifyBtn;
         }
-            
+
         function deleteCellFormat(cell, row){
             const deleteBtn = <i onClick={() => self.deleteItems(row)} className="fa fa-trash fa-5" aria-hidden="true"></i>;
             return deleteBtn;
         }
 
-        function sortFunc(a, b, order) {   
+        function sortFunc(a, b, order) {
             if (order === 'desc') {
                 return a.price - b.price;
             } else {
@@ -113,7 +117,7 @@ class Inventory extends Component {
             }
         }
 
-        const options = { 
+        const options = {
             // onRowClick: this.showSpecs
         }
 
@@ -127,21 +131,21 @@ class Inventory extends Component {
                         { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                         <br />
                         <Link to={`/add`} className="list-group-item d-inline-block collapsed">
-                            <i className="fa fa-plus pr-2"></i> 
+                            <i className="fa fa-plus pr-2"></i>
                             <span className="">Add Item</span>
                         </Link>
 
                         <BootstrapTable data={this.state.items} options={options} striped condensed hover pagination search scrolling >
-                            <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>                        
-                            <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>                        
+                            <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
+                            <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
                             <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
-                            <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>                      
-                            <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} >Quantity</TableHeaderColumn>                        
+                            <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
+                            <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} >Quantity</TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
                         </BootstrapTable>
-                    </div>    
+                    </div>
                 </div>
 
                 {/* Modal for Modify item */}

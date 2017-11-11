@@ -28,7 +28,7 @@ class AddItem extends Component {
                 this.setState({specs: ['ramSize', 'processorType', 'numCores', 'hardDriveSize', 'dx', 'dy', 'dz']});
                 break;
             case 'Laptop':
-                this.setState({specs: ['ramSize', 'processorType', 'numCores', 'hardDriveSize', 'containCamera', 'isTouch', 'batteryInfo', 'os', 'size']});
+                this.setState({specs: ['ramSize', 'processorType', 'numCores', 'hardDriveSize', 'containsCamera', 'isTouch', 'batteryInfo', 'os', 'size']});
                 break;
             case 'Tablet':
                 this.setState({specs: ['ramSize', 'processorType', 'numCores', 'hardDriveSize', 'dx', 'dy', 'dz', 'os', 'batteryInfo', 'size', 'cameraInfo']});
