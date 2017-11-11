@@ -9,7 +9,12 @@ from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.Tablet import Tablet
-from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
+
+from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
+from backend.apps.v1.inventory.serializers.LaptopSerializer import LaptopSerializer
+from backend.apps.v1.inventory.serializers.MonitorDisplay import MonitorDisplaySerializer
+from backend.apps.v1.inventory.serializers.TabletSerializer import TabletSerializer
+from backend.apps.v1.inventory.serializers.ItemIDSerializer import ItemIDSerializer
 
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
@@ -114,7 +119,6 @@ class AddItemSpecView(APIView):
         return Response()
 
     def post(self, request):
-        print(ObjectSession.sessions)
         itemAdministration = ObjectSession.sessions[request.session['token']]
         itemData = request.data
         itemType = itemData["type"]
@@ -137,6 +141,8 @@ class AddItemSpecView(APIView):
 
 
 class ModifyItemSpecView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
 
     def post(self, request):
         itemAdministration = ObjectSession.sessions[request.session['token']]
@@ -144,13 +150,13 @@ class ModifyItemSpecView(APIView):
         itemType = itemData["type"]
         item = None
         try:
-            if itemType == "Desktop":
+            if itemType == "DESKTOP":
                 item = Desktop(itemData)
-            elif itemType == "Monitor Display":
+            elif itemType == "MONITOR":
                 item = MonitorDisplay(itemData)
-            elif itemType == "Laptop":
+            elif itemType == "LAPTOP":
                 item = Laptop(itemData)
-            elif itemType == "Tablet":
+            elif itemType == "TABLET":
                 item = Tablet(itemData)
         except Exception as error:
             print(error)
@@ -166,4 +172,39 @@ class getEditStateView(APIView):
         itemAdministration = ObjectSession.sessions[request.session['token']]
 
         if itemAdministration.uow is None:
-            return Response({''})
+            return Response({'currentlyEditing': False}, status=status.HTTP_200_OK)
+        else:
+            editedSpecs = list()
+            editedSpecs += itemAdministration.uow.newSpecs
+            editedSpecs += itemAdministration.uow.dirtySpecs
+            serializedItems = list()
+            for item in editedSpecs:
+                if isinstance(item, Desktop):
+                    item = DesktopSerializer(item).data
+                    serializedItems.append(item)
+                elif isinstance(item, Laptop):
+                    item = LaptopSerializer(item).data
+                    serializedItems.append(item)
+                elif isinstance(item, MonitorDisplay):
+                    item = MonitorDisplaySerializer(item).data
+                    serializedItems.append(item)
+                elif isinstance(item, Tablet):
+                    item = TabletSerializer(item).data
+                    serializedItems.append(item)
+
+            addedItemIDs = itemAdministration.uow.newItemIDs
+            serializedAddedItemIDs = list()
+            for itemID in addedItemIDs:
+                serializedAddedItemIDs.append(ItemIDSerializer(itemID).data)
+
+            deletedItemIDs = itemAdministration.uow.deletedItemIDs
+            serializedDeletedItemIDs = list()
+            for itemID in deletedItemIDs:
+                serializedDeletedItemIDs.append(ItemIDSerializer(itemID).data)
+
+            return Response({
+                'currentlyEditing': True,
+                'editedSpecs': serializedItems,
+                'addedItemIDs': serializedAddedItemIDs,
+                'deletedItemIDs': serializedDeletedItemIDs
+            }, status=status.HTTP_200_OK)

@@ -35,6 +35,10 @@ class Inventory extends Component {
             errorMsg: null,
             showModifyModal: false,
             showDeleteModal: false,
+            currentlyEditing: false,
+            editedSpecs: [],
+            newItemIDs: [],
+            deletedItemIDs:[]
         };
 
         this.modifySpecs = this.modifySpecs.bind(this);
@@ -44,6 +48,33 @@ class Inventory extends Component {
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
         this.deleteItems = this.deleteItems.bind(this);
 
+    }
+
+    componentWillMount() {
+        axios({
+            method: 'get',
+            url: `${settings.API_ROOT}/getEditState`,
+            withCredentials: true
+        }).then(results => {
+            var data = results.data;
+            if(data.currentlyEditing) {
+                this.setState({
+                    currentlyEditing: data.currentlyEditing,
+                    editedSpecs: data.editedSpecs,
+                    newItemIDs: data.newItemIDs,
+                    deletedItemIDs: data.deletedItemIDs
+                });
+            } else {
+                axios({
+                    method: 'post',
+                    data: {},
+                    url: `${settings.API_ROOT}/initiateEdit`,
+                    withCredentials: true
+                }).then( result => {
+                    this.setState({currentlyEditing: true})
+                });
+            }
+        })
     }
 
     componentDidMount() {
@@ -96,6 +127,17 @@ class Inventory extends Component {
         console.log("in delete Items")
     }
 
+    terminateEdit() {
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/terminateEdit`,
+            data: {},
+            withCredentials: true
+        }).then( result => {
+            this.props.history.push('/')
+        })
+    }
+
     render() {
         const self = this;
 
@@ -134,7 +176,7 @@ class Inventory extends Component {
                             <i className="fa fa-plus pr-2"></i>
                             <span className="">Add Item</span>
                         </Link>
-
+                        <button type='button' onClick={() => this.terminateEdit()} className="list-group-item d-inline-block collapsed">Confirm Changes</button>
                         <BootstrapTable data={this.state.items} options={options} striped condensed hover pagination search scrolling >
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>

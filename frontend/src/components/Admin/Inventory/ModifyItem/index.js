@@ -10,7 +10,7 @@ class ModifyItem extends Component {
         super(props);
 
         this.state = {
-        
+
         }
     }
 
@@ -20,11 +20,12 @@ class ModifyItem extends Component {
 
         axios({
             method: 'post',
-            url: `${settings.API_ROOT}/item`,
+            url: `${settings.API_ROOT}/modifyItemSpec`,
             data: data,
             headers: {
                 Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-            }
+            },
+            withCredentials: true
         })
         .then(response => {
             console.log('item modified');
@@ -49,7 +50,7 @@ class ModifyItem extends Component {
 
     // display specs of selected item
     displaySpecs() {
-            return (                
+            return (
                 <div>
                     {Object.keys(this.props.item).map((name,index) => {
                         if(typeof this.props.item[name] != 'object'){
@@ -61,7 +62,7 @@ class ModifyItem extends Component {
                         }
                     })
                     }
-                </div>  
+                </div>
             );
     }
 
@@ -80,7 +81,7 @@ class ModifyItem extends Component {
                     <h1>Modify Item</h1>
                     { this.displaySpecs() }
                     </div>
-               
+
                 </div>
             </div>
         )

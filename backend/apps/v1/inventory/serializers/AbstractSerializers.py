@@ -4,29 +4,15 @@ from backend.utils.database import Database
 
 class ItemSpecificationSerializer(serializers.Serializer):
     modelNumber = serializers.CharField()
+    name = serializers.CharField()
+    brandName = serializers.CharField()
+    price = serializers.DecimalField(max_digits=20, decimal_places=2)
     weight = serializers.FloatField()
     weightFormat = serializers.CharField()
-    price = serializers.DecimalField(max_digits=20, decimal_places=2)
     priceFormat = serializers.CharField()
-    brandName = serializers.CharField()
     type = serializers.CharField()
-    quantity = serializers.SerializerMethodField()
+    quantity = serializers.IntegerField()
 
-    def get_quantity(self, item):
-        with Database() as cursor:
-            query = """
-                SELECT *
-                FROM item
-                WHERE modelNumber='{}'
-            """.format(item.modelNumber)
-
-            try:
-                cursor.execute(query)
-                item = cursor.fetchone()
-                return item["quantity"]
-            except Exception as error:
-                print(error)
-                return None
 
 
 class AbstractComputerSerializer(ItemSpecificationSerializer):
