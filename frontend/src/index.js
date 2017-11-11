@@ -11,6 +11,7 @@ import AdminHome from './components/Admin/Home';
 import AdminInventory from './components/Admin/Inventory';
 import AdminInventoryAddItem from './components/Admin/Inventory/AddItem';
 import MerchantHome from './components/Merchant/Catalog';
+import Cart from './components/Merchant/Cart';
 
 const store = createStore(
     rootReducer,
@@ -28,6 +29,7 @@ ReactDOM.render(
                 <Route exact path="/update" component={AdminInventory}/>
                 <Route exact path="/login" component={AdminLogin}/>
                 <Route exact path="/add" component={AdminInventoryAddItem}/>
+                <Route exact path="/cart" component={Cart}/>
             </div>
         </Router>
     </Provider>,
