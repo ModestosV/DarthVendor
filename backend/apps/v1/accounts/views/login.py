@@ -53,6 +53,7 @@ class LoginView(APIView):
                     cursor.execute(query)
                     serializer = UserSerializerLogin(serializer.data)
                     request.session['token'] = token
+                    request.session['test'] = 'test'
                     ObjectSession.sessions[token] = ItemAdministration()
                     print(ObjectSession.sessions)
             except Exception as error:

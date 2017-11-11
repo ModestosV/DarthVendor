@@ -4,7 +4,7 @@ from backend.apps.v1.inventory.serializers.AbstractSerializers import AbstractCo
 
 class LaptopSerializer(AbstractComputerSerializer):
 
-    containCamera = serializers.FloatField()
+    containsCamera = serializers.FloatField()
     isTouch = serializers.BooleanField()
     batteryInfo = serializers.CharField()
     os = serializers.CharField()

@@ -5,7 +5,6 @@ from rest_framework import serializers
 from django.utils.six import BytesIO
 from rest_framework.parsers import JSONParser
 
-from backend.apps.v1.inventory.models.Store import Store
 from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Laptop import Laptop
@@ -24,17 +23,18 @@ from backend.apps.v1.accounts.ObjectSession import ObjectSession
 class InitiateEdit(APIView):
     authentication_classes = ()
     permission_classes = ()
+
     def post(self, request):
         print('initiateEdit')
 
-        try:
-            print(ObjectSession.sessions)
-            itemAdministration = ObjectSession.sessions[request.session['token']]
-            itemAdministration.initiateEdit()
-            return Response({}, status=status.HTTP_200_OK)
-        except Exception as error:
-            print(error)
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        print(ObjectSession.sessions)
+        itemAdministration = ObjectSession.sessions[request.session['token']]
+        itemAdministration.initiateEdit()
+        return Response({}, status=status.HTTP_200_OK)
+        # except Exception as error:
+        #     print(error)
+        #     return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TerminateEdit(APIView):
@@ -114,6 +114,7 @@ class AddItemSpecView(APIView):
         return Response()
 
     def post(self, request):
+        print(ObjectSession.sessions)
         itemAdministration = ObjectSession.sessions[request.session['token']]
         itemData = request.data
         itemType = itemData["type"]
