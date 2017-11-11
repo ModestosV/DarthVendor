@@ -53,8 +53,8 @@ class AddItem extends Component {
 
         axios({
             method: 'post',
-            url: `${settings.API_ROOT}/item`,
-            // withCredentials: true,
+            url: `${settings.API_ROOT}/addItemSpec`,
+            withCredentials: true,
             data: data,
             headers: {
                 Authorization: "Token " + JSON.parse(localStorage.activeUser).token
@@ -86,7 +86,7 @@ class AddItem extends Component {
                     onChange={(e) => this.handleTypeChange(e)}
                 >
                     <option value="">Choose type</option>
-                    { 
+                    {
                         itemTypes.map((name,index) => {
                             return (
                                 <option key={index} value={name}>
@@ -115,7 +115,7 @@ class AddItem extends Component {
                                 onChange={(e) => this.handleSpecChange(e)}
                             />
                         </div>
-                    );                                    
+                    );
                 })
             );
         }
@@ -136,7 +136,7 @@ class AddItem extends Component {
         const itemSpecs = this.state.specs;
         const itemFields = itemBasicSpecs;
         itemFields.push.apply(itemFields, itemSpecs);
-        
+
         return (
             <div>
                 <Sidebar />
@@ -149,7 +149,7 @@ class AddItem extends Component {
                             { this.typeSelect(itemTypes) }
 
                             { this.attributeFields(itemFields) }
-                            
+
                             <button
                                 type="button"
                                 className="btn btn-dark btn-block"
