@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
-from backend.apps.v1.inventory.models.Store import Store
 from backend.apps.v1.inventory.models.Tablet import Tablet
 
 from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
@@ -13,19 +12,21 @@ from backend.apps.v1.inventory.serializers.LaptopSerializer import LaptopSeriali
 from backend.apps.v1.inventory.serializers.MonitorDisplay import MonitorDisplaySerializer
 from backend.apps.v1.inventory.serializers.TabletSerializer import TabletSerializer
 
-
-store = Store()
+from backend.apps.v1.accounts.ObjectSession import ObjectSession
 
 
 class InventoryView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
 
     def get(self, request):
-
-        inventory = store.requestInventoryList()
+        print(ObjectSession.sessions)
+        print(request.session['test'])
+        itemAdministration = ObjectSession.sessions[request.session['token']]
+        specList = itemAdministration.getCatalog()
         serializedItems = []
 
-        print(inventory)
-        for item in inventory:
+        for item in specList:
             if isinstance(item, Desktop):
                 item = DesktopSerializer(item).data
                 serializedItems.append(item)
@@ -38,5 +39,5 @@ class InventoryView(APIView):
             elif isinstance(item, Tablet):
                 item = TabletSerializer(item).data
                 serializedItems.append(item)
-
+        print(serializedItems)
         return Response(serializedItems)
