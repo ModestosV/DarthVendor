@@ -49,6 +49,8 @@ class ItemSpecMapper():
 
     @staticmethod
     def lock(type, uow):
+
+        print(type)
         if(type == "DESKTOP"):
             result = DesktopTDG.lock(uow)
 

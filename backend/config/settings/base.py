@@ -25,7 +25,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
 ]
 
-INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE_CLASSES = [
     'corsheaders.middleware.CorsMiddleware',
@@ -38,6 +38,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
 
 ROOT_URLCONF = 'backend.config.urls'
 
@@ -93,7 +95,12 @@ REST_FRAMEWORK = {
     # )
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',
+    'localhost:8000'
+)
+
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = [
     'accept',
