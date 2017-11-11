@@ -38,7 +38,6 @@ class UserTDG:
     def delete(userid):
 
         with Database() as cursor:
-            print(userid)
 
             try:
                 cursor.execute("DELETE FROM user WHERE id = " + str(userid) + ";")
@@ -62,7 +61,7 @@ class UserTDG:
         with Database() as cursor:
 
             try:
-                cursor.execute("SELECT * FROM user;")
+                cursor.execute("SELECT * FROM user WHERE isAdmin=0;")
                 resultSet = cursor.fetchall()
                 return resultSet
             except Exception as error:

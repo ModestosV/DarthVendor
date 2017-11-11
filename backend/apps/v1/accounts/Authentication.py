@@ -84,3 +84,19 @@ class Authentication:
                 print(error)
         else:
             print("User has already logged out.")
+
+
+    @staticmethod
+    def deleteCustomer(user):
+        if(user.isAdmin == 0):
+            UserMapper.delete(user)
+            print("Your account is now removed.")
+        else:
+            print("Admin account cannot be removed.")
+
+    @staticmethod
+    def viewAllCustomer(user):
+        if(user.isAdmin == 1):
+            UserMapper.displayAllCustomer()
+        else:
+            print("Only Admin can see all the customers.")
