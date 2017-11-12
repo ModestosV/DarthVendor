@@ -6,25 +6,49 @@ import settings from '../../../config/settings';
 import Sidebar from '../Sidebar';
 import ModifyItem from './ModifyItem';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import DeleteItem from './DeleteItem';
 
 class Inventory extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
+            item: [],
+            // items:[{'modelNumber':'ZZZZZZZ',
+            // 'quantity':46,
+            // 'name':'Razer Desktop',
+            // 'weight':15.0,
+            // 'weightFormat':'lbs',
+            // 'price':2299.99,
+            // 'priceFormat':'CAD',
+            // 'brandName':'RAZER',
+            // 'type':'Desktop',
+            // 'ramSize':16,
+            // 'ramFormat':'GB',
+            // 'processorType':'INTEL',
+            // 'numCores':4,
+            // 'hardDriveSize':2,
+            // 'hardDriveFormat':'TB',
+            // 'dx':15,
+            // 'dy':30,
+            // 'dz':1,
+            // 'dimensionFormat':'INCH'}],
             items:[],
             errorMsg: null,
             showModifyModal: false,
-            showDeleteModal: false,
+            showDeleteModal: false
         };
-
         this.modifySpecs = this.modifySpecs.bind(this);
         this.openModifyModal = this.openModifyModal.bind(this);
         this.closeModifyModal = this.closeModifyModal.bind(this);
         this.openDeleteModal = this.openDeleteModal.bind(this);
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
         this.deleteItems = this.deleteItems.bind(this);
-
+    }
+    componentWillMount() {
+        const {history} = this.props;
+        if (!localStorage.activeUser) {
+            history.push('/login');
+        }
     }
 
     componentWillMount() {
@@ -48,21 +72,20 @@ class Inventory extends Component {
     }
 
     openModifyModal () {
-        this.setState({ showModifyModal: true });
+        this.setState({showModifyModal: true});
     }
 
     closeModifyModal () {
-        this.setState({ showModifyModal: false });
+        this.setState({showModifyModal: false});
     }
 
     openDeleteModal () {
-        this.setState({ showDeleteModal: true });
+        this.setState({showDeleteModal: true});
     }
 
     closeDeleteModal () {
-        this.setState({ showDeleteModal: false });
+        this.setState({showDeleteModal: false});
     }
-
     itemsList() {
         return axios({
             method:'get',
@@ -82,30 +105,33 @@ class Inventory extends Component {
          this.setState({errorMsg});
        })
     }
-
     modifySpecs(row) {
         this.setState({item: row});
         this.openModifyModal();
     }
 
-    deleteItems(row) {
-        this.openDeleteModal();
-        console.log("in delete Items")
+    createDeleteButton(onClick) {
+        console.log('created delete');
+        return (
+            <i class="fa fa-trash fa-5" onClick={e => handleDelete()} aria-hidden="true"></i>
+        )
     }
 
-    
+    deleteItems(row) {
+        this.openDeleteModal();
+        this.setState({item: row});
+    }
 
     render() {
+
         const self = this;
 
         function modifyCellFormat(cell, row){
-            const modifyBtn = <i onClick={() => self.modifySpecs(row)} className="fa fa-pencil-square-o fa-5" aria-hidden="true"></i>;
-            return modifyBtn;
+            return <i onClick={() => self.modifySpecs(row)} className="fa fa-pencil-square-o fa-5" aria-hidden="true"></i>;
         }
 
         function deleteCellFormat(cell, row){
-            const deleteBtn = <i onClick={() => self.deleteItems(row)} className="fa fa-trash fa-5" aria-hidden="true"></i>;
-            return deleteBtn;
+            return <i onClick={() => self.deleteItems(row)} className="fa fa-trash fa-5" aria-hidden="true"></i>;
         }
 
         function sortFunc(a, b, order) {
@@ -129,8 +155,7 @@ class Inventory extends Component {
                             <i className="fa fa-plus pr-2"></i>
                             <span className="">Add Item</span>
                         </Link>
-
-                        <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling >
+                        <BootstrapTable data={this.state.items} striped hover condensed pagination search scrolling >
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
@@ -138,6 +163,7 @@ class Inventory extends Component {
                             <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
+
                         </BootstrapTable>
                     </div>
                 </div>
@@ -150,11 +176,8 @@ class Inventory extends Component {
 
                 {/* Modal for Delete item */}
                 <ReactModal isOpen={this.state.showDeleteModal}>
-                    <button onClick={this.closeDeleteModal}>Cancel</button>
-                    <button onClick={this.closeDeleteModal}>Close Modal</button>
-                    {/* <DeleteItem item={this.state.item} closeModal={this.closeDeleteModal}/> */}
+                    <DeleteItem item={this.state.item} closeDeleteModal={this.closeDeleteModal}/>
                 </ReactModal>
-
             </div>
         );
     }
