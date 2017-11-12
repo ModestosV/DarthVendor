@@ -7,3 +7,6 @@ class ItemID(object):
         self.serialNumber = serialNumber
         self.isLocked = isLocked
         self.spec = itemSpecification
+
+    def getPrice(self):
+        return self.spec.price
