@@ -10,54 +10,36 @@ from backend.apps.v1.accounts.serializers.user import UserSerializerLogin
 from backend.apps.v1.inventory.ItemAdministration import ItemAdministration
 from backend.apps.v1.accounts.ObjectSession import ObjectSession
 
+from backend.apps.v1.accounts.Authentication import Authentication
+
 
 class LoginView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
-    def get(self, request):
-        print(ObjectSession.sessions[request.session['token']].uow.newSpecs)
-
     def post(self, request):
-        """
-            Get user data and API token.
-        """
 
-        with Database() as cursor:
-            query = """
-                SELECT *
-                FROM user
-                WHERE username='{}'
-            """.format(request.data.get('username'))
+        isAdmin = request.data['isAdmin']
 
-            try:
-                cursor.execute(query)
-                user = cursor.fetchone()
-                serializer = UserSerializerLogin(data=user)
-                if not serializer.is_valid():
-                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        email = request.data['email']
+        password = request.data['password']
 
-                if not check_password(request.data.get('password'), user["password"]):
-                    return Response('Invalid username/password.', status=status.HTTP_400_BAD_REQUEST)
+        if isAdmin is False:
+            user = Authentication.customerLogin(email, password)
 
-                token = serializer.data["token"] if serializer.data else None
+        else:
+            user = Authentication.adminLogin(email, password)
 
-                # Create token if does not exist
-                if not bool(token):
-                    token = str(uuid.uuid4()).replace('-', '')
-                    query = """
-                        INSERT INTO token (token, user_id)
-                        VALUES ('{}', {});
-                    """.format(token, serializer.data['id'])
+        if user is None:
+            return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
-                    cursor.execute(query)
-                    serializer = UserSerializerLogin(serializer.data)
-                    request.session['token'] = token
-                    request.session['test'] = 'test'
-                    ObjectSession.sessions[token] = ItemAdministration()
-                    print(ObjectSession.sessions)
-            except Exception as error:
-                print(error)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        request.session['user'] = email
+        ObjectSession.sessions[email] = user
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        userSerializer = UserSerializerLogin(data=user.__dict__)
+
+        if not userSerializer.is_valid():
+            print(userSerializer.errors)
+            return Response(userSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(userSerializer.data, status=status.HTTP_200_OK)

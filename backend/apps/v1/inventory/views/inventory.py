@@ -20,8 +20,8 @@ class InventoryView(APIView):
     permission_classes = ()
 
     def get(self, request):
-        itemAdministration = ObjectSession.sessions[request.session['token']]
-        specList = itemAdministration.getCatalog()
+        user = ObjectSession.sessions[request.session['user']]
+        specList = user.itemAdministration.getCatalog()
         serializedItems = []
 
         for item in specList:
