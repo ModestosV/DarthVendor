@@ -32,7 +32,7 @@ class Catalog extends Component {
         
         if (!localStorage.activeUser) {
             history.push('/login');
-        }
+        } 
     }
 
     componentDidMount() {
