@@ -52,7 +52,6 @@ class Navigation extends Component {
                     //     method: 'post',
                     //     url: `${settings.API_ROOT}/item`,
                     //     // withCredentials: true,
-                    //     data: data,
                     //     headers: {
                     //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
                     //     }
@@ -78,7 +77,7 @@ class Navigation extends Component {
     }
 
     render() {
-        const options = () => (
+        const options = ( 
               <Dropdown text='Options' className='ui primary button'>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => this.handleLogOutButton()}>Logout</Dropdown.Item>
@@ -86,7 +85,8 @@ class Navigation extends Component {
                   <Dropdown.Item onClick={() => this.handleDeleteAccount()}>Delete Account</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-          )
+        );
+          
 
         return (    
             <div>
@@ -114,7 +114,7 @@ class Navigation extends Component {
                     </i>
                 </div>
                 <div className="item">
-                    {options()}
+                    {options}
                 </div>
             </div>
         </div>
