@@ -37,8 +37,8 @@ class Inventory extends Component {
             const activeUser = JSON.parse(localStorage.activeUser);
 
             // Redirect to merchant home page                
-            if (activeUser.isAdmin === false) {                
-                history.push('merchant');
+            if (activeUser.adminPermission === false) {                
+                history.push('/');
             }            
         }  
     }
@@ -125,7 +125,7 @@ class Inventory extends Component {
                         <h1 className="m-0"> Inventory </h1>
                         { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                         <br />
-                        <Link to={`/add`} className="list-group-item d-inline-block collapsed">
+                        <Link to={`/admin/add`} className="list-group-item d-inline-block collapsed">
                             <i className="fa fa-plus pr-2"></i>
                             <span className="">Add Item</span>
                         </Link>
