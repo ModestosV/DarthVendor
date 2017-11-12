@@ -10,25 +10,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items:[{'modelNumber':'ZZZZZZZ',
-            'quantity':46,
-            'name':'Razer Desktop',
-            'weight':15.0,
-            'weightFormat':'lbs',
-            'price':2299.99,
-            'priceFormat':'CAD',
-            'brandName':'RAZER',
-            'type':'Desktop',
-            'ramSize':16,
-            'ramFormat':'GB',
-            'processorType':'INTEL',
-            'numCores':4,
-            'hardDriveSize':2,
-            'hardDriveFormat':'TB',
-            'dx':15,
-            'dy':30,
-            'dz':1,
-            'dimensionFormat':'INCH'}],
+            items:[],
             errorMsg: null,
             showModal: false
         };
@@ -44,7 +26,6 @@ class Home extends Component {
             history.push('/login');
         } else {
             const activeUser = JSON.parse(localStorage.activeUser);
-
             if (activeUser.isAdmin === false) {
                 // Redirect to merchant home page                
                 history.push('merchant');
@@ -101,11 +82,8 @@ class Home extends Component {
                         <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>
                         <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
-                        <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight</TableHeaderColumn>
-                        <TableHeaderColumn dataField="weightFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight Format</TableHeaderColumn>
-                        <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price</TableHeaderColumn>
-                        <TableHeaderColumn dataField="priceFormat" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Price Format</TableHeaderColumn>
-                        <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Quantity</TableHeaderColumn>
+                        <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight (lbs)</TableHeaderColumn>
+                        <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price (CAD)</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>
