@@ -18,4 +18,4 @@ class Administrator(Client):
         self.address = address
         self.phone = phone
 
-        self.itemAdministrationController = ItemAdministration()
+        self.itemAdministration = ItemAdministration()
