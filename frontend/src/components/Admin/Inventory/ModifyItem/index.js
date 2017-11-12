@@ -71,32 +71,29 @@ class ModifyItem extends Component {
     }
 
     addQuantity() {
-        let data = this.state.addQuantity;
-        
-        // axios({
-        //     method: 'post',
-        //     url: `${settings.API_ROOT}/item`,
-        //     data: data,
-        //     headers: {
-        //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-        //     }
-        // })
-        // .then(response => {
-        //     swal({
-        //         text: "Quantity Added!",
-        //         icon: "success",
-        //         button: "Ok",
-        //     });
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        //     swal({
-        //         title: "Woops!",
-        //         text: "Something went wrong!",
-        //         icon: "error",
-        //         button: "Ok",
-        //     });
-        // })
+        let data = this.state;
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/addQuantity`,
+            data: data,
+            withCredentials: true
+        })
+        .then(response => {
+            swal({
+                text: "Quantity Added!",
+                icon: "success",
+                button: "Ok",
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            swal({
+                title: "Woops!",
+                text: "Something went wrong!",
+                icon: "error",
+                button: "Ok",
+            });
+        })
     }
 
     componentWillMount() {
@@ -104,7 +101,7 @@ class ModifyItem extends Component {
         console.log(localStorage);
 
         const {dispatch, history} = this.props;
-        
+
         // Redirect if user is not logged in
         if (!localStorage.activeUser) {
             history.push('/login');
@@ -112,10 +109,10 @@ class ModifyItem extends Component {
             const activeUser = JSON.parse(localStorage.activeUser);
 
             if (activeUser.isAdmin === false) {
-                // Redirect to merchant home page                
+                // Redirect to merchant home page
                 history.push('/');
-            }            
-        }        
+            }
+        }
     }
 
     render() {
