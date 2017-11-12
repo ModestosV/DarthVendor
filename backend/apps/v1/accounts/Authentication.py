@@ -1,6 +1,8 @@
 from backend.apps.v1.accounts.models.Customer import Customer
 from backend.apps.v1.accounts.models.Client import Client
 from backend.apps.v1.accounts.mapper.UserMapper import UserMapper
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
 import datetime
 
 class Authentication:
@@ -9,47 +11,45 @@ class Authentication:
     def register(customer):
 
         if(UserMapper.validEmailToRegister(customer.email)):
+            customer.password = make_password(customer.password)
             UserMapper.insert(customer)
             return True
         else:
             return False
 
-    def login(client):
+    @staticmethod
+    def customerLogin(email, password):
 
-        if(UserMapper.existUser(client.email) is True):
-            user = UserMapper.find(client.email)
-            if(client.password == user.password):
-                if(user.isLoggedIn is 0):
-                    user.isAdmin = client.isAdmin
-                    user.isLoggedIn = 1
-                    client.timeStamp = datetime.datetime.now()
+        customer = UserMapper.findCustomer(email)
 
-                    try:
-                        UserMapper.update(user)
-                        return user
-                    except Exception as error:
-                        print(error)
-                else:
-                    print("User has logged in.")
-                    return None
-            else:
-                print("Password does not match.")
-                return None
-        else:
-            print("User does not exist.")
+        if check_password(password, customer.password):
+            return customer
+
+        return None
+
+    def adminLogin(email, password):
+
+        admin = UserMapper.findAdmin(email)
+
+        if admin.isAdmin is not True:
             return None
 
-    
+        if check_password(password, admin.password):
+            return admin
+
+        return None
+
     @staticmethod
-    def logout(client):
-
-        if(client.isLoggedIn is 1):
-            client.isLoggedIn = 0
-            client.timeStamp = None
-
-            try:
-                UserMapper.update(client)
-            except Exception as error:
-                print(error)
+    def deleteCustomer(user):
+        if(user.isAdmin == 0):
+            UserMapper.delete(user)
+            print("Your account is now removed.")
         else:
-            print("User has already logged out.")
+            print("Admin account cannot be removed.")
+
+    @staticmethod
+    def viewAllCustomer(user):
+        if(user.isAdmin == 1):
+            UserMapper.displayAllCustomer()
+        else:
+            print("Only Admin can see all the customers.")

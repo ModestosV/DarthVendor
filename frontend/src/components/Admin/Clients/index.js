@@ -5,12 +5,12 @@ import settings from '../../../config/settings';
 import Sidebar from '../Sidebar';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
-class Home extends Component {
+class Clients extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            items:[],
+            clients:[],
             errorMsg: null,
             showModal: false
         };
@@ -26,7 +26,7 @@ class Home extends Component {
             history.push('/login');
         } else {
             const activeUser = JSON.parse(localStorage.activeUser);
-            if (activeUser.isAdmin === false) {
+            if (activeUser.adminPermission === false) {
                 // Redirect to merchant home page                
                 history.push('/');
             }            
@@ -34,10 +34,10 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.itemsList();
+        this.clientsList();
     }
 
-    itemsList() {
+    clientsList() {
         return axios({
             method:'get',
             url: `${settings.API_ROOT}/inventory`,
@@ -45,45 +45,35 @@ class Home extends Component {
         })
         .then(results => {
             const errorMsg = null;
-            const items = results.data.map(item => item);
-            this.setState({items});
+            const clients = results.data.map(client => client);
+            this.setState({clients});
             this.setState({errorMsg});
-            console.log(items);
+            console.log(clients);
         })
         .catch(error => {
          console.log(error);
-         const errorMsg = "Oops, something went wrong while fetching items!";
+         const errorMsg = "Oops, something went wrong while fetching clients!";
          this.setState({errorMsg});
        })
     }
 
     render() {
-        function cellFormat(cell, row){
-            return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
-        }
-
-        function sortFunc(a, b, order) {
-            if (order === 'desc') {
-                return a.price - b.price;
-            } else {
-                return b.price - a.price;
-            }
-        }
 
         return (
             <div>
                 <Sidebar />
                 <div className="container">
                     <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
-                    <h1> Inventory </h1>
+                    <h1> Clients List </h1>
                     { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                     <br />
-                    <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling>
-                        <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>
-                        <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
-                        <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight (lbs)</TableHeaderColumn>
-                        <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price (CAD)</TableHeaderColumn>
+                    <BootstrapTable data={this.state.clients} striped condensed hover pagination search scrolling>
+                        <TableHeaderColumn dataField="email" dataAlign="center" dataSort={true}>Email</TableHeaderColumn>
+                        <TableHeaderColumn dataField="username" isKey={true} dataAlign="center" dataSort={true}>Username</TableHeaderColumn>
+                        <TableHeaderColumn dataField="lastname" dataAlign="center" dataSort={true}>Last Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="firstname" dataAlign="center" dataSort={true}>First Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="address" dataAlign="center" dataSort={true}>Address</TableHeaderColumn>
+                        <TableHeaderColumn dataField="phone" dataAlign="center" dataSort={true}>Phone</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
             </div>
@@ -91,4 +81,4 @@ class Home extends Component {
     }
 }
 
-export default Home
+export default Clients

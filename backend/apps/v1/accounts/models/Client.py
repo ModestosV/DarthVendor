@@ -1,7 +1,7 @@
 class Client(object):
 
-    def __init__(self, id, email, password,
-                 isAdmin, isLoggedIn, timeStamp):
+    def __init__(self, id = None, email = None, password = None,
+                 isAdmin = None, isLoggedIn = None, timeStamp = None):
 
         """Constructor"""
 
