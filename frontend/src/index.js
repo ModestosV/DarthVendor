@@ -6,7 +6,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';  
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-import AdminLogin from './components/Admin/Login';
+import Login from './components/Login';
 import AdminHome from './components/Admin/Home';
 import AdminInventory from './components/Admin/Inventory';
 import AdminInventoryAddItem from './components/Admin/Inventory/AddItem';
@@ -28,7 +28,7 @@ ReactDOM.render(
                 <Route exact path="/return" component={MerchantReturn}/>
                 <Route exact path="/admin/" component={AdminHome}/>
                 <Route exact path="/admin/update" component={AdminInventory}/>
-                <Route exact path="/login" component={AdminLogin}/>
+                <Route exact path="/login" component={Login}/>
                 <Route exact path="/admin/add" component={AdminInventoryAddItem}/>
             </div>
         </Router>
