@@ -1,5 +1,5 @@
-"""from backend.apps.v1.accounts.models.Customer import Customer
-from backend.apps.v1.accounts.models.Client import Client"""
+from backend.apps.v1.accounts.models.Customer import Customer
+from backend.apps.v1.accounts.models.Client import Client
 from backend.apps.v1.accounts.mapper.UserMapper import UserMapper
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
@@ -17,74 +17,27 @@ class Authentication:
         else:
             return False
 
-    def customerLogin(customer):
-
-        if(UserMapper.existUser(customer.email) is True):
-            user = UserMapper.findCustomer(customer.email)
-
-            if(check_password(customer.password, user.password)):
-                if(user.isLoggedIn is 0):
-                    user.isLoggedIn = 1
-                    customer.timeStamp = datetime.datetime.now()
-
-                    try:
-                        UserMapper.update(user)
-                        return user
-                    except Exception as error:
-                        print(error)
-                else:
-                    print("User has logged in.")
-                    return None
-            else:
-                print("Password does not match.")
-                return None
-        else:
-            print("User does not exist.")
-            return None
-
-    def adminLogin(admin):
-
-        if(UserMapper.existUser(admin.email) is True):
-            user = UserMapper.findAdmin(admin.email)
-            if(user.isAdmin == 1):
-                if(check_password(admin.password, user.password)):
-                    if(user.isLoggedIn is 0):
-                        user.isLoggedIn = 1
-                        admin.timeStamp = datetime.datetime.now()
-
-                        try:
-                            UserMapper.update(user)
-                            return user
-                        except Exception as error:
-                            print(error)
-                    else:
-                        print("Administrator has logged in.")
-                        return None
-                else:
-                    print("Password does not match.")
-                    return None
-            else:
-                print("Only Administrator can log in.")
-                return None
-        else:
-            print("Administrator does not exist.")
-            return None
-
-    
     @staticmethod
-    def logout(user):
+    def customerLogin(email, password):
 
-        if(user.isLoggedIn is 1):
-            user.isLoggedIn = 0
-            user.timeStamp = None
+        customer = UserMapper.findCustomer(email)
 
-            try:
-                UserMapper.update(user)
-            except Exception as error:
-                print(error)
-        else:
-            print("User has already logged out.")
+        if check_password(password, customer.password):
+            return customer
 
+        return None
+
+    def adminLogin(email, password):
+
+        admin = UserMapper.findAdmin(email)
+
+        if admin.isAdmin is not True:
+            return None
+
+        if check_password(password, admin.password):
+            return admin
+
+        return None
 
     @staticmethod
     def deleteCustomer(user):

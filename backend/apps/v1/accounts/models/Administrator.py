@@ -8,7 +8,7 @@ class Administrator(Client):
                  username=None, firstname=None, lastname=None, address=None, phone=None):
 
         """Constructor"""
-        
+
         super().__init__(id, email, password,
                  isAdmin, isLoggedIn, timeStamp)
 
@@ -17,3 +17,5 @@ class Administrator(Client):
         self.lastname = lastname
         self.address = address
         self.phone = phone
+
+        self.itemAdministrationController = ItemAdministration()

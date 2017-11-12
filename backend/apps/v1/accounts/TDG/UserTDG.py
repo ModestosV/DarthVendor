@@ -49,8 +49,8 @@ class UserTDG:
         with Database() as cursor:
 
             try:
-                cursor.execute("SELECT * FROM user WHERE email = '"+useremail+"';")
-                resultSet = cursor.fetchall()
+                cursor.execute("SELECT * FROM user WHERE email = \'" + useremail + "\';")
+                resultSet = cursor.fetchone()
                 return resultSet
             except Exception as error:
                 print(error)
