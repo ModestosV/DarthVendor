@@ -23,6 +23,7 @@ class LoginView(APIView):
             Get user data and API token.
         """
 
+        adminPermission = False
         with Database() as cursor:
             query = """
                 SELECT *
@@ -30,10 +31,27 @@ class LoginView(APIView):
                 WHERE username='{}'
             """.format(request.data.get('username'))
 
+            if "isAdmin" in request.data.keys():    
+
+                if request.data['isAdmin'] is True:
+                    adminPermission = True
+
+                query = """
+                    SELECT *
+                    FROM user
+                    WHERE username='{}' AND isAdmin=1
+                """.format(request.data.get('username'))                
+
             try:
                 cursor.execute(query)
                 user = cursor.fetchone()
+
+                if not user:
+                    return Response(dict(), status=status.HTTP_401_UNAUTHORIZED)                
+
+                user['adminPermission'] = adminPermission   # Update admin permission
                 serializer = UserSerializerLogin(data=user)
+
                 if not serializer.is_valid():
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

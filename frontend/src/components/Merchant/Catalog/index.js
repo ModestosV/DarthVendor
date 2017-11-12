@@ -32,6 +32,14 @@ class Catalog extends Component {
         
         if (!localStorage.activeUser) {
             history.push('/login');
+        } else {
+            const activeUser = JSON.parse(localStorage.activeUser);
+
+            // Making sure user does not have admin permission
+            if (activeUser.adminPermission === true) {
+                // Redirect to admin home page                
+                history.push('/admin/');
+            }            
         } 
     }
 
