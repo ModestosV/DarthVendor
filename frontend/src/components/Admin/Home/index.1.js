@@ -29,11 +29,9 @@ class Home extends Component {
         .then(results => {
             const errorMsg = null;
             const items = results.data.map(item => item);
-            const itemsList = items;
-            this.setState({itemsList});
             this.setState({items});
             this.setState({errorMsg});
-            console.log(this.state);
+            console.log(items);
         })
         .catch(error => {
          console.log(error);
@@ -42,18 +40,7 @@ class Home extends Component {
        })
     }
 
-    filterItems(e) {
-        if(e.target.value == ""){
-            this.setState({itemsList: this.state.items});
-        } else {
-            let filteredItems = this.state.items.filter(item => item.weight < e.target.value);
-            this.setState({itemsList: filteredItems});
-        }
-        
-    }
-
     render() {
-
         function cellFormat(cell, row){
             return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
         }
@@ -74,8 +61,7 @@ class Home extends Component {
                     <h1> Inventory </h1>
                     { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                     <br />
-                    <input type="text" onBlur={(e) => this.filterItems(e)}/>
-                    <BootstrapTable data={this.state.itemsList} striped condensed hover pagination search scrolling>
+                    <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling>
                         <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>
                         <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
