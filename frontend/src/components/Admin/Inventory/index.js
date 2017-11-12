@@ -5,6 +5,7 @@ import {Link, HashRouter as Router, Route} from 'react-router-dom';
 import settings from '../../../config/settings';
 import Sidebar from '../Sidebar';
 import ModifyItem from './ModifyItem';
+import UpdateList from './UpdateList';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class Inventory extends Component {
@@ -44,7 +45,8 @@ class Inventory extends Component {
     }
 
     componentDidMount() {
-        this.itemsList();     
+        this.getItemsList();  
+        this.getUpdatedItemList();   
     }
 
     openModifyModal () {
@@ -63,7 +65,7 @@ class Inventory extends Component {
         this.setState({ showDeleteModal: false });
     }
 
-    itemsList() {
+    getItemsList() {
         return axios({
             method:'get',
             url:`${settings.API_ROOT}/inventory`,
@@ -81,6 +83,27 @@ class Inventory extends Component {
          const errorMsg = "Oops, something went wrong while fetching items!";
          this.setState({errorMsg});
        })
+    }
+
+    getUpdatedItemList() {
+        //    return axios({
+    //         method:'get',
+    //         url:`${settings.API_ROOT}/inventory`,
+    //         withCredentials: true
+    //     })
+    //     .then(results => {
+    //         const errorMsg = null;
+    //         const items = results.data.map(item => item);
+    //         const abc ="abc";
+    //         this.setState({items});
+    //         this.setState({errorMsg});
+    //         console.log(items);
+    //     })
+    //     .catch(error => {
+    //      console.log(error);
+    //      const errorMsg = "Oops, something went wrong while fetching items!";
+    //      this.setState({errorMsg});
+    //    })
     }
 
     modifySpecs(row) {
@@ -154,7 +177,7 @@ class Inventory extends Component {
                     <button onClick={this.closeDeleteModal}>Close Modal</button>
                     {/* <DeleteItem item={this.state.item} closeModal={this.closeDeleteModal}/> */}
                 </ReactModal>
-
+                <UpdateList />
             </div>
         );
     }
