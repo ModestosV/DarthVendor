@@ -31,7 +31,7 @@ class LoginView(APIView):
                 WHERE username='{}'
             """.format(request.data.get('username'))
 
-            if "isAdmin" in request.data.keys():    
+            if "isAdmin" in request.data.keys():
 
                 if request.data['isAdmin'] is True:
                     adminPermission = True
@@ -40,14 +40,14 @@ class LoginView(APIView):
                     SELECT *
                     FROM user
                     WHERE username='{}' AND isAdmin=1
-                """.format(request.data.get('username'))                
+                """.format(request.data.get('username'))
 
             try:
                 cursor.execute(query)
                 user = cursor.fetchone()
 
                 if not user:
-                    return Response(dict(), status=status.HTTP_401_UNAUTHORIZED)                
+                    return Response(dict(), status=status.HTTP_401_UNAUTHORIZED)
 
                 user['adminPermission'] = adminPermission   # Update admin permission
                 serializer = UserSerializerLogin(data=user)
@@ -71,7 +71,6 @@ class LoginView(APIView):
                     cursor.execute(query)
                     serializer = UserSerializerLogin(serializer.data)
                     request.session['token'] = token
-                    request.session['test'] = 'test'
                     ObjectSession.sessions[token] = ItemAdministration()
                     print(ObjectSession.sessions)
             except Exception as error:

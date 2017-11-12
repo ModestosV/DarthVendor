@@ -1,4 +1,4 @@
-from backend.apps.v1.accounts.models.PurchaseCollection import PurchaseCollection
+from backend.apps.v1.accounts.models.PurchasedItemID import PurchasedItemID
 from backend.apps.v1.accounts.models.PurchaseCollectionID import PurchaseCollectionID
 from backend.apps.v1.accounts.TDG.PurchaseCollectionIDTDG import PurchaseCollectionIDTDG
 
@@ -22,16 +22,15 @@ class PurchaseCollectionIDMapper():
         PurchaseCollectionIDTDG.update(purchaseCollectionID)
 
     @staticmethod
-    def lock(uow):
+    def lock(lockOwner):
 
-        result = PurchaseCollectionIDTDG.lock(uow)
+        result = PurchaseCollectionIDTDG.lock(lockOwner)
         return result
 
-
     @staticmethod
-    def unlock(uow):
+    def unlock(lockOwner):
 
-        result = PurchaseCollectionIDTDG.unlock(uow)
+        result = PurchaseCollectionIDTDG.unlock(lockOwner)
         return result
 
     @staticmethod
