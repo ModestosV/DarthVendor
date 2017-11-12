@@ -4,7 +4,7 @@ import {HashRouter as Router, Route} from 'react-router-dom';
 import settings from '../../../config/settings';
 import Navigation from '../Navigation';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import './Catalog.scss';
+import './Return.scss';
 
 
 class Return extends Component {    
@@ -157,4 +157,4 @@ class Return extends Component {
     }
 }
 
-export default Catalog;
+export default Return;
