@@ -107,12 +107,9 @@ class Navigation extends Component {
                     <i className="search icon"></i>
                 </div>
             </div> */}
-
-                <div className="item">
-                    <i className="shopping basket icon mx-auto">
-
-                    </i>
-                </div>
+                <Link to={`/cart`} className="item">
+                    <i className="shopping basket icon mx-auto"></i>
+                </Link>
                 <div className="item">
                     {options}
                 </div>
