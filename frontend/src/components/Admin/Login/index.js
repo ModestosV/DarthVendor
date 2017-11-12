@@ -56,6 +56,20 @@ class Login extends Component {
 
     componentWillMount() {
         console.log(localStorage);
+
+        const {dispatch, history} = this.props;
+
+        if (localStorage.activeUser) {
+            const activeUser = JSON.parse(localStorage.activeUser);
+
+            if (activeUser.isAdmin === true) {
+                // Redirect to admin home page                
+                history.push('/');
+            } else {
+                // Redirect to merchant home page                
+                history.push('merchant');
+            }            
+        }
     }
 
     render() {
