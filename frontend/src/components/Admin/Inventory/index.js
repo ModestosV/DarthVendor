@@ -12,25 +12,6 @@ class Inventory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // items:[{'modelNumber':'ZZZZZZZ',
-            // 'quantity':46,
-            // 'name':'Razer Desktop',
-            // 'weight':15.0,
-            // 'weightFormat':'lbs',
-            // 'price':2299.99,
-            // 'priceFormat':'CAD',
-            // 'brandName':'RAZER',
-            // 'type':'Desktop',
-            // 'ramSize':16,
-            // 'ramFormat':'GB',
-            // 'processorType':'INTEL',
-            // 'numCores':4,
-            // 'hardDriveSize':2,
-            // 'hardDriveFormat':'TB',
-            // 'dx':15,
-            // 'dy':30,
-            // 'dz':1,
-            // 'dimensionFormat':'INCH'}],
             items:[],
             errorMsg: null,
             showModifyModal: false,
@@ -112,6 +93,8 @@ class Inventory extends Component {
         console.log("in delete Items")
     }
 
+    
+
     render() {
         const self = this;
 
@@ -133,10 +116,6 @@ class Inventory extends Component {
             }
         }
 
-        const options = {
-            // onRowClick: this.showSpecs
-        }
-
         return (
             <div>
                 <Sidebar />
@@ -151,13 +130,12 @@ class Inventory extends Component {
                             <span className="">Add Item</span>
                         </Link>
 
-                        <BootstrapTable data={this.state.items} options={options} striped condensed hover pagination search scrolling >
+                        <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling >
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
                             <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
                             <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
-                            <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} >Quantity</TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
                         </BootstrapTable>
@@ -166,11 +144,13 @@ class Inventory extends Component {
 
                 {/* Modal for Modify item */}
                 <ReactModal isOpen={this.state.showModifyModal}>
+                    <button onClick={this.closeModifyModal}>Cancel</button>
                     <ModifyItem item={this.state.item} closeModal={this.closeModifyModal}/>
                 </ReactModal>
 
                 {/* Modal for Delete item */}
                 <ReactModal isOpen={this.state.showDeleteModal}>
+                    <button onClick={this.closeDeleteModal}>Cancel</button>
                     <button onClick={this.closeDeleteModal}>Close Modal</button>
                     {/* <DeleteItem item={this.state.item} closeModal={this.closeDeleteModal}/> */}
                 </ReactModal>

@@ -55,7 +55,7 @@ class ModifyItem extends Component {
                         if(typeof this.props.item[name] != 'object'){
                             return (
                                 <div key={index}>
-                                    {name}: <input type="text" name={name} onChange={ (e) => this.handleChange(e) }/>{this.props.item[name]}
+                                    {name}: <input type="text" name={name} onChange={ (e) => this.handleChange(e) } placeholder={this.props.item[name]}/>
                                 </div>
                             );
                         }
@@ -63,6 +63,39 @@ class ModifyItem extends Component {
                     }
                 </div>  
             );
+    }
+
+    handleQuantity(e) {
+        this.setState({addQuantity: e.target.value});
+    }
+
+    addQuantity() {
+        let data = this.state.addQuantity;
+        
+        // axios({
+        //     method: 'post',
+        //     url: `${settings.API_ROOT}/item`,
+        //     data: data,
+        //     headers: {
+        //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
+        //     }
+        // })
+        // .then(response => {
+        //     swal({
+        //         text: "Quantity Added!",
+        //         icon: "success",
+        //         button: "Ok",
+        //     });
+        // })
+        // .catch(error => {
+        //     console.log(error);
+        //     swal({
+        //         title: "Woops!",
+        //         text: "Something went wrong!",
+        //         icon: "error",
+        //         button: "Ok",
+        //     });
+        // })
     }
 
     componentWillMount() {
@@ -96,6 +129,11 @@ class ModifyItem extends Component {
                     </div>
                
                 </div>
+                <div>
+                    <button onClick={() => {this.addQuantity()}}> Add Quantity</button>
+                    <input type="number" min="0" onChange={(e) => this.handleQuantity(e)}/>
+                </div>
+
             </div>
         )
     }
