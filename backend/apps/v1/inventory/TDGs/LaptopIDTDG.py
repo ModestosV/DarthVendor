@@ -34,6 +34,11 @@ class LaptopIDTDG:
             except Exception as error:
                 print(error)
 
+    def update(laptopID):
+
+        # needs to have update method implimented for database entry where serialNumber matches and match up other criteria of object
+        return
+
     def delete(serialNum):
 
         with Database() as cursor:
