@@ -18,35 +18,33 @@ class Navigation extends Component {
 
     handleLogOutButton() {
         const {history} = this.props;
-        let headers = {
-            'authorization': JSON.parse(localStorage.activeUser)['token'] 
-        };        
-        let config = {
-            'headers': headers
-        };
-        
-        axios.get(`${settings.API_ROOT}/logout`, config)
-            .then(response => {
-                console.log(response);
-                localStorage.setItem('activeUser', '');
-                history.push('/login');
-            })
-            .catch(error => {
-                console.log(error);                
-            })
+
+        axios({
+            method: 'get',
+            url: `${settings.API_ROOT}/logout`,
+            withCredentials: true
+        })
+        .then(response => {
+            console.log(response);
+            localStorage.setItem('activeUser', '');
+            history.push('/login');
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     handleDeleteAccount() {
         swal({
               title: "Delete account?",
-              text: "Are you sure you want to delete your account?",            
+              text: "Are you sure you want to delete your account?",
               type: "warning",
               buttons: {
                   confirm:true,
                   cancel: true
-              }            
+              }
             })
-            .then((confirm) => {   
+            .then((confirm) => {
                 if(confirm){
                     // axios({
                     //     method: 'post',
@@ -68,16 +66,16 @@ class Navigation extends Component {
                     //         button: "Ok",
                     //     });
                     // })
-                }                
+                }
             });
-            
-            
 
-        
+
+
+
     }
 
     render() {
-        const options = ( 
+        const options = (
               <Dropdown text='Options' className='ui primary button'>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => this.handleLogOutButton()}>Logout</Dropdown.Item>
@@ -86,9 +84,9 @@ class Navigation extends Component {
                 </Dropdown.Menu>
               </Dropdown>
         );
-          
 
-        return (    
+
+        return (
             <div>
                 <div className="ui huge menu stackable">
 
@@ -118,10 +116,10 @@ class Navigation extends Component {
                 </div>
             </div>
         </div>
-    </div>   
-        
+    </div>
+
         )
-        
+
     }
 }
 

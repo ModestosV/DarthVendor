@@ -37,7 +37,7 @@ class Inventory extends Component {
             const activeUser = JSON.parse(localStorage.activeUser);
 
             // Redirect to merchant home page                
-            if (activeUser.adminPermission === false) {                
+            if (activeUser.isAdmin === false) {                
                 history.push('/');
             }            
         }  
