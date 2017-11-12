@@ -36,7 +36,7 @@ class Catalog extends Component {
             const activeUser = JSON.parse(localStorage.activeUser);
 
             // Making sure user does not have admin permission
-            if (activeUser.adminPermission === true) {
+            if (activeUser.isAdmin === true) {
                 // Redirect to admin home page                
                 history.push('/admin/');
             }            

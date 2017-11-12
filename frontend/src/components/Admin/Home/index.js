@@ -26,7 +26,7 @@ class Home extends Component {
             history.push('/login');
         } else {
             const activeUser = JSON.parse(localStorage.activeUser);
-            if (activeUser.adminPermission === false) {
+            if (activeUser.isAdmin === false) {
                 // Redirect to merchant home page                
                 history.push('/');
             }            
