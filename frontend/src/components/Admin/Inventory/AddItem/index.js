@@ -128,6 +128,20 @@ class AddItem extends Component {
 
     componentWillMount() {
         console.log(localStorage);
+
+        const {dispatch, history} = this.props;
+        
+        // Redirect if user is not logged in
+        if (!localStorage.activeUser) {
+            history.push('/login');
+        } else {
+            const activeUser = JSON.parse(localStorage.activeUser);
+
+            if (activeUser.adminPermission === false) {
+                // Redirect to merchant home page                
+                history.push('/');
+            }            
+        }       
     }
 
     render() {

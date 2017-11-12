@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import swal from 'sweetalert';
-import settings from '../../../config/settings';
+import settings from '../../config/settings';
 import './Login.scss';
 
 
@@ -12,7 +12,11 @@ class Login extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            adminCheatCode: [38, 38, 40, 40, 37, 39, 37, 39, 65, 66, 65, 66],  // Up, Up, Down, Down, Left, Right, Left, Right, A, B, A, B
+            cancelAdminCheatCode: [81], // Q
+            keyStroke: [],
+            isAdminLogin: false
         }
     }
 
@@ -32,6 +36,10 @@ class Login extends Component {
             'password': this.state.password
         };
 
+        if (this.state.isAdminLogin) {
+            data['isAdmin'] = true;
+        }
+
         axios({
             method: 'post',
             url: `${settings.API_ROOT}/login`,
@@ -40,22 +48,80 @@ class Login extends Component {
         })
         .then(response => {
             console.log(response.data);
-            localStorage.setItem('activeUser', JSON.stringify(response.data));
+            localStorage.setItem('activeUser', JSON.stringify(response.data));                        
             history.push('/');
         })
         .catch(error => {
-            console.log(error);
-            swal({
-                title: "Woops!",
-                text: "Please provide valid credentials.",
-                icon: "error",
-                button: "Ok",
-            });
+            if (error.request.status === 401) {
+                swal({
+                    title: "Uh oh!",
+                    text: "Are you lost?",
+                    icon: "error",
+                    button: "Ok",
+                });
+            } else {
+                swal({
+                    title: "Woops!",
+                    text: "Please provide valid credentials.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
         })
+    }
+
+    onKeyPressHandler(event) {            
+        
+        this.setState((state) => {
+            return {keyStroke: [...this.state.keyStroke, event.keyCode]}
+        }, 
+        () => {            
+            if (this.state.keyStroke.join(',').includes(this.state.adminCheatCode.join(','))) {                            
+                swal({
+                    title: "Darth Varder Mode",
+                    text: "Admin login enabled. Remember, this power is privilege.",
+                    icon: "warning",
+                    button: "Ok"                    
+                })   
+                                      
+                this.setState({keyStroke: [], isAdminLogin: true});
+            } else if (this.state.isAdminLogin && this.state.keyStroke.join(',').includes(this.state.cancelAdminCheatCode.join(','))) {                
+                swal({
+                    title: "Stormtrooper Mode",
+                    text: "Admin login disabled.",
+                    icon: "warning",
+                    button: "Ok"                    
+                })               
+                this.setState({keyStroke: [], isAdminLogin: false});                     
+            }
+
+        });    
     }
 
     componentWillMount() {
         console.log(localStorage);
+
+        const {dispatch, history} = this.props;
+
+        if (localStorage.activeUser) {
+            const activeUser = JSON.parse(localStorage.activeUser);
+
+            if (activeUser.isAdmin === true) {
+                // Redirect to admin home page                
+                history.push('/admin/');
+            } else {
+                // Redirect to merchant home page                
+                history.push('/');
+            }            
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener("keydown", (e) =>this.onKeyPressHandler(e), false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", (e) =>this.onKeyPressHandler(e), false);
     }
 
     render() {
