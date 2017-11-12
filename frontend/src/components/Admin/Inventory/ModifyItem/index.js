@@ -55,7 +55,7 @@ class ModifyItem extends Component {
                         if(typeof this.props.item[name] != 'object'){
                             return (
                                 <div key={index}>
-                                    {name}: <input type="text" name={name} onChange={ (e) => this.handleChange(e) }/>{this.props.item[name]}
+                                    {name}: <input type="text" name={name} onChange={ (e) => this.handleChange(e) } placeholder={this.props.item[name]}/>
                                 </div>
                             );
                         }
