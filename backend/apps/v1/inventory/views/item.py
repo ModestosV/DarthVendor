@@ -2,21 +2,21 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers
-from django.utils.six import BytesIO
-from rest_framework.parsers import JSONParser
 
 from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.Tablet import Tablet
-from backend.apps.v1.inventory.TDGs.DesktopTDG import DesktopTDG
+
+from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
+from backend.apps.v1.inventory.serializers.LaptopSerializer import LaptopSerializer
+from backend.apps.v1.inventory.serializers.MonitorDisplay import MonitorDisplaySerializer
+from backend.apps.v1.inventory.serializers.TabletSerializer import TabletSerializer
+from backend.apps.v1.inventory.serializers.ItemIDSerializer import ItemIDSerializer
 
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
-from backend.apps.v1.inventory.ItemAdminUOW import ItemAdminUOW
-
-from backend.apps.v1.inventory.ItemAdministration import ItemAdministration
 from backend.apps.v1.accounts.ObjectSession import ObjectSession
 
 
@@ -27,14 +27,13 @@ class InitiateEdit(APIView):
     def post(self, request):
         print('initiateEdit')
 
-        # try:
-        print(ObjectSession.sessions)
-        itemAdministration = ObjectSession.sessions[request.session['token']]
-        itemAdministration.initiateEdit()
-        return Response({}, status=status.HTTP_200_OK)
-        # except Exception as error:
-        #     print(error)
-        #     return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = ObjectSession.sessions[request.session['user']]
+            user.itemAdministration.initiateEdit()
+            return Response({}, status=status.HTTP_200_OK)
+        except Exception as error:
+            print(error)
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TerminateEdit(APIView):
@@ -44,8 +43,8 @@ class TerminateEdit(APIView):
     def post(self, request):
         print('terminateEdit')
         try:
-            itemAdministration = ObjectSession.sessions[request.session['token']]
-            itemAdministration.terminateEdit()
+            user = ObjectSession.sessions[request.session['user']]
+            user.itemAdministration.terminateEdit()
             return Response({}, status=status.HTTP_200_OK)
         except:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
@@ -56,66 +55,8 @@ class AddItemSpecView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
-    def get(self, request):
-        print(request.session['userID'])
-        try:
-            request.session['count'] += 1
-        except:
-            request.session['count'] = 0
-
-        print(request.session['count'])
-        itemAdmin = ItemAdministration()
-        desktop1 = Desktop({
-            'modelNumber': 'ZZZZZZT',
-            'name': 'Razer Desktop',
-            'quantity': 46,
-            'weight': 15.0,
-            'weightFormat': 'LBS',
-            'price': 2299.99,
-            'priceFormat': 'CAD',
-            'brandName': 'RAZER',
-            'ramSize': 16,
-            'ramFormat': 'GB',
-            'processorType': 'DELL',
-            'numCores': 4,
-            'hardDriveSize': 2,
-            'hardDriveFormat': 'GB',
-            'dx': 15,
-            'dy': 30,
-            'dz': 1
-        })
-        desktop2 = Desktop({
-            'modelNumber': 'ZZZZZZW',
-            'name': 'Razer Desktop',
-            'quantity': 46,
-            'weight': 15.0,
-            'weightFormat': 'LBS',
-            'price': 2299.99,
-            'priceFormat': 'CAD',
-            'brandName': 'RAZER',
-            'ramSize': 16,
-            'ramFormat': 'GB',
-            'processorType': 'DELL',
-            'numCores': 4,
-            'hardDriveSize': 2,
-            'hardDriveFormat': 'TB',
-            'dx': 15,
-            'dy': 30,
-            'dz': 1
-        })
-
-        itemAdmin.initiateEdit()
-        itemAdmin.addQuantity(desktop2.modelNumber, "DESKTOP", 5)
-        itemAdmin.terminateEdit()
-        result = ItemIDMapper.find(desktop2)
-
-        print(len(result))
-
-        return Response()
-
     def post(self, request):
-        print(ObjectSession.sessions)
-        itemAdministration = ObjectSession.sessions[request.session['token']]
+        user = ObjectSession.sessions[request.session['user']]
         itemData = request.data
         itemType = itemData["type"]
         item = None
@@ -132,29 +73,107 @@ class AddItemSpecView(APIView):
             print(error)
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
-        itemAdministration.addItemSpec(item)
+        user.itemAdministration.addItemSpec(item)
         return Response("It Worked")
 
 
 class ModifyItemSpecView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
 
     def post(self, request):
-        itemAdministration = ObjectSession.sessions[request.session['token']]
+        user = ObjectSession.sessions[request.session['user']]
         itemData = request.data
         itemType = itemData["type"]
         item = None
         try:
-            if itemType == "Desktop":
+            if itemType == "DESKTOP":
                 item = Desktop(itemData)
-            elif itemType == "Monitor Display":
+            elif itemType == "MONITOR":
                 item = MonitorDisplay(itemData)
-            elif itemType == "Laptop":
+            elif itemType == "LAPTOP":
                 item = Laptop(itemData)
-            elif itemType == "Tablet":
+            elif itemType == "TABLET":
                 item = Tablet(itemData)
         except Exception as error:
             print(error)
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
-        itemAdministration.modifyItemSpec(item)
+        user.itemAdministration.modifyItemSpec(item)
         return Response("It Worked")
+
+
+class AddQuantityView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        user = ObjectSession.sessions[request.session['user']]
+
+        quantity = request.data['addQuantity']
+        modelNumber = request.data['modelNumber']
+        type = request.data['type']
+
+        success = user.itemAdministration.addQuantity(modelNumber, type, quantity)
+        if success:
+            return Response({}, status=status.HTTP_200_OK)
+        else:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class getEditStateView(APIView):
+
+    def get(self, request):
+        user = ObjectSession.sessions[request.session['user']]
+
+        if user.itemAdministration.uow is None:
+            return Response({'currentlyEditing': False}, status=status.HTTP_200_OK)
+        else:
+
+            serializedNewItems = list()
+            for item in itemAdministration.uow.newSpecs:
+                if isinstance(item, Desktop):
+                    item = DesktopSerializer(item).data
+                    serializedNewItems.append(item)
+                elif isinstance(item, Laptop):
+                    item = LaptopSerializer(item).data
+                    serializedNewItems.append(item)
+                elif isinstance(item, MonitorDisplay):
+                    item = MonitorDisplaySerializer(item).data
+                    serializedNewItems.append(item)
+                elif isinstance(item, Tablet):
+                    item = TabletSerializer(item).data
+                    serializedNewItems.append(item)
+
+            serializedDirtyItems = list()
+            for item in itemAdministration.uow.dirtySpecs:
+                if isinstance(item, Desktop):
+                    item = DesktopSerializer(item).data
+                    serializedDirtyItems.append(item)
+                elif isinstance(item, Laptop):
+                    item = LaptopSerializer(item).data
+                    serializedDirtyItems.append(item)
+                elif isinstance(item, MonitorDisplay):
+                    item = MonitorDisplaySerializer(item).data
+                    serializedDirtyItems.append(item)
+                elif isinstance(item, Tablet):
+                    item = TabletSerializer(item).data
+                    serializedDirtyItems.append(item)
+
+            addedItemIDs = user.itemAdministration.uow.newItemIDs
+            serializedAddedItemIDs = list()
+            for itemID in addedItemIDs:
+                serializedAddedItemIDs.append(ItemIDSerializer(itemID).data)
+
+            deletedItemIDs = user.itemAdministration.uow.deletedItemIDs
+            serializedDeletedItemIDs = list()
+            for itemID in deletedItemIDs:
+                serializedDeletedItemIDs.append(ItemIDSerializer(itemID).data)
+
+            return Response({
+                'currentlyEditing': True,
+                'newSpecs': serializedNewItems,
+                'dirtySpecs': serializedDirtyItems,
+                'addedItemIDs': serializedAddedItemIDs,
+                'deletedItemIDs': serializedDeletedItemIDs
+            }, status=status.HTTP_200_OK)
