@@ -16,6 +16,7 @@ class UserSerializerLogin(serializers.Serializer):
     password = serializers.HiddenField(default='')
     isAdmin = serializers.BooleanField(default='')
     token = serializers.SerializerMethodField()
+    adminPermission = serializers.BooleanField(default=False)
 
     def get_token(self, user):
         with Database() as cursor:
