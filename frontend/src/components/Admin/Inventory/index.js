@@ -51,8 +51,24 @@ class Inventory extends Component {
         }
     }
 
+    componentWillMount() {
+        const {dispatch, history} = this.props;
+        
+        // Redirect if user is not logged in
+        if (!localStorage.activeUser) {
+            history.push('/login');
+        } else {
+            const activeUser = JSON.parse(localStorage.activeUser);
+
+            // Redirect to merchant home page                
+            if (activeUser.adminPermission === false) {                
+                history.push('/');
+            }            
+        }  
+    }
+
     componentDidMount() {
-        this.itemsList();
+        this.itemsList();     
     }
 
     openModifyModal () {
@@ -105,6 +121,7 @@ class Inventory extends Component {
         this.openDeleteModal();
         this.setState({item: row});
     }
+
     render() {
 
         const self = this;
@@ -134,7 +151,7 @@ class Inventory extends Component {
                         <h1 className="m-0"> Inventory </h1>
                         { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                         <br />
-                        <Link to={`/add`} className="list-group-item d-inline-block collapsed">
+                        <Link to={`/admin/add`} className="list-group-item d-inline-block collapsed">
                             <i className="fa fa-plus pr-2"></i>
                             <span className="">Add Item</span>
                         </Link>
@@ -144,7 +161,6 @@ class Inventory extends Component {
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
                             <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
                             <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
-                            <TableHeaderColumn dataField="quantity" dataAlign="center" dataSort={true} >Quantity</TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
 
@@ -154,6 +170,7 @@ class Inventory extends Component {
 
                 {/* Modal for Modify item */}
                 <ReactModal isOpen={this.state.showModifyModal}>
+                    <button onClick={this.closeModifyModal}>Cancel</button>
                     <ModifyItem item={this.state.item} closeModal={this.closeModifyModal}/>
                 </ReactModal>
 

@@ -54,12 +54,12 @@ class Sidebar extends Component {
             <div>
                 <div className="ui huge menu stackable">
 
-                <Link to={`/`} className="item active">
+                <Link to={`/admin/`} className="item active">
                     {/* <img src={"../../../assets/images/logo-50.png"} className="mr-2"/> */}
                     <strong>Admin</strong>
                 </Link>
 
-                <Link to={`/update`} className="item">Update Inventory</Link>
+                <Link to={`/admin/update`} className="item">Update Inventory</Link>
 
 
             <div className="right menu">
