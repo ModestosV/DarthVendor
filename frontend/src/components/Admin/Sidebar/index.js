@@ -61,6 +61,8 @@ class Sidebar extends Component {
 
                 <Link to={`/admin/update`} className="item">Update Inventory</Link>
 
+                <Link to={`/admin/registeredClients`} className="item">Clients List</Link>
+
 
             <div className="right menu">
 
