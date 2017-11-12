@@ -16,24 +16,24 @@ class ItemAdministration:
 
     def initiateEdit(self):
         self.uow = ItemAdminUOW()
-        return
+        return True
 
     def terminateEdit(self):
         self.uow.commit()
         self.uow = None
-        return
+        return True
 
     def addItemSpec(self, itemSpec):
         self.uow.registerNewSpec(itemSpec)
-        return
+        return True
 
     def modifyItemSpec(self, itemSpec):
         self.uow.registerDirtySpec(itemSpec)
-        return
+        return True
 
     def deleteItem(self, itemID):
         self.uow.registerDeletedItemID(itemID)
-        return
+        return True
 
     def addQuantity(self, modelNumber, specType, quantity):
         spec = ItemSpecMapper.find(modelNumber, specType)
