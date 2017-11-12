@@ -24,12 +24,12 @@ ReactDOM.render(
     <Provider store={store}>
         <Router>
             <div>
-                <Route exact path="/merchant" component={MerchantHome}/>
-                <Route exact path="/merchant/return" component={MerchantReturn}/>
-                <Route exact path="/" component={AdminHome}/>
-                <Route exact path="/update" component={AdminInventory}/>
+                <Route exact path="/" component={MerchantHome}/>
+                <Route exact path="/return" component={MerchantReturn}/>
+                <Route exact path="/admin/" component={AdminHome}/>
+                <Route exact path="/admin/update" component={AdminInventory}/>
                 <Route exact path="/login" component={AdminLogin}/>
-                <Route exact path="/add" component={AdminInventoryAddItem}/>
+                <Route exact path="/admin/add" component={AdminInventoryAddItem}/>
             </div>
         </Router>
     </Provider>,

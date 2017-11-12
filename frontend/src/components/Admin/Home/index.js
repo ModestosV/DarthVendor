@@ -28,7 +28,7 @@ class Home extends Component {
             const activeUser = JSON.parse(localStorage.activeUser);
             if (activeUser.adminPermission === false) {
                 // Redirect to merchant home page                
-                history.push('merchant');
+                history.push('/');
             }            
         }        
     }

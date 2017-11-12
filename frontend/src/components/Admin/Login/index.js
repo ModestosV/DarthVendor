@@ -108,10 +108,10 @@ class Login extends Component {
 
             if (activeUser.isAdmin === true) {
                 // Redirect to admin home page                
-                history.push('/');
+                history.push('/admin/');
             } else {
                 // Redirect to merchant home page                
-                history.push('merchant');
+                history.push('/');
             }            
         }
     }

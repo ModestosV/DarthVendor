@@ -92,11 +92,11 @@ class Navigation extends Component {
             <div>
                 <div className="ui huge menu stackable">
 
-                <Link to={`/merchant`} className="item active">
+                <Link to={`/`} className="item active">
                     <img src={logo} className="mr-2"/>
                 </Link>
 
-                <Link to={`/merchant`} className="item">Catalog</Link>
+                <Link to={`/`} className="item">Catalog</Link>
 
 
             <div className="right menu">
