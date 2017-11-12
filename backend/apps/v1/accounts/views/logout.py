@@ -7,6 +7,8 @@ from backend.apps.v1.accounts.ObjectSession import ObjectSession
 
 
 class LogoutView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
 
     def get(self, request):
         """

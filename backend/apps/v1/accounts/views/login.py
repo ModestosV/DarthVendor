@@ -34,11 +34,12 @@ class LoginView(APIView):
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
         request.session['user'] = email
-        ObjectSession.session[email] = user
+        ObjectSession.sessions[email] = user
 
-        userSerializer = UserSerializerLogin(user)
+        userSerializer = UserSerializerLogin(data=user.__dict__)
 
         if not userSerializer.is_valid():
-            return Respoonse(userSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(userSerializer.errors)
+            return Response(userSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(userSerializer.data, status=status.HTTP_200_OK)

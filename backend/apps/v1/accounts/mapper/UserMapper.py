@@ -56,7 +56,6 @@ class UserMapper:
         row = UserTDG.findUser(email)
 
         user = Customer(0, "", "", 0, 0, "", "", "", "", "", "")
-
         user.id = row['id']
         user.email = row['email']
         user.password = row['password']
@@ -74,22 +73,21 @@ class UserMapper:
     @staticmethod
     def findAdmin(email):
 
-        resultSet = UserTDG.findUser(email)
+        row = UserTDG.findUser(email)
 
         user = Administrator(0,"","",0,0,"","","","","","")
 
-        for row in resultSet:
-            user.id = row['id']
-            user.email = row['email']
-            user.password = row['password']
-            user.isAdmin = True if row['isAdmin'] == 1 else False
-            user.isLoggedIn = row['isLoggedIn']
-            user.timeStamp = row['timeStamp']
-            user.username = row['username']
-            user.firstname = row['firstname']
-            user.lastname = row['lastname']
-            user.address = row['address']
-            user.phone = row['phone']
+        user.id = row['id']
+        user.email = row['email']
+        user.password = row['password']
+        user.isAdmin = True if row['isAdmin'] == 1 else False
+        user.isLoggedIn = row['isLoggedIn']
+        user.timeStamp = row['timeStamp']
+        user.username = row['username']
+        user.firstname = row['firstname']
+        user.lastname = row['lastname']
+        user.address = row['address']
+        user.phone = row['phone']
 
         return user
 
