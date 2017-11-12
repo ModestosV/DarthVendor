@@ -46,16 +46,16 @@ class ItemIDMapper():
     @staticmethod
     def update(itemID):
         if (type(itemID.spec) is Desktop):
-            DesktopIDTDG.update(itemID.serialNumber, itemID.isLocked, itemID.spec)
+            DesktopIDTDG.update(itemID)
 
         elif (type(itemID.spec) is Laptop):
-            LaptopIDTDG.update(itemID.serialNumber)
+            LaptopIDTDG.update(itemID)
 
         elif (type(itemID.spec) is MonitorDisplay):
-            MonitorDisplayIDTDG.update(itemID.serialNumber)
+            MonitorDisplayIDTDG.update(itemID)
 
         elif (type(itemID.spec) is Tablet):
-            TabletIDTDG.update(itemID.serialNumber)
+            TabletIDTDG.update(itemID)
 
     @staticmethod
     def lock(type, uow):
