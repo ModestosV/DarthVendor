@@ -42,7 +42,7 @@ class Navigation extends Component {
                 onClick={() => this.handleLogOutButton()}
             >
                 {" "}    
-                Login                                         
+                Logout                                         
             </button>
 
         )
