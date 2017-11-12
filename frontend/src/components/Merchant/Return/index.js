@@ -33,7 +33,7 @@ class Return extends Component {
             // Making sure user does not have admin permission
             if (activeUser.adminPermission === true) {
                 // Redirect to admin home page                
-                history.push('/');
+                history.push('/admin/');
             }            
         } 
     }

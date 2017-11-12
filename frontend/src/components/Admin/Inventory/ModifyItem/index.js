@@ -112,7 +112,7 @@ class ModifyItem extends Component {
 
             if (activeUser.adminPermission === false) {
                 // Redirect to merchant home page                
-                history.push('merchant');
+                history.push('/');
             }            
         }        
     }
