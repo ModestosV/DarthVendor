@@ -54,7 +54,7 @@ class ModifyItem extends Component {
                     {Object.keys(this.props.item).map((name,index) => {
                         if(typeof this.props.item[name] != 'object'){
                             return (
-                                <div key={index}>
+                                <div className="ui input" key={index}>
                                     {name}: <input type="text" name={name} onChange={ (e) => this.handleChange(e) } placeholder={this.props.item[name]}/>
                                 </div>
                             );
