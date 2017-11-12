@@ -44,20 +44,6 @@ class ItemIDMapper():
             TabletIDTDG.delete(itemID.serialNumber)
 
     @staticmethod
-    def update(itemID):
-        if (type(itemID.spec) is Desktop):
-            DesktopIDTDG.update(itemID)
-
-        elif (type(itemID.spec) is Laptop):
-            LaptopIDTDG.update(itemID)
-
-        elif (type(itemID.spec) is MonitorDisplay):
-            MonitorDisplayIDTDG.update(itemID)
-
-        elif (type(itemID.spec) is Tablet):
-            TabletIDTDG.update(itemID)
-
-    @staticmethod
     def lock(type, uow):
 
         if (type == "DESKTOP"):
