@@ -6,7 +6,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';  
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-import AdminLogin from './components/Admin/Login';
+// import AdminLogin from './components/Admin/Login';
 import AdminHome from './components/Admin/Home';
 import AdminInventory from './components/Admin/Inventory';
 import AdminInventoryAddItem from './components/Admin/Inventory/AddItem';
