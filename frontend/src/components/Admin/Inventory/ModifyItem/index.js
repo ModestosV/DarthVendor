@@ -68,6 +68,20 @@ class ModifyItem extends Component {
     componentWillMount() {
         this.state = this.props.item;
         console.log(localStorage);
+
+        const {dispatch, history} = this.props;
+        
+        // Redirect if user is not logged in
+        if (!localStorage.activeUser) {
+            history.push('/login');
+        } else {
+            const activeUser = JSON.parse(localStorage.activeUser);
+
+            if (activeUser.isAdmin === false) {
+                // Redirect to merchant home page                
+                history.push('merchant');
+            }            
+        }        
     }
 
     render() {

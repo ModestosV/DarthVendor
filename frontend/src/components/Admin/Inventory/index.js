@@ -46,8 +46,24 @@ class Inventory extends Component {
 
     }
 
+    componentWillMount() {
+        const {dispatch, history} = this.props;
+        
+        // Redirect if user is not logged in
+        if (!localStorage.activeUser) {
+            history.push('/login');
+        } else {
+            const activeUser = JSON.parse(localStorage.activeUser);
+
+            // Redirect to merchant home page                
+            if (activeUser.isAdmin === false) {                
+                history.push('merchant');
+            }            
+        }  
+    }
+
     componentDidMount() {
-        this.itemsList();
+        this.itemsList();     
     }
 
     openModifyModal () {
