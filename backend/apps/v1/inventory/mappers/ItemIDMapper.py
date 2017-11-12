@@ -95,7 +95,7 @@ class ItemIDMapper():
             result = TabletIDTDG.findBySpec(itemSpecification)
 
         for row in result:
-            newItemID = ItemID(row.get('serialNumber'), row.get('isLocked'), itemSpecification)
+            newItemID = ItemID(row.get('serialNum'), row.get('isLocked'), itemSpecification)
             itemIDList.append(newItemID)
 
         return itemIDList

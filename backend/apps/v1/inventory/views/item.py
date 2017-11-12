@@ -2,8 +2,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers
-from django.utils.six import BytesIO
-from rest_framework.parsers import JSONParser
 
 from backend.apps.v1.inventory.models.Desktop import Desktop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
@@ -19,9 +17,6 @@ from backend.apps.v1.inventory.serializers.ItemIDSerializer import ItemIDSeriali
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
-from backend.apps.v1.inventory.ItemAdminUOW import ItemAdminUOW
-
-from backend.apps.v1.inventory.ItemAdministration import ItemAdministration
 from backend.apps.v1.accounts.ObjectSession import ObjectSession
 
 
@@ -106,6 +101,24 @@ class ModifyItemSpecView(APIView):
 
         user.itemAdministration.modifyItemSpec(item)
         return Response("It Worked")
+
+
+class AddQuantityView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        user = ObjectSession.sessions[request.session['user']]
+
+        quantity = request.data['addQuantity']
+        modelNumber = request.data['modelNumber']
+        type = request.data['type']
+
+        success = user.itemAdministration.addQuantity(modelNumber, type, quantity)
+        if success:
+            return Response({}, status=status.HTTP_200_OK)
+        else:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class getEditStateView(APIView):
