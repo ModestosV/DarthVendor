@@ -7,21 +7,24 @@ from rest_framework.views import APIView
 from backend.utils.database import Database
 from backend.apps.v1.accounts.serializers.user import UserSerializerLogin
 
-from backend.apps.v1.inventory.ItemAdministration import ItemAdministration
 from backend.apps.v1.accounts.ObjectSession import ObjectSession
 
 from backend.apps.v1.accounts.Authentication import Authentication
-from backend.apps.v1.accounts.models.Customer import Customer
 
+from backend.apps.v1.accounts.serializers.CustomerSerializer import CustomerSerializer
 
-class viewCustomerView(APIView):
+class ViewCustomerView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
     def get(self, request):
         
-        #not done
+        customerList = Authentication.viewAllCustomer()
 
-        customers = Authentication.viewAllCustomer()
+        serializedCustomers = []
 
-        return Response({}, status=status.HTTP_200_OK)
+        for cus in customerList:
+                cus = UserSerializer(cus).data
+                serializedCustomers.append(cus)
+
+        return Response(serializedCustomers)
