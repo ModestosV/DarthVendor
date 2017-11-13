@@ -25,6 +25,8 @@ class InventoryView(APIView):
 
         specList = Catalog.getAllSpecs()
 
+        serializedItems = []
+
         for item in specList:
             if isinstance(item, Desktop):
                 item = DesktopSerializer(item).data
