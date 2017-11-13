@@ -13,9 +13,7 @@ class UpdateList extends Component {
 
         this.state = {
             items: [
-      
-                
-                
+              {name: 'dsadsa'}
             ]
         }
     }
@@ -85,26 +83,26 @@ class UpdateList extends Component {
           });
     }
 
-  
+
 
     getUpdateList() {
-    //     return axios({
-    //         method:'get',
-    //         url:`${settings.API_ROOT}/inventory`,
-    //         withCredentials: true
-    //     })
-    //     .then(results => {
-    //         const errorMsg = null;
-    //         const items = results.data.map(item => item);
-    //         this.setState({items});
-    //         this.setState({errorMsg});
-    //         console.log(items);
-    //     })
-    //     .catch(error => {
-    //      console.log(error);
-    //      const errorMsg = "Oops, something went wrong while fetching items!";
-    //      this.setState({errorMsg});
-    //    })
+        return axios({
+            method:'get',
+            url:`${settings.API_ROOT}/getEditState`,
+            withCredentials: true
+        })
+        .then(results => {
+            const errorMsg = null;
+            const items = results.data.map(item => item);
+            this.setState({items});
+            this.setState({errorMsg});
+            console.log(items);
+        })
+        .catch(error => {
+         console.log(error);
+         const errorMsg = "Oops, something went wrong while fetching items!";
+         this.setState({errorMsg});
+       })
     }
 
     // display list of updates
@@ -146,8 +144,7 @@ class UpdateList extends Component {
 
     componentWillMount() {
         console.log(localStorage);
-        this.getUpdateList();
-       
+        this.getUpdateList();       
     }
 
     render() {
