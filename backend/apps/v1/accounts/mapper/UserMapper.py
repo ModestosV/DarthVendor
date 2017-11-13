@@ -52,8 +52,8 @@ class UserMapper:
                     'phone': row.get('phone')
                 })
                 customerList.append(cus)
+            return customerList
 
-        return customerList
 
     @staticmethod
     def findCustomer(email):
@@ -101,16 +101,20 @@ class UserMapper:
 
         try:
             UserTDG.update(user)
+            return True
         except Exception as error:
             print(error)
+            return False
 
     @staticmethod
-    def delete(user):
+    def delete(email):
 
         try:
-            UserTDG.delete(user.id)
+            UserTDG.delete(email)
+            return True
         except Exception as error:
             print(error)
+            return False
 
     @staticmethod
     def isLoggedCustomer(email):

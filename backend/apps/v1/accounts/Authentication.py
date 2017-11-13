@@ -40,15 +40,11 @@ class Authentication:
         return None
 
     @staticmethod
-    def deleteCustomer(user):
-        if(user.isAdmin == 0):
-            UserMapper.delete(user)
-            return True
-        else:
-            return False
+    def deleteCustomer(email):
+            
+        return UserMapper.delete(email)
 
     @staticmethod
     def viewAllCustomer():
 
         return UserMapper.displayAllCustomer()
-

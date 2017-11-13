@@ -24,7 +24,7 @@ class ViewCustomerView(APIView):
         serializedCustomers = []
 
         for cus in customerList:
-                cus = CustomerSerializer(cus).data
-                serializedCustomers.append(cus)
+            cus = CustomerSerializer(cus).data
+            serializedCustomers.append(cus)
 
         return Response(serializedCustomers)
