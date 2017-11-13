@@ -38,3 +38,16 @@ class ItemIDsForSpecView(APIView):
             serializedItemIDs.append(ItemIDSerializer(itemID).data)
 
         return Response(serializedItemIDs, status=status.HTTP_200_OK)
+
+
+class DeleteItemID(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        itemSpec = ItemSpecMapper.find(request.data['modelNumber'])
+        itemID = ItemIDMapper.findBySerialNum(request.data['serialNumber'], itemSpecification)
+
+        user.itemAdministration.delete(itemID)
+
+        return Response({}, status=status.HTTP_200_OK)
