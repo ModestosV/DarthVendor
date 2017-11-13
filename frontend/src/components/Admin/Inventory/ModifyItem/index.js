@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {Component} from 'react';
 import settings from '../../../../config/settings';
 import Sidebar from '../../Sidebar';
-
+import './modifyitem.scss'
 
 class ModifyItem extends Component {
 
@@ -53,10 +53,14 @@ class ModifyItem extends Component {
             return (
                 <div>
                     {Object.keys(this.props.item).map((name,index) => {
-                        if(typeof this.props.item[name] != 'object'){
+
+                        if(typeof this.props.item[name] != 'object' && !name.includes('Format') ){
                             return (
-                                <div key={index}>
-                                    {name}: <input type="text" name={name} onChange={ (e) => this.handleChange(e) } placeholder={this.props.item[name]}/>
+                                <div className="form-group row" key={index}>
+                                    <label htmlFor={name} className="col-sm-2 col-form-label"><strong>{name}</strong></label>
+                                    <div className="col-sm-10">
+                                        <input type="text" className="form-control" id={name}  name={name} onChange={ (e) => this.handleChange(e) } placeholder={this.props.item[name]}/>
+                                    </div>
                                 </div>
                             );
                         }
@@ -118,20 +122,21 @@ class ModifyItem extends Component {
     render() {
         console.log(this.state);
         return (
+
             <div>
-                <div className="pusher">
-                    <button onClick={() => {this.confirmModifications()}}>Confirm</button>
-                    <div className="container p-0 mt-4">
-                    <h1>Modify Item</h1>
-                    { this.displaySpecs() }
-                    </div>
+                
+                <label><strong>Add Quantity</strong></label><br />
+                <input className="input--add mr-2" type="number" min="0" onChange={(e) => this.handleQuantity(e)}/>
 
+                <button className="ui blue button" onClick={() => {this.addQuantity()}}>
+                    <i className="fa fa-plus"></i> Add 
+                </button>
+  
+                <hr />
+                { this.displaySpecs() }
+                <div className="mb-5">
+                    <button className="ui green button float-right" onClick={() => {this.confirmModifications()}}>Confirm</button>
                 </div>
-                <div>
-                    <button onClick={() => {this.addQuantity()}}> Add Quantity</button>
-                    <input type="number" min="0" onChange={(e) => this.handleQuantity(e)}/>
-                </div>
-
             </div>
         )
     }

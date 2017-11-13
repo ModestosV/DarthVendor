@@ -8,6 +8,7 @@ import ModifyItem from './ModifyItem';
 import UpdateList from './UpdateList';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import DeleteItem from './DeleteItem';
+import './inventory.scss';
 
 class Inventory extends Component {
     constructor(props) {
@@ -212,40 +213,61 @@ class Inventory extends Component {
         return (
             <div>
                 <Sidebar />
-                <div className="container">
-                    <div className="mt-4">
-                        <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
-                        <h1 className="m-0"> Inventory </h1>
-                        { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
-                        <br />
-                        <Link to={`/admin/add`} className="list-group-item d-inline-block collapsed">
-                            <i className="fa fa-plus pr-2"></i>
-                            <span className="">Add Item</span>
-                        </Link>
-                        <button type='button' onClick={() => this.terminateEdit()} className="list-group-item d-inline-block collapsed">Confirm Changes</button>
-                        <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling >
-                            <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
-                            <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
-                            <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
-                            <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
-                            <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
-                            <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
-                            <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
-                        </BootstrapTable>
+                    <div className="container-fluid">
+                        <div className="row mt-4">
+                            <div className="col-sm-9 item--table">
+                                <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
+                                <h1 className="m-0"> Inventory </h1>
+                                { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
+                                <br />
+                                <Link to={`/admin/add`} className="list-group-item d-inline-block collapsed">
+                                    <i className="fa fa-plus pr-2"></i>
+                                    <span className="">Add Item</span>
+                                </Link>
+                                <BootstrapTable data={this.state.items} striped hover condensed pagination search scrolling >
+                                    <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
+                                    <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
+                                    <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
+
+                                </BootstrapTable>
+                            </div>
+
+                            <UpdateList />
+
+                           
+                        </div>
                     </div>
-                </div>
+
+                
 
                 {/* Modal for Modify item */}
-                <ReactModal isOpen={this.state.showModifyModal}>
-                    <button onClick={this.closeModifyModal}>Cancel</button>
-                    <ModifyItem item={this.state.item} closeModal={this.closeModifyModal}/>
+                <ReactModal isOpen={this.state.showModifyModal} 
+                    className={{base: 'modify--modal'}}>
+                    <div>
+                        <h1 className="float-left">Modify Item</h1>
+                        <i className="remove icon float-right" onClick={this.closeModifyModal}></i>
+                    </div>
+                    <div className="mt-50">
+                        <ModifyItem item={this.state.item} closeModal={this.closeModifyModal}/>
+                    </div>
                 </ReactModal>
 
                 {/* Modal for Delete item */}
-                <ReactModal isOpen={this.state.showDeleteModal}>
-                    <DeleteItem item={this.state.item} closeDeleteModal={this.closeDeleteModal}/>
+                <ReactModal isOpen={this.state.showDeleteModal}
+                 className={{base: 'modify--modal'}}>
+                    <div>
+                        <h1 className="float-left">Delete Item</h1>
+                        <i className="remove icon float-right" onClick={this.closeDeleteModal}></i>
+                    </div>
+                    <div className="mt-50">
+                        <DeleteItem item={this.state.item} closeDeleteModal={this.closeDeleteModal}/>
+                    </div>
                 </ReactModal>
-                <UpdateList />
+       
             </div>
         );
     }
