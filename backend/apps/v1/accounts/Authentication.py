@@ -45,7 +45,7 @@ class Authentication:
             UserMapper.delete(user)
             return True
         else:
-        	return False
+            return False
 
     @staticmethod
     def viewAllCustomer():
