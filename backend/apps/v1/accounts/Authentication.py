@@ -43,13 +43,12 @@ class Authentication:
     def deleteCustomer(user):
         if(user.isAdmin == 0):
             UserMapper.delete(user)
-            print("Your account is now removed.")
+            return True
         else:
-            print("Admin account cannot be removed.")
+            return False
 
     @staticmethod
-    def viewAllCustomer(user):
-        if(user.isAdmin == 1):
-            UserMapper.displayAllCustomer()
-        else:
-            print("Only Admin can see all the customers.")
+    def viewAllCustomer():
+
+        return UserMapper.displayAllCustomer()
+

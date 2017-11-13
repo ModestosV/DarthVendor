@@ -29,6 +29,7 @@ class Cart():
                         ItemIDMapper.update(itemID)
                         cartLineItem = CartLineItem(itemID)
                         self.cartItems.append(cartLineItem)
+                        self.Total += cartLineItem.getSubTotal()
                         return True
 
                 ItemIDMapper.unlock(itemSpec.type, self)
@@ -42,11 +43,11 @@ class Cart():
     def removeFromCart(self, itemID):
         if len(self.cartItems) > self.cartItemsMinSize:
             if self.cartItems.length() > self.cartItemsMinSize:
-                if(ItemIDMapper.lock(itemID.spec.type)):
+                if(ItemIDMapper.lock(itemID.spec.type, self)):
                     itemID.isLocked = False
                     ItemIDMapper.update(itemID)
                     self.cartItems.remove(itemID)
-                    ItemIDMapper.unlock(itemID.spec.type)
+                    ItemIDMapper.unlock(itemID.spec.type, self)
                     return
                 else:
                     # tell customer they will need to to try again later to remove this item

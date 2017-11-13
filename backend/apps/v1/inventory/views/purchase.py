@@ -9,6 +9,8 @@ from backend.apps.v1.accounts.ObjectSession import ObjectSession
 from backend.apps.v1.inventory.serializers.CartSerializer import CartSerializer
 
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
+from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
+
 
 
 class CartView(APIView):
@@ -31,5 +33,19 @@ class AddToCartView(APIView):
         itemSpec = ItemSpecMapper.find(request.data['modelNumber'], request.data['type'])
 
         user.purchaseController.addItem(itemSpec)
+
+        return Response({}, status=status.HTTP_200_OK)
+
+
+class RemoveFromCartView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        user = ObjectSession.sessions[request.session['user']]
+
+        itemID = ItemIDMapper.find(request.data['serialNumber'], request.data['type'])
+
+        user.purchaseController.removeItem(itemID)
 
         return Response({}, status=status.HTTP_200_OK)
