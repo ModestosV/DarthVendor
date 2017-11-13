@@ -10,25 +10,7 @@ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items:[{'modelNumber':'ZZZZZZZ',
-      'quantity':46,
-      'name':'Razer Desktop',
-      'weight':15.0,
-      'weightFormat':'lbs',
-      'price':2299.99,
-      'priceFormat':'CAD',
-      'brandName':'RAZER',
-      'type':'Desktop',
-      'ramSize':16,
-      'ramFormat':'GB',
-      'processorType':'INTEL',
-      'numCores':4,
-      'hardDriveSize':2,
-      'hardDriveFormat':'TB',
-      'dx':15,
-      'dy':30,
-      'dz':1,
-      'dimensionFormat':'INCH'}],
+      items:[],
       errorMsg: null
     }
   }
@@ -52,12 +34,13 @@ class Cart extends Component {
           withCredentials: true
       })
       .then(results => {
+          console.log("VIEW CART DATA");
           console.log(results.data);
           const errorMsg = null;
-          const items = results.data.cartItems;
+          let items = results.data.cartItems;
           this.setState({items});
           this.setState({errorMsg});
-          console.log(items);
+          // console.log(items);
       })
       .catch(error => {
        console.log(error);
@@ -101,7 +84,7 @@ class Cart extends Component {
   }
   render() {
     const self = this;
-
+      
     return (
       <div>
         <Navigation />
@@ -113,12 +96,12 @@ class Cart extends Component {
                 { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                 <div className="card mt-2">
                   <ul className="list-group list-group-flush">
-                    {self.state.items.map( (cartItem) =>
-                      <li key={cartItem.name}
+                    {self.state.items.map((item) =>
+                      <li key={item.itemID.itemSpec.modelNumber}
                         className="list-group-item">
                         <div className="row">
                           <div className="col-sm-11">
-                            // <div>{cartItem.itemID.itemSpec.name}</div>
+                            {item.itemID.itemSpec.modelNumber}, {item.itemID.itemSpec.name}
                           </div>
                           <div className="col-sm-1 text-right">
                             <i className="fa fa-times"
