@@ -33,22 +33,28 @@ class UserMapper:
 
     @staticmethod
     def displayAllCustomer():
-
+        
         resultSet = UserTDG.findUsers()
-
-        if(not resultSet):
-            print("found nothing")
-        else:
+        
+        customerList = list()
+        if not resultSet:
+            return None
+        else:    
             for row in resultSet:
-                print("User id: " + str(row['id']))
-                print("Email: " + row['email'])
-                print("Username: " + row['username'])
-                print("Firstname: " + row['firstname'])
-                print("Lastname: " + row['lastname'])
-                print("Address: " + row['address'])
-                print("Phone: " + row['phone'])
-                print("is logged: " + str(row['isLoggedIn']))
-                print("")
+            
+                cus = Customer({
+                    'id': row.get('id'),
+                    'email': row.get('email'),
+                    'timeStamp': row.get('timeStamp'),
+                    'username': row.get('username'),
+                    'firstname': row.get('firstname'),
+                    'lastname': row.get('lastname'),
+                    'address': row.get('address'),
+                    'phone': row.get('phone')
+                })
+            customerList.append(cus)
+            
+        return customerList
 
     @staticmethod
     def findCustomer(email):

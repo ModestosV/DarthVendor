@@ -49,7 +49,5 @@ class Authentication:
 
     @staticmethod
     def viewAllCustomer(user):
-        if(user.isAdmin == 1):
-            UserMapper.displayAllCustomer()
-        else:
-            print("Only Admin can see all the customers.")
+
+        UserMapper.displayAllCustomer()
