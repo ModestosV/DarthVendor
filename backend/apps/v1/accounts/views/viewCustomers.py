@@ -20,6 +20,8 @@ class viewCustomerView(APIView):
 
     def get(self, request):
         
+        #not done
+
         customers = Authentication.viewAllCustomer()
 
         return Response({}, status=status.HTTP_200_OK)
