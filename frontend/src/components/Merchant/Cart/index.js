@@ -93,7 +93,7 @@ class Cart extends Component {
             className="list-group-item">
             <div className="row">
               <div className="col-sm-11">
-                {item.itemID.itemSpec.modelNumber}, {item.itemID.itemSpec.name}
+                {item.itemID.itemSpec.modelNumber}, {item.itemID.itemSpec.name}, {item.itemID.serialNumber}
               </div>
               <div className="col-sm-1 text-right">
                 <i className="fa fa-times"

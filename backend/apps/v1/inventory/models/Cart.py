@@ -19,13 +19,10 @@ class Cart():
         if len(self.cartItems) < self.cartItemMaxSize:
             if (ItemIDMapper.lock(itemSpec.type, self)):
                 itemIdsOfItemSpecType = ItemIDMapper.find(itemSpec)
-                print(len(itemIdsOfItemSpecType))
                 itemIDFound = False
                 for itemID in itemIdsOfItemSpecType:
-                    if itemID.isLocked is True:
-                        # skip over item and check the next to see if unlocked
-                        break
-                    else:
+                    print(itemID.isLocked)
+                    if itemID.isLocked is False:
                         # set itemID.locked to true and update database to set itemID.locked to true so no one else can obtain
                         itemID.isLocked = True
                         ItemIDMapper.update(itemID)
