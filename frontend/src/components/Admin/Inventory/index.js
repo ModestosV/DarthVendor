@@ -213,30 +213,36 @@ class Inventory extends Component {
         return (
             <div>
                 <Sidebar />
-                    <div className="container">
-                        <div className="mt-4">
-                            <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
-                            <h1 className="m-0"> Inventory </h1>
-                            { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
-                            <br />
-                            <Link to={`/admin/add`} className="list-group-item d-inline-block collapsed">
-                                <i className="fa fa-plus pr-2"></i>
-                                <span className="">Add Item</span>
-                            </Link>
-                            <BootstrapTable data={this.state.items} striped hover condensed pagination search scrolling >
-                                <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
-                                <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
-                                <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
-                                <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
-                                <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
-                                <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
-                                <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
+                    <div className="container-fluid">
+                        <div className="row mt-4">
+                            <div className="col-sm-9 item--table">
+                                <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
+                                <h1 className="m-0"> Inventory </h1>
+                                { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
+                                <br />
+                                <Link to={`/admin/add`} className="list-group-item d-inline-block collapsed">
+                                    <i className="fa fa-plus pr-2"></i>
+                                    <span className="">Add Item</span>
+                                </Link>
+                                <BootstrapTable data={this.state.items} striped hover condensed pagination search scrolling >
+                                    <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
+                                    <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
+                                    <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
 
-                            </BootstrapTable>
+                                </BootstrapTable>
+                            </div>
+
+                            <UpdateList />
+
+                           
                         </div>
                     </div>
 
-                <UpdateList />
+                
 
                 {/* Modal for Modify item */}
                 <ReactModal isOpen={this.state.showModifyModal} 
