@@ -164,7 +164,7 @@ class Catalog extends Component {
                             {/* { items.map((item)=> <li>{ item.name }</li> )} */}
                             <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
 
-                            <BootstrapTable data={this.state.payload} condensed search scrolling className="item--table">
+                            <BootstrapTable data={this.state.payload} condensed search scrolling className="catalog--table">
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
