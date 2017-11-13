@@ -28,16 +28,22 @@ class DeleteItem extends Component {
         console.log(this.state.item);
         return (
             <div>
-                <div className="pusher">
-                    <h1>Delete Item</h1>
+                <div>
                     {this.displaySpecs}
-                    <button onClick={this.props.closeDeleteModal}>Close Modal</button>
-                    <button onClick={() => {this.confirmModifications()}}>Confirm</button>
-                    <select>
-                        <option> {this.state.item.type}, {this.state.item.modelNumber} </option>
-                    </select>
+                    <div className="form-group">
+                        <select className="form-control">
+                            <option> {this.state.item.type}, {this.state.item.modelNumber} </option>
+                        </select>
+                    </div>
                 </div>
+
+                <div className="mb-5">
+                    <button  className="ui green button float-right"  onClick={() => {this.confirmModifications()}}>Confirm</button>
+                </div>
+
             </div>
+
+
         )
     }
 }

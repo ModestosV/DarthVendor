@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import settings from '../../../../config/settings';
 import Sidebar from '../../Sidebar';
+import './updatelist.scss'
 
 
 class UpdateList extends Component {
@@ -11,7 +12,11 @@ class UpdateList extends Component {
         super(props);
 
         this.state = {
-        
+            items: [
+      
+                
+                
+            ]
         }
     }
 
@@ -114,20 +119,37 @@ class UpdateList extends Component {
 
     // display list of updates
     displayUpdateList() {
-        if(this.state.items){
+        if(this.state.items.length > 0){
             return (                
                 <div>
                     {
                         this.state.items.map((item,index) => {
                             return (
                                 <div key={index}>
-                                    {item.modelNumber}
+                                    {item.name}
                                 </div>
                             );
                         }) 
                     }
                 </div>  
             );
+        }else{
+            return (                
+                <div>
+                    No items changed.
+                </div>  
+            );
+        }
+    }
+
+    displayButtons(){
+        if(this.state.items.length > 0){
+            return (
+                <div className="float-right">
+                    <button className="cancel ui button mr-3" onClick={() => {this.cancelUpdate()}}>Cancel</button>
+                    <button className="apply ui button mr-3" onClick={() => {this.confirmUpdate()}}>Apply Changes</button>
+                </div>
+            )
         }
     }
 
@@ -140,16 +162,14 @@ class UpdateList extends Component {
 
     render() {
         return (
-            <div>
-                <div className="pusher">
+            <div className="footer">
+                <div className="update--list">
+                    <h2>Changes</h2>
                     { this.displayUpdateList() }
                 </div>
                
-                <div>
-                    <button onClick={() => {this.confirmUpdate()}}>Confirm</button>
-                    <button onClick={() => {this.cancelUpdate()}}>Cancel</button>
-                </div>
 
+               {this.displayButtons()}
             </div>
         )
     }

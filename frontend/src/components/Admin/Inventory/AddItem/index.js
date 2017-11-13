@@ -106,14 +106,12 @@ class AddItem extends Component {
             return(
                 itemFields.map((name,index) => {
                     return (
-                        <div key={index} className="input-group mb-3">
-                            <input
-                                name={name}
-                                type="text"
-                                className="form-control"
-                                placeholder={name}
-                                onChange={(e) => this.handleSpecChange(e)}
-                            />
+
+                        <div className="form-group row" key={index}>
+                            <label htmlFor={name} className="col-sm-2 col-form-label"><strong>{name}</strong></label>
+                            <div className="col-sm-10">
+                                <input type="text" className="form-control" id={name}  name={name} onChange={(e) => this.handleSpecChange(e) }/>
+                            </div>
                         </div>
                     );                                    
                 })
@@ -155,8 +153,9 @@ class AddItem extends Component {
             <div>
                 <Sidebar />
                 <div className="container mt-4">
+                
                     <div id="addItem">
-                        <div>
+                        <div className="mb-3">
                             <h1>Add New Item </h1>
                         </div>
                         <form id="addItemForm">
@@ -165,11 +164,10 @@ class AddItem extends Component {
                             { this.attributeFields(itemFields) }
                             
                             <button
-                                type="button"
-                                className="btn btn-dark btn-block"
+                                className="ui green button float-right mb-5"
                                 onClick={() => this.confirmAddItem()}
                             >
-                                Add <i className="fa fa-plus"></i>
+                            <i className="fa fa-plus"></i> Add
                             </button>
                         </form>
                     </div>
