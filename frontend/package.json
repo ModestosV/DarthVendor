@@ -1,0 +1,59 @@
+{
+  "name": "darthvendor",
+  "version": "1.0.0",
+  "description": "SOEN343 Team Project Fall 2017 ",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.config.dev.js",
+    "build": "NODE_ENV=production webpack --progress --verbose",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "babel": {
+    "presets": [
+      "stage-0",
+      "es2015",
+      "react"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xTEddie/SOEN343_GroupProject.git"
+  },
+  "author": "DarthVendor Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xTEddie/SOEN343_GroupProject/issues"
+  },
+  "homepage": "https://github.com/xTEddie/SOEN343_GroupProject#readme",
+  "devDependencies": {
+    "axios": "^0.16.2",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-regenerator-runtime": "^6.5.0",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.5",
+    "image-webpack-loader": "^3.4.2",
+    "node-sass": "^4.5.3",
+    "react": "^15.6.1",
+    "react-bootstrap-table": "^4.0.5",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "sweetalert": "^2.0.3",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.8.2"
+  },
+  "dependencies": {
+    "react-modal": "^3.1.0",
+    "react-rangeslider": "^2.2.0",
+    "semantic-ui-react": "^0.76.0"
+  }
+}

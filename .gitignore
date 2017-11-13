@@ -1,0 +1,18 @@
+
+*.pyc
+__pycache__/
+
+db.sqlite3
+
+# Migrations
+**/migrations/*
+!**/migrations/__init__.py
+
+backend/static/
+
+node_modules/
+package-lock.json
+
+frontend/build/*
+!frontend/build/index.html
+.idea/
