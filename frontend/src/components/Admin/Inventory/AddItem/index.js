@@ -53,8 +53,8 @@ class AddItem extends Component {
 
         axios({
             method: 'post',
-            url: `${settings.API_ROOT}/item`,
-            // withCredentials: true,
+            url: `${settings.API_ROOT}/addItemSpec`,
+            withCredentials: true,
             data: data,
             headers: {
                 Authorization: "Token " + JSON.parse(localStorage.activeUser).token
@@ -86,7 +86,7 @@ class AddItem extends Component {
                     onChange={(e) => this.handleTypeChange(e)}
                 >
                     <option value="">Choose type</option>
-                    { 
+                    {
                         itemTypes.map((name,index) => {
                             return (
                                 <option key={index} value={name}>
@@ -113,7 +113,7 @@ class AddItem extends Component {
                                 <input type="text" className="form-control" id={name}  name={name} onChange={(e) => this.handleSpecChange(e) }/>
                             </div>
                         </div>
-                    );                                    
+                    );
                 })
             );
         }
@@ -135,7 +135,7 @@ class AddItem extends Component {
         } else {
             const activeUser = JSON.parse(localStorage.activeUser);
 
-            if (activeUser.adminPermission === false) {
+            if (activeUser.isAdmin === false) {
                 // Redirect to merchant home page                
                 history.push('/');
             }            
@@ -148,7 +148,7 @@ class AddItem extends Component {
         const itemSpecs = this.state.specs;
         const itemFields = itemBasicSpecs;
         itemFields.push.apply(itemFields, itemSpecs);
-        
+
         return (
             <div>
                 <Sidebar />
@@ -162,7 +162,7 @@ class AddItem extends Component {
                             { this.typeSelect(itemTypes) }
 
                             { this.attributeFields(itemFields) }
-                            
+
                             <button
                                 className="ui green button float-right mb-5"
                                 onClick={() => this.confirmAddItem()}

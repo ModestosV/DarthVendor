@@ -37,7 +37,11 @@ class Inventory extends Component {
             items:[],
             errorMsg: null,
             showModifyModal: false,
-            showDeleteModal: false
+            showDeleteModal: false,
+            currentlyEditing: false,
+            editedSpecs: [],
+            newItemIDs: [],
+            deletedItemIDs:[]
         };
         this.modifySpecs = this.modifySpecs.bind(this);
         this.openModifyModal = this.openModifyModal.bind(this);
@@ -55,23 +59,50 @@ class Inventory extends Component {
 
     componentWillMount() {
         const {dispatch, history} = this.props;
-        
+
         // Redirect if user is not logged in
         if (!localStorage.activeUser) {
             history.push('/login');
         } else {
             const activeUser = JSON.parse(localStorage.activeUser);
 
-            // Redirect to merchant home page                
-            if (activeUser.adminPermission === false) {                
+            // Redirect to merchant home page
+            if (activeUser.isAdmin === false) {
                 history.push('/');
-            }            
-        }  
+            }
+        }
+    }
+
+    componentWillMount() {
+        axios({
+            method: 'get',
+            url: `${settings.API_ROOT}/getEditState`,
+            withCredentials: true
+        }).then(results => {
+            var data = results.data;
+            if(data.currentlyEditing) {
+                this.setState({
+                    currentlyEditing: data.currentlyEditing,
+                    editedSpecs: data.editedSpecs,
+                    newItemIDs: data.newItemIDs,
+                    deletedItemIDs: data.deletedItemIDs
+                });
+            } else {
+                axios({
+                    method: 'post',
+                    data: {},
+                    url: `${settings.API_ROOT}/initiateEdit`,
+                    withCredentials: true
+                }).then( result => {
+                    this.setState({currentlyEditing: true})
+                });
+            }
+        })
     }
 
     componentDidMount() {
-        this.getItemsList();  
-        this.getUpdatedItemList();   
+        this.getItemsList();
+        this.getUpdatedItemList();
     }
 
     openModifyModal () {
@@ -146,6 +177,17 @@ class Inventory extends Component {
     deleteItems(row) {
         this.openDeleteModal();
         this.setState({item: row});
+    }
+
+    terminateEdit() {
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/terminateEdit`,
+            data: {},
+            withCredentials: true
+        }).then( result => {
+            this.props.history.push('/')
+        })
     }
 
     render() {

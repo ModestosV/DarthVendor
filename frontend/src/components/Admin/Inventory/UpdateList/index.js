@@ -34,26 +34,14 @@ class UpdateList extends Component {
               if(confirm){
                 console.log('updated');
                 window.location = '/'
-                  // axios({
-                  //     method: 'post',
-                  //     url: `${settings.API_ROOT}/item`,
-                  //     // withCredentials: true,
-                  //     headers: {
-                  //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-                  //     }
-                  // })
-                  // .then(response => {
-                  //     swal("Deleted!", "Your account has been deleted.", "success");
-                  // })
-                  // .catch(error => {
-                  //     console.log(error);
-                  //     swal({
-                  //         title: "Woops!",
-                  //         text: "Something went wrong!",
-                  //         ilcon: "error",
-                  //         button: "Ok",
-                  //     });
-                  // })
+                axios({
+                    method: 'post',
+                    url: `${settings.API_ROOT}/terminateEdit`,
+                    data: {},
+                    withCredentials: true
+                }).then( result => {
+                    this.props.history.push('/')
+                })
               }                
           });
 
@@ -96,6 +84,8 @@ class UpdateList extends Component {
               }                
           });
     }
+
+  
 
     getUpdateList() {
     //     return axios({

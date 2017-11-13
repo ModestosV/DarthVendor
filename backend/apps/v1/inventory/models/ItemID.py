@@ -7,3 +7,5 @@ class ItemID(object):
         self.serialNumber = serialNumber
         self.isLocked = isLocked
         self.spec = itemSpecification
+
+        

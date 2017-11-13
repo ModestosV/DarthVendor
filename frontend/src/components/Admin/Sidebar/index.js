@@ -16,22 +16,20 @@ class Sidebar extends Component {
 
     handleLogOutButton() {
         const {history} = this.props;
-        let headers = {
-            'authorization': JSON.parse(localStorage.activeUser)['token'] 
-        };        
-        let config = {
-            'headers': headers
-        };
-        
-        axios.get(`${settings.API_ROOT}/logout`, config)
-            .then(response => {
-                console.log(response);
-                localStorage.setItem('activeUser', '');
-                history.push('/login');
-            })
-            .catch(error => {
-                console.log(error);                
-            })
+
+        axios({
+            method: 'get',
+            url: `${settings.API_ROOT}/logout`,
+            withCredentials: true
+        })
+        .then(response => {
+            console.log(response);
+            localStorage.setItem('activeUser', '');
+            history.push('/login');
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     renderLogOutButton() {
@@ -41,8 +39,8 @@ class Sidebar extends Component {
                 className="ui red button"
                 onClick={() => this.handleLogOutButton()}
             >
-                {" "}    
-                Logout                                            
+                {" "}
+                Logout
             </button>
 
         )
@@ -50,7 +48,7 @@ class Sidebar extends Component {
 
     render() {
 
-        return (    
+        return (
             <div>
                 <div className="ui huge menu stackable">
 
@@ -76,10 +74,10 @@ class Sidebar extends Component {
                 </div>
             </div>
         </div>
-    </div>   
-        
+    </div>
+
         )
-        
+
     }
 }
 

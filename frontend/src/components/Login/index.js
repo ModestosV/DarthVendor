@@ -32,8 +32,9 @@ class Login extends Component {
         const {dispatch, history} = this.props;
 
         let data = {
-            'username': this.state.username,
-            'password': this.state.password
+            'email': this.state.username,
+            'password': this.state.password,
+            'isAdmin': false
         };
 
         if (this.state.isAdminLogin) {
@@ -48,7 +49,7 @@ class Login extends Component {
         })
         .then(response => {
             console.log(response.data);
-            localStorage.setItem('activeUser', JSON.stringify(response.data));                        
+            localStorage.setItem('activeUser', JSON.stringify(response.data));
             history.push('/');
         })
         .catch(error => {
@@ -70,32 +71,32 @@ class Login extends Component {
         })
     }
 
-    onKeyPressHandler(event) {            
-        
+    onKeyPressHandler(event) {
+
         this.setState((state) => {
             return {keyStroke: [...this.state.keyStroke, event.keyCode]}
-        }, 
-        () => {            
-            if (this.state.keyStroke.join(',').includes(this.state.adminCheatCode.join(','))) {                            
+        },
+        () => {
+            if (this.state.keyStroke.join(',').includes(this.state.adminCheatCode.join(','))) {
                 swal({
                     title: "Darth Varder Mode",
                     text: "Admin login enabled. Remember, this power is privilege.",
                     icon: "warning",
-                    button: "Ok"                    
-                })   
-                                      
+                    button: "Ok"
+                })
+
                 this.setState({keyStroke: [], isAdminLogin: true});
-            } else if (this.state.isAdminLogin && this.state.keyStroke.join(',').includes(this.state.cancelAdminCheatCode.join(','))) {                
+            } else if (this.state.isAdminLogin && this.state.keyStroke.join(',').includes(this.state.cancelAdminCheatCode.join(','))) {
                 swal({
                     title: "Stormtrooper Mode",
                     text: "Admin login disabled.",
                     icon: "warning",
-                    button: "Ok"                    
-                })               
-                this.setState({keyStroke: [], isAdminLogin: false});                     
+                    button: "Ok"
+                })
+                this.setState({keyStroke: [], isAdminLogin: false});
             }
 
-        });    
+        });
     }
 
     componentWillMount() {
@@ -107,12 +108,12 @@ class Login extends Component {
             const activeUser = JSON.parse(localStorage.activeUser);
 
             if (activeUser.isAdmin === true) {
-                // Redirect to admin home page                
+                // Redirect to admin home page
                 history.push('/admin/');
             } else {
-                // Redirect to merchant home page                
+                // Redirect to merchant home page
                 history.push('/');
-            }            
+            }
         }
     }
 
