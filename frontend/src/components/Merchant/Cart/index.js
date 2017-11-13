@@ -48,6 +48,7 @@ class Cart extends Component {
        this.setState({errorMsg});
      })
   }
+
   handleDeleteCartItem(row) {
     console.log("unlock item");
     const data = row;
@@ -66,6 +67,8 @@ class Cart extends Component {
         icon: "success",
         button: "Ok",
       });
+
+      this.cartItemsList()
     })
     .catch(error => {
       console.log(error);
