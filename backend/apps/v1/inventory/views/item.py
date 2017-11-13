@@ -50,6 +50,18 @@ class TerminateEdit(APIView):
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class CancelEditView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        try:
+            user = ObjectSession.sessions[request.session['user']]
+            user.itemAdministration.cancelEdit()
+            return Response({}, status=status.HTTP_200_OK)
+        except:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
 class AddItemSpecView(APIView):
 
     authentication_classes = ()

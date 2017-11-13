@@ -23,6 +23,10 @@ class ItemAdministration:
         self.uow = None
         return True
 
+    def cancelEdit(self):
+        self.uow = None
+        return True
+
     def addItemSpec(self, itemSpec):
         self.uow.registerNewSpec(itemSpec)
         return True
