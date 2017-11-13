@@ -5,7 +5,7 @@ import settings from '../../../config/settings';
 import Navigation from '../Navigation';
 
 
-class Cart extends Component {    
+class Cart extends Component {
 
   constructor(props) {
     super(props);
@@ -46,26 +46,24 @@ class Cart extends Component {
   }
 
   cartItemsList() {
- //  return axios({
- //      params: {
- //          userID: localStorage.activeUser.id
- //      },
- //      method:'get',
- //      url: `${settings.API_ROOT}/cart`,   // needs to be change to correct URL
- //      withCredentials: true
- //  })
- //  .then(results => {
- //      const errorMsg = null;
- //      const items = results.data.map(item => item);
- //      this.setState({items});
- //      this.setState({errorMsg});
- //      console.log(items);
- //  })
- //  .catch(error => {
- //   console.log(error);
- //   const errorMsg = "Oops, something went wrong while fetching items from shopping cart!";
- //   this.setState({errorMsg});
- // })
+      return axios({
+          method:'get',
+          url: `${settings.API_ROOT}/viewCart`,   // needs to be change to correct URL
+          withCredentials: true
+      })
+      .then(results => {
+          console.log(results.data);
+          const errorMsg = null;
+          const items = results.data.cartItems;
+          this.setState({items});
+          this.setState({errorMsg});
+          console.log(items);
+      })
+      .catch(error => {
+       console.log(error);
+       const errorMsg = "Oops, something went wrong while fetching items from shopping cart!";
+       this.setState({errorMsg});
+     })
   }
   handleDeleteCartItem(row) {
     console.log("unlock item");
@@ -115,12 +113,12 @@ class Cart extends Component {
                 { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                 <div className="card mt-2">
                   <ul className="list-group list-group-flush">
-                    {self.state.items.map( (item) =>
-                      <li key={item.name}
+                    {self.state.items.map( (cartItem) =>
+                      <li key={cartItem.name}
                         className="list-group-item">
                         <div className="row">
                           <div className="col-sm-11">
-                            <div>{item.name}</div>
+                            // <div>{cartItem.itemID.itemSpec.name}</div>
                           </div>
                           <div className="col-sm-1 text-right">
                             <i className="fa fa-times"

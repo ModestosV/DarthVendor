@@ -11,7 +11,7 @@ from backend.apps.v1.inventory.models.Catalog import Catalog
 
 from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
 from backend.apps.v1.inventory.serializers.LaptopSerializer import LaptopSerializer
-from backend.apps.v1.inventory.serializers.MonitorDisplay import MonitorDisplaySerializer
+from backend.apps.v1.inventory.serializers.MonitorDisplaySerializer import MonitorDisplaySerializer
 from backend.apps.v1.inventory.serializers.TabletSerializer import TabletSerializer
 
 from backend.apps.v1.accounts.ObjectSession import ObjectSession

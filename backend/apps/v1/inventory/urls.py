@@ -3,6 +3,7 @@ from django.conf.urls import url
 from .views.inventory import InventoryView
 from .views.item import AddItemSpecView, InitiateEdit, TerminateEdit, CancelEditView, ModifyItemSpecView, getEditStateView, AddQuantityView
 from .views.itemID import ItemIDsForSpecView, DeleteItemID
+from .views.purchase import CartView, AddToCartView
 
 
 urlpatterns = [
@@ -15,5 +16,7 @@ urlpatterns = [
     url(r'^cancelEdit', CancelEditView.as_view()),
     url(r'^getEditState', getEditStateView.as_view()),
     url(r'^getItemIDs', ItemIDsForSpecView.as_view()),
-    url(r'^deleteItemID', DeleteItemID.as_view())
+    url(r'^deleteItemID', DeleteItemID.as_view()),
+    url(r'^viewCart', CartView.as_view()),
+    url(r'^addToCart', AddToCartView.as_view())
 ]

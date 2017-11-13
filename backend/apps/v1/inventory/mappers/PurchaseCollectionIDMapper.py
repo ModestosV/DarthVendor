@@ -1,6 +1,5 @@
-from backend.apps.v1.accounts.models.PurchasedItemID import PurchasedItemID
-from backend.apps.v1.accounts.models.PurchaseCollectionID import PurchaseCollectionID
-from backend.apps.v1.accounts.TDG.PurchaseCollectionIDTDG import PurchaseCollectionIDTDG
+from backend.apps.v1.inventory.models.PurchasedItemID import PurchasedItemID
+from backend.apps.v1.inventory.TDGs.PurchasedItemIDTDG import PurchasedItemIDTDG
 
 class PurchaseCollectionIDMapper():
 

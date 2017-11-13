@@ -34,6 +34,21 @@ class LaptopIDTDG:
             except Exception as error:
                 print(error)
 
+    def update(laptopID):
+        with Database() as cursor:
+            isLockedInt = 1 if laptopID.isLocked else 0
+            query = """
+                UPDATE laptopID SET
+                isLocked = {}
+                WHERE serialNumber = '{}';
+            """.format(isLockedInt, laptopID.serialNumber)
+
+            try:
+                cursor.execute(query)
+            except Exception as error:
+                print(error)
+
+
     def delete(serialNum):
 
         with Database() as cursor:

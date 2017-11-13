@@ -1,4 +1,5 @@
 from backend.apps.v1.accounts.models.Client import Client
+from backend.apps.v1.inventory.Purchase import Purchase
 
 class Customer(Client):
 
@@ -9,7 +10,7 @@ class Customer(Client):
         """Constructor"""
 
         super().__init__(id, email, password,
-                 isAdmin, isLoggedIn, timeStamp)
+                            isAdmin, isLoggedIn, timeStamp)
 
         self.username = username
         self.firstname = firstname
@@ -17,4 +18,4 @@ class Customer(Client):
         self.address = address
         self.phone = phone
 
-        self.purchaseController = None
+        self.purchaseController = Purchase(self)
