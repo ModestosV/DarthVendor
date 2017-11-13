@@ -12,26 +12,42 @@ class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            log: false,
             visible: true
         }
     }
 
     handleLogOutButton() {
-        const {history} = this.props;
-
-        axios({
-            method: 'get',
-            url: `${settings.API_ROOT}/logout`,
-            withCredentials: true
-        })
-        .then(response => {
-            console.log(response);
-            localStorage.setItem('activeUser', '');
-            history.push('/login');
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        swal({
+            title: "Log out?",
+            text: "Are you sure you want log out?",            
+            type: "warning",
+            buttons: {
+                confirm:true,
+                cancel: true
+            }            
+          })
+          .then((confirm) => {   
+                if(confirm){
+                    const {history} = this.props;
+            
+                    axios({
+                        method: 'get',        
+                        url: `${settings.API_ROOT}/logout`,
+                        withCredentials: true
+                    })        
+                    .then(response => {        
+                        console.log(response);        
+                        localStorage.setItem('activeUser', '');
+                        history.push('/');
+                        this.setState({log: false})      
+                    })        
+                    .catch(error => {        
+                        console.log(error);
+                    });
+                }
+            });
+    
     }
 
     handleDeleteAccount() {
@@ -68,22 +84,44 @@ class Navigation extends Component {
                     // })
                 }
             });
+    }
 
+    renderLogBtn(){
+        if(localStorage.activeUser){
+            return (
+                <Dropdown text='Account' className='ui primary button'>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => this.handleLogOutButton()}>Logout</Dropdown.Item>
+                        <Dropdown.Divider />
+                        <Dropdown.Item onClick={() => this.handleDeleteAccount()}>Delete Account</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            )
+        } else {
+            return (
+                <Link to={`/login`} className="item">Login</Link>
+            )
+        }
+        
+    }
 
+    renderCart(){
+        if(this.state.log){
+            return (
+                <Link to={`/cart`} className="item">
+                    <i className="shopping basket icon mx-auto"></i>
+                </Link>
+            )
+        }
+    }
 
-
+    componentDidMount() {
+        if(localStorage.activeUser) {
+            this.setState({log: true});
+        }
     }
 
     render() {
-        const options = (
-              <Dropdown text='Options' className='ui primary button'>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => this.handleLogOutButton()}>Logout</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item onClick={() => this.handleDeleteAccount()}>Delete Account</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-        );
 
 
         return (
@@ -96,7 +134,6 @@ class Navigation extends Component {
 
                 <Link to={`/`} className="item">Catalog</Link>
 
-
             <div className="right menu">
 
             {/* <div className="item">
@@ -105,11 +142,9 @@ class Navigation extends Component {
                     <i className="search icon"></i>
                 </div>
             </div> */}
-                <Link to={`/cart`} className="item">
-                    <i className="shopping basket icon mx-auto"></i>
-                </Link>
+                {this.renderCart()}
                 <div className="item">
-                    {options}
+                    {this.renderLogBtn()}
                 </div>
             </div>
         </div>
