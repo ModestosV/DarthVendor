@@ -40,18 +40,6 @@ class Catalog extends Component {
     componentWillMount() {  
         const {history} = this.props;      
         console.log(localStorage);
-        
-        if (!localStorage.activeUser) {
-            history.push('/login');
-        } else {
-            const activeUser = JSON.parse(localStorage.activeUser);
-
-            // Making sure user does not have admin permission
-            if (activeUser.isAdmin === true) {
-                // Redirect to admin home page                
-                history.push('/admin/');
-            }            
-        } 
     }
 
     componentDidMount() {
