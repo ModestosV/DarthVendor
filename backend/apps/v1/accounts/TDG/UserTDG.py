@@ -63,7 +63,7 @@ class UserTDG:
         with Database() as cursor:
 
             try:
-                cursor.execute("SELECT * FROM user WHERE isAdmin=0;")
+                cursor.execute("SELECT * FROM user;")
                 resultSet = cursor.fetchall()
                 return resultSet
             except Exception as error:
