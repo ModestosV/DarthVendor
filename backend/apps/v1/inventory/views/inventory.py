@@ -23,7 +23,8 @@ class InventoryView(APIView):
 
     def get(self, request):
 
-        specList = Catalog.getCatalog()
+        specList = Catalog.getAllSpecs()
+
         serializedItems = []
 
         for item in specList:
