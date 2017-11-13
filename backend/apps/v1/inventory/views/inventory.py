@@ -7,6 +7,8 @@ from backend.apps.v1.inventory.models.Laptop import Laptop
 from backend.apps.v1.inventory.models.MonitorDisplay import MonitorDisplay
 from backend.apps.v1.inventory.models.Tablet import Tablet
 
+from backend.apps.v1.inventory.models.Catalog import Catalog
+
 from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
 from backend.apps.v1.inventory.serializers.LaptopSerializer import LaptopSerializer
 from backend.apps.v1.inventory.serializers.MonitorDisplay import MonitorDisplaySerializer
@@ -20,8 +22,8 @@ class InventoryView(APIView):
     permission_classes = ()
 
     def get(self, request):
-        user = ObjectSession.sessions[request.session['user']]
-        specList = user.itemAdministration.getCatalog()
+
+        specList = Catalog.getCatalog()
         serializedItems = []
 
         for item in specList:
