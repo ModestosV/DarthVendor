@@ -48,9 +48,15 @@ class Login extends Component {
             withCredentials: true
         })
         .then(response => {
-            console.log(response.data);
+            // console.log(response.datan);
             localStorage.setItem('activeUser', JSON.stringify(response.data));
-            history.push('/');
+
+            if(response.data.isAdmin === true) {
+                history.push('/admin');
+            } else {
+                history.push('/');
+            }
+            
         })
         .catch(error => {
             if (error.request.status === 401) {
