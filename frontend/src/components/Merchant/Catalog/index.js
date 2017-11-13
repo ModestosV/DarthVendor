@@ -12,29 +12,10 @@ class Catalog extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items:[{'modelNumber':'ZZZZZZZ',
-            'quantity':46,
-            'name':'Razer Desktop',
-            'weight':15.0,
-            'weightFormat':'lbs',
-            'price':2299.99,
-            'priceFormat':'CAD',
-            'brandName':'RAZER',
-            'type':'Desktop',
-            'ramSize':16,
-            'ramFormat':'GB',
-            'processorType':'INTEL',
-            'numCores':4,
-            'hardDriveSize':2,
-            'hardDriveFormat':'TB',
-            'dx':15,
-            'dy':30,
-            'dz':1,
-            'dimensionFormat':'INCH'}],
+            items:[],
             errorMsg: null,
             showModal: false
         };
-        console.log(this.state.items);
     }
 
     componentWillMount() {  
@@ -43,21 +24,21 @@ class Catalog extends Component {
     }
 
     componentDidMount() {
-        //this.getCatalog();
+        this.getCatalog();
     }
 
     getCatalog() {
-        return axios.get(`${settings.API_ROOT}/catalog`)
+        return axios.get(`${settings.API_ROOT}/inventory`)
         .then(results => {
-            //const errorMsg = null;
-            // const items = results.data.map(item => item);
-            // this.setState({items});
-            //this.setState({errorMsg});
-            //console.log(items);
+            const errorMsg = null;
+            const items = results.data.map(item => item);
+            this.setState({items});
+            this.setState({errorMsg});
+            console.log(items);
         })
         .catch(error => {
          console.log(error);
-         //const errorMsg = "Oops, something went wrong while fetching items!";
+         const errorMsg = "Oops, something went wrong while fetching items!";
          this.setState({errorMsg});
        })
     }
@@ -84,33 +65,38 @@ class Catalog extends Component {
     }
     
     addToCart(row) {
-        console.log("lock :" + row );
-        let data = row;
-
-        axios({
-            method: 'post',
-            url: `${settings.API_ROOT}/cart`,
-            data: data,
-            headers: {
-                Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-            }
-        })
-        .then(response => {
-            swal({
-                text: "Item added to cart!",
-                icon: "success",
-                button: "Ok",
-            });
-        })
-        .catch(error => {
-            console.log(error);
-            swal({
-                title: "Woops!",
-                text: "Something went wrong!",
-                icon: "error",
-                button: "Ok",
-            });
-        })
+        if(localStorage.activeUser){
+            console.log("lock :" + row );
+            let data = row;
+    
+            axios({
+                method: 'post',
+                url: `${settings.API_ROOT}/cart`,
+                data: data,
+                headers: {
+                    Authorization: "Token " + JSON.parse(localStorage.activeUser).token
+                }
+            })
+            .then(response => {
+                swal({
+                    text: "Item added to cart!",
+                    icon: "success",
+                    button: "Ok",
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                swal({
+                    title: "Woops!",
+                    text: "Something went wrong!",
+                    icon: "error",
+                    button: "Ok",
+                });
+            })
+        } else {
+            swal("Oops!", "You need to login to add item to cart", "error");
+        }
+        
     }
     render() {
         const self = this;
