@@ -23,8 +23,7 @@ class InventoryView(APIView):
 
     def get(self, request):
 
-        specList = Catalog.getCatalog()
-        serializedItems = []
+        specList = Catalog.getAllSpecs()
 
         for item in specList:
             if isinstance(item, Desktop):
