@@ -33,7 +33,6 @@ class UserMapper:
 
     @staticmethod
     def displayAllCustomer():
-        
         resultSet = UserTDG.findUsers()
         
         customerList = list()

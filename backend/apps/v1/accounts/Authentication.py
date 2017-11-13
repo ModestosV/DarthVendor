@@ -51,3 +51,4 @@ class Authentication:
     def viewAllCustomer():
 
         return UserMapper.displayAllCustomer()
+
