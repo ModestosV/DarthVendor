@@ -18,11 +18,20 @@ class DeleteItem extends Component {
 
     // display specs of selected item
     displaySpecs() {
-            
+
     }
     // get item to delete
     componentWillMount() {
         this.setState({item: this.props.item});
+
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/getItemIDs`,
+            data: this.props.item,
+            withCredentials: true
+        }).then(result => {
+            console.log(result);
+        });
     }
     render() {
         console.log(this.state.item);
