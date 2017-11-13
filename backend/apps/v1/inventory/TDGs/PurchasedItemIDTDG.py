@@ -1,12 +1,10 @@
-
-from backend.apps.v1.accounts.models.PurchaseCollection import PurchaseCollection
-from backend.apps.v1.accounts.models.PurchaseCollectionID import PurchaseCollectionID
-from backend.apps.v1.accounts.TDG.PurchaseCollectionIDTDG import PurchaseCollectionIDTDG
+from backend.apps.v1.inventory.models.PurchaseCollection import PurchaseCollection
+from backend.apps.v1.inventory.models.PurchasedItemID import PurchasedItemID
 
 from backend.utils.database import Database
 
 
-class PurchaseCollectionIDTDG:
+class PurchasedItemIDTDG:
 
     owner = None
 

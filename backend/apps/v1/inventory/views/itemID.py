@@ -10,7 +10,7 @@ from backend.apps.v1.inventory.models.Tablet import Tablet
 
 from backend.apps.v1.inventory.serializers.DesktopSerializer import DesktopSerializer
 from backend.apps.v1.inventory.serializers.LaptopSerializer import LaptopSerializer
-from backend.apps.v1.inventory.serializers.MonitorDisplay import MonitorDisplaySerializer
+from backend.apps.v1.inventory.serializers.MonitorDisplaySerializer import MonitorDisplaySerializer
 from backend.apps.v1.inventory.serializers.TabletSerializer import TabletSerializer
 from backend.apps.v1.inventory.serializers.ItemIDSerializer import ItemIDSerializer
 

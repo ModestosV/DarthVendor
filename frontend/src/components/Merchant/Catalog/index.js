@@ -7,7 +7,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './Catalog.scss';
 
 
-class Catalog extends Component {    
+class Catalog extends Component {
 
     constructor(props) {
         super(props);
@@ -18,8 +18,8 @@ class Catalog extends Component {
         };
     }
 
-    componentWillMount() {  
-        const {history} = this.props;      
+    componentWillMount() {
+        const {history} = this.props;
         console.log(localStorage);
     }
 
@@ -56,26 +56,24 @@ class Catalog extends Component {
                                     <a className="header">{item.name}</a>
                                 </div>
                             </div>
-                        </div>        
+                        </div>
                     );
                 })
             }
             </div>
         );
     }
-    
+
     addToCart(row) {
         if(localStorage.activeUser){
             console.log("lock :" + row );
             let data = row;
-    
+
             axios({
                 method: 'post',
-                url: `${settings.API_ROOT}/cart`,
+                url: `${settings.API_ROOT}/addToCart`,
                 data: data,
-                headers: {
-                    Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-                }
+                withCredentials: true
             })
             .then(response => {
                 swal({
@@ -96,12 +94,12 @@ class Catalog extends Component {
         } else {
             swal("Oops!", "You need to login to add item to cart", "error");
         }
-        
+
     }
     render() {
         const self = this;
 
-        function sortFunc(a, b, order) {   
+        function sortFunc(a, b, order) {
             if (order === 'desc') {
                 return a.price - b.price;
             } else {
@@ -137,7 +135,7 @@ class Catalog extends Component {
                 </div>
 
             </div>
-     
+
         )
     }
 }

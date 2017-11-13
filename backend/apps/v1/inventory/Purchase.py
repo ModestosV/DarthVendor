@@ -1,4 +1,4 @@
-from backend.v1.inventory.models.Cart import Cart
+from backend.apps.v1.inventory.models.Cart import Cart
 
 
 class Purchase():

@@ -34,6 +34,21 @@ class MonitorDisplayIDTDG:
             except Exception as error:
                 print(error)
 
+    def update(monitorDisplayID):
+        with Database() as cursor:
+            isLockedInt = 1 if monitorDisplayID.isLocked else 0
+            query = """
+                UPDATE monitorDisplayID SET
+                isLocked = {}
+                WHERE serialNumber = '{}';
+            """.format(isLockedInt, monitorDisplayID.serialNumber)
+
+            try:
+                cursor.execute(query)
+            except Exception as error:
+                print(error)
+
+
     def delete(serialNum):
 
         with Database() as cursor:
