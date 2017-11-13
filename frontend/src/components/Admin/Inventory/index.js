@@ -36,7 +36,11 @@ class Inventory extends Component {
             items:[],
             errorMsg: null,
             showModifyModal: false,
-            showDeleteModal: false
+            showDeleteModal: false,
+            currentlyEditing: false,
+            editedSpecs: [],
+            newItemIDs: [],
+            deletedItemIDs:[]
         };
         this.modifySpecs = this.modifySpecs.bind(this);
         this.openModifyModal = this.openModifyModal.bind(this);
@@ -54,23 +58,50 @@ class Inventory extends Component {
 
     componentWillMount() {
         const {dispatch, history} = this.props;
-        
+
         // Redirect if user is not logged in
         if (!localStorage.activeUser) {
             history.push('/login');
         } else {
             const activeUser = JSON.parse(localStorage.activeUser);
 
-            // Redirect to merchant home page                
-            if (activeUser.adminPermission === false) {                
+            // Redirect to merchant home page
+            if (activeUser.isAdmin === false) {
                 history.push('/');
-            }            
-        }  
+            }
+        }
+    }
+
+    componentWillMount() {
+        axios({
+            method: 'get',
+            url: `${settings.API_ROOT}/getEditState`,
+            withCredentials: true
+        }).then(results => {
+            var data = results.data;
+            if(data.currentlyEditing) {
+                this.setState({
+                    currentlyEditing: data.currentlyEditing,
+                    editedSpecs: data.editedSpecs,
+                    newItemIDs: data.newItemIDs,
+                    deletedItemIDs: data.deletedItemIDs
+                });
+            } else {
+                axios({
+                    method: 'post',
+                    data: {},
+                    url: `${settings.API_ROOT}/initiateEdit`,
+                    withCredentials: true
+                }).then( result => {
+                    this.setState({currentlyEditing: true})
+                });
+            }
+        })
     }
 
     componentDidMount() {
-        this.getItemsList();  
-        this.getUpdatedItemList();   
+        this.getItemsList();
+        this.getUpdatedItemList();
     }
 
     openModifyModal () {
@@ -147,6 +178,17 @@ class Inventory extends Component {
         this.setState({item: row});
     }
 
+    terminateEdit() {
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/terminateEdit`,
+            data: {},
+            withCredentials: true
+        }).then( result => {
+            this.props.history.push('/')
+        })
+    }
+
     render() {
 
         const self = this;
@@ -180,7 +222,8 @@ class Inventory extends Component {
                             <i className="fa fa-plus pr-2"></i>
                             <span className="">Add Item</span>
                         </Link>
-                        <BootstrapTable data={this.state.items} striped hover condensed pagination search scrolling >
+                        <button type='button' onClick={() => this.terminateEdit()} className="list-group-item d-inline-block collapsed">Confirm Changes</button>
+                        <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling >
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
@@ -188,7 +231,6 @@ class Inventory extends Component {
                             <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
-
                         </BootstrapTable>
                     </div>
                 </div>

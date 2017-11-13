@@ -56,7 +56,6 @@ class MonitorDisplayTDG:
 
     @staticmethod
     def update(monitor):
-
         with Database() as cursor:
             query = """
                 UPDATE monitorDisplay SET
