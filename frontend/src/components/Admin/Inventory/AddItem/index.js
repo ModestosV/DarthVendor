@@ -55,10 +55,7 @@ class AddItem extends Component {
             method: 'post',
             url: `${settings.API_ROOT}/addItemSpec`,
             withCredentials: true,
-            data: data,
-            headers: {
-                Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-            }
+            data: data
         })
         .then(response => {
             console.log('item added');
