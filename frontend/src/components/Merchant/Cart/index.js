@@ -84,7 +84,28 @@ class Cart extends Component {
   }
   render() {
     const self = this;
-      
+    
+    let cartItems = [];
+    self.state.items.map((item, index) => {
+        cartItems.push(
+          <li key={index}
+            className="list-group-item">
+            <div className="row">
+              <div className="col-sm-11">
+                {item.itemID.itemSpec.modelNumber}, {item.itemID.itemSpec.name}
+              </div>
+              <div className="col-sm-1 text-right">
+                <i className="fa fa-times"
+                  aria-hidden="true"
+                  onClick={() => this.handleDeleteCartItem(item)}>
+                </i>
+              </div>
+            </div>
+          </li>
+        )        
+      }
+    )     
+
     return (
       <div>
         <Navigation />
@@ -96,22 +117,7 @@ class Cart extends Component {
                 { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                 <div className="card mt-2">
                   <ul className="list-group list-group-flush">
-                    {self.state.items.map((item) =>
-                      <li key={item.itemID.itemSpec.modelNumber}
-                        className="list-group-item">
-                        <div className="row">
-                          <div className="col-sm-11">
-                            {item.itemID.itemSpec.modelNumber}, {item.itemID.itemSpec.name}
-                          </div>
-                          <div className="col-sm-1 text-right">
-                            <i className="fa fa-times"
-                              aria-hidden="true"
-                              onClick={() => this.handleDeleteCartItem(item)}>
-                            </i>
-                          </div>
-                        </div>
-                      </li>
-                    )}
+                    {cartItems}
                   </ul>
                 </div>
                 <div className="justify-content-md-center">
