@@ -74,7 +74,7 @@ class Catalog extends Component {
         if(price === ""){
             this.setState({payload: this.state.items});
         } else {
-            let filteredItems = this.state.items.filter(item => item.price < price);
+            let filteredItems = this.state.items.filter(item => item.price <= price);
             this.setState({payload: filteredItems});         
         }
     }
