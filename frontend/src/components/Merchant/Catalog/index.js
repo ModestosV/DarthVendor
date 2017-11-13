@@ -12,14 +12,25 @@ class Catalog extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items:[
-            {'name':"Razer Desktop"},
-            {'name':"Dell Desktop"},
-            {'name':"MacBook Desktop"},
-            {'name':"ASUS Desktop"},
-            {'name':"Good Desktop"},
-            {'name':"Bad Desktop"},
-            {'name':"Cool Desktop"}],
+            items:[{'modelNumber':'ZZZZZZZ',
+            'quantity':46,
+            'name':'Razer Desktop',
+            'weight':15.0,
+            'weightFormat':'lbs',
+            'price':2299.99,
+            'priceFormat':'CAD',
+            'brandName':'RAZER',
+            'type':'Desktop',
+            'ramSize':16,
+            'ramFormat':'GB',
+            'processorType':'INTEL',
+            'numCores':4,
+            'hardDriveSize':2,
+            'hardDriveFormat':'TB',
+            'dx':15,
+            'dy':30,
+            'dz':1,
+            'dimensionFormat':'INCH'}],
             errorMsg: null,
             showModal: false
         };
@@ -84,12 +95,37 @@ class Catalog extends Component {
         );
     }
     
-    
+    addToCart(row) {
+        console.log("lock :" + row );
+        let data = row;
+
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/cart`,
+            data: data,
+            headers: {
+                Authorization: "Token " + JSON.parse(localStorage.activeUser).token
+            }
+        })
+        .then(response => {
+            swal({
+                text: "Item added to cart!",
+                icon: "success",
+                button: "Ok",
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            swal({
+                title: "Woops!",
+                text: "Something went wrong!",
+                icon: "error",
+                button: "Ok",
+            });
+        })
+    }
     render() {
-        const columns = [['name','Name'],['price','Price']];
-        function cellFormat(cell, row){
-            return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
-        }
+        const self = this;
 
         function sortFunc(a, b, order) {   
             if (order === 'desc') {
@@ -98,31 +134,30 @@ class Catalog extends Component {
                 return b.price - a.price;
             }
         }
+
+        function addToCartFormat(cell, row) {
+            return <i onClick={() => self.addToCart(row)} className="fa fa-shopping-cart fa-5" aria-hidden="true"></i>;
+        }
        // const items = this.state.items;
 
         return (
-            
             <div>
                 <Navigation />
 
                 {/* { items.map((item)=> <li>{ item.name }</li> )} */}
-
-                <div className="container mt-5">
+                <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
+                <div className="mt-5">
                     <div className="row">
-                        <div className="col-sm-3">
-                        
-                        </div>
-
                         <div className="col-sm-9">
-                        <BootstrapTable data={this.state.items} condensed hover search scrolling className="item--table">            
-                    <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Items</TableHeaderColumn>                          
-                </BootstrapTable>
+                            <BootstrapTable data={this.state.items} condensed search scrolling className="item--table">
+                            <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
+                            <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
+                            <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
+                            <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
+                            <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
+                            <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={addToCartFormat}> </TableHeaderColumn>
+                            </BootstrapTable>
                         </div>
-
-
-
-
-                    
                         {/* {this.renderItems(items)} */}
                     </div>
                 </div>
