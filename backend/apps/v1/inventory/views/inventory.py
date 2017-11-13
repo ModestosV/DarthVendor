@@ -20,10 +20,8 @@ class InventoryView(APIView):
     permission_classes = ()
 
     def get(self, request):
-        print(ObjectSession.sessions)
-        print(request.session['test'])
-        itemAdministration = ObjectSession.sessions[request.session['token']]
-        specList = itemAdministration.getCatalog()
+        user = ObjectSession.sessions[request.session['user']]
+        specList = user.itemAdministration.getCatalog()
         serializedItems = []
 
         for item in specList:
@@ -39,5 +37,4 @@ class InventoryView(APIView):
             elif isinstance(item, Tablet):
                 item = TabletSerializer(item).data
                 serializedItems.append(item)
-        print(serializedItems)
         return Response(serializedItems)

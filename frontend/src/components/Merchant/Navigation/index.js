@@ -12,6 +12,7 @@ class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            log: false,
             visible: true
         }
     }
@@ -27,39 +28,39 @@ class Navigation extends Component {
             }            
           })
           .then((confirm) => {   
-              if(confirm){
-                const {history} = this.props;
-                let headers = {
-                    'authorization': JSON.parse(localStorage.activeUser)['token'] 
-                };        
-                let config = {
-                    'headers': headers
-                };
-                
-                axios.get(`${settings.API_ROOT}/logout`, config)
-                    .then(response => {
-                        console.log(response);
+                if(confirm){
+                    const {history} = this.props;
+            
+                    axios({
+                        method: 'get',        
+                        url: `${settings.API_ROOT}/logout`,
+                        withCredentials: true
+                    })        
+                    .then(response => {        
+                        console.log(response);        
                         localStorage.setItem('activeUser', '');
-                        this.forceUpdate();
-                    })
-                    .catch(error => {
-                        console.log(error);                
-                    })
-                };
+                        history.push('/');
+                        this.setState({log: false})      
+                    })        
+                    .catch(error => {        
+                        console.log(error);
+                    });
+                }
             });
+    
     }
 
     handleDeleteAccount() {
         swal({
               title: "Delete account?",
-              text: "Are you sure you want to delete your account?",            
+              text: "Are you sure you want to delete your account?",
               type: "warning",
               buttons: {
                   confirm:true,
                   cancel: true
-              }            
+              }
             })
-            .then((confirm) => {   
+            .then((confirm) => {
                 if(confirm){
                     // axios({
                     //     method: 'post',
@@ -81,7 +82,7 @@ class Navigation extends Component {
                     //         button: "Ok",
                     //     });
                     // })
-                }                
+                }
             });
     }
 
@@ -104,9 +105,26 @@ class Navigation extends Component {
         
     }
 
+    renderCart(){
+        if(this.state.log){
+            return (
+                <Link to={`/cart`} className="item">
+                    <i className="shopping basket icon mx-auto"></i>
+                </Link>
+            )
+        }
+    }
+
+    componentDidMount() {
+        if(localStorage.activeUser) {
+            this.setState({log: true});
+        }
+    }
+
     render() {
 
-        return (    
+
+        return (
             <div>
                 <div className="ui huge menu stackable">
 
@@ -124,18 +142,16 @@ class Navigation extends Component {
                     <i className="search icon"></i>
                 </div>
             </div> */}
-                <Link to={`/cart`} className="item">
-                    <i className="shopping basket icon mx-auto"></i>
-                </Link>
+                {this.renderCart()}
                 <div className="item">
                     {this.renderLogBtn()}
                 </div>
             </div>
         </div>
-    </div>   
-        
+    </div>
+
         )
-        
+
     }
 }
 
