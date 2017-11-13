@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import settings from '../../../config/settings';
 import './sidebar.scss';
-//import logo from '../../../assets/images/logo-50.png';
+import logo from '../../../assets/images/logo-50.png';
 
 class Sidebar extends Component {
 
@@ -38,7 +38,7 @@ class Sidebar extends Component {
         return (
    
             <button 
-                className="ui primary button"
+                className="ui red button"
                 onClick={() => this.handleLogOutButton()}
             >
                 {" "}    
@@ -55,12 +55,11 @@ class Sidebar extends Component {
                 <div className="ui huge menu stackable">
 
                 <Link to={`/admin/`} className="item active">
-                    {/* <img src={"../../../assets/images/logo-50.png"} className="mr-2"/> */}
+                    <img src={logo} className="mr-2"/> 
                     <strong>Admin</strong>
                 </Link>
 
                 <Link to={`/admin/update`} className="item">Update Inventory</Link>
-
                 <Link to={`/admin/registeredClients`} className="item">Clients List</Link>
 
 
