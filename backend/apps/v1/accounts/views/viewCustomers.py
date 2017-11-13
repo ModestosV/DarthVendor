@@ -10,7 +10,6 @@ from backend.apps.v1.accounts.serializers.user import UserSerializerLogin
 from backend.apps.v1.accounts.ObjectSession import ObjectSession
 
 from backend.apps.v1.accounts.Authentication import Authentication
-
 from backend.apps.v1.accounts.serializers.CustomerSerializer import CustomerSerializer
 
 class ViewCustomerView(APIView):

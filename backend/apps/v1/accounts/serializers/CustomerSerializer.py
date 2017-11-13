@@ -2,7 +2,7 @@ from rest_framework import serializers
 from backend.utils.database import Database
 from .token import TokenSerializer
 
-class UserSerializer(serializers.Serializer):
+class CustomerSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     email = serializers.CharField(max_length=255)
     timeStamp = serializers.CharField(max_length=255)

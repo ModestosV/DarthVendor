@@ -38,7 +38,7 @@ class UserTDG:
     def delete(useremail):
 
         with Database() as cursor:
-                query = "DELETE FROM user WHERE email = '{}';".format(useremail)
+            query = "DELETE FROM user WHERE email = '{}';".format(useremail)
 
             try:
                 cursor.execute(query)
