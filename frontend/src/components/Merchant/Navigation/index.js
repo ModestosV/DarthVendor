@@ -12,41 +12,55 @@ class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            log: false,
             visible: true
         }
     }
 
     handleLogOutButton() {
-        const {history} = this.props;
-        let headers = {
-            'authorization': JSON.parse(localStorage.activeUser)['token'] 
-        };        
-        let config = {
-            'headers': headers
-        };
-        
-        axios.get(`${settings.API_ROOT}/logout`, config)
-            .then(response => {
-                console.log(response);
-                localStorage.setItem('activeUser', '');
-                history.push('/login');
-            })
-            .catch(error => {
-                console.log(error);                
-            })
+        swal({
+            title: "Log out?",
+            text: "Are you sure you want log out?",            
+            type: "warning",
+            buttons: {
+                confirm:true,
+                cancel: true
+            }            
+          })
+          .then((confirm) => {   
+                if(confirm){
+                    const {history} = this.props;
+            
+                    axios({
+                        method: 'get',        
+                        url: `${settings.API_ROOT}/logout`,
+                        withCredentials: true
+                    })        
+                    .then(response => {        
+                        console.log(response);        
+                        localStorage.setItem('activeUser', '');
+                        history.push('/');
+                        this.setState({log: false})      
+                    })        
+                    .catch(error => {        
+                        console.log(error);
+                    });
+                }
+            });
+    
     }
 
     handleDeleteAccount() {
         swal({
               title: "Delete account?",
-              text: "Are you sure you want to delete your account?",            
+              text: "Are you sure you want to delete your account?",
               type: "warning",
               buttons: {
                   confirm:true,
                   cancel: true
-              }            
+              }
             })
-            .then((confirm) => {   
+            .then((confirm) => {
                 if(confirm){
                     // axios({
                     //     method: 'post',
@@ -68,27 +82,49 @@ class Navigation extends Component {
                     //         button: "Ok",
                     //     });
                     // })
-                }                
+                }
             });
-            
-            
+    }
 
+    renderLogBtn(){
+        if(localStorage.activeUser){
+            return (
+                <Dropdown text='Account' className='ui primary button'>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => this.handleLogOutButton()}>Logout</Dropdown.Item>
+                        <Dropdown.Divider />
+                        <Dropdown.Item onClick={() => this.handleDeleteAccount()}>Delete Account</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            )
+        } else {
+            return (
+                <Link to={`/login`} className="item">Login</Link>
+            )
+        }
         
     }
 
-    render() {
-        const options = ( 
-              <Dropdown text='Options' className='ui primary button'>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => this.handleLogOutButton()}>Logout</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item onClick={() => this.handleDeleteAccount()}>Delete Account</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-        );
-          
+    renderCart(){
+        if(this.state.log){
+            return (
+                <Link to={`/cart`} className="item">
+                    <i className="shopping basket icon mx-auto"></i>
+                </Link>
+            )
+        }
+    }
 
-        return (    
+    componentDidMount() {
+        if(localStorage.activeUser) {
+            this.setState({log: true});
+        }
+    }
+
+    render() {
+
+
+        return (
             <div>
                 <div className="ui huge menu stackable">
 
@@ -98,7 +134,6 @@ class Navigation extends Component {
 
                 <Link to={`/`} className="item">Catalog</Link>
 
-
             <div className="right menu">
 
             {/* <div className="item">
@@ -107,18 +142,16 @@ class Navigation extends Component {
                     <i className="search icon"></i>
                 </div>
             </div> */}
-                <Link to={`/cart`} className="item">
-                    <i className="shopping basket icon mx-auto"></i>
-                </Link>
+                {this.renderCart()}
                 <div className="item">
-                    {options}
+                    {this.renderLogBtn()}
                 </div>
             </div>
         </div>
-    </div>   
-        
+    </div>
+
         )
-        
+
     }
 }
 
