@@ -52,8 +52,8 @@ class UserMapper:
                     'address': row.get('address'),
                     'phone': row.get('phone')
                 })
-            customerList.append(cus)
-            
+                customerList.append(cus)
+
         return customerList
 
     @staticmethod
