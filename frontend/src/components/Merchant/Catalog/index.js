@@ -5,6 +5,7 @@ import settings from '../../../config/settings';
 import Navigation from '../Navigation';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './Catalog.scss';
+import Slider from 'react-rangeslider';
 
 
 class Catalog extends Component {    
@@ -14,8 +15,12 @@ class Catalog extends Component {
         this.state = {
             items:[],
             errorMsg: null,
-            showModal: false
+            showModal: false,
+            priceSlider: '',
+            maxPrice: '',
         };
+        this.handleOnChange = this.handleOnChange.bind(this);
+        this.handleChangeComplete = this.handleChangeComplete.bind(this);
     }
 
     componentWillMount() {  
@@ -25,6 +30,7 @@ class Catalog extends Component {
 
     componentDidMount() {
         this.getCatalog();
+     
     }
 
     getCatalog() {
@@ -33,6 +39,8 @@ class Catalog extends Component {
             const errorMsg = null;
             const items = results.data.map(item => item);
             this.setState({items});
+            this.setState({payload: items});
+            this.getMaxPrice();
             this.setState({errorMsg});
             console.log(items);
         })
@@ -43,26 +51,34 @@ class Catalog extends Component {
        })
     }
 
-    renderItems(items) {
-        return(
-            <div className="ui five column grid">
-            {
-                items.map((item,index) => {
-                console.log(item.name);
-                    return (
-                        <div className="column" key={index}>
-                            <div className="ui fluid card">
-                                <div className="content">
-                                    <a className="header">{item.name}</a>
-                                </div>
-                            </div>
-                        </div>        
-                    );
-                })
+    getMaxPrice(){
+        let temp = this.state.items;
+        let max = 0;
+        for(let i = 0; i < temp.length; i++){
+            if (max < parseInt(temp[i].price)){
+                max = temp[i].price;
             }
-            </div>
-        );
+        }
+        this.state.maxPrice = max;
+        this.state.priceSlider = max;
     }
+
+    handleOnChange(value){
+        this.setState({
+          priceSlider: value
+        })
+    };
+
+    handleChangeComplete(){
+        let price = this.state.priceSlider;
+        if(price === ""){
+            this.setState({payload: this.state.items});
+        } else {
+            let filteredItems = this.state.items.filter(item => item.price < price);
+            this.setState({payload: filteredItems});         
+        }
+    }
+
     
     addToCart(row) {
         if(localStorage.activeUser){
@@ -99,6 +115,8 @@ class Catalog extends Component {
         
     }
     render() {
+        const priceSlider  = this.state.priceSlider;
+        
         const self = this;
 
         function sortFunc(a, b, order) {   
@@ -112,29 +130,54 @@ class Catalog extends Component {
         function addToCartFormat(cell, row) {
             return <i onClick={() => self.addToCart(row)} className="fa fa-shopping-cart fa-5" aria-hidden="true"></i>;
         }
-       // const items = this.state.items;
 
         return (
             <div>
                 <Navigation />
-
-                {/* { items.map((item)=> <li>{ item.name }</li> )} */}
-                <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
-                <div className="mt-5">
+                <div className="container mt-5">
                     <div className="row">
-                        <div className="col-sm-9">
-                            <BootstrapTable data={this.state.items} condensed search scrolling className="item--table">
+                        <div className="col-sm-2">
+                        <h2>Filters</h2>
+
+                            <div className="ui form mb-2">
+                                <div className="grouped fields">
+
+                                <h4>Prices</h4>
+
+                                    <Slider
+                                        min={1}
+                                        max={this.state.maxPrice}
+                                        value={priceSlider}
+                                        orientation="horizontal"
+                                        onChange={this.handleOnChange}
+                                        onChangeComplete={this.handleChangeComplete}
+                                    />
+
+                                    <div className='float-right'>{priceSlider}</div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className="col-sm-10">
+                            {/* { items.map((item)=> <li>{ item.name }</li> )} */}
+                            <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
+
+                            <BootstrapTable data={this.state.payload} condensed search scrolling className="item--table">
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
                             <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
                             <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={addToCartFormat}> </TableHeaderColumn>
-                            </BootstrapTable>
+                            </BootstrapTable>                      
+    
                         </div>
-                        {/* {this.renderItems(items)} */}
+
                     </div>
                 </div>
+   
 
             </div>
      
