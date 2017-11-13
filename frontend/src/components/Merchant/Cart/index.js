@@ -54,11 +54,9 @@ class Cart extends Component {
 
     axios({
       method: 'post',
-      url: `${settings.API_ROOT}/cart`, // need to change this
+      url: `${settings.API_ROOT}/removeFromCart`, // need to change this
       data: data,
-      headers: {
-          Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-      }
+      withCredentials: true
     })
     .then(response => {
       swal({
@@ -96,21 +94,13 @@ class Cart extends Component {
                 { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                 <div className="card mt-2">
                   <ul className="list-group list-group-flush">
-<<<<<<< HEAD
-                    {self.state.items.map( (cartItem) =>
-                      <li key={cartItem.name}
-                        className="list-group-item">
-                        <div className="row">
-                          <div className="col-sm-11">
-                            // <div>{cartItem.itemID.itemSpec.name}</div>
-=======
+
                     {self.state.items.map((item) =>
                       <li key={item.itemID.itemSpec.modelNumber}
                         className="list-group-item">
                         <div className="row">
                           <div className="col-sm-11">
                             {item.itemID.itemSpec.modelNumber}, {item.itemID.itemSpec.name}
->>>>>>> 5edb545241c1f9488c99fa8f43852eddcb57a963
                           </div>
                           <div className="col-sm-1 text-right">
                             <i className="fa fa-times"

@@ -20,6 +20,21 @@ class MonitorDisplayIDTDG:
                 print(error)
                 return None
 
+    def findBySerialNumber(serialNum):
+
+        with Database() as cursor:
+
+            query = """
+                SELECT * FROM monitorDisplayID WHERE serialNum = '{}';
+            """.format(serialNum)
+            try:
+                cursor.execute(query)
+                result = cursor.fetchone()
+                return result
+            except Exception as error:
+                print(error)
+                return None
+
     def insert(monitorDisplayID):
 
         with Database() as cursor:
@@ -40,7 +55,7 @@ class MonitorDisplayIDTDG:
             query = """
                 UPDATE monitorDisplayID SET
                 isLocked = {}
-                WHERE serialNumber = '{}';
+                WHERE serialNum = '{}';
             """.format(isLockedInt, monitorDisplayID.serialNumber)
 
             try:

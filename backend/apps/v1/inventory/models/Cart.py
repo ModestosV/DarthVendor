@@ -15,10 +15,12 @@ class Cart():
         self.cartItemMinSize = 0
         self.Total = 0
 
-    def addToCart(self, itemSpec):
+    def addItem(self, itemSpec):
         if len(self.cartItems) < self.cartItemMaxSize:
             if (ItemIDMapper.lock(itemSpec.type, self)):
                 itemIdsOfItemSpecType = ItemIDMapper.find(itemSpec)
+                print(len(itemIdsOfItemSpecType))
+                itemIDFound = False
                 for itemID in itemIdsOfItemSpecType:
                     if itemID.isLocked is True:
                         # skip over item and check the next to see if unlocked
@@ -30,9 +32,14 @@ class Cart():
                         cartLineItem = CartLineItem(itemID)
                         self.cartItems.append(cartLineItem)
                         self.Total += cartLineItem.getSubTotal()
-                        return True
+                        itemIDFound = True
+                        print(self.cartItems)
+                        break
 
+                if itemIDFound is not True:
+                    return False  # No stock of this item
                 ItemIDMapper.unlock(itemSpec.type, self)
+
             else:
                 # tell customer they will need to to try again later to add this item
                 return False
@@ -40,21 +47,25 @@ class Cart():
             # message user telling them they are unable to add to cart as cart is full
             return False
 
-    def removeFromCart(self, itemID):
-        if len(self.cartItems) > self.cartItemsMinSize:
-            if self.cartItems.length() > self.cartItemsMinSize:
-                if(ItemIDMapper.lock(itemID.spec.type, self)):
-                    itemID.isLocked = False
-                    ItemIDMapper.update(itemID)
-                    self.cartItems.remove(itemID)
-                    ItemIDMapper.unlock(itemID.spec.type, self)
-                    return
-                else:
-                    # tell customer they will need to to try again later to remove this item
-                    return
-            else:
-                # tell customer there are no more items in cart
+        return True
+
+    def removeItem(self, itemID):
+        if len(self.cartItems) > self.cartItemMinSize:
+
+            if(ItemIDMapper.lock(itemID.spec.type, self)):
+                itemID.isLocked = False
+                ItemIDMapper.update(itemID)
+                for cartLineItem in self.cartItems:
+                    if cartLineItem.itemID.serialNumber == itemID.serialNumber:
+                        self.cartItems.remove(cartLineItem)
+                ItemIDMapper.unlock(itemID.spec.type, self)
                 return
+            else:
+                # tell customer they will need to to try again later to remove this item
+                return
+        else:
+            # tell customer there are no more items in cart
+            return
 
     def confirmPurchase(self):
         timeOfCheckout = datetime.now()

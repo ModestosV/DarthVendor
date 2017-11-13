@@ -11,7 +11,7 @@ class Purchase():
         if self.cart is None:
             self.cart = Cart(self.customer)
 
-        self.cart.addToCart(itemSpec)
+        self.cart.addItem(itemSpec)
 
     def removeItem(self, itemID):
         self.cart.removeItem(itemID)

@@ -43,8 +43,8 @@ class RemoveFromCartView(APIView):
 
     def post(self, request):
         user = ObjectSession.sessions[request.session['user']]
-
-        itemID = ItemIDMapper.find(request.data['serialNumber'], request.data['type'])
+        itemSpec = ItemSpecMapper.find(request.data['itemID']['itemSpec']['modelNumber'], request.data['itemID']['itemSpec']['type'])
+        itemID = ItemIDMapper.findBySerialNumber(request.data['itemID']['serialNumber'], itemSpec)
 
         user.purchaseController.removeItem(itemID)
 
