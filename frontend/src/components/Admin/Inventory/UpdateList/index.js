@@ -13,6 +13,8 @@ class UpdateList extends Component {
 
         this.state = {
             items: [
+              {name: 'dsadsa'},
+              {name: 'dsadsa'},
               {name: 'dsadsa'}
             ]
         }
@@ -133,9 +135,9 @@ class UpdateList extends Component {
     displayButtons(){
         if(this.state.items.length > 0){
             return (
-                <div className="float-right">
-                    <button className="cancel ui button mr-3" onClick={() => {this.cancelUpdate()}}>Cancel</button>
-                    <button className="apply ui button mr-3" onClick={() => {this.confirmUpdate()}}>Apply Changes</button>
+                <div className="uow--buttons row">
+                    <button className="col cancel ui button mx-3" onClick={() => {this.cancelUpdate()}}>Cancel</button>
+                    <button className="col apply ui button mx-3" onClick={() => {this.confirmUpdate()}}>Apply</button>
                 </div>
             )
         }
@@ -149,14 +151,12 @@ class UpdateList extends Component {
 
     render() {
         return (
-            <div className="footer">
-                <div className="update--list">
+            <div className="col-sm-3 uow">
+                <div className="uow--body">
                     <h2>Changes</h2>
-                    { this.displayUpdateList() }
+                    {this.displayUpdateList() }
+                    {this.displayButtons()}
                 </div>
-               
-
-               {this.displayButtons()}
             </div>
         )
     }
