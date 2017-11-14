@@ -36,3 +36,7 @@ class Purchase():
                 return result
 
         return result
+
+    def initiateReturn():
+        resultSet = PurchaseCollectionIDMapper.find()
+        return resultSet
