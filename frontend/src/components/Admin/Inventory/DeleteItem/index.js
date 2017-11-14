@@ -13,11 +13,17 @@ class DeleteItem extends Component {
     }
     // add deletions to UOW
     confirmDeletion() {
+        //create object to post
+        let data = [];
+        data.push(this.props.item.modelNumber);
+        data.push(this.props.item.type);
+        data.push(this.state.itemToDelete);
+
         if(this.state.itemToDelete != ""){
             axios({
                 method: 'post',
                 url: `${settings.API_ROOT}/deleteItemID`,
-                data: this.state.itemToDelete,
+                data: data,
                 withCredentials: true
             }).then(result => {
                 this.props.closeDeleteModal();
@@ -41,11 +47,13 @@ class DeleteItem extends Component {
             data: this.props.item,
             withCredentials: true
         }).then(result => {
-            let serials = [];
-            result.data.map((item,index) => {
-                serials.push(item.serialNumber);
-            })
-            this.setState({itemIDs: serials});
+            this.setState({itemIDs: result.data});
+            // let serials = [];
+            // result.data.map((item,index) => {
+            //     console.log(item)
+            //     serials.push(item.serialNumber);
+            // })
+            // this.setState({itemIDs: serials});
         });
     }
 
@@ -54,7 +62,6 @@ class DeleteItem extends Component {
     }
 
     render() {
-        console.log(this.state.itemToDelete);
         const selectRowProp = {
             mode: 'radio',
             onSelect: this.selectItem
@@ -68,9 +75,9 @@ class DeleteItem extends Component {
                         <select className="form-control" onChange={(e) => this.handleSelect(e)}>
                             <option value="">Select ID to delete</option>
                             {
-                                this.state.itemIDs.map((serial,index) => {
+                                this.state.itemIDs.map((item,index) => {
                                     return(
-                                        <option key={index} value={serial}>{serial}</option>
+                                        <option key={index} value={item.serialNumber}>{item.isLocked? "(in a cart) ":""}{item.serialNumber}</option>
                                     )
                                 })
                             }
