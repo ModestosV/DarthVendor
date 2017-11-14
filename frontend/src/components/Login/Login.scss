@@ -12,20 +12,57 @@
     }
 }
 
-#login {
+.wrapper{
     -webkit-animation: 2s fade-in ease-in;
     animation: 2s fade-in ease-in;
+    width:35%;
 }
 
-#login > div {
-    background: url(http://wallpaper.pickywallpapers.com/widescreen/preview/darth-vader-in-the-dark.jpg);
-    background-position: -50px -50px;
-    padding: 2px;
-    margin: 0 0 10px 0;
-    border-radius: 5px;
+.form__body{
+    height: 100vh;
 }
 
-#login > div > h1 {
-    color: #fff;
-    font-weight: 400;
+#login,
+#register {
+
+    .header{
+        background: url(http://wallpaper.pickywallpapers.com/widescreen/preview/darth-vader-in-the-dark.jpg);
+        background-position: -50px -50px;
+        padding: 2px;
+        margin: 0 0 10px 0;
+        border-radius: 5px;
+
+        h1{
+            color: #fff;
+            font-weight: 400;
+            padding-left:15px;
+        }
+
+    }
 }
+
+#register{
+    margin-top:25px;
+    span{
+        padding-left: 5px;
+        text-decoration: underline;
+        color: #2986CD;
+    }
+}
+
+.input--error{
+    border: 1px solid #e0b4b4 !important;
+    background-color: #fff6f6;
+}
+.hidden{
+    display: none;
+}
+
+.error--message{
+    margin-top: 25px;
+    li{
+        background-color:#fff6f6;
+        padding:5px;
+    }
+}
+
