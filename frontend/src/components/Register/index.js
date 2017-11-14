@@ -9,10 +9,6 @@ class Register extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            toggleRegister: false,
-        }
     }
 
     registerHandleFirstName(event){
