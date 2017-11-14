@@ -13,12 +13,11 @@ class DeleteAccountView(APIView):
 
     def post(self, request):
 
-        if not request.session['isAdmin']:
-            Authentication.deleteCustomer(request.session['user'])
+        if not Authentication.deleteCustomer(request.session['user']):
+            return Response({}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
             ObjectSession.sessions[request.session['user']] = None
             request.session['user'] = None
             request.session['isAdmin'] = None
-        else:
-            return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
         return Response({}, status=status.HTTP_200_OK)
