@@ -7,10 +7,12 @@ from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
 from backend.apps.v1.inventory.Exceptions import TableLockedException, CartFullException, OutOfStockException
 
-from datetime import datetime
+import threading
+from datetime import datetime, timedelta
 
 
 class Cart():
+    deltaTime = timedelta(minutes=0, seconds=30)
 
     def __init__(self, customer):
         self.customer = customer
@@ -18,6 +20,20 @@ class Cart():
         self.cartItemMaxSize = 7
         self.cartItemMinSize = 0
         self.Total = 0
+        self.cleanCart()
+
+    def stopCartClean(self):
+        self.t.cancel()
+
+    def cleanCart(self):
+        print('clean')
+        self.t = threading.Timer(5.0, self.cleanCart)
+        self.t.start()
+        now = datetime.now()
+
+        for lineItem in self.cartItems:
+            if now - lineItem.additionTime > Cart.deltaTime:
+                self.removeItem(lineItem.itemID)
 
     def addItem(self, itemSpec):
         if len(self.cartItems) < self.cartItemMaxSize:

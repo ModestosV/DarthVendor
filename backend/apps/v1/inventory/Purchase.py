@@ -21,6 +21,7 @@ class Purchase():
 
     def confirmPurchase(self):
         self.cart.confirmPurchase()
+        self.cart.stopCartClean()
         self.cart = None
 
     def getCart(self):
