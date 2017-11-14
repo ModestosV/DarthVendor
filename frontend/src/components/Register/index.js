@@ -9,6 +9,7 @@ class Register extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {}
     }
 
     registerHandleFirstName(event){
@@ -17,6 +18,10 @@ class Register extends Component {
 
     registerHandleLasttName(event){
         this.setState({registerLast: event.target.value});
+    }
+
+    registerHandleUsername(event){
+        this.setState({registerUsername: event.target.value});
     }
 
     registerHandleEmail(event){
@@ -58,6 +63,7 @@ class Register extends Component {
         let data = {
             'first': this.state.registerFirst,
             'last': this.state.registerLast,
+            'username': this.state.registerUsername,
             'email': this.state.registerEmail,
             'address': this.state.registerAddress,
             'phone': this.state.registerPhone,
@@ -160,7 +166,17 @@ class Register extends Component {
                         onChange={(e) => this.registerHandleLasttName(e)}
                     />
                 </div>
-
+                <div className="input-group mb-3">
+                    <div className="input-group-addon">
+                        Username
+                    </div>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="darthvador"
+                        onChange={(e) => this.registerHandleUsername(e)}
+                    />
+                </div>
                 <div className="input-group mb-3">
                     <div className="input-group-addon">
                         <i className="fa fa-envelope"></i>
@@ -224,7 +240,7 @@ class Register extends Component {
                 <ul className="list-group">
                     <li className={emailMsg}>Invalid Email Address</li>
                     <li className={phoneMsg}>Invalid Phone Number</li>
-                    <li className={passwordMsg}>Password must be a minimum eight characters, at least one letter and one number</li>
+                    <li className={passwordMsg}>Password must be a minimum eight characters, at least two letter and two number</li>
                 </ul>
             </div>
 
