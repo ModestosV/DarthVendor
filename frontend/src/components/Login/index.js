@@ -87,8 +87,8 @@ class Login extends Component {
         () => {
             if (this.state.keyStroke.join(',').includes(this.state.adminCheatCode.join(','))) {
                 swal({
-                    title: "Darth Varder Mode",
-                    text: "Admin login enabled. Remember, this power is privilege.",
+                    title: "Darth Vendor Mode",
+                    text: "Admin login enabled. Remember! this power is privilege.",
                     icon: "warning",
                     button: "Ok"
                 })
