@@ -15,7 +15,6 @@ class Laptop(ItemSpecification):
         super().__init__(params['modelNumber'], params['name'], params['quantity'],
                          params['weight'], params['weightFormat'], params['price'], params['priceFormat'], params['brandName'], "LAPTOP")
 
-        print(params)
         self.ramSize = params['ramSize']
         self.ramFormat = params['ramFormat']
         self.processorType = params['processorType']

@@ -50,13 +50,13 @@ class ItemIDMapper():
             DesktopIDTDG.delete(serialNumber)
 
         elif (type == "LAPTOP"):
-            LaptopIDTDG.delete(itemID.serialNumber)
+            LaptopIDTDG.delete(serialNumber)
 
         elif (type == "MONITOR"):
-            MonitorDisplayIDTDG.delete(itemID.serialNumber)
+            MonitorDisplayIDTDG.delete(serialNumber)
 
         elif (type == "TABLET"):
-            TabletIDTDG.delete(itemID.serialNumber)
+            TabletIDTDG.delete(serialNumber)
 
     @staticmethod
     def lock(type, uow):
@@ -109,7 +109,7 @@ class ItemIDMapper():
             result = TabletIDTDG.findBySpec(itemSpecification)
 
         for row in result:
-            newItemID = ItemID(row.get('serialNum'), row.get('isLocked'), itemSpecification)
+            newItemID = ItemID(row.get('serialNum'), True if row.get('isLocked') == 1 else False, itemSpecification)
             itemIDList.append(newItemID)
 
         return itemIDList
@@ -127,4 +127,4 @@ class ItemIDMapper():
         elif(itemSpecification.type == "TABLET"):
             result = TabletIDTDG.findBySerialNumber(serialNumber)
 
-        return ItemID(row.get('serialNum'), row.get('isLocked'), itemSpecification)
+        return ItemID(result.get('serialNum'),True if result.get('isLocked') == 1 else False, itemSpecification)
