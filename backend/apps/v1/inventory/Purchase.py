@@ -38,5 +38,5 @@ class Purchase():
         return result
 
     def initiateReturn():
-        resultSet = PurchaseCollectionIDMapper.find()
+        resultSet = PurchaseCollectionIDMapper.find("")
         return resultSet
