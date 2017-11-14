@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
-import {HashRouter as Router, Route} from 'react-router-dom';
+import {Link, HashRouter as Router, Route} from 'react-router-dom';
 import settings from '../../../config/settings';
 import Navigation from '../Navigation';
 
@@ -34,13 +34,10 @@ class Cart extends Component {
           withCredentials: true
       })
       .then(results => {
-          console.log("VIEW CART DATA");
-          console.log(results.data);
           const errorMsg = null;
           let items = results.data.cartItems;
           this.setState({items});
           this.setState({errorMsg});
-          // console.log(items);
       })
       .catch(error => {
        console.log(error);
@@ -55,7 +52,7 @@ class Cart extends Component {
 
     axios({
       method: 'post',
-      url: `${settings.API_ROOT}/removeFromCart`, // need to change this
+      url: `${settings.API_ROOT}/removeFromCart`,
       data: data,
       withCredentials: true
     })
@@ -130,10 +127,18 @@ class Cart extends Component {
                   </ul>
                 </div>
                 <div className="justify-content-md-center">
-                  <button className="btn btn-success float-right col-sm-2 mt-2"
+                {this.state.items.length < 1 && 
+                  <div className="col-sm-12">
+                    Shopping cart is empty. <i className="fa fa-frown-o" aria-hidden="true"></i>
+                  </div>
+                }
+                {this.state.items.length >= 1 &&
+                  <Link className="btn btn-success float-right col-sm-2 mt-2"
+                    to={`/checkout`}
                     onClick={() => this.handleCheckout()}>
                     Checkout
-                  </button>
+                  </Link>
+                }
                 </div>
             </div>
         </div>

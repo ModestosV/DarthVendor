@@ -50,6 +50,11 @@ class Navigation extends Component {
     
     }
 
+    handleReturnButton() {
+        const {history} = this.props;
+        history.push('/return');
+    }
+
     handleDeleteAccount() {
         swal({
               title: "Delete account?",
@@ -92,6 +97,7 @@ class Navigation extends Component {
                 <Dropdown text='Account' className='ui primary button'>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={() => this.handleLogOutButton()}>Logout</Dropdown.Item>
+                        <Dropdown.Item onClick={() => this.handleReturnButton()}>Return Item</Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item onClick={() => this.handleDeleteAccount()}>Delete Account</Dropdown.Item>
                     </Dropdown.Menu>
