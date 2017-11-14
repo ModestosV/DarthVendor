@@ -122,9 +122,7 @@ class ModifyItem extends Component {
     render() {
         console.log(this.state);
         return (
-
             <div>
-                
                 <label><strong>Add Quantity</strong></label><br />
                 <input className="input--add mr-2" type="number" min="0" onChange={(e) => this.handleQuantity(e)}/>
 

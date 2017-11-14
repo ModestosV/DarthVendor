@@ -84,18 +84,20 @@ class Cart():
     def confirmPurchase(self):
         timeOfCheckout = datetime.now()
         for cartLineItem in self.cartItems:
+            print(cartLineItem)
             if cartLineItem is not None:
                 if (ItemIDMapper.lock(cartLineItem.itemID.spec.type, self) and PurchasedItemIDMapper.lock(self)):
+                    print('adding')
                     newPurchaseItem = PurchasedItemID(cartLineItem.itemID.serialNumber, cartLineItem.itemID.spec, self.customer.email, cartLineItem.itemID.spec.type, timeOfCheckout)
                     PurchasedItemIDMapper.insert(newPurchaseItem)
                     ItemIDMapper.delete(cartLineItem.itemID.serialNumber, cartLineItem.itemID.spec.type)
 
                     ItemIDMapper.unlock(cartLineItem.itemID.spec.type, self)
                     PurchasedItemIDMapper.unlock(self)
-                    break
                 else:
+                    print('unlocking')
                     ItemIDMapper.unlock(cartLineItem.itemID.spec.type, self)
-                    PurchasedItemIDMapper.lock(self)
+                    PurchasedItemIDMapper.unlock(self)
                     raise TableLockedException()
 
         return True

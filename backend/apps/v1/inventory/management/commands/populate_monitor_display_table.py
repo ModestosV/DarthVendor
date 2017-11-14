@@ -138,12 +138,12 @@ monitors = [
 monitorDisplayIDs = [
     dict(
         serialNum='test',
-        modelNum='x123131',
+        modelNum='VE208T',
         isLocked=0
     ),
     dict(
         serialNum='TWERTERTERRK',
-        modelNum='v123131',
+        modelNum='VE208T',
         isLocked=0
     )
 ]
