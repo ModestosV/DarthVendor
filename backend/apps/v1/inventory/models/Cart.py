@@ -5,6 +5,8 @@ from backend.apps.v1.inventory.mappers.PurchasedItemIDMapper import PurchasedIte
 
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
+from backend.apps.v1.inventory.Exceptions import TableLockedException, CartFullException
+
 from datetime import datetime
 
 
@@ -35,16 +37,14 @@ class Cart():
                         print(self.cartItems)
                         break
 
-                if itemIDFound is not True:
-                    return False  # No stock of this item
                 ItemIDMapper.unlock(itemSpec.type, self)
+                if itemIDFound is not True:
+                    raise OutOfStockException()
 
             else:
-                # tell customer they will need to to try again later to add this item
-                return False
+                raise TableLockedException()
         else:
-            # message user telling them they are unable to add to cart as cart is full
-            return False
+            raise CartFullException()
 
         return True
 
@@ -60,8 +60,7 @@ class Cart():
                 ItemIDMapper.unlock(itemID.spec.type, self)
                 return
             else:
-                # tell customer they will need to to try again later to remove this item
-                return
+                raise TableLockedException()
         else:
             # tell customer there are no more items in cart
             return
@@ -79,7 +78,8 @@ class Cart():
                     PurchasedItemIDMapper.unlock(self)
                     break
                 else:
-                    # tell customer they will need to to try again later to add this item
-                    return False
+                    ItemIDMapper.unlock(cartLineItem.itemID.spec.type, self)
+                    PurchasedItemIDMapper.lock(self)
+                    raise TableLockedException()
 
         return True
