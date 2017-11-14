@@ -8,6 +8,8 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './Catalog.scss';
 import Slider from 'react-rangeslider';
 
+import ReactModal from 'react-modal';
+
 
 class Catalog extends Component {
 
@@ -16,15 +18,18 @@ class Catalog extends Component {
         this.state = {
             items:[],
             errorMsg: null,
-            showModal: false,
+            showSpecsModal: false,
             priceSlider: '',
             maxPrice: '',
-            typeFilter: '',        
+            typeFilter: '',  
+            sizeFilter: '',      
             brandFilter: [],
+            processorTypeFilter: [],
         };
         this.handleOnChange = this.handleOnChange.bind(this);
         this.handleChangeComplete = this.handleChangeComplete.bind(this);
         this.renderFilterBrand = this.renderFilterBrand.bind(this);
+        this.closeShowSpecsModal = this.closeShowSpecsModal.bind(this);
         // this.handleFilter = this.handleFilter.bind(this);
     }
 
@@ -35,6 +40,10 @@ class Catalog extends Component {
 
     componentDidMount() {
         this.getCatalog();
+    }
+
+    closeShowSpecsModal(){
+        this.setState({showSpecsModal: false});
     }
 
    getCatalog() {
@@ -128,8 +137,8 @@ class Catalog extends Component {
                 <h4>Price</h4>
                 <Slider
                     min={1}
-                    max={this.state.maxPrice}
-                    value={priceSlider}
+                    max={Number(this.state.maxPrice)}
+                    value={Number(priceSlider)}
                     orientation="horizontal"
                     onChange={this.handleOnChange}
                     onChangeComplete={this.handleChangeComplete}
@@ -182,6 +191,75 @@ class Catalog extends Component {
             )
         }                           
     }
+
+    renderFilterSpecific() {
+        if(this.state.typeFilter == 'Monitor'){
+            return (
+                <div className="grouped fields">
+                    <h4>Size</h4>
+                    <Form>
+                        
+                        <Form.Field>
+                            <Checkbox label="<=24 inches" value="1" checked={this.state.sizeFilter == '1'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                        </Form.Field>
+                        <Form.Field>
+                            <Checkbox label="<=27 inches" value="2" checked={this.state.sizeFilter == '2'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                        </Form.Field>
+                        <Form.Field>
+                            <Checkbox label=">27 inches" value="3" checked={this.state.sizeFilter == '3'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                        </Form.Field>
+                                
+                    </Form>
+                </div>
+            ) 
+        }
+        if(this.state.typeFilter == 'Desktop'){
+            let processors = [];
+            this.state.items.map((item,index) => {
+                if(item.type == 'DESKTOP'){
+                    if(!processors.includes(item.processorType)){
+                        processors.push(item.processorType);
+                    }
+                }
+            })
+            return (
+                <div className="grouped fields">
+                    <h4>Processor Type</h4>
+                    <Form>
+                        {
+                            processors.map((type,index) => {
+                                return(
+                                    <Form.Field key={index}>
+                                        <Checkbox label={type} value={type} onChange={(event, data) => this.handleFilterProcessorType(data)}/>    
+                                    </Form.Field>
+                                )
+                            })
+                        }
+                    </Form>
+                </div>
+            ) 
+        }
+    }
+    
+    handleFilterProcessorType(data) {
+        if(data.checked){
+            let b = this.state.processorTypeFilter;
+            b.push(data.value)
+            this.setState({processorTypeFilter: b},() => this.handleFilter())
+        }else{
+            let b = this.state.processorTypeFilter;
+            b = b.filter(type => type != data.value);
+            this.setState({processorTypeFilter: b},() => this.handleFilter());
+        }
+    }
+
+    handleFilterSize(data) {
+        if(data.checked){
+            this.setState({sizeFilter: data.value},() => this.handleFilter());
+        } else {
+            this.setState({sizeFilter: ''},() => this.handleFilter())
+        }
+    }
     
     handleFilterBrand(data) {
         if(data.checked){
@@ -201,9 +279,9 @@ class Catalog extends Component {
         }else{
             this.setState({typeFilter: ''},() => this.handleFilter());
         }
-        
-        
     }
+
+
 
     handleFilter(){
         //start filter by price
@@ -212,15 +290,43 @@ class Catalog extends Component {
         // filter by type
         if(this.state.typeFilter == 'Desktop'){
             filteredItems = filteredItems.filter(item => item.type == 'DESKTOP')
+            //filter by processor type
+            if(this.state.processorTypeFilter.length != 0){
+                let f = [];
+                this.state.processorTypeFilter.map((type,index) => {
+                    f= [...f, filteredItems.filter(item => item.processorType == type)];
+                })
+                let f2 = [];
+                f.map((items,index) => {
+                    items.map((item,index2) => {
+                        f2.push(item);
+                    })
+                    
+                })
+                filteredItems = f2;
+            }
         }
         if(this.state.typeFilter == 'Laptop'){
             filteredItems = filteredItems.filter(item => item.type == 'LAPTOP')
+
         }
         if(this.state.typeFilter == 'Tablet'){
             filteredItems = filteredItems.filter(item => item.type == 'TABLET')
         }
         if(this.state.typeFilter == 'Monitor'){
             filteredItems = filteredItems.filter(item => item.type == 'MONITOR')
+            //filterby size
+            if(this.state.sizeFilter != ''){
+                if(this.state.sizeFilter == '1'){
+                    filteredItems = filteredItems.filter(item => item.size <= 24);
+                }
+                if(this.state.sizeFilter == '2'){
+                    filteredItems = filteredItems.filter(item => item.size <= 27);
+                }
+                if(this.state.sizeFilter == '3'){
+                    filteredItems = filteredItems.filter(item => item.size > 27);
+                }
+            }
         }
 
         //filter by brand
@@ -239,15 +345,41 @@ class Catalog extends Component {
                 
             })
             filteredItems = f2;
-
         }
 
         this.setState({catalog: filteredItems});         
         
     }
 
-    test() {
-        console.log('aaa')
+    showSpecs(row) {
+        this.setState({showSpecsModal: true});
+        this.setState({detailedItem: row})
+        console.log(row)
+    }
+
+    displayDetails(){
+        if(this.state.detailedItem){
+            return (
+                <div>
+                    {Object.keys(this.state.detailedItem).map((name,index) => {
+    
+                        if(typeof this.state.detailedItem[name] != 'object' && !name.includes('Format') ){
+                            return (
+                                <div className="form-group row" key={index}>
+                                    <label htmlFor={name} className="col-sm-2 col-form-label"><strong>{name}</strong></label>
+                                    <div className="col-sm-10">
+                                        {this.state.detailedItem[name]}
+                                    </div>
+                                </div>
+                            );
+                        }
+                    })
+                    }
+                </div>
+            );
+        }
+        
+    
     }
 
     render() {
@@ -265,12 +397,9 @@ class Catalog extends Component {
         function addToCartFormat(cell, row) {
             return <i onClick={() => self.addToCart(row)} className="fa fa-shopping-cart fa-5" aria-hidden="true"></i>;
         }
-        function onRowClick() {
-            self.test();
-        }
 
-        var options = {
-            onRowClick: onRowClick()
+        function detailsFormat(cell, row) {
+            return <i onClick={() => self.showSpecs(row)} className="fa fa-info-circle fa-5" aria-hidden="true"></i>;
         }
 
         return (
@@ -285,6 +414,7 @@ class Catalog extends Component {
                             {this.renderFilterPrice()}
                             {this.renderFilterType()}
                             {this.renderFilterBrand()}
+                            {this.renderFilterSpecific()}
                             {/* <button onClick={() => this.handleFilter()}>Apply</button> */}
 
                         </div>
@@ -293,7 +423,8 @@ class Catalog extends Component {
                             {/* { items.map((item)=> <li>{ item.name }</li> )} */}
                             <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
 
-                            <BootstrapTable data={this.state.catalog} option={options} condensed search scrolling className="catalog--table">
+                            <BootstrapTable data={this.state.catalog} condensed search scrolling className="catalog--table">
+                            <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={detailsFormat}> </TableHeaderColumn>
                             <TableHeaderColumn dataField="name" dataAlign="center" dataSort={true} >Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
@@ -304,6 +435,18 @@ class Catalog extends Component {
                             </BootstrapTable>                      
     
                         </div>
+
+                        {/* Modal for Modify item */}
+                        <ReactModal isOpen={this.state.showSpecsModal} 
+                            className={{base: 'modify--modal'}}>
+                            <div>
+                                <h1 className="float-left">Details</h1>
+                                <i className="remove icon float-right" onClick={this.closeShowSpecsModal}></i>
+                            </div>
+                            <div className="mt-50">
+                                {this.displayDetails()}
+                            </div>
+                        </ReactModal>
 
                     </div>
                 </div>
