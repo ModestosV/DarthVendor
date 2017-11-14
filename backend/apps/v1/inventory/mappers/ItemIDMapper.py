@@ -50,13 +50,13 @@ class ItemIDMapper():
             DesktopIDTDG.delete(serialNumber)
 
         elif (type == "LAPTOP"):
-            LaptopIDTDG.delete(itemID.serialNumber)
+            LaptopIDTDG.delete(serialNumber)
 
         elif (type == "MONITOR"):
-            MonitorDisplayIDTDG.delete(itemID.serialNumber)
+            MonitorDisplayIDTDG.delete(serialNumber)
 
         elif (type == "TABLET"):
-            TabletIDTDG.delete(itemID.serialNumber)
+            TabletIDTDG.delete(serialNumber)
 
     @staticmethod
     def lock(type, uow):

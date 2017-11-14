@@ -1,9 +1,11 @@
 from backend.apps.v1.inventory.models.PurchasedItemID import PurchasedItemID
 from backend.apps.v1.inventory.models.PurchaseCollection import PurchaseCollection
 from backend.apps.v1.inventory.models.CartLineItem import CartLineItem
-from backend.apps.v1.inventory.mappers.PurchaseCollectionIDMapper import PurchaseCollectionIDMapper
+from backend.apps.v1.inventory.mappers.PurchasedItemIDMapper import PurchasedItemIDMapper
 
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
+
+from datetime import datetime
 
 
 class Cart():
@@ -67,14 +69,14 @@ class Cart():
     def confirmPurchase(self):
         timeOfCheckout = datetime.now()
         for cartLineItem in self.cartItems:
-            if itemID is not None:
-                if (ItemIDMapper.lock(cartLineItem.itemID.spec.type, self) and PurchaseCollectionIDMapper.lock(self)):
+            if cartLineItem is not None:
+                if (ItemIDMapper.lock(cartLineItem.itemID.spec.type, self) and PurchasedItemIDMapper.lock(self)):
                     newPurchaseItem = PurchasedItemID(None, cartLineItem.itemID, self.customer, cartLineItem.itemID.spec.type, timeOfCheckout)
-                    PurchaseCollectionIDMapper.insert(newPurchaseItem)
-                    ItemIDMapper.delete(cartLineItem.itemID)
+                    PurchasedItemIDMapper.insert(newPurchaseItem)
+                    ItemIDMapper.delete(cartLineItem.itemID.serialNumber, cartLineItem.itemID.spec.type)
 
                     ItemIDMapper.unlock(cartLineItem.itemID.spec.type, self)
-                    PurchaseCollectionIDMapper.unlock(self)
+                    PurchasedItemIDMapper.unlock(self)
                     break
                 else:
                     # tell customer they will need to to try again later to add this item
