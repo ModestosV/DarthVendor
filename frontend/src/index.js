@@ -16,6 +16,7 @@ import Login from './components/Login';
 import AdminRoutes from './components/Admin/routes';
 import MerchantRoutes from './components/Merchant/routes';
 import MerchantReturn from './components/Merchant/Return';
+import Register from './components/Register';
 
 const store = createStore(
     rootReducer,
@@ -31,6 +32,7 @@ ReactDOM.render(
                 <Route exact path="/login" component={Login}/>     
                 <Route path="/admin" component={AdminRoutes}/>
                 <Route path="/" component={MerchantRoutes}/>
+                <Route path="/register" component={Register} />
                 
             </div>
         </Router>
