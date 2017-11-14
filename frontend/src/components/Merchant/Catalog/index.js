@@ -432,8 +432,8 @@ class Catalog extends Component {
                             <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
                             <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={addToCartFormat}> </TableHeaderColumn>
-                            </BootstrapTable>                      
-    
+                            </BootstrapTable>
+
                         </div>
 
                         {/* Modal for Modify item */}
@@ -450,7 +450,7 @@ class Catalog extends Component {
 
                     </div>
                 </div>
-   
+
 
             </div>
 

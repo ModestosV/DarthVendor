@@ -9,6 +9,7 @@ from backend.apps.v1.accounts.ObjectSession import ObjectSession
 from backend.apps.v1.inventory.serializers.CartSerializer import CartSerializer
 
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
+from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
 
 class CartView(APIView):
@@ -17,8 +18,11 @@ class CartView(APIView):
         user = ObjectSession.sessions[request.session['user']]
 
         cart = user.purchaseController.getCart()
-        serializedCart = CartSerializer(cart).data
-        return Response(serializedCart, status=status.HTTP_200_OK)
+        if cart:
+            serializedCart = CartSerializer(cart).data
+            return Response(serializedCart, status=status.HTTP_200_OK)
+        else:
+            return Response({}, status=status.HTTP_200_OK)
 
 
 class AddToCartView(APIView):
@@ -31,5 +35,31 @@ class AddToCartView(APIView):
         itemSpec = ItemSpecMapper.find(request.data['modelNumber'], request.data['type'])
 
         user.purchaseController.addItem(itemSpec)
+
+        return Response({}, status=status.HTTP_200_OK)
+
+
+class RemoveFromCartView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        user = ObjectSession.sessions[request.session['user']]
+        itemSpec = ItemSpecMapper.find(request.data['itemID']['itemSpec']['modelNumber'], request.data['itemID']['itemSpec']['type'])
+        itemID = ItemIDMapper.findBySerialNumber(request.data['itemID']['serialNumber'], itemSpec)
+
+        user.purchaseController.removeItem(itemID)
+
+        return Response({}, status=status.HTTP_200_OK)
+
+
+class ConfirmPurchaseView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        user = ObjectSession.sessions[request.session['user']]
+
+        user.purchaseController.confirmPurchase()
 
         return Response({}, status=status.HTTP_200_OK)
