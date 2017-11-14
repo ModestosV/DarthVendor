@@ -17,7 +17,7 @@ class Login extends Component {
             cancelAdminCheatCode: [81], // Q
             keyStroke: [],
             isAdminLogin: false,
-            toggleRegister: true,
+            toggleRegister: false,
         }
     }
 
