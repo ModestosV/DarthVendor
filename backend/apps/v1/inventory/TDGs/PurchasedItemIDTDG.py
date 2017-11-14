@@ -13,17 +13,17 @@ class PurchasedItemIDTDG:
         with Database() as cursor:
 
                 query = """
-                    SELECT * FROM purchasecollection WHERE purchaseId = '{}';
+                    SELECT * FROM purchasecollection WHERE serialNum = '{}';
                 """.format(purchaseID)
                 try:
                     cursor.execute(query)
-                    resultSet = cursor.fetchall()
+                    resultSet = cursor.fetchone()
                     return resultSet
                 except Exception as error:
                     print(error)
                     return None
 
-    def findByUserId(userId):
+    def findByUser(userId):
 
         with Database() as cursor:
 
@@ -32,20 +32,20 @@ class PurchasedItemIDTDG:
                 """.format(userId)
                 try:
                     cursor.execute(query)
-                    result = cursor.fetchone()
+                    result = cursor.fetchall()
                     return result
                 except Exception as error:
                     print(error)
                     return None
 
-    def insert(itemID, userId, timeOfCheckout):
+    def insert(serialNum, modelNumber, email, type, timeOfCheckout):
 
         with Database() as cursor:
 
                 query = """
                     INSERT INTO purchasecollection (serialNum, modelNum, userId, type, timeStamp)
                     VALUES ('{}', '{}','{}','{}','{}');
-                """.format(itemID.serialNumber, itemID.spec.modelNumber, userId, itemID.spec.type, timeOfCheckout)
+                """.format(serialNum, modelNumber, email, type, timeOfCheckout)
 
                 try:
                     cursor.execute(query)
@@ -57,13 +57,13 @@ class PurchasedItemIDTDG:
         # needs to have update method implimented for database entry where serialNumber matches and match up other criteria of object
         return
 
-    def delete(purchaseCollectionID):
+    def delete(serialNumber):
 
         with Database() as cursor:
 
                 query = """
-                DELETE FROM purchasecollection WHERE purchaseCollectionID.purchaseId = '{}';
-                """.format(purchaseCollectionID.purchaseId)
+                DELETE FROM purchasecollection WHERE serialNum = '{}';
+                """.format(serialNumber)
 
                 try:
                     cursor.execute(query)
