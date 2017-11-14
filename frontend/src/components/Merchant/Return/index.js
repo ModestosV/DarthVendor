@@ -7,7 +7,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './Return.scss';
 
 
-class Return extends Component {    
+class Return extends Component {
 
     constructor(props) {
         super(props);
@@ -17,14 +17,14 @@ class Return extends Component {
             errorMsg: null,
             showModal: false
         };
-        
+
         this.selectItem = this.selectItem.bind(this);
     }
 
-    componentWillMount() {  
-        const {history} = this.props;      
+    componentWillMount() {
+        const {history} = this.props;
         console.log(localStorage);
-        
+
         if (!localStorage.activeUser) {
             history.push('/login');
         } else {
@@ -32,58 +32,62 @@ class Return extends Component {
 
             // Making sure user does not have admin permission
             if (activeUser.isAdmin === true) {
-                // Redirect to admin home page                
+                // Redirect to admin home page
                 history.push('/admin/');
-            }            
-        } 
+            }
+        }
     }
 
     componentDidMount() {
-        //this.getPurchaseCollection();
+        this.getPurchaseCollection();
     }
 
     // get list of purchased items
     getPurchaseCollection() {
-    //     return axios.get(`${settings.API_ROOT}/purchaseCollection`)
-    //     .then(results => {
-    //         //const errorMsg = null;
-    //         // const items = results.data.map(item => item);
-    //         // this.setState({items});
-    //         //this.setState({errorMsg});
-    //         //console.log(items);
-    //     })
-    //     .catch(error => {
-    //      console.log(error);
-    //      //const errorMsg = "Oops, something went wrong while fetching items!";
-    //      this.setState({errorMsg});
-    //    })
+        return axios({
+            method: 'get',
+            url: `${settings.API_ROOT}/getPurchaseCollection`,
+            withCredentials: true
+        })
+        .then(results => {
+            const errorMsg = null;
+            const items = results.data.map(item => item);
+            this.setState({items});
+            this.setState({errorMsg});
+            console.log(items);
+        })
+        .catch(error => {
+         console.log(error);
+         const errorMsg = "Oops, something went wrong while fetching items!";
+         this.setState({errorMsg});
+       })
     }
 
     returnItems() {
         let data = this.state.returnItems;
-        
-        // axios({
-        //     method: 'post',
-        //     url: `${settings.API_ROOT}/item`,
-        //     // withCredentials: true,
-        //     data: data,
-        //     headers: {
-        //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-        //     }
-        // })
-        // .then(response => {
-        //     console.log('item added');
-        //     this.resetForm();
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        //     swal({
-        //         title: "Woops!",
-        //         text: "Something went wrong!",
-        //         ilcon: "error",
-        //         button: "Ok",
-        //     });
-        // })
+
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/returnItems`,
+            withCredentials: true,
+            data: data,
+            headers: {
+                Authorization: "Token " + JSON.parse(localStorage.activeUser).token
+            }
+        })
+        .then(response => {
+            console.log('item added');
+            this.resetForm();
+        })
+        .catch(error => {
+            console.log(error);
+            swal({
+                title: "Woops!",
+                text: "Something went wrong!",
+                ilcon: "error",
+                button: "Ok",
+            });
+        })
     }
 
     renderItems(items) {
@@ -98,14 +102,14 @@ class Return extends Component {
                                     <a className="header">{item.name}</a>
                                 </div>
                             </div>
-                        </div>        
+                        </div>
                     );
                 })
             }
             </div>
         );
     }
-    
+
     selectItem(row, isSelected, e) {
         if(isSelected) {
             this.setState({
@@ -118,10 +122,10 @@ class Return extends Component {
         }
 
     }
-    
+
     render() {
         const columns = [['name','Name'],['price','Price']];
-        
+
         const selectRowProp = {
             mode: 'checkbox',
             onSelect: this.selectItem
@@ -131,7 +135,7 @@ class Return extends Component {
             return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
         }
 
-        function sortFunc(a, b, order) {   
+        function sortFunc(a, b, order) {
             if (order === 'desc') {
                 return a.price - b.price;
             } else {
@@ -140,19 +144,19 @@ class Return extends Component {
         }
 
         return (
-            
+
             <div>
                 <Navigation />
 
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-sm-3">
-                        
+
                         </div>
-                        <button onClick={() => this.confirmReturn}>Return Items</button>
+                        <button onClick={() => this.returnItems()}>Return Items</button>
                         <div className="col-sm-9">
-                        <BootstrapTable data={this.state.items} selectRow={selectRowProp} condensed hover search scrolling className="item--table">            
-                            <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Items</TableHeaderColumn>                          
+                        <BootstrapTable data={this.state.items} selectRow={selectRowProp} condensed hover search scrolling className="item--table">
+                            <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Items</TableHeaderColumn>
                         </BootstrapTable>
                         </div>
 
@@ -160,7 +164,7 @@ class Return extends Component {
                 </div>
 
             </div>
-     
+
         )
     }
 }

@@ -20,6 +20,21 @@ class TabletIDTDG:
                 print(error)
                 return None
 
+    def findBySerialNumber(serialNum):
+
+        with Database() as cursor:
+
+            query = """
+                SELECT * FROM tabletID WHERE serialNum = '{}';
+            """.format(serialNum)
+            try:
+                cursor.execute(query)
+                result = cursor.fetchone()
+                return result
+            except Exception as error:
+                print(error)
+                return None
+
     def insert(tabletID):
 
         with Database() as cursor:
@@ -40,7 +55,7 @@ class TabletIDTDG:
             query = """
                 UPDATE tabletID SET
                 isLocked = {}
-                WHERE serialNumber = '{}';
+                WHERE serialNum = '{}';
             """.format(isLockedInt, tabletID.serialNumber)
 
             try:

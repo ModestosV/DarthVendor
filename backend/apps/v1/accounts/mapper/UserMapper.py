@@ -72,7 +72,7 @@ class UserMapper:
         user.lastname = row['lastname']
         user.address = row['address']
         user.phone = row['phone']
-
+        
         return user
 
     @staticmethod

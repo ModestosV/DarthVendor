@@ -143,7 +143,7 @@ class getEditStateView(APIView):
         else:
 
             serializedNewItems = list()
-            for item in itemAdministration.uow.newSpecs:
+            for item in user.itemAdministration.uow.newSpecs:
                 if isinstance(item, Desktop):
                     item = DesktopSerializer(item).data
                     serializedNewItems.append(item)
@@ -158,7 +158,7 @@ class getEditStateView(APIView):
                     serializedNewItems.append(item)
 
             serializedDirtyItems = list()
-            for item in itemAdministration.uow.dirtySpecs:
+            for item in user.itemAdministration.uow.dirtySpecs:
                 if isinstance(item, Desktop):
                     item = DesktopSerializer(item).data
                     serializedDirtyItems.append(item)
