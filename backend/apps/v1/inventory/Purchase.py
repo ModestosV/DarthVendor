@@ -29,7 +29,7 @@ class Purchase():
             result = PurchaseCollectionIDMapper.delete(purchaseID)
             if result == False:
                 return result
-            
+
         for purchaseID in idList:
             result = ItemIDMapper.insert(purchaseID.itemID)
             if result == False:

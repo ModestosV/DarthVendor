@@ -11,7 +11,8 @@ from backend.apps.v1.inventory.Purchase import Purchase
 class ReturItem(APIView):
     
     def get(self, request):
-
+        purchase = Purchase()
+        purchase.returnItems()
        
 
         return Response()
