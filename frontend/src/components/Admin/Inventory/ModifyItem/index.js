@@ -29,7 +29,14 @@ class ModifyItem extends Component {
             withCredentials: true
         })
         .then(response => {
-            console.log('item modified');
+            swal({
+                text: "Item Spec Modified!",
+                icon: "success",
+                button: "Ok",
+            })
+            .then(() => {
+                window.location.reload()
+            })
         })
         .catch(error => {
             console.log(error);
