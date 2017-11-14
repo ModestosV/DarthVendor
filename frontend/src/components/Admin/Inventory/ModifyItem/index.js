@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
 import settings from '../../../../config/settings';
 import Sidebar from '../../Sidebar';
 import './modifyitem.scss'

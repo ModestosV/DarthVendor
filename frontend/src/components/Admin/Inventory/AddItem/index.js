@@ -57,9 +57,18 @@ class AddItem extends Component {
             withCredentials: true,
             data: data
         })
-        .then(response => {
-            console.log('item added');
-            this.resetForm();
+        .then(response => {                        
+
+            swal({
+                text: "Item Spec Added!",
+                icon: "success",
+                button: "Ok",
+            })
+            .then(() => {                                
+                window.location.href = '/';
+                window.location.hash = "#/admin/update";
+                location.reload()
+            })            
         })
         .catch(error => {
             console.log(error);
