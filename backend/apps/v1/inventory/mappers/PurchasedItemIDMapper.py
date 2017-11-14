@@ -1,12 +1,17 @@
 from backend.apps.v1.inventory.models.PurchasedItemID import PurchasedItemID
 from backend.apps.v1.inventory.TDGs.PurchasedItemIDTDG import PurchasedItemIDTDG
 
+from backend.apps.v1.inventory.models.PurchasedItemID import PurchasedItemID
+
+from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
+
+
 class PurchasedItemIDMapper():
 
     @staticmethod
     def insert(newPurchaseItem):
 
-        PurchasedItemIDTDG.insert(newPurchaseItem.itemID, newPurchaseItem.customer.email, newPurchaseItem.timeStamp)
+        PurchasedItemIDTDG.insert(newPurchaseItem.serialNumber, newPurchaseItem.spec.modelNumber, newPurchaseItem.customer.email, newPurchaseItem.spec.type, newPurchaseItem.timeStamp)
         return
 
     @staticmethod
@@ -37,3 +42,13 @@ class PurchasedItemIDMapper():
 
         purchaseItemID = PurchasedItemIDTDG.findByPurchaseId(purchaseID)
         return purchaseItemID
+
+    @staticmethod
+    def findByUser(email):
+        rows = PurchasedItemIDTDG.findByUser(email)
+        result = list()
+        for row in rows:
+            print(row)
+            itemSpec = ItemSpecMapper.find(row['modelNum'], row['type'])
+            result.append(PurchasedItemID(row['serialNum'], itemSpec, email, row['type'], row['timeStamp']))
+        return result

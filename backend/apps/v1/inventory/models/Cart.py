@@ -71,7 +71,7 @@ class Cart():
         for cartLineItem in self.cartItems:
             if cartLineItem is not None:
                 if (ItemIDMapper.lock(cartLineItem.itemID.spec.type, self) and PurchasedItemIDMapper.lock(self)):
-                    newPurchaseItem = PurchasedItemID(None, cartLineItem.itemID, self.customer, cartLineItem.itemID.spec.type, timeOfCheckout)
+                    newPurchaseItem = PurchasedItemID(cartLineItem.itemID.serialNumber, cartLineItem.itemID.spec, self.customer, cartLineItem.itemID.spec.type, timeOfCheckout)
                     PurchasedItemIDMapper.insert(newPurchaseItem)
                     ItemIDMapper.delete(cartLineItem.itemID.serialNumber, cartLineItem.itemID.spec.type)
 

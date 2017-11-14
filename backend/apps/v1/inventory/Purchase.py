@@ -1,5 +1,5 @@
 from backend.apps.v1.inventory.models.Cart import Cart
-from backend.apps.v1.inventory.mappers.PurchaseCollectionIDMapper import PurchaseCollectionIDMapper
+from backend.apps.v1.inventory.mappers.PurchasedItemIDMapper import PurchasedItemIDMapper
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
 
@@ -25,19 +25,19 @@ class Purchase():
     def getCart(self):
         return self.cart
 
-    def returnItems(self,idList):
+    def returnItems(self, idList):
         for purchaseID in idList:
             result = PurchaseCollectionIDMapper.delete(purchaseID)
-            if result == False:
+            if result is False:
                 return result
 
         for purchaseID in idList:
             result = ItemIDMapper.insert(purchaseID.itemID)
-            if result == False:
+            if result is False:
                 return result
 
         return result
 
-    def initiateReturn():
-        resultSet = PurchaseCollectionIDMapper.find("")
-        return resultSet
+    def getPurchaseCollection(self, user):
+
+        return PurchasedItemIDMapper.findByUser(user.email)

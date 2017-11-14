@@ -23,7 +23,7 @@ class PurchasedItemIDTDG:
                     print(error)
                     return None
 
-    def findByUserId(userId):
+    def findByUser(userId):
 
         with Database() as cursor:
 
@@ -32,20 +32,20 @@ class PurchasedItemIDTDG:
                 """.format(userId)
                 try:
                     cursor.execute(query)
-                    result = cursor.fetchone()
+                    result = cursor.fetchall()
                     return result
                 except Exception as error:
                     print(error)
                     return None
 
-    def insert(itemID, userId, timeOfCheckout):
+    def insert(serialNum, modelNumber, email, type, timeOfCheckout):
 
         with Database() as cursor:
 
                 query = """
                     INSERT INTO purchasecollection (serialNum, modelNum, userId, type, timeStamp)
                     VALUES ('{}', '{}','{}','{}','{}');
-                """.format(itemID.serialNumber, itemID.spec.modelNumber, userId, itemID.spec.type, timeOfCheckout)
+                """.format(serialNum, modelNumber, email, type, timeOfCheckout)
 
                 try:
                     cursor.execute(query)
