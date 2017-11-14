@@ -67,7 +67,7 @@ class MonitorDisplayIDTDG:
     def delete(serialNum):
 
         with Database() as cursor:
-
+            print('delete')
             query = """
                 DELETE FROM monitorDisplayID WHERE serialNum = '{}';
             """.format(serialNum)

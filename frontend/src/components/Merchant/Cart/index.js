@@ -80,8 +80,16 @@ class Cart extends Component {
   }
 
   handleCheckout() {
-    console.log("checking out");
-    console.log("unlock cart item");
+
+    axios({
+        method: 'post',
+        url: `${settings.API_ROOT}/confirmPurchase`,
+        data: {},
+        withCredentials: true
+    }).then(() => {
+        console.log("checked out");
+    })
+
   }
   render() {
     const self = this;
