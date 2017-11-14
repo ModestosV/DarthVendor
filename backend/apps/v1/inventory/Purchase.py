@@ -1,6 +1,7 @@
 from backend.apps.v1.inventory.models.Cart import Cart
 from backend.apps.v1.inventory.mappers.PurchasedItemIDMapper import PurchasedItemIDMapper
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
+from backend.apps.v1.inventory.models.ItemID import ItemID
 
 
 class Purchase():
@@ -26,17 +27,13 @@ class Purchase():
         return self.cart
 
     def returnItems(self, idList):
-        for purchaseID in idList:
-            result = PurchaseCollectionIDMapper.delete(purchaseID)
-            if result is False:
-                return result
 
         for purchaseID in idList:
-            result = ItemIDMapper.insert(purchaseID.itemID)
-            if result is False:
-                return result
+            PurchasedItemIDMapper.delete(purchaseID.serialNumber)
+            itemID = ItemID(purchaseID.serialNumber, False, purchaseID.spec)
+            ItemIDMapper.insert(itemID)
 
-        return result
+        return
 
     def getPurchaseCollection(self, user):
 

@@ -66,28 +66,28 @@ class Return extends Component {
     returnItems() {
         let data = this.state.returnItems;
 
-        // axios({
-        //     method: 'post',
-        //     url: `${settings.API_ROOT}/item`,
-        //     // withCredentials: true,
-        //     data: data,
-        //     headers: {
-        //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-        //     }
-        // })
-        // .then(response => {
-        //     console.log('item added');
-        //     this.resetForm();
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        //     swal({
-        //         title: "Woops!",
-        //         text: "Something went wrong!",
-        //         ilcon: "error",
-        //         button: "Ok",
-        //     });
-        // })
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/returnItems`,
+            withCredentials: true,
+            data: data,
+            headers: {
+                Authorization: "Token " + JSON.parse(localStorage.activeUser).token
+            }
+        })
+        .then(response => {
+            console.log('item added');
+            this.resetForm();
+        })
+        .catch(error => {
+            console.log(error);
+            swal({
+                title: "Woops!",
+                text: "Something went wrong!",
+                ilcon: "error",
+                button: "Ok",
+            });
+        })
     }
 
     renderItems(items) {
@@ -153,7 +153,7 @@ class Return extends Component {
                         <div className="col-sm-3">
 
                         </div>
-                        <button onClick={() => this.confirmReturn}>Return Items</button>
+                        <button onClick={() => this.returnItems()}>Return Items</button>
                         <div className="col-sm-9">
                         <BootstrapTable data={this.state.items} selectRow={selectRowProp} condensed hover search scrolling className="item--table">
                             <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Items</TableHeaderColumn>

@@ -11,6 +11,7 @@ from backend.apps.v1.inventory.serializers.PurchasedItemIDSerializer import Purc
 
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
+from backend.apps.v1.inventory.mappers.PurchasedItemIDMapper import PurchasedItemIDMapper
 
 
 class CartView(APIView):
@@ -82,3 +83,18 @@ class GetPurchaseCollection(APIView):
             serializedPurchasedItemIDs.append(PurchasedItemIDSerializer(purchasedItemID).data)
 
         return Response(serializedPurchasedItemIDs, status=status.HTTP_200_OK)
+
+
+class ReturnItemsView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        user = ObjectSession.sessions[request.session['user']]
+
+        purchasedItemIDs = list()
+        for data in request.data:
+            purchasedItemIDs.append(PurchasedItemIDMapper.find(data['serialNumber']))
+
+        user.purchaseController.returnItems(purchasedItemIDs)
+        return Response({}, status=status.HTTP_200_OK)

@@ -13,11 +13,11 @@ class PurchasedItemIDTDG:
         with Database() as cursor:
 
                 query = """
-                    SELECT * FROM purchasecollection WHERE purchaseId = '{}';
+                    SELECT * FROM purchasecollection WHERE serialNum = '{}';
                 """.format(purchaseID)
                 try:
                     cursor.execute(query)
-                    resultSet = cursor.fetchall()
+                    resultSet = cursor.fetchone()
                     return resultSet
                 except Exception as error:
                     print(error)
@@ -57,13 +57,13 @@ class PurchasedItemIDTDG:
         # needs to have update method implimented for database entry where serialNumber matches and match up other criteria of object
         return
 
-    def delete(purchaseCollectionID):
+    def delete(serialNumber):
 
         with Database() as cursor:
 
                 query = """
-                DELETE FROM purchasecollection WHERE purchaseCollectionID.purchaseId = '{}';
-                """.format(purchaseCollectionID.purchaseId)
+                DELETE FROM purchasecollection WHERE serialNum = '{}';
+                """.format(serialNumber)
 
                 try:
                     cursor.execute(query)
