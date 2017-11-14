@@ -43,9 +43,9 @@ class PurchasedItemIDTDG:
         with Database() as cursor:
 
                 query = """
-                    INSERT INTO purchasecollection (serialNumber, modelNumber, userId, type, timeStamp)
+                    INSERT INTO purchasecollection (serialNum, modelNum, userId, type, timeStamp)
                     VALUES ('{}', '{}','{}','{}','{}');
-                """.format(itemID.serialNumber, itemID.modelNumber, userId, itemID.spec.type, timeOfCheckout)
+                """.format(itemID.serialNumber, itemID.spec.modelNumber, userId, itemID.spec.type, timeOfCheckout)
 
                 try:
                     cursor.execute(query)
@@ -71,14 +71,14 @@ class PurchasedItemIDTDG:
                     print(error)
 
     def lock(uow):
-        if PurchaseCollectionIDTDG.owner is None:
+        if PurchasedItemIDTDG.owner is None:
             owner = uow
             return True
         else:
             return False
 
     def unlock(uow):
-        if PurchaseCollectionIDTDG.owner is uow:
+        if PurchasedItemIDTDG.owner is uow:
             owner = None
             return True
         else:

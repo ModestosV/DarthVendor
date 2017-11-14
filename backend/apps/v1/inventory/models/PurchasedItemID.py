@@ -2,7 +2,7 @@
 
 class PurchasedItemID():
 
-    def __init__(self, purchaseId, itemID, customer, type, timeStamp):
+    def __init__(self, purchaseID, itemID, customer, type, timeStamp):
 
         """Constructor"""
         self.purchaseID = purchaseID

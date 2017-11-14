@@ -30,7 +30,7 @@ class Catalog extends Component {
 
     componentDidMount() {
         this.getCatalog();
-     
+
     }
 
    getCatalog() {
@@ -75,7 +75,7 @@ class Catalog extends Component {
             this.setState({payload: this.state.items});
         } else {
             let filteredItems = this.state.items.filter(item => item.price <= price);
-            this.setState({payload: filteredItems});         
+            this.setState({payload: filteredItems});
         }
     }
 
@@ -111,10 +111,10 @@ class Catalog extends Component {
         }
 
     }
-    
+
     render() {
         const priceSlider  = this.state.priceSlider;
-        
+
         const self = this;
 
         function sortFunc(a, b, order) {
@@ -169,13 +169,13 @@ class Catalog extends Component {
                             <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
                             <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={addToCartFormat}> </TableHeaderColumn>
-                            </BootstrapTable>                      
-    
+                            </BootstrapTable>
+
                         </div>
 
                     </div>
                 </div>
-   
+
 
             </div>
 
