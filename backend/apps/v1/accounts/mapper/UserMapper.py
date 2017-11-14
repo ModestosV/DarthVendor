@@ -109,11 +109,15 @@ class UserMapper:
     @staticmethod
     def delete(email):
 
-        try:
-            UserTDG.delete(email)
-            return True
-        except Exception as error:
-            print(error)
+        user = UserMapper.findAdmin(email)
+        if not user.isAdmin:
+            try:
+                UserTDG.delete(email)
+                return True
+            except Exception as error:
+                print(error)
+                return False
+        else:
             return False
 
     @staticmethod
