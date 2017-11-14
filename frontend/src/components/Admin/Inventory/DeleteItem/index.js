@@ -7,13 +7,24 @@ class DeleteItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            item: []
+            itemIDs: [],
+            itemToDelete: ""
         }
     }
     // add deletions to UOW
     confirmDeletion() {
-        let data = this.state;
-        this.props.closeDeleteModal();
+        if(this.state.itemToDelete != ""){
+            axios({
+                method: 'post',
+                url: `${settings.API_ROOT}/deleteItemID`,
+                data: this.state.itemToDelete,
+                withCredentials: true
+            }).then(result => {
+                this.props.closeDeleteModal();
+            });
+    
+            
+        }  
     }
 
     // display specs of selected item
@@ -22,7 +33,7 @@ class DeleteItem extends Component {
     }
     // get item to delete
     componentWillMount() {
-        this.setState({item: this.props.item});
+        // this.setState({item: this.props.item});
 
         axios({
             method: 'post',
@@ -30,24 +41,46 @@ class DeleteItem extends Component {
             data: this.props.item,
             withCredentials: true
         }).then(result => {
-            console.log(result);
+            let serials = [];
+            result.data.map((item,index) => {
+                serials.push(item.serialNumber);
+            })
+            this.setState({itemIDs: serials});
         });
     }
+
+    handleSelect(e) {
+        this.setState({itemToDelete: e.target.value});
+    }
+
     render() {
-        console.log(this.state.item);
+        console.log(this.state.itemToDelete);
+        const selectRowProp = {
+            mode: 'radio',
+            onSelect: this.selectItem
+        };
         return (
             <div>
                 <div>
-                    {this.displaySpecs}
+                    Model Number: {this.props.item.modelNumber} <br/>
+                    Type: {this.props.item.type}
                     <div className="form-group">
-                        <select className="form-control">
-                            <option> {this.state.item.type}, {this.state.item.modelNumber} </option>
+                        <select className="form-control" onChange={(e) => this.handleSelect(e)}>
+                            <option value="">Select ID to delete</option>
+                            {
+                                this.state.itemIDs.map((serial,index) => {
+                                    return(
+                                        <option key={index} value={serial}>{serial}</option>
+                                    )
+                                })
+                            }
+                            
                         </select>
                     </div>
                 </div>
 
                 <div className="mb-5">
-                    <button  className="ui green button float-right"  onClick={() => {this.confirmModifications()}}>Confirm</button>
+                    <button  className="ui green button float-right"  onClick={() => {this.confirmDeletion()}}>Confirm</button>
                 </div>
 
             </div>
