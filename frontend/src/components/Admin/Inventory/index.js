@@ -206,7 +206,7 @@ class Inventory extends Component {
                                     <i className="fa fa-plus pr-2"></i>
                                     <span className="">Add Item</span>
                                 </Link>
-                                <BootstrapTable data={this.state.items} striped hover condensed pagination search scrolling >
+                                <BootstrapTable data={this.state.items} striped hover condensed search scrolling >
                                     <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                                     <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
@@ -214,13 +214,9 @@ class Inventory extends Component {
                                     <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
                                     <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
                                     <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
-
                                 </BootstrapTable>
                             </div>
-
                             <UpdateList />
-
-                           
                         </div>
                     </div>
 
@@ -249,7 +245,6 @@ class Inventory extends Component {
                         <DeleteItem item={this.state.item} closeDeleteModal={this.closeDeleteModal}/>
                     </div>
                 </ReactModal>
-       
             </div>
         );
     }

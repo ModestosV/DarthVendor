@@ -122,7 +122,7 @@ class Home extends Component {
                     <h1> Inventory </h1>
                     { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                     <br />
-                    <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling>
+                    <BootstrapTable data={this.state.items} striped condensed hover search scrolling>
                         <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={detailsFormat}> </TableHeaderColumn>
                         <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>
                         <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>
