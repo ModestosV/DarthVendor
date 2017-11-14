@@ -38,11 +38,7 @@ class Clients extends Component {
     }
 
     clientsList() {
-        return axios({
-            method:'get',
-            url: `${settings.API_ROOT}/inventory`,
-            withCredentials: true
-        })
+        return axios.get(`${settings.API_ROOT}/viewCustomers`)
         .then(results => {
             const errorMsg = null;
             const clients = results.data.map(client => client);

@@ -19,9 +19,7 @@ class Authentication:
 
     @staticmethod
     def customerLogin(email, password):
-
         customer = UserMapper.findCustomer(email)
-
         if check_password(password, customer.password):
             return customer
 
@@ -40,15 +38,11 @@ class Authentication:
         return None
 
     @staticmethod
-    def deleteCustomer(user):
-        if(user.isAdmin == 0):
-            UserMapper.delete(user)
-            return True
-        else:
-            return False
+    def deleteCustomer(email):
+            
+        return UserMapper.delete(email)
 
     @staticmethod
     def viewAllCustomer():
 
         return UserMapper.displayAllCustomer()
-

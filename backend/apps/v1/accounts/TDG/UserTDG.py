@@ -35,12 +35,13 @@ class UserTDG:
                 print(error)
 
     @staticmethod
-    def delete(userid):
+    def delete(useremail):
 
         with Database() as cursor:
+            query = "DELETE FROM user WHERE email = '{}';".format(useremail)
 
             try:
-                cursor.execute("DELETE FROM user WHERE id = " + str(userid) + ";")
+                cursor.execute(query)
             except Exception as error:
                 print(error)
 
@@ -62,7 +63,7 @@ class UserTDG:
         with Database() as cursor:
 
             try:
-                cursor.execute("SELECT * FROM user WHERE isAdmin=0;")
+                cursor.execute("SELECT * FROM user;")
                 resultSet = cursor.fetchall()
                 return resultSet
             except Exception as error:

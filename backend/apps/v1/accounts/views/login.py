@@ -33,6 +33,7 @@ class LoginView(APIView):
         if user is None:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
+        request.session['isAdmin'] = isAdmin
         request.session['user'] = email
         ObjectSession.sessions[email] = user
 

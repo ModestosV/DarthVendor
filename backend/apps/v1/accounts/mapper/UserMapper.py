@@ -34,26 +34,16 @@ class UserMapper:
     @staticmethod
     def displayAllCustomer():
         resultSet = UserTDG.findUsers()
-        
-        customerList = list()
-        if not resultSet:
-            return None
-        else:    
-            for row in resultSet:
-            
-                cus = Customer({
-                    'id': row.get('id'),
-                    'email': row.get('email'),
-                    'timeStamp': row.get('timeStamp'),
-                    'username': row.get('username'),
-                    'firstname': row.get('firstname'),
-                    'lastname': row.get('lastname'),
-                    'address': row.get('address'),
-                    'phone': row.get('phone')
-                })
-                customerList.append(cus)
 
-        return customerList
+        customerList = list()
+
+        if resultSet:
+            for row in resultSet:
+                cus = Customer(**row)
+                customerList.append(cus)
+            return customerList
+        return None
+
 
     @staticmethod
     def findCustomer(email):
@@ -72,7 +62,7 @@ class UserMapper:
         user.lastname = row['lastname']
         user.address = row['address']
         user.phone = row['phone']
-
+        
         return user
 
     @staticmethod
@@ -101,16 +91,24 @@ class UserMapper:
 
         try:
             UserTDG.update(user)
+            return True
         except Exception as error:
             print(error)
+            return False
 
     @staticmethod
-    def delete(user):
+    def delete(email):
 
-        try:
-            UserTDG.delete(user.id)
-        except Exception as error:
-            print(error)
+        user = UserMapper.findAdmin(email)
+        if not user.isAdmin:
+            try:
+                UserTDG.delete(email)
+                return True
+            except Exception as error:
+                print(error)
+                return False
+        else:
+            return False
 
     @staticmethod
     def isLoggedCustomer(email):
