@@ -5,7 +5,7 @@ from backend.apps.v1.inventory.mappers.PurchasedItemIDMapper import PurchasedIte
 
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
-from backend.apps.v1.inventory.Exceptions import TableLockedException, CartFullException
+from backend.apps.v1.inventory.Exceptions import TableLockedException, CartFullException, OutOfStockException
 
 from datetime import datetime
 
