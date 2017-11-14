@@ -19,9 +19,7 @@ class Authentication:
 
     @staticmethod
     def customerLogin(email, password):
-
         customer = UserMapper.findCustomer(email)
-
         if check_password(password, customer.password):
             return customer
 

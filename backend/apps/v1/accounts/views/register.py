@@ -28,7 +28,7 @@ class RegisterView(APIView):
         phone = request.data['phone']
 
         newCustomer = Customer(0,email,password,0,0,"",username,firstname,lastname,address,phone)
-        valid = register(newCustomer)
+        valid = Authentication.register(newCustomer)
         if valid is False:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
