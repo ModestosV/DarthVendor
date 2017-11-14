@@ -71,28 +71,29 @@ class UpdateList extends Component {
           })
           .then((confirm) => {   
               if(confirm){
-                  console.log('canceled');
-                  window.location = '/'
-                  // axios({
-                  //     method: 'post',
-                  //     url: `${settings.API_ROOT}/item`,
-                  //     // withCredentials: true,
-                  //     headers: {
-                  //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-                  //     }
-                  // })
-                  // .then(response => {
-                  //     swal("Deleted!", "Your account has been deleted.", "success");
-                  // })
-                  // .catch(error => {
-                  //     console.log(error);
-                  //     swal({
-                  //         title: "Woops!",
-                  //         text: "Something went wrong!",
-                  //         ilcon: "error",
-                  //         button: "Ok",
-                  //     });
-                  // })
+                  axios({
+                      method: 'post',
+                      url: `${settings.API_ROOT}/cancelEdit`,
+                      withCredentials: true
+                  })
+                  .then(response => {                                        
+                    swal("Deleted!", "The updates have been canceled", "success").then(
+                      () => {
+                        window.location.reload();
+                      }
+                    )
+
+
+                  })
+                  .catch(error => {
+                      console.log(error);
+                      swal({
+                          title: "Woops!",
+                          text: "Something went wrong!",
+                          ilcon: "error",
+                          button: "Ok",
+                      });
+                  })
               }                
           });
     }
