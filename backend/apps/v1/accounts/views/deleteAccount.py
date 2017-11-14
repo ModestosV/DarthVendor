@@ -11,7 +11,7 @@ class DeleteAccountView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
-    def get(self, request):
+    def post(self, request):
 
         if not request.session['isAdmin']:
             Authentication.deleteCustomer(request.session['user'])
