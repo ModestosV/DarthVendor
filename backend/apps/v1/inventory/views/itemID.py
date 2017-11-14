@@ -45,9 +45,10 @@ class DeleteItemID(APIView):
     permission_classes = ()
 
     def post(self, request):
-        itemSpec = ItemSpecMapper.find(request.data['modelNumber'])
-        itemID = ItemIDMapper.findBySerialNum(request.data['serialNumber'], itemSpecification)
+        user = ObjectSession.sessions[request.session['user']]
+        itemSpec = ItemSpecMapper.find(request.data['modelNumber'], request.data['specType'])
+        itemID = ItemIDMapper.findBySerialNumber(request.data['serialNumber'], itemSpec)
 
-        user.itemAdministration.delete(itemID)
+        user.itemAdministration.deleteItem(itemID)
 
         return Response({}, status=status.HTTP_200_OK)
