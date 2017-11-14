@@ -76,7 +76,7 @@ class Register extends Component {
         })
         .then(response => {
             swal("Congratulation! You are now registered!");
-            history.push('/');            
+            this.props.history.push('/login');            
         })
         .catch(error => {
             if (error.request.status === 401) {
