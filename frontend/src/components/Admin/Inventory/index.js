@@ -220,8 +220,6 @@ class Inventory extends Component {
                         </div>
                     </div>
 
-                
-
                 {/* Modal for Modify item */}
                 <ReactModal isOpen={this.state.showModifyModal} 
                     className='modify--modal'>

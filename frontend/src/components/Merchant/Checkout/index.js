@@ -4,7 +4,6 @@ import {Link, HashRouter as Router, Route} from 'react-router-dom';
 import settings from '../../../config/settings';
 import Navigation from '../Navigation';
 
-
 class Checkout extends Component {
 
   constructor(props) {
@@ -31,7 +30,7 @@ class Checkout extends Component {
         <Navigation />
         <div className="justify-content-md-center row">
           <div>
-            <h1> Purchase succesfull <i className="fa fa-check" aria-hidden="true"></i> </h1>
+            <h1> Purchase succesfull <i className="fa fa-check" aria-hidden="true"></i></h1>
             <div> Please visit your {history} if you wish to return your items.</div>
           </div>
         </div>

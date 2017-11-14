@@ -120,7 +120,6 @@ class Return extends Component {
                 returnItems: this.state.returnItems.filter(item => item.modelNumber != row.modelNumber)
             })
         }
-
     }
 
     render() {
@@ -135,23 +134,12 @@ class Return extends Component {
             return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
         }
 
-        function sortFunc(a, b, order) {
-            if (order === 'desc') {
-                return a.price - b.price;
-            } else {
-                return b.price - a.price;
-            }
-        }
-
         return (
-
             <div>
                 <Navigation />
-
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-sm-3">
-
                         </div>
                         <button onClick={() => this.returnItems()}>Return Items</button>
                         <div className="col-sm-9">
@@ -159,12 +147,9 @@ class Return extends Component {
                             <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Items</TableHeaderColumn>
                         </BootstrapTable>
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
         )
     }
 }
