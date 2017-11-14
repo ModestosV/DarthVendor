@@ -3,9 +3,7 @@ from backend.utils.database import Database
 from .token import TokenSerializer
 
 class CustomerSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
     email = serializers.CharField(max_length=255)
-    timeStamp = serializers.CharField(max_length=255)
     username = serializers.CharField(max_length=255)
     firstname = serializers.CharField(max_length=255)
     lastname = serializers.CharField(max_length=255)
