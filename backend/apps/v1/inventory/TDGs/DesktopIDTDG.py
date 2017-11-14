@@ -20,7 +20,7 @@ class DesktopIDTDG:
                 print(error)
                 return None
 
-    def findBySerialNum(serialNum):
+    def findBySerialNumber(serialNum):
 
         with Database() as cursor:
 
@@ -55,7 +55,7 @@ class DesktopIDTDG:
             query = """
                 UPDATE desktopID SET
                 isLocked = {}
-                WHERE serialNumber = '{}';
+                WHERE serialNum = '{}';
             """.format(isLockedInt, desktopID.serialNumber)
 
             try:

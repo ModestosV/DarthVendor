@@ -2,11 +2,11 @@
 
 class PurchasedItemID():
 
-    def __init__(self, purchaseId, itemID, customer, type, timeStamp):
+    def __init__(self, serialNumber, itemSpec, email, type, timeStamp):
 
         """Constructor"""
-        self.purchaseID = purchaseID
-        self.itemID = itemID
-        self.customer = customer
+        self.serialNumber = serialNumber
+        self.spec = itemSpec
+        self.email = email
         self.type = type
         self.timeStamp = timeStamp

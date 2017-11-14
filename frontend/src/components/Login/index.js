@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, {Component} from 'react';
 import swal from 'sweetalert';
 import settings from '../../config/settings';
+import {Link, withRouter} from 'react-router-dom';
 import './Login.scss';
 
 
@@ -16,7 +17,7 @@ class Login extends Component {
             adminCheatCode: [38, 38, 40, 40, 37, 39, 37, 39, 65, 66, 65, 66],  // Up, Up, Down, Down, Left, Right, Left, Right, A, B, A, B
             cancelAdminCheatCode: [81], // Q
             keyStroke: [],
-            isAdminLogin: false
+            isAdminLogin: false,
         }
     }
 
@@ -28,7 +29,8 @@ class Login extends Component {
         this.setState({password: event.target.value});
     }
 
-    handleForm() {
+
+    handleLoginForm() {
         const {dispatch, history} = this.props;
 
         let data = {
@@ -105,6 +107,51 @@ class Login extends Component {
         });
     }
 
+    loginForm(){
+        
+        return (   
+            <div id="login">
+            <div className="header">
+                <h1> Login </h1>
+            </div>
+            <form>
+                <div className="input-group mb-3">
+                    <div className="input-group-addon">
+                        <i className="fa fa-user"></i>
+                    </div>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Email"
+                        onChange={(e) => this.handleUserNameChange(e)}
+                    />
+                </div>
+                <div className="input-group mb-3">
+                    <div className="input-group-addon">
+                        <i className="fa fa-lock"></i>
+                    </div>
+                    <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Password"
+                        onChange={(e) => this.handlePasswordChange(e)}
+                    />
+                </div>
+                <button
+                    type="button"
+                    className="btn btn-dark btn-block"
+                    onClick={() => this.handleLoginForm()}
+                >
+                    Login <i className="fa fa-sign-in"></i>
+                </button>
+            </form>
+            <div id="register" className="d-flex justify-content-end mt-3">
+                     Don't have an account? <Link className="link" to={`/register`}> Sign up now.</Link> 
+            </div>
+        </div>
+        );
+    }
+
     componentWillMount() {
         console.log(localStorage);
 
@@ -132,48 +179,11 @@ class Login extends Component {
     }
 
     render() {
-
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col-md-4" />
-                    <div className="col-md-4" style={{marginTop: '30%'}}>
-                        <div id="login">
-                            <div>
-                                <h1> Login </h1>
-                            </div>
-                            <form>
-                                <div className="input-group mb-3">
-                                    <div className="input-group-addon">
-                                        <i className="fa fa-user"></i>
-                                    </div>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Username"
-                                        onChange={(e) => this.handleUserNameChange(e)}
-                                    />
-                                </div>
-                                <div className="input-group mb-3">
-                                    <div className="input-group-addon">
-                                        <i className="fa fa-lock"></i>
-                                    </div>
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        placeholder="Password"
-                                        onChange={(e) => this.handlePasswordChange(e)}
-                                    />
-                                </div>
-                                <button
-                                    type="button"
-                                    className="btn btn-dark btn-block"
-                                    onClick={() => this.handleForm()}
-                                >
-                                    Login <i className="fa fa-sign-in"></i>
-                                </button>
-                            </form>
-                        </div>
+                <div className="form__body d-flex justify-content-center align-items-center">
+                    <div className="wrapper">
+                        {this.loginForm()}
                     </div>
                 </div>
             </div>
