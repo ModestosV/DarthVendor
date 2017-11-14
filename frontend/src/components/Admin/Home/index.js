@@ -5,6 +5,8 @@ import settings from '../../../config/settings';
 import Sidebar from '../Sidebar';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
+import ReactModal from 'react-modal';
+
 class Home extends Component {
 
     constructor(props) {
@@ -14,6 +16,13 @@ class Home extends Component {
             errorMsg: null,
             showModal: false
         };
+
+
+        this.closeShowSpecsModal = this.closeShowSpecsModal.bind(this);
+    }
+
+    closeShowSpecsModal(){
+        this.setState({showSpecsModal: false});
     }
 
     componentWillMount() {
@@ -57,9 +66,44 @@ class Home extends Component {
        })
     }
 
+    showSpecs(row) {
+        this.setState({showSpecsModal: true});
+        this.setState({detailedItem: row})
+    }
+
+    displayDetails(){
+        if(this.state.detailedItem){
+            return (
+                <div>
+                    {Object.keys(this.state.detailedItem).map((name,index) => {
+    
+                        if(typeof this.state.detailedItem[name] != 'object' && !name.includes('Format') ){
+                            return (
+                                <div className="form-group row" key={index}>
+                                    <label htmlFor={name} className="col-sm-2 col-form-label"><strong>{name}</strong></label>
+                                    <div className="col-sm-10">
+                                        {this.state.detailedItem[name]}
+                                    </div>
+                                </div>
+                            );
+                        }
+                    })
+                    }
+                </div>
+            );
+        }
+        
+    
+    }
+
     render() {
+        const self = this;
         function cellFormat(cell, row){
             return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+        }
+
+        function detailsFormat(cell, row) {
+            return <i onClick={() => self.showSpecs(row)} className="fa fa-info-circle fa-5" aria-hidden="true"></i>;
         }
 
         function sortFunc(a, b, order) {
@@ -79,12 +123,25 @@ class Home extends Component {
                     { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                     <br />
                     <BootstrapTable data={this.state.items} striped condensed hover pagination search scrolling>
+                        <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={detailsFormat}> </TableHeaderColumn>
                         <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Model Number</TableHeaderColumn>
                         <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Brand Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Type</TableHeaderColumn>
                         <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Weight (lbs)</TableHeaderColumn>
                         <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} dataFormat={cellFormat}>Price (CAD)</TableHeaderColumn>
                     </BootstrapTable>
+
+                    {/* Modal for Spec item */}
+                    <ReactModal isOpen={this.state.showSpecsModal} 
+                            className={{base: 'modify--modal'}}>
+                            <div>
+                                <h1 className="float-left">Details</h1>
+                                <i className="remove icon float-right" onClick={this.closeShowSpecsModal}></i>
+                            </div>
+                            <div className="mt-50">
+                                {this.displayDetails()}
+                            </div>
+                    </ReactModal>
                 </div>
             </div>
         );
