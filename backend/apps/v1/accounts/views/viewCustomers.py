@@ -20,10 +20,9 @@ class ViewCustomerView(APIView):
         
         customerList = Authentication.viewAllCustomer()
 
-        serializedCustomers = []
-
-        for cus in customerList:
-            cus = CustomerSerializer(cus).data
-            serializedCustomers.append(cus)
+        serializedCustomers = []        
+        for cus in customerList:            
+            cus = CustomerSerializer(cus.__dict__).data
+            serializedCustomers.append(cus)        
 
         return Response(serializedCustomers)

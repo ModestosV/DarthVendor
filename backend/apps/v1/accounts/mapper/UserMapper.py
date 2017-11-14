@@ -34,23 +34,15 @@ class UserMapper:
     @staticmethod
     def displayAllCustomer():
         resultSet = UserTDG.findUsers()
-        
+
         customerList = list()
-        if not resultSet:
-            return None
-        else:    
+
+        if resultSet:
             for row in resultSet:
-            
-                cus = Customer({
-                    'email': row.get('email'),
-                    'username': row.get('username'),
-                    'firstname': row.get('firstname'),
-                    'lastname': row.get('lastname'),
-                    'address': row.get('address'),
-                    'phone': row.get('phone')
-                })
+                cus = Customer(**row)
                 customerList.append(cus)
             return customerList
+        return None
 
 
     @staticmethod
