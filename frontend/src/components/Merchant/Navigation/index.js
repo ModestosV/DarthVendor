@@ -56,6 +56,7 @@ class Navigation extends Component {
     }
 
     handleDeleteAccount() {
+
         swal({
               title: "Delete account?",
               text: "Are you sure you want to delete your account?",
@@ -67,26 +68,25 @@ class Navigation extends Component {
             })
             .then((confirm) => {
                 if(confirm){
-                    // axios({
-                    //     method: 'post',
-                    //     url: `${settings.API_ROOT}/item`,
-                    //     // withCredentials: true,
-                    //     headers: {
-                    //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-                    //     }
-                    // })
-                    // .then(response => {
-                    //     swal("Deleted!", "Your account has been deleted.", "success");
-                    // })
-                    // .catch(error => {
-                    //     console.log(error);
-                    //     swal({
-                    //         title: "Woops!",
-                    //         text: "Something went wrong!",
-                    //         ilcon: "error",
-                    //         button: "Ok",
-                    //     });
-                    // })
+                    axios({
+                        method: 'post',
+                        url: `${settings.API_ROOT}/deleteAccount`,
+                        withCredentials: true,
+                    })
+                    .then(response => {
+                        swal("Deleted!", "Your account has been deleted.", "success");
+                        localStorage.removeItem("activeUser");
+                        this.props.history.push("/")
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        swal({
+                            title: "Woops!",
+                            text: "Something went wrong!",
+                            ilcon: "error",
+                            button: "Ok",
+                        });
+                    })
                 }
             });
     }

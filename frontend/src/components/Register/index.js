@@ -59,20 +59,42 @@ class Register extends Component {
     }
 
     handleRegisterForm(){
-
         let data = {
-            'first': this.state.registerFirst,
-            'last': this.state.registerLast,
+            'firstname': this.state.registerFirst,
+            'lastname': this.state.registerLast,
             'username': this.state.registerUsername,
             'email': this.state.registerEmail,
             'address': this.state.registerAddress,
             'phone': this.state.registerPhone,
-            'password': this.state.registerPassword,
-            'isAdmin': false
+            'password': this.state.registerPassword
         };
-
-        console.log(JSON.stringify(data));
-
+        
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/register`,
+            data: data
+        })
+        .then(response => {
+            swal("Congratulation! You are now registered!");
+            this.props.history.push('/login');            
+        })
+        .catch(error => {
+            if (error.request.status === 401) {
+                swal({
+                    title: "Uh oh!",
+                    text: "Some email cannot be registered twice.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            } else {
+                swal({
+                    title: "Woops!",
+                    text: "Something is wrong!",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
+        })
         // axios({
         //     method: 'post',
         //     url: `${settings.API_ROOT}/login`,
@@ -240,7 +262,7 @@ class Register extends Component {
                 <ul className="list-group">
                     <li className={emailMsg}>Invalid Email Address</li>
                     <li className={phoneMsg}>Invalid Phone Number</li>
-                    <li className={passwordMsg}>Password must be a minimum eight characters, at least two letter and two number</li>
+                    <li className={passwordMsg}>Password must be a minimum nine characters, at least two letter and two number</li>
                 </ul>
             </div>
 
