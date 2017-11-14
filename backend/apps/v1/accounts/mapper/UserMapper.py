@@ -42,9 +42,7 @@ class UserMapper:
             for row in resultSet:
             
                 cus = Customer({
-                    'id': row.get('id'),
                     'email': row.get('email'),
-                    'timeStamp': row.get('timeStamp'),
                     'username': row.get('username'),
                     'firstname': row.get('firstname'),
                     'lastname': row.get('lastname'),
