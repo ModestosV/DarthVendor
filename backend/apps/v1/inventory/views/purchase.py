@@ -13,6 +13,8 @@ from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 from backend.apps.v1.inventory.mappers.PurchasedItemIDMapper import PurchasedItemIDMapper
 
+from backend.apps.v1.inventory.Exceptions import OutOfStockException, CartFullException, TableLockedException
+
 
 class CartView(APIView):
 
@@ -32,14 +34,18 @@ class AddToCartView(APIView):
     permission_classes = ()
 
     def post(self, request):
-        user = ObjectSession.sessions[request.session['user']]
+        try:
+            user = ObjectSession.sessions[request.session['user']]
 
-        itemSpec = ItemSpecMapper.find(request.data['modelNumber'], request.data['type'])
+            itemSpec = ItemSpecMapper.find(request.data['modelNumber'], request.data['type'])
 
-        user.purchaseController.addItem(itemSpec)
+            user.purchaseController.addItem(itemSpec)
 
-        return Response({}, status=status.HTTP_200_OK)
-
+            return Response({}, status=status.HTTP_200_OK)
+        except OutOfStockException:
+            return Response({'message': 'outOfStock'}, status=status.HTTP_412_PRECONDITION_FAILED)
+        except CartFullException:
+            return Response({'message': 'cartFull'}, status=status.HTTP_412_PRECONDITION_FAILED)
 
 class RemoveFromCartView(APIView):
     authentication_classes = ()

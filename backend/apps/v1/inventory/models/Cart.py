@@ -5,10 +5,14 @@ from backend.apps.v1.inventory.mappers.PurchasedItemIDMapper import PurchasedIte
 
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
-from datetime import datetime
+from backend.apps.v1.inventory.Exceptions import TableLockedException, CartFullException, OutOfStockException
+
+import threading
+from datetime import datetime, timedelta
 
 
 class Cart():
+    deltaTime = timedelta(minutes=0, seconds=30)
 
     def __init__(self, customer):
         self.customer = customer
@@ -16,6 +20,20 @@ class Cart():
         self.cartItemMaxSize = 7
         self.cartItemMinSize = 0
         self.Total = 0
+        self.cleanCart()
+
+    def stopCartClean(self):
+        self.t.cancel()
+
+    def cleanCart(self):
+        print('clean')
+        self.t = threading.Timer(5.0, self.cleanCart)
+        self.t.start()
+        now = datetime.now()
+
+        for lineItem in self.cartItems:
+            if now - lineItem.additionTime > Cart.deltaTime:
+                self.removeItem(lineItem.itemID)
 
     def addItem(self, itemSpec):
         if len(self.cartItems) < self.cartItemMaxSize:
@@ -35,16 +53,14 @@ class Cart():
                         print(self.cartItems)
                         break
 
-                if itemIDFound is not True:
-                    return False  # No stock of this item
                 ItemIDMapper.unlock(itemSpec.type, self)
+                if itemIDFound is not True:
+                    raise OutOfStockException()
 
             else:
-                # tell customer they will need to to try again later to add this item
-                return False
+                raise TableLockedException()
         else:
-            # message user telling them they are unable to add to cart as cart is full
-            return False
+            raise CartFullException()
 
         return True
 
@@ -60,8 +76,7 @@ class Cart():
                 ItemIDMapper.unlock(itemID.spec.type, self)
                 return
             else:
-                # tell customer they will need to to try again later to remove this item
-                return
+                raise TableLockedException()
         else:
             # tell customer there are no more items in cart
             return
@@ -79,7 +94,8 @@ class Cart():
                     PurchasedItemIDMapper.unlock(self)
                     break
                 else:
-                    # tell customer they will need to to try again later to add this item
-                    return False
+                    ItemIDMapper.unlock(cartLineItem.itemID.spec.type, self)
+                    PurchasedItemIDMapper.lock(self)
+                    raise TableLockedException()
 
         return True
