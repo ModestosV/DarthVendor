@@ -353,8 +353,7 @@ class Catalog extends Component {
 
     showSpecs(row) {
         this.setState({showSpecsModal: true});
-        this.setState({detailedItem: row})
-        console.log(row)
+        this.setState({detailedItem: row});
     }
 
     displayDetails(){
@@ -436,7 +435,7 @@ class Catalog extends Component {
 
                         </div>
 
-                        {/* Modal for Modify item */}
+                        {/* Modal for Spec item */}
                         <ReactModal isOpen={this.state.showSpecsModal} 
                             className={{base: 'modify--modal'}}>
                             <div>
