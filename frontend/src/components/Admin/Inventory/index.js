@@ -15,25 +15,6 @@ class Inventory extends Component {
         super(props);
         this.state = {
             item: [],
-            // items:[{'modelNumber':'ZZZZZZZ',
-            // 'quantity':46,
-            // 'name':'Razer Desktop',
-            // 'weight':15.0,
-            // 'weightFormat':'lbs',
-            // 'price':2299.99,
-            // 'priceFormat':'CAD',
-            // 'brandName':'RAZER',
-            // 'type':'Desktop',
-            // 'ramSize':16,
-            // 'ramFormat':'GB',
-            // 'processorType':'INTEL',
-            // 'numCores':4,
-            // 'hardDriveSize':2,
-            // 'hardDriveFormat':'TB',
-            // 'dx':15,
-            // 'dy':30,
-            // 'dz':1,
-            // 'dimensionFormat':'INCH'}],
             items:[],
             errorMsg: null,
             showModifyModal: false,
@@ -43,6 +24,7 @@ class Inventory extends Component {
             newItemIDs: [],
             deletedItemIDs:[]
         };
+
         this.modifySpecs = this.modifySpecs.bind(this);
         this.openModifyModal = this.openModifyModal.bind(this);
         this.closeModifyModal = this.closeModifyModal.bind(this);
@@ -79,7 +61,7 @@ class Inventory extends Component {
             url: `${settings.API_ROOT}/getEditState`,
             withCredentials: true
         }).then(results => {
-            var data = results.data;
+            var data = results.data;            
             if(data.currentlyEditing) {
                 this.setState({
                     currentlyEditing: data.currentlyEditing,
@@ -246,7 +228,7 @@ class Inventory extends Component {
 
                 {/* Modal for Modify item */}
                 <ReactModal isOpen={this.state.showModifyModal} 
-                    className={{base: 'modify--modal'}}>
+                    className='modify--modal'>
                     <div>
                         <h1 className="float-left">Modify Item</h1>
                         <i className="remove icon float-right" onClick={this.closeModifyModal}></i>
@@ -258,7 +240,7 @@ class Inventory extends Component {
 
                 {/* Modal for Delete item */}
                 <ReactModal isOpen={this.state.showDeleteModal}
-                 className={{base: 'modify--modal'}}>
+                 className='modify--modal'>
                     <div>
                         <h1 className="float-left">Delete Item</h1>
                         <i className="remove icon float-right" onClick={this.closeDeleteModal}></i>

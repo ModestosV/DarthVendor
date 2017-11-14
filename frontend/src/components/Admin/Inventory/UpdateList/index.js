@@ -12,12 +12,13 @@ class UpdateList extends Component {
         super(props);
 
         this.state = {
-            items: [
-              {name: 'dsadsa'},
-              {name: 'dsadsa'},
-              {name: 'dsadsa'}
-            ]
-        }
+            items: [],
+            addedItemIDs: [],
+            currentlyEditing: false,
+            deletedItemIDs: [],
+            dirtySpecs: [],
+            newSpecs: []
+        }        
     }
 
     confirmUpdate() {
@@ -85,20 +86,29 @@ class UpdateList extends Component {
           });
     }
 
-
-
     getUpdateList() {
-        return axios({
+        axios({
             method:'get',
             url:`${settings.API_ROOT}/getEditState`,
             withCredentials: true
         })
         .then(results => {
             const errorMsg = null;
-            const items = results.data.map(item => item);
-            this.setState({items});
-            this.setState({errorMsg});
-            console.log(items);
+            let data = results.data;  
+
+            console.log("DATA");
+            console.log(data);            
+            // this.setState({errorMsg});
+
+            if(data.currentlyEditing) {
+                this.setState({
+                    currentlyEditing: data.currentlyEditing,
+                    dirtySpecs: data.dirtySpecs,
+                    newSpecs: data.newSpecs,
+                    addedItemIDs: data.addedItemIDs,
+                    deletedItemIDs: data.deletedItemIDs
+                });
+            }            
         })
         .catch(error => {
          console.log(error);
@@ -109,31 +119,87 @@ class UpdateList extends Component {
 
     // display list of updates
     displayUpdateList() {
-        if(this.state.items.length > 0){
-            return (                
-                <div>
-                    {
-                        this.state.items.map((item,index) => {
-                            return (
-                                <div key={index}>
-                                    {item.name}
-                                </div>
-                            );
-                        }) 
-                    }
-                </div>  
-            );
-        }else{
-            return (                
-                <div>
-                    No items changed.
-                </div>  
-            );
-        }
+      let display = [];
+      let labelStyle = {
+        fontWeight: 600
+      };
+
+      console.log("GET STATE")
+      console.log(this.state.newSpecs);
+
+      if (this.state.newSpecs.length === 0 && this.state.dirtySpecs.length === 0 && this.state.addedItemIDs.length === 0 && this.state.deletedItemIDs.length === 0) {
+          return (                
+            <div>
+              No items changed.
+            </div>  
+          );
+      }
+
+      if (this.state.newSpecs.length > 0) {
+          display.push(                
+              <div>
+                <label style={labelStyle}> News Specs </label>
+                {
+                  this.state.newSpecs.map((item, index) => {
+                    return (
+                      <li> {item.modelNumber} - {item.name} </li>
+                    )
+                  })
+                }
+              </div>  
+          );
+      }
+
+      if (this.state.dirtySpecs.length > 0) {
+          display.push(                
+              <div>
+                <label style={labelStyle}> Modify Specs </label>
+                {
+                  this.state.dirtySpecs.map((item, index) => {
+                    return (
+                      <li> {item.modelNumber} - {item.name} </li>
+                    )
+                  })
+                }
+              </div>  
+          );
+      } 
+
+      if (this.state.addedItemIDs.length > 0) {
+          display.push(                
+              <div>
+                <label style={labelStyle}> Add Items </label>
+                {
+                  this.state.addedItemIDs.map((item, index) => {
+                    return (
+                      <li> {item.itemSpec.modelNumber} - {item.itemSpec.name} </li>
+                    )
+                  })
+                }
+              </div>  
+          );
+      }  
+
+      if (this.state.deletedItemIDs.length > 0) {
+          display.push(                
+              <div>
+                <label style={labelStyle}> Delete Items </label>
+                {
+                  this.state.deletedItemIDs.map((item, index) => {
+                    return (
+                      <li> {item.itemSpec.modelNumber} - {item.itemSpec.name} </li>
+                    )
+                  })
+                }
+              </div>  
+          );
+      }                 
+
+      return display;
     }
 
     displayButtons(){
-        if(this.state.items.length > 0){
+        if(this.state.newSpecs.length > 0 || this.state.dirtySpecs.length > 0 || this.state.addedItemIDs.length > 0 || this.state.deletedItemIDs.length > 0 ){
             return (
                 <div className="uow--buttons row">
                     <button className="col cancel ui button mx-3" onClick={() => {this.cancelUpdate()}}>Cancel</button>
