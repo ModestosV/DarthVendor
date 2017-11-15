@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
+import { withRouter } from 'react-router';
 import settings from '../../../../config/settings';
 import Sidebar from '../../Sidebar';
 import './modifyitem.scss'
@@ -28,7 +29,14 @@ class ModifyItem extends Component {
             withCredentials: true
         })
         .then(response => {
-            console.log('item modified');
+            swal({
+                text: "Item Spec Modified!",
+                icon: "success",
+                button: "Ok",
+            })
+            .then(() => {
+                window.location.reload()
+            })
         })
         .catch(error => {
             console.log(error);
@@ -87,7 +95,11 @@ class ModifyItem extends Component {
                 text: "Quantity Added!",
                 icon: "success",
                 button: "Ok",
-            });
+            })
+            .then(() => {
+                window.location.reload()
+            })
+            
         })
         .catch(error => {
             console.log(error);
@@ -140,4 +152,4 @@ class ModifyItem extends Component {
     }
 }
 
-export default ModifyItem;
+export default withRouter(ModifyItem);

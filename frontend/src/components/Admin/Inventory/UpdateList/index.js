@@ -34,14 +34,25 @@ class UpdateList extends Component {
           .then((confirm) => {   
               if(confirm){
                 console.log('updated');
-                window.location = '/'
+                // window.location = '/'
                 axios({
                     method: 'post',
                     url: `${settings.API_ROOT}/terminateEdit`,
                     data: {},
                     withCredentials: true
                 }).then( result => {
-                    this.props.history.push('/')
+                  swal({
+                      text: "Changes applied!",
+                      icon: "success",
+                      button: "Ok",
+                  })
+                  .then(() => {
+                    // this.props.history.push('/admin/update');
+                    // window.location.href = '/';
+                    // window.location.hash = "#/admin/update";
+                    // location.reload()                      
+                    window.location.reload();
+                  })                  
                 })
               }                
           });
@@ -60,28 +71,29 @@ class UpdateList extends Component {
           })
           .then((confirm) => {   
               if(confirm){
-                  console.log('canceled');
-                  window.location = '/'
-                  // axios({
-                  //     method: 'post',
-                  //     url: `${settings.API_ROOT}/item`,
-                  //     // withCredentials: true,
-                  //     headers: {
-                  //         Authorization: "Token " + JSON.parse(localStorage.activeUser).token
-                  //     }
-                  // })
-                  // .then(response => {
-                  //     swal("Deleted!", "Your account has been deleted.", "success");
-                  // })
-                  // .catch(error => {
-                  //     console.log(error);
-                  //     swal({
-                  //         title: "Woops!",
-                  //         text: "Something went wrong!",
-                  //         ilcon: "error",
-                  //         button: "Ok",
-                  //     });
-                  // })
+                  axios({
+                      method: 'post',
+                      url: `${settings.API_ROOT}/cancelEdit`,
+                      withCredentials: true
+                  })
+                  .then(response => {                                        
+                    swal("Deleted!", "The updates have been canceled", "success").then(
+                      () => {
+                        window.location.reload();
+                      }
+                    )
+
+
+                  })
+                  .catch(error => {
+                      console.log(error);
+                      swal({
+                          title: "Woops!",
+                          text: "Something went wrong!",
+                          ilcon: "error",
+                          button: "Ok",
+                      });
+                  })
               }                
           });
     }
@@ -95,9 +107,8 @@ class UpdateList extends Component {
         .then(results => {
             const errorMsg = null;
             let data = results.data;  
-
-            console.log("DATA");
-            console.log(data);            
+            
+            // console.log(data);            
             // this.setState({errorMsg});
 
             if(data.currentlyEditing) {
@@ -123,9 +134,6 @@ class UpdateList extends Component {
       let labelStyle = {
         fontWeight: 600
       };
-
-      console.log("GET STATE")
-      console.log(this.state.newSpecs);
 
       if (this.state.newSpecs.length === 0 && this.state.dirtySpecs.length === 0 && this.state.addedItemIDs.length === 0 && this.state.deletedItemIDs.length === 0) {
           return (                
@@ -228,4 +236,4 @@ class UpdateList extends Component {
     }
 }
 
-export default UpdateList;
+export default withRouter(UpdateList);

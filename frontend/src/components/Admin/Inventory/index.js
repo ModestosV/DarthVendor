@@ -61,7 +61,7 @@ class Inventory extends Component {
             url: `${settings.API_ROOT}/getEditState`,
             withCredentials: true
         }).then(results => {
-            var data = results.data;            
+            var data = results.data;
             if(data.currentlyEditing) {
                 this.setState({
                     currentlyEditing: data.currentlyEditing,
@@ -208,20 +208,24 @@ class Inventory extends Component {
                                 </Link>
                                 <BootstrapTable data={this.state.items} striped hover condensed search scrolling >
                                     <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="name" dataAlign="center" dataSort={true} >Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="weight" dataAlign="center" dataSort={true} >Weight (lbs)</TableHeaderColumn>
                                     <TableHeaderColumn dataField="price" dataAlign="center" dataSort={true} sortFunc={sortFunc} >Price (CAD)</TableHeaderColumn>
                                     <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={deleteCellFormat}> </TableHeaderColumn>
                                     <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={modifyCellFormat}> </TableHeaderColumn>
                                 </BootstrapTable>
                             </div>
                             <UpdateList />
+
+
                         </div>
                     </div>
 
+
+
                 {/* Modal for Modify item */}
-                <ReactModal isOpen={this.state.showModifyModal} 
+                <ReactModal isOpen={this.state.showModifyModal}
                     className='modify--modal'>
                     <div>
                         <h1 className="float-left">Modify Item</h1>
@@ -243,6 +247,10 @@ class Inventory extends Component {
                         <DeleteItem item={this.state.item} closeDeleteModal={this.closeDeleteModal}/>
                     </div>
                 </ReactModal>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 968f69cce7fe6583bc9fe04998c52b03afe7a1cb
             </div>
         );
     }

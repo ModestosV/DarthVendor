@@ -14,10 +14,16 @@ class DeleteItem extends Component {
     // add deletions to UOW
     confirmDeletion() {
         //create object to post
-        let data = [];
-        data.push(this.props.item.modelNumber);
-        data.push(this.props.item.type);
-        data.push(this.state.itemToDelete);
+        // let data = [];
+        // data.push(this.props.item.modelNumber);
+        // data.push(this.props.item.type);
+        // data.push(this.state.itemToDelete);
+        console.log(this.state.itemToDelete);
+        let data = {
+            modelNumber: this.props.item.modelNumber,
+            serialNumber: this.state.itemToDelete,
+            specType: this.props.item.type    
+        }
 
         if(this.state.itemToDelete != ""){
             axios({
@@ -27,6 +33,7 @@ class DeleteItem extends Component {
                 withCredentials: true
             }).then(result => {
                 this.props.closeDeleteModal();
+                window.location.reload();
             });
 
 
@@ -73,7 +80,12 @@ class DeleteItem extends Component {
                             {
                                 this.state.itemIDs.map((item,index) => {
                                     return(
-                                        <option key={index} value={item.serialNumber}>{item.isLocked? "(in a cart) ":""}{item.serialNumber}</option>
+                                        <option 
+                                            key={index} 
+                                            value={item.serialNumber}
+                                        >
+                                            {item.isLocked? "(in a cart) ":""}{item.serialNumber}
+                                        </option>
                                     )
                                 })
                             }

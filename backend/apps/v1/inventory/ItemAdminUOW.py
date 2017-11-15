@@ -119,7 +119,7 @@ class ItemAdminUOW:
             ItemIDMapper.insert(itemID)
 
         for itemID in self.deletedItemIDs:
-            ItemIDMapper.delete(itemID)
+            ItemIDMapper.delete(itemID.serialNumber, itemID.spec.type)
 
         for tdgType in self.lockedItemIDTDGs:
             ItemIDMapper.unlock(tdgType, self)

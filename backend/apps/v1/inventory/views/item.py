@@ -42,12 +42,12 @@ class TerminateEdit(APIView):
 
     def post(self, request):
         print('terminateEdit')
-        try:
-            user = ObjectSession.sessions[request.session['user']]
-            user.itemAdministration.terminateEdit()
-            return Response({}, status=status.HTTP_200_OK)
-        except:
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        user = ObjectSession.sessions[request.session['user']]
+        user.itemAdministration.terminateEdit()
+        return Response({}, status=status.HTTP_200_OK)
+        # except:
+        #     return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CancelEditView(APIView):
