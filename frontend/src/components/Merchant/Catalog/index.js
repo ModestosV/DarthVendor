@@ -21,8 +21,8 @@ class Catalog extends Component {
             showSpecsModal: false,
             priceSlider: '',
             maxPrice: '',
-            typeFilter: '',  
-            sizeFilter: '',      
+            typeFilter: '',
+            sizeFilter: '',
             brandFilter: [],
             processorTypeFilter: [],
         };
@@ -65,7 +65,7 @@ class Catalog extends Component {
     }
 
     getMaxPrice(){
-        
+
         let max = 0;
         this.state.items.map((item,index) => {
             if (max < parseInt(item.price)){
@@ -76,7 +76,7 @@ class Catalog extends Component {
         this.state.priceSlider = max;
     }
 
-    getBrands() { 
+    getBrands() {
         let brands = [];
         this.state.items.map((item,index) => {
             if(!brands.includes(item.brandName)){
@@ -166,7 +166,7 @@ class Catalog extends Component {
                     })
                 }
                 </Form>
-                
+
             </div>
         )
     }
@@ -181,7 +181,7 @@ class Catalog extends Component {
                             this.state.brandsList.map((brand,index) => {
                                 return(
                                     <Form.Field key={index}>
-                                        <Checkbox label={brand} value={brand} onChange={(event, data) => this.handleFilterBrand(data)}/>    
+                                        <Checkbox label={brand} value={brand} onChange={(event, data) => this.handleFilterBrand(data)}/>
                                     </Form.Field>
                                 )
                             })
@@ -189,7 +189,7 @@ class Catalog extends Component {
                     </Form>
                 </div>
             )
-        }                           
+        }
     }
 
     renderFilterSpecific() {
@@ -198,20 +198,20 @@ class Catalog extends Component {
                 <div className="grouped fields">
                     <h4>Size</h4>
                     <Form>
-                        
+
                         <Form.Field>
-                            <Checkbox label="<=24 inches" value="1" checked={this.state.sizeFilter == '1'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                            <Checkbox label="<=24 inches" value="1" checked={this.state.sizeFilter == '1'} onChange={(event, data) => this.handleFilterSize(data)}/>
                         </Form.Field>
                         <Form.Field>
-                            <Checkbox label="<=27 inches" value="2" checked={this.state.sizeFilter == '2'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                            <Checkbox label="<=27 inches" value="2" checked={this.state.sizeFilter == '2'} onChange={(event, data) => this.handleFilterSize(data)}/>
                         </Form.Field>
                         <Form.Field>
-                            <Checkbox label=">27 inches" value="3" checked={this.state.sizeFilter == '3'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                            <Checkbox label=">27 inches" value="3" checked={this.state.sizeFilter == '3'} onChange={(event, data) => this.handleFilterSize(data)}/>
                         </Form.Field>
-                                
+
                     </Form>
                 </div>
-            ) 
+            )
         }
         if(this.state.typeFilter == 'Desktop'){
             let processors = [];
@@ -230,17 +230,17 @@ class Catalog extends Component {
                             processors.map((type,index) => {
                                 return(
                                     <Form.Field key={index}>
-                                        <Checkbox label={type} value={type} onChange={(event, data) => this.handleFilterProcessorType(data)}/>    
+                                        <Checkbox label={type} value={type} onChange={(event, data) => this.handleFilterProcessorType(data)}/>
                                     </Form.Field>
                                 )
                             })
                         }
                     </Form>
                 </div>
-            ) 
+            )
         }
     }
-    
+
     handleFilterProcessorType(data) {
         if(data.checked){
             let b = this.state.processorTypeFilter;
@@ -260,7 +260,7 @@ class Catalog extends Component {
             this.setState({sizeFilter: ''},() => this.handleFilter())
         }
     }
-    
+
     handleFilterBrand(data) {
         if(data.checked){
             let b = this.state.brandFilter;
@@ -301,7 +301,7 @@ class Catalog extends Component {
                     items.map((item,index2) => {
                         f2.push(item);
                     })
-                    
+
                 })
                 filteredItems = f2;
             }
@@ -342,13 +342,13 @@ class Catalog extends Component {
                     console.log(item)
                     f2.push(item);
                 })
-                
+
             })
             filteredItems = f2;
         }
 
-        this.setState({catalog: filteredItems});         
-        
+        this.setState({catalog: filteredItems});
+
     }
 
     showSpecs(row) {
@@ -358,11 +358,28 @@ class Catalog extends Component {
 
     displayDetails(){
         if(this.state.detailedItem){
+            axios({
+                method: 'post',
+                url:`${settings.API_ROOT}/getQuantity`,
+                data: this.state.detailedItem,
+                withCredentials: true
+            }).then((result) => {
+                let detailedItem = this.state.detailedItem;
+                detailedItem.quantity = result.data.quantity
+                this.setState({detailedItem});
+            });
+
             return (
                 <div>
+                    <div className="form-group row">
+                        <label htmlFor={name} className="col-sm-2 col-form-label"><strong>Quantity</strong></label>
+                            <div className="col-sm-10">
+                                {this.state.detailedItem.quantity}
+                            </div>
+                    </div>
                     {Object.keys(this.state.detailedItem).map((name,index) => {
-    
-                        if(typeof this.state.detailedItem[name] != 'object' && !name.includes('Format') ){
+
+                        if(typeof this.state.detailedItem[name] != 'object' && !name.includes('Format') && !name.includes('quantity')){
                             return (
                                 <div className="form-group row" key={index}>
                                     <label htmlFor={name} className="col-sm-2 col-form-label"><strong>{name}</strong></label>
@@ -376,13 +393,14 @@ class Catalog extends Component {
                     }
                 </div>
             );
+
         }
-        
-    
+
+
     }
 
     render() {
-        
+
         const self = this;
 
         function sortFunc(a, b, order) {
@@ -402,7 +420,7 @@ class Catalog extends Component {
         }
 
         return (
-            
+
             <div>
                 <Navigation />
                 <div className="container mt-5">
@@ -436,7 +454,7 @@ class Catalog extends Component {
                         </div>
 
                         {/* Modal for Spec item */}
-                        <ReactModal isOpen={this.state.showSpecsModal} 
+                        <ReactModal isOpen={this.state.showSpecsModal}
                             className={{base: 'modify--modal'}}>
                             <div>
                                 <h1 className="float-left">Details</h1>
@@ -446,11 +464,8 @@ class Catalog extends Component {
                                 {this.displayDetails()}
                             </div>
                         </ReactModal>
-
                     </div>
                 </div>
-
-
             </div>
 
         )

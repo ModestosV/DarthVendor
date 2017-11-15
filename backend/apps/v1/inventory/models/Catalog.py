@@ -1,4 +1,5 @@
 from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
+from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
 
 class Catalog:
@@ -10,3 +11,8 @@ class Catalog:
         for specType in types:
             specs += ItemSpecMapper.findAll({'type': specType})
         return specs
+
+    def getQuantityOfSpec(modelNumber, type):
+        spec = ItemSpecMapper.find(modelNumber, type)
+        itemIDs = ItemIDMapper.find(spec)
+        return len(itemIDs)
