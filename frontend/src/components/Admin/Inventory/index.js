@@ -204,7 +204,7 @@ class Inventory extends Component {
                                 <br />
                                 <Link to={`/admin/add`} className="list-group-item d-inline-block collapsed">
                                     <i className="fa fa-plus pr-2"></i>
-                                    <span className="">Add Item</span>
+                                    <span className="">Add Item Spec</span>
                                 </Link>
                                 <BootstrapTable data={this.state.items} striped hover condensed search scrolling >
                                     <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
