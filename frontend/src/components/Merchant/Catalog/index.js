@@ -24,6 +24,7 @@ class Catalog extends Component {
             typeFilter: '',
             sizeFilter: '',
             brandFilter: [],
+            quantity: 0,
             processorTypeFilter: [],
         };
         this.handleOnChange = this.handleOnChange.bind(this);
@@ -353,28 +354,29 @@ class Catalog extends Component {
 
     showSpecs(row) {
         this.setState({showSpecsModal: true});
-        this.setState({detailedItem: row});
+        this.setState({detailedItem: row}, () => this.getQuantity());
+    }
+
+    getQuantity(){
+        axios({
+            method: 'post',
+            url:`${settings.API_ROOT}/getQuantity`,
+            data: this.state.detailedItem,
+            withCredentials: true
+        }).then((result) => {
+            this.setState({quantity: result.data.quantity})
+        });
     }
 
     displayDetails(){
         if(this.state.detailedItem){
-            axios({
-                method: 'post',
-                url:`${settings.API_ROOT}/getQuantity`,
-                data: this.state.detailedItem,
-                withCredentials: true
-            }).then((result) => {
-                let detailedItem = this.state.detailedItem;
-                detailedItem.quantity = result.data.quantity
-                this.setState({detailedItem});
-            });
 
             return (
                 <div>
                     <div className="form-group row">
                         <label htmlFor={name} className="col-sm-2 col-form-label"><strong>Quantity</strong></label>
                             <div className="col-sm-10">
-                                {this.state.detailedItem.quantity}
+                                {this.state.quantity}
                             </div>
                     </div>
                     {Object.keys(this.state.detailedItem).map((name,index) => {
