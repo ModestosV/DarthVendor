@@ -42,12 +42,16 @@ class InventoryView(APIView):
                 serializedItems.append(item)
         return Response(serializedItems)
 
+
 class QuantityView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
-    def get(self, request):
-
+    def post(self, request):
+        print(request.data)
         modelNumber = request.data['modelNumber']
+        type = request.data['type']
 
-        return Response({}, status=status.HTTP_200_OK)
+        quantity = Catalog.getQuantityOfSpec(modelNumber, type)
+
+        return Response({'quantity': quantity}, status=status.HTTP_200_OK)
