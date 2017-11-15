@@ -71,6 +71,9 @@ class AddItemSpecView(APIView):
         user = ObjectSession.sessions[request.session['user']]
         itemData = request.data
         itemType = itemData["type"]
+
+        # Store quantity to 0 in the DB by default since we are not using it        
+        itemData["quantity"] = 0         
         item = None
         try:
             if itemType == "Desktop":
@@ -97,6 +100,9 @@ class ModifyItemSpecView(APIView):
         user = ObjectSession.sessions[request.session['user']]
         itemData = request.data
         itemType = itemData["type"]
+
+        # Store quantity to 0 in the DB by default since we are not using it        
+        itemData["quantity"] = 0  
         item = None
         try:
             if itemType == "DESKTOP":
