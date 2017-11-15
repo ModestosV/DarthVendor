@@ -137,15 +137,50 @@ monitors = [
 
 monitorDisplayIDs = [
     dict(
-        serialNum='test',
+        serialNum='11111',
         modelNum='VE208T',
         isLocked=0
     ),
     dict(
-        serialNum='TWERTERTERRK',
+        serialNum='22222',
         modelNum='VE208T',
         isLocked=0
-    )
+    ),
+    dict(
+        serialNum='33333',
+        modelNum='VE208T',
+        isLocked=0
+    ),
+    dict(
+        serialNum='44444',
+        modelNum='VE208T',
+        isLocked=0
+    ),
+    dict(
+        serialNum='55555',
+        modelNum='VE208T',
+        isLocked=0
+    ),
+    dict(
+        serialNum='66666',
+        modelNum='VE208T',
+        isLocked=0
+    ),
+    dict(
+        serialNum='77777',
+        modelNum='VE208T',
+        isLocked=0
+    ),
+    dict(
+        serialNum='88888',
+        modelNum='VE208T',
+        isLocked=0
+    ),
+    dict(
+        serialNum='99999',
+        modelNum='VE208T',
+        isLocked=0
+    )                           
 ]
 
 

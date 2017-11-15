@@ -138,12 +138,12 @@ tablets = [
 tabletIDs = [
     dict(
         serialNum='f569g79874',
-        modelNum='GGGGGG',
+        modelNum='ME176C',
         isLocked=0
     ),
     dict(
         serialNum='bWERTERTERRK',
-        modelNum='GAGGGGG',
+        modelNum='ME176C',
         isLocked=0
     )
 ]

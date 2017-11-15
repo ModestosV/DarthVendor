@@ -37,6 +37,16 @@ class Catalog extends Component {
     componentWillMount() {
         const {history} = this.props;
         console.log(localStorage);
+
+        if (localStorage.activeUser) {
+            const activeUser = JSON.parse(localStorage.activeUser);
+
+            if (activeUser.isAdmin === true) {
+                // Redirect to admin home page                
+                history.push('/admin');
+            }             
+        }
+
     }
 
     componentDidMount() {
@@ -115,13 +125,21 @@ class Catalog extends Component {
                 });
             })
             .catch(error => {
-                console.log(error);
+                                
+                let text = "Something went wrong!";
+                // Out of stock / full cart error
+                if (error.request.status === 412) {
+                    let response = JSON.parse(error.request.response);                                                           
+                    text = response.message;
+                } 
+
                 swal({
                     title: "Woops!",
-                    text: "Something went wrong!",
+                    text: text,
                     icon: "error",
                     button: "Ok",
-                });
+                }); 
+
             })
         } else {
             swal("Oops!", "You need to login to add item to cart", "error");

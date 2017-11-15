@@ -11,7 +11,7 @@ class ItemSpecificationSerializer(serializers.Serializer):
     weightFormat = serializers.CharField()
     priceFormat = serializers.CharField()
     type = serializers.CharField()
-    quantity = serializers.IntegerField()
+    quantity = serializers.HiddenField(default='')
 
 
 
