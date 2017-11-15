@@ -41,3 +41,13 @@ class InventoryView(APIView):
                 item = TabletSerializer(item).data
                 serializedItems.append(item)
         return Response(serializedItems)
+
+class QuantityView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def get(self, request):
+
+        modelNumber = request.data['modelNumber']
+
+        return Response({}, status=status.HTTP_200_OK)
