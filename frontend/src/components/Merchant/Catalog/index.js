@@ -436,7 +436,7 @@ class Catalog extends Component {
                 <Navigation />
                 <div className="container mt-5">
                     <div className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-2 mb-5">
                         <h2>Filters</h2>
 
                             {this.renderFilterPrice()}

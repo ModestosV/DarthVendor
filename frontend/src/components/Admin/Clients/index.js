@@ -58,7 +58,7 @@ class Clients extends Component {
         return (
             <div>
                 <Sidebar />
-                <div className="container">
+                <div className="container mb-5">
                     <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
                     <h1> Clients List </h1>
                     { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }

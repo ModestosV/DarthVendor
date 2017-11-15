@@ -72,8 +72,10 @@ class DeleteItem extends Component {
         return (
             <div>
                 <div>
+                    <div className="mb-3">
                     Model Number: {this.props.item.modelNumber} <br/>
                     Type: {this.props.item.type}
+                    </div>
                     <div className="form-group">
                         <select className="form-control" onChange={(e) => this.handleSelect(e)}>
                             <option value="">Select ID to delete</option>

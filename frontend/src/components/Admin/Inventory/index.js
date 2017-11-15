@@ -195,7 +195,7 @@ class Inventory extends Component {
         return (
             <div>
                 <Sidebar />
-                    <div className="container-fluid">
+                    <div className="container-fluid mb-5">
                         <div className="row mt-4">
                             <div className="col-sm-9 item--table">
                                 <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
