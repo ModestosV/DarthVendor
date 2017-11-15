@@ -162,7 +162,7 @@ class AddItem extends Component {
                 
                     <div id="addItem">
                         <div className="mb-3">
-                            <h1>Add New Item Spec</h1>
+                            <h1>Add Item Spec</h1>
                         </div>
                         <form id="addItemForm">
                             { this.typeSelect(itemTypes) }
