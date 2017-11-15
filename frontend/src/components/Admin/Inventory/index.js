@@ -195,7 +195,7 @@ class Inventory extends Component {
         return (
             <div>
                 <Sidebar />
-                    <div className="container-fluid">
+                    <div className="container-fluid mb-5">
                         <div className="row mt-4">
                             <div className="col-sm-9 item--table">
                                 <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
@@ -204,7 +204,7 @@ class Inventory extends Component {
                                 <br />
                                 <Link to={`/admin/add`} className="list-group-item d-inline-block collapsed">
                                     <i className="fa fa-plus pr-2"></i>
-                                    <span className="">Add Item</span>
+                                    <span className="">Add Item Spec</span>
                                 </Link>
                                 <BootstrapTable data={this.state.items} striped hover condensed search scrolling >
                                     <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
