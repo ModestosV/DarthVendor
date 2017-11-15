@@ -13,15 +13,6 @@ users = [
     ),
 
     dict(
-        firstname='Modestos',
-        lastname='Glykis-Vergados',
-        username='modestos',
-        email='modestos@darthvendor.com',
-        password=make_password('qwerty'),
-        isAdmin=1
-    ),
-
-    dict(
         firstname='test',
         lastname='test',
         username='test',
