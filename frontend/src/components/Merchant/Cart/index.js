@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
-import {HashRouter as Router, Route} from 'react-router-dom';
+import {Link, HashRouter as Router, Route} from 'react-router-dom';
 import settings from '../../../config/settings';
 import Navigation from '../Navigation';
 
@@ -34,13 +34,10 @@ class Cart extends Component {
           withCredentials: true
       })
       .then(results => {
-          console.log("VIEW CART DATA");
-          console.log(results.data);
           const errorMsg = null;
           let items = results.data.cartItems;
           this.setState({items});
           this.setState({errorMsg});
-          // console.log(items);
       })
       .catch(error => {
        console.log(error);
@@ -55,7 +52,7 @@ class Cart extends Component {
 
     axios({
       method: 'post',
-      url: `${settings.API_ROOT}/removeFromCart`, // need to change this
+      url: `${settings.API_ROOT}/removeFromCart`,
       data: data,
       withCredentials: true
     })
@@ -122,20 +119,29 @@ class Cart extends Component {
           <div className="col-md-2"></div>
             <div className="col-md-8 offset-md-2">
               <div className="mt-2">
-                <h1 className="m-0"> Shopping Cart </h1> </div>
-                { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
-                <div className="card mt-2">
-                  <ul className="list-group list-group-flush">
-                    {cartItems}
-                  </ul>
+                <h1 className="m-0"> Shopping Cart </h1>
+              </div>
+              { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
+              <div className="card mt-2">
+                <ul className="list-group list-group-flush">
+                  {cartItems}
+                </ul>
+              </div>
+              <div className="justify-content-md-center">
+              {this.state.items.length < 1 &&
+                <div className="col-sm-12">
+                  Shopping cart is empty. <i className="fa fa-frown-o" aria-hidden="true"></i>
                 </div>
-                <div className="justify-content-md-center">
-                  <button className="btn btn-success float-right col-sm-2 mt-2"
-                    onClick={() => this.handleCheckout()}>
-                    Checkout
-                  </button>
-                </div>
+              }
+              {this.state.items.length >= 1 &&
+                <Link className="btn btn-success float-right col-sm-2 mt-2"
+                  to={`/checkout`}
+                  onClick={() => this.handleCheckout()}>
+                  Checkout
+                </Link>
+              }
             </div>
+          </div>
         </div>
       </div>
     )

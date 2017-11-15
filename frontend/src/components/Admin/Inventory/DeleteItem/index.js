@@ -35,15 +35,11 @@ class DeleteItem extends Component {
                 this.props.closeDeleteModal();
                 window.location.reload();
             });
-    
-            
-        }  
+
+
+        }
     }
 
-    // display specs of selected item
-    displaySpecs() {
-
-    }
     // get item to delete
     componentWillMount() {
         // this.setState({item: this.props.item});
@@ -93,18 +89,14 @@ class DeleteItem extends Component {
                                     )
                                 })
                             }
-                            
+
                         </select>
                     </div>
                 </div>
-
                 <div className="mb-5">
                     <button  className="ui green button float-right"  onClick={() => {this.confirmDeletion()}}>Confirm</button>
                 </div>
-
             </div>
-
-
         )
     }
 }

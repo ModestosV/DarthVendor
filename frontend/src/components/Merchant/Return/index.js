@@ -51,7 +51,10 @@ class Return extends Component {
         })
         .then(results => {
             const errorMsg = null;
-            const items = results.data.map(item => item);
+            const items = results.data.map((item,index) => {
+                item.name = item.spec.name;
+                return item;
+            })
             this.setState({items});
             this.setState({errorMsg});
             console.log(items);
@@ -77,7 +80,7 @@ class Return extends Component {
         })
         .then(response => {
             console.log('item added');
-            this.resetForm();
+            window.location.reload()
         })
         .catch(error => {
             console.log(error);
@@ -95,11 +98,12 @@ class Return extends Component {
             <div className="ui five column grid">
             {
                 items.map((item,index) => {
+                    console.log(item)
                     return (
                         <div className="column" key={index}>
                             <div className="ui fluid card">
                                 <div className="content">
-                                    <a className="header">{item.name}</a>
+                                    <a className="header">{item.spec.name}</a>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +124,6 @@ class Return extends Component {
                 returnItems: this.state.returnItems.filter(item => item.modelNumber != row.modelNumber)
             })
         }
-
     }
 
     render() {
@@ -135,36 +138,23 @@ class Return extends Component {
             return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
         }
 
-        function sortFunc(a, b, order) {
-            if (order === 'desc') {
-                return a.price - b.price;
-            } else {
-                return b.price - a.price;
-            }
-        }
-
         return (
-
             <div>
                 <Navigation />
-
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-sm-3">
-
                         </div>
                         <button onClick={() => this.returnItems()}>Return Items</button>
                         <div className="col-sm-9">
                         <BootstrapTable data={this.state.items} selectRow={selectRowProp} condensed hover search scrolling className="item--table">
-                            <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Items</TableHeaderColumn>
+                            <TableHeaderColumn dataField="name" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Item Name</TableHeaderColumn>
+                            <TableHeaderColumn dataField="serialNumber" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Serial Number</TableHeaderColumn>
                         </BootstrapTable>
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
         )
     }
 }
