@@ -198,14 +198,29 @@ desktops = [
 desktopIDs = [
     dict(
         serialNum='4569s79874',
-        modelNum='ZZZZZZZ',
+        modelNum='VR7RC',
         isLocked=0
     ),
     dict(
         serialNum='45698756x4',
-        modelNum='PPPPPP',
+        modelNum='VR7RC',
         isLocked=0
-    )
+    ),
+    dict(
+        serialNum='45698756x5',
+        modelNum='VR7RC',
+        isLocked=0
+    ),
+    dict(
+        serialNum='45698756x6',
+        modelNum='VR7RC',
+        isLocked=0
+    ),
+    dict(
+        serialNum='45698756x7',
+        modelNum='VR7RC',
+        isLocked=0
+    )            
 ]
 
 

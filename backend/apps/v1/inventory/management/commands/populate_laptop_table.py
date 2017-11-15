@@ -238,12 +238,12 @@ laptops = [
 laptopIDs = [
     dict(
         serialNum='f569s79874',
-        modelNum='XPXPXPXPXPXP',
+        modelNum='GT73VR',
         isLocked=0
     ),
     dict(
         serialNum='QWERTERTERRK',
-        modelNum='PPPPPP',
+        modelNum='GT73VR',
         isLocked=0
     )
 ]
