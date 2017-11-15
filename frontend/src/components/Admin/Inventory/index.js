@@ -247,10 +247,6 @@ class Inventory extends Component {
                         <DeleteItem item={this.state.item} closeDeleteModal={this.closeDeleteModal}/>
                     </div>
                 </ReactModal>
-<<<<<<< HEAD
-
-=======
->>>>>>> 968f69cce7fe6583bc9fe04998c52b03afe7a1cb
             </div>
         );
     }
