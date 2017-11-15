@@ -74,14 +74,14 @@ class Home extends Component {
     displayDetails(){
         if(this.state.detailedItem){
             return (
-                <div>
+                <div className="row">
                     {Object.keys(this.state.detailedItem).map((name,index) => {
     
                         if(typeof this.state.detailedItem[name] != 'object' && !name.includes('Format') ){
                             return (
-                                <div className="form-group row" key={index}>
-                                    <label htmlFor={name} className="col-sm-2 col-form-label"><strong>{name}</strong></label>
-                                    <div className="col-sm-10">
+                                <div className="form-group col-sm-6" key={index}>
+                                    <label htmlFor={name}><strong>{name}</strong></label>
+                                    <div>
                                         {this.state.detailedItem[name]}
                                     </div>
                                 </div>
