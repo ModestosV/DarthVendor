@@ -37,8 +37,27 @@ users = [
         email='client@loremipsum.com',
         password=make_password('01010101'),
         isAdmin=0
+    ),
+
+    dict(
+        firstname='Kammy',
+        lastname='Wong',
+        username='wongkam',
+        email='kammy@noodleexpress.com',
+        password=make_password('test'),
+        isAdmin=0
+    ),
+
+    dict(
+        firstname='Kammy',
+        lastname='Wong',
+        username='kamshun',
+        email='kammy@darthvendor.com',
+        password=make_password('test'),
+        isAdmin=1
     )
 ]
+
 
 class Command(BaseCommand):
     help = 'Populate user table'
