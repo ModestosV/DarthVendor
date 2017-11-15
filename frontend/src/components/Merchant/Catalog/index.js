@@ -65,7 +65,6 @@ class Catalog extends Component {
     }
 
     getMaxPrice(){
-        
         let max = 0;
         this.state.items.map((item,index) => {
             if (max < parseInt(item.price)){
@@ -152,16 +151,17 @@ class Catalog extends Component {
     renderFilterType() {
         const itemTypes = ['Desktop', 'Laptop', 'Tablet', 'Monitor'];
         return(
-            <div className="grouped fields">
-
+            <div className="grouped fields mt-5">
                 <h4>Type</h4>
                 <Form>
                 {
                     itemTypes.map((type,index) => {
                         return (
-                            <Form.Field key={index}>
-                                <Checkbox label={type} value={type} checked={this.state.typeFilter == type} onChange={(event, data) => this.handleFilterType(data)}/>
-                            </Form.Field>
+                            <div>  
+                                <Form.Field key={index}>
+                                    <Checkbox label={type} value={type} checked={this.state.typeFilter == type} onChange={(event, data) => this.handleFilterType(data)}/>
+                                </Form.Field>
+                            </div>
                         )
                     })
                 }
@@ -174,15 +174,17 @@ class Catalog extends Component {
     renderFilterBrand() {
         if(this.state.brandsList){
             return (
-                <div className="grouped fields">
+                <div className="grouped fields mt-3">
                     <h4>Brand</h4>
                     <Form>
                         {
                             this.state.brandsList.map((brand,index) => {
                                 return(
-                                    <Form.Field key={index}>
-                                        <Checkbox label={brand} value={brand} onChange={(event, data) => this.handleFilterBrand(data)}/>    
-                                    </Form.Field>
+                                    <div>
+                                        <Form.Field key={index}>
+                                            <Checkbox label={brand} value={brand} onChange={(event, data) => this.handleFilterBrand(data)}/>    
+                                        </Form.Field>
+                                    </div>
                                 )
                             })
                         }
@@ -195,21 +197,25 @@ class Catalog extends Component {
     renderFilterSpecific() {
         if(this.state.typeFilter == 'Monitor'){
             return (
-                <div className="grouped fields">
+                <div className="grouped fields mt-3">
                     <h4>Size</h4>
-                    <Form>
-                        
-                        <Form.Field>
-                            <Checkbox label="<=24 inches" value="1" checked={this.state.sizeFilter == '1'} onChange={(event, data) => this.handleFilterSize(data)}/>    
-                        </Form.Field>
-                        <Form.Field>
-                            <Checkbox label="<=27 inches" value="2" checked={this.state.sizeFilter == '2'} onChange={(event, data) => this.handleFilterSize(data)}/>    
-                        </Form.Field>
-                        <Form.Field>
-                            <Checkbox label=">27 inches" value="3" checked={this.state.sizeFilter == '3'} onChange={(event, data) => this.handleFilterSize(data)}/>    
-                        </Form.Field>
-                                
-                    </Form>
+                        <Form>
+                            <div>
+                            <Form.Field>
+                                <Checkbox label="<=24 inches" value="1" checked={this.state.sizeFilter == '1'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                            </Form.Field>
+                            </div>
+                            <div>
+                            <Form.Field>
+                                <Checkbox label="<=27 inches" value="2" checked={this.state.sizeFilter == '2'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                            </Form.Field>
+                            </div>
+                            <div>
+                            <Form.Field>
+                                <Checkbox label=">27 inches" value="3" checked={this.state.sizeFilter == '3'} onChange={(event, data) => this.handleFilterSize(data)}/>    
+                            </Form.Field>    
+                            </div>   
+                        </Form>
                 </div>
             ) 
         }
@@ -223,15 +229,17 @@ class Catalog extends Component {
                 }
             })
             return (
-                <div className="grouped fields">
+                <div className="grouped fields mt-3">
                     <h4>Processor Type</h4>
                     <Form>
                         {
                             processors.map((type,index) => {
                                 return(
+                                    <div>
                                     <Form.Field key={index}>
                                         <Checkbox label={type} value={type} onChange={(event, data) => this.handleFilterProcessorType(data)}/>    
                                     </Form.Field>
+                                    </div>
                                 )
                             })
                         }
@@ -442,7 +450,7 @@ class Catalog extends Component {
                                 <h1 className="float-left">Details</h1>
                                 <i className="remove icon float-right" onClick={this.closeShowSpecsModal}></i>
                             </div>
-                            <div className="mt-50">
+                            <div className="mt-50 container">
                                 {this.displayDetails()}
                             </div>
                         </ReactModal>
