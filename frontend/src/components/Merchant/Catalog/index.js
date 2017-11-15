@@ -66,7 +66,6 @@ class Catalog extends Component {
     }
 
     getMaxPrice(){
-
         let max = 0;
         this.state.items.map((item,index) => {
             if (max < parseInt(item.price)){
@@ -144,7 +143,7 @@ class Catalog extends Component {
                     onChange={this.handleOnChange}
                     onChangeComplete={this.handleChangeComplete}
                 />
-                <div className='float-right'>{priceSlider}</div>
+                <div className='float-right'>$ {priceSlider}</div>
 
             </div>
         )
@@ -153,16 +152,17 @@ class Catalog extends Component {
     renderFilterType() {
         const itemTypes = ['Desktop', 'Laptop', 'Tablet', 'Monitor'];
         return(
-            <div className="grouped fields">
-
+            <div className="grouped fields mt-5">
                 <h4>Type</h4>
                 <Form>
                 {
                     itemTypes.map((type,index) => {
                         return (
-                            <Form.Field key={index}>
-                                <Checkbox label={type} value={type} checked={this.state.typeFilter == type} onChange={(event, data) => this.handleFilterType(data)}/>
-                            </Form.Field>
+                            <div>  
+                                <Form.Field key={index}>
+                                    <Checkbox label={type} value={type} checked={this.state.typeFilter == type} onChange={(event, data) => this.handleFilterType(data)}/>
+                                </Form.Field>
+                            </div>
                         )
                     })
                 }
@@ -175,15 +175,17 @@ class Catalog extends Component {
     renderFilterBrand() {
         if(this.state.brandsList){
             return (
-                <div className="grouped fields">
+                <div className="grouped fields mt-3">
                     <h4>Brand</h4>
                     <Form>
                         {
                             this.state.brandsList.map((brand,index) => {
                                 return(
+                                    <div>
                                     <Form.Field key={index}>
                                         <Checkbox label={brand} value={brand} onChange={(event, data) => this.handleFilterBrand(data)}/>
                                     </Form.Field>
+                                    </div>
                                 )
                             })
                         }
@@ -196,19 +198,24 @@ class Catalog extends Component {
     renderFilterSpecific() {
         if(this.state.typeFilter == 'Monitor'){
             return (
-                <div className="grouped fields">
+                <div className="grouped fields mt-3">
                     <h4>Size</h4>
                     <Form>
-
+                        <div>
                         <Form.Field>
                             <Checkbox label="<=24 inches" value="1" checked={this.state.sizeFilter == '1'} onChange={(event, data) => this.handleFilterSize(data)}/>
                         </Form.Field>
+                        </div>
+                        <div>
                         <Form.Field>
                             <Checkbox label="<=27 inches" value="2" checked={this.state.sizeFilter == '2'} onChange={(event, data) => this.handleFilterSize(data)}/>
                         </Form.Field>
+                        </div>
+                        <div>
                         <Form.Field>
                             <Checkbox label=">27 inches" value="3" checked={this.state.sizeFilter == '3'} onChange={(event, data) => this.handleFilterSize(data)}/>
                         </Form.Field>
+                        </div>
 
                     </Form>
                 </div>
@@ -224,15 +231,17 @@ class Catalog extends Component {
                 }
             })
             return (
-                <div className="grouped fields">
+                <div className="grouped fields mt-3">
                     <h4>Processor Type</h4>
                     <Form>
                         {
                             processors.map((type,index) => {
                                 return(
+                                    <div>
                                     <Form.Field key={index}>
                                         <Checkbox label={type} value={type} onChange={(event, data) => this.handleFilterProcessorType(data)}/>
                                     </Form.Field>
+                                    </div>
                                 )
                             })
                         }
@@ -372,10 +381,10 @@ class Catalog extends Component {
         if(this.state.detailedItem){
 
             return (
-                <div>
-                    <div className="form-group row">
-                        <label htmlFor={name} className="col-sm-2 col-form-label"><strong>Quantity</strong></label>
-                            <div className="col-sm-10">
+                <div className="row">
+                    <div className="form-group col-sm-6">
+                        <label htmlFor={name} className=""><strong>Quantity</strong></label>
+                            <div className="">
                                 {this.state.quantity}
                             </div>
                     </div>
@@ -383,9 +392,9 @@ class Catalog extends Component {
 
                         if(typeof this.state.detailedItem[name] != 'object' && !name.includes('Format') && !name.includes('quantity')){
                             return (
-                                <div className="form-group row" key={index}>
-                                    <label htmlFor={name} className="col-sm-2 col-form-label"><strong>{name}</strong></label>
-                                    <div className="col-sm-10">
+                                <div className="form-group col-sm-6" key={index}>
+                                    <label htmlFor={name} className="col-form-label"><strong>{name}</strong></label>
+                                    <div>
                                         {this.state.detailedItem[name]}
                                     </div>
                                 </div>
@@ -462,7 +471,7 @@ class Catalog extends Component {
                                 <h1 className="float-left">Details</h1>
                                 <i className="remove icon float-right" onClick={this.closeShowSpecsModal}></i>
                             </div>
-                            <div className="mt-50">
+                            <div className="mt-50 container">
                                 {this.displayDetails()}
                             </div>
                         </ReactModal>

@@ -145,12 +145,21 @@ class Return extends Component {
                     <div className="row">
                         <div className="col-sm-3">
                         </div>
-                        <button onClick={() => this.returnItems()}>Return Items</button>
+                        <h1 className="ml-4">Purchase History</h1>
+        
                         <div className="col-sm-9">
+                        <div>
                         <BootstrapTable data={this.state.items} selectRow={selectRowProp} condensed hover search scrolling className="item--table">
                             <TableHeaderColumn dataField="name" dataAlign="center" dataSort={true} dataFormat={cellFormat}>Item Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="serialNumber" isKey={true} dataAlign="center" dataSort={true} dataFormat={cellFormat}>Serial Number</TableHeaderColumn>
                         </BootstrapTable>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-3"></div>
+                        <div className="col-sm-9">
+                            <button className="ui green button mt-3" onClick={() => this.returnItems()}>Return Items</button>
                         </div>
                     </div>
                 </div>
