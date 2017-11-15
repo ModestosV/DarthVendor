@@ -115,12 +115,8 @@ class Cart extends Component {
     return (
       <div>
         <Navigation />
-        <div className="row">
-          <div className="col-md-2"></div>
-            <div className="col-md-8 offset-md-2">
-              <div className="mt-2">
-                <h1 className="m-0"> Shopping Cart </h1>
-              </div>
+        <div className="container">
+              <h1 className="mt-5">Shopping Cart</h1>
               { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
               <div className="card mt-2">
                 <ul className="list-group list-group-flush">
@@ -129,21 +125,20 @@ class Cart extends Component {
               </div>
               <div className="justify-content-md-center">
               {this.state.items.length < 1 &&
-                <div className="col-sm-12">
-                  Shopping cart is empty. <i className="fa fa-frown-o" aria-hidden="true"></i>
+                <div>
+                  <h3>Shopping cart is empty. <i className="fa fa-frown-o" aria-hidden="true"></i></h3>
                 </div>
               }
               {this.state.items.length >= 1 &&
-                <Link className="btn btn-success float-right col-sm-2 mt-2"
+                <Link className="btn btn-success float-right mt-3"
                   to={`/checkout`}
                   onClick={() => this.handleCheckout()}>
                   Checkout
                 </Link>
               }
             </div>
-          </div>
+            </div>
         </div>
-      </div>
     )
   }
 }
