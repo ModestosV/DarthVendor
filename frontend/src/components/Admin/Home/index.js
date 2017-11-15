@@ -67,20 +67,39 @@ class Home extends Component {
     }
 
     showSpecs(row) {
-        this.setState({showSpecsModal: true});
-        this.setState({detailedItem: row})
+        this.setState({showSpecsModal: true});        
+        this.setState({detailedItem: row}, () => this.getQuantity());
+    }
+
+    getQuantity() {
+        console.log('duma');
+        axios({
+            method: 'post',
+            url:`${settings.API_ROOT}/getQuantity`,
+            data: this.state.detailedItem,
+            withCredentials: true
+        }).then((result) => {
+            this.setState({quantity: result.data.quantity})
+        });
     }
 
     displayDetails(){
         if(this.state.detailedItem){
+
             return (
                 <div className="row">
+                    <div className="form-group col-sm-6">
+                        <label htmlFor={name} className=""><strong>Quantity</strong></label>
+                            <div className="">
+                                {this.state.quantity}
+                            </div>
+                    </div>
                     {Object.keys(this.state.detailedItem).map((name,index) => {
-    
-                        if(typeof this.state.detailedItem[name] != 'object' && !name.includes('Format') ){
+
+                        if(typeof this.state.detailedItem[name] != 'object' && !name.includes('Format') && !name.includes('quantity')){
                             return (
                                 <div className="form-group col-sm-6" key={index}>
-                                    <label htmlFor={name}><strong>{name}</strong></label>
+                                    <label htmlFor={name} className="col-form-label"><strong>{name}</strong></label>
                                     <div>
                                         {this.state.detailedItem[name]}
                                     </div>
@@ -91,8 +110,7 @@ class Home extends Component {
                     }
                 </div>
             );
-        }
-        
+        }        
     
     }
 
