@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Link, HashRouter as Router, Route} from 'react-router-dom';
 import settings from '../../../config/settings';
 import Navigation from '../Navigation';
+import './checkout.scss'
 
 class Checkout extends Component {
 
@@ -28,10 +29,10 @@ class Checkout extends Component {
     return (
       <div>
         <Navigation />
-        <div className="justify-content-md-center row">
+        <div className="d-flex checkout justify-content-center align-items-center container">
           <div>
-            <h1> Purchase succesfull <i className="fa fa-check" aria-hidden="true"></i></h1>
-            <div> Please visit your {history} if you wish to return your items.</div>
+            <div> <h1> Purchase successful <i className="fa fa-check text-success" aria-hidden="true"></i></h1></div>
+            <div className="mt-3"> Please visit your {history} if you wish to return your items.</div>
           </div>
         </div>
       </div>
