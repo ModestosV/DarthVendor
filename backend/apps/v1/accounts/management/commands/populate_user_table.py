@@ -18,7 +18,7 @@ users = [
         username='admin',
         email='admin@darthvendor.me',
         password=make_password('admin'),
-        isAdoyomin=1
+        isAdmin=1
     ),
     
     dict(
