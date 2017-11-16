@@ -63,7 +63,7 @@ class Clients extends Component {
                     <h1> Clients List </h1>
                     { !!this.state.errorMsg && <div className="fa fa-warning errorMsg"> {this.state.errorMsg} </div> }
                     <br />
-                    <BootstrapTable data={this.state.clients} striped condensed hover pagination search scrolling>
+                    <BootstrapTable data={this.state.clients} striped condensed hover search scrolling>
                         <TableHeaderColumn dataField="email" dataAlign="center" dataSort={true}>Email</TableHeaderColumn>
                         <TableHeaderColumn dataField="username" isKey={true} dataAlign="center" dataSort={true}>Username</TableHeaderColumn>
                         <TableHeaderColumn dataField="lastname" dataAlign="center" dataSort={true}>Last Name</TableHeaderColumn>

@@ -77,7 +77,7 @@ class UpdateList extends Component {
                       withCredentials: true
                   })
                   .then(response => {                                        
-                    swal("Deleted!", "The updates have been canceled", "success").then(
+                    swal("Canceled!", "The updates have been canceled", "success").then(
                       () => {
                         window.location.reload();
                       }

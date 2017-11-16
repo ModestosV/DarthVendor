@@ -17,6 +17,18 @@ class ModifyItem extends Component {
 
     confirmModifications() {
 
+        var isValid = this.verifyInput();
+
+        if(!isValid) {
+            swal({
+                text: "Bad input! Please validate your entries",
+                icon: "error",
+                button: "Ok",
+            });
+            return false;
+
+        }
+
         let data = this.state;
 
         axios({
@@ -51,6 +63,22 @@ class ModifyItem extends Component {
 
     }
 
+    // validate input
+    verifyInput() {
+        let self = this.state;
+        // only verifies for positive integers in case of number input
+        function verify(field) {
+            return parseInt(field) >= 0;
+        }
+        for(let spec in this.state) {
+            var number = parseInt(this.state[spec]);
+            if(!isNaN(number) && !verify(number)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // set state on spec value change
     handleChange(event){
         this.setState({[event.target.name]: event.target.value});
@@ -58,16 +86,32 @@ class ModifyItem extends Component {
 
     // display specs of selected item
     displaySpecs() {
+        let input = null;
             return (
                 <div>
                     {Object.keys(this.props.item).map((name,index) => {
-
                         if(typeof this.props.item[name] != 'object' && !name.includes('Format') ){
+                            if(typeof this.props.item[name] === "number") {
+                                input = <input type="number"
+                                            min="0"
+                                            className="form-control"
+                                            id={name}
+                                            name={name}
+                                            onChange={ (e) => this.handleChange(e) }
+                                            placeholder={this.props.item[name]}/>
+                            } else {
+                                input = <input type="text"
+                                            className="form-control"
+                                            id={name}
+                                            name={name}
+                                            onChange={ (e) => this.handleChange(e) }
+                                            placeholder={this.props.item[name]}/>
+                            }
                             return (
                                 <div className="form-group row" key={index}>
                                     <label htmlFor={name} className="col-sm-2 col-form-label"><strong>{name}</strong></label>
                                     <div className="col-sm-10">
-                                        <input type="text" className="form-control" id={name}  name={name} onChange={ (e) => this.handleChange(e) } placeholder={this.props.item[name]}/>
+                                        {input}
                                     </div>
                                 </div>
                             );
