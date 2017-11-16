@@ -7,46 +7,55 @@ users = [
         firstname='foo',
         lastname='bar',
         username='foobar',
-        email='foobar@darthvendor.com',
+        email='foobar@darthvendor.me',
         password=make_password('D4rthV3nD0r'),
         isAdmin=1
     ),
 
     dict(
-        firstname='test',
+        firstname='admin',
         lastname='test',
-        username='test',
-        email='test@darthvendor.com',
-        password=make_password('test'),
-        isAdmin=1
+        username='admin',
+        email='admin@darthvendor.me',
+        password=make_password('admin'),
+        isAdoyomin=1
     ),
+    
+    dict(
+        firstname='constantinos',
+        lastname='constantinides',
+        username='cc',
+        email='cc@cse.concordia.ca',
+        password=make_password('admin'),
+        isAdmin=1
+    ),    
 
     dict(
-        firstname='lorem',
-        lastname='ipsum',
+        firstname='client',
+        lastname='',
         username='client',
-        email='client@loremipsum.com',
-        password=make_password('01010101'),
+        email='client@email.com',
+        password=make_password('client'),
         isAdmin=0
     ),
-
+    
     dict(
-        firstname='Kammy',
-        lastname='Wong',
-        username='wongkam',
-        email='kammy@noodleexpress.com',
-        password=make_password('test'),
+        firstname='customer',
+        lastname='',
+        username='client',
+        email='customer@email.com',
+        password=make_password('client'),
         isAdmin=0
     ),
-
+    
     dict(
-        firstname='Kammy',
-        lastname='Wong',
-        username='kamshun',
-        email='kammy@darthvendor.com',
-        password=make_password('test'),
-        isAdmin=1
-    )
+        firstname='merchant',
+        lastname='',
+        username='client',
+        email='merchant@email.com',
+        password=make_password('client'),
+        isAdmin=0
+    )    
 ]
 
 
