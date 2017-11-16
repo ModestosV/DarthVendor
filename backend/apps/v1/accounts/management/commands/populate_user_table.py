@@ -14,7 +14,7 @@ users = [
 
     dict(
         firstname='admin',
-        lastname='test',
+        lastname='',
         username='admin',
         email='admin@darthvendor.me',
         password=make_password('admin'),
