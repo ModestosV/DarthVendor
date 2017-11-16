@@ -42,7 +42,7 @@ users = [
     dict(
         firstname='customer',
         lastname='',
-        username='client',
+        username='customer',
         email='customer@email.com',
         password=make_password('client'),
         isAdmin=0
@@ -51,7 +51,7 @@ users = [
     dict(
         firstname='merchant',
         lastname='',
-        username='client',
+        username='merchant',
         email='merchant@email.com',
         password=make_password('client'),
         isAdmin=0
