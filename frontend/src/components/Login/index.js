@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, {Component} from 'react';
-import swal from 'sweetalert';
 import settings from '../../config/settings';
 import {Link, withRouter} from 'react-router-dom';
+import {Checkbox} from 'semantic-ui-react'
+import swal from 'sweetalert';
 import './Login.scss';
 
 
@@ -29,6 +30,25 @@ class Login extends Component {
         this.setState({password: event.target.value});
     }
 
+    handleToggle(event, data) {        
+        this.setState({isAdminLogin: data.checked});
+
+        if (data.checked) {
+            swal({
+                title: "Darth Vendor Mode",
+                text: "Admin login enabled. Remember, this power is privilege.",
+                icon: "warning",
+                button: "Ok"
+            })
+        } else { 
+            swal({
+                title: "Stormtrooper Mode",
+                text: "Admin login disabled.",
+                icon: "warning",
+                button: "Ok"
+            })  
+        }      
+    }
 
     handleLoginForm() {
         const {dispatch, history} = this.props;
@@ -88,7 +108,7 @@ class Login extends Component {
             if (this.state.keyStroke.join(',').includes(this.state.adminCheatCode.join(','))) {
                 swal({
                     title: "Darth Vendor Mode",
-                    text: "Admin login enabled. Remember! this power is privilege.",
+                    text: "Admin login enabled. Remember, this power is privilege.",
                     icon: "warning",
                     button: "Ok"
                 })
@@ -109,6 +129,17 @@ class Login extends Component {
 
     loginForm(){
         
+        let toggleButton = (
+            <div className="d-flex justify-content-end" style={{}}>
+                <label style={{fontWeight: '600', padding: '0 5px 0 5px'}}> Admin </label>
+                <Checkbox 
+                    toggle                     
+                    onClick={(e, d) => this.handleToggle(e, d)}
+                />
+            </div>
+        )
+
+
         return (   
             <div id="login">
             <div className="header">
@@ -137,6 +168,9 @@ class Login extends Component {
                         onChange={(e) => this.handlePasswordChange(e)}
                     />
                 </div>
+
+                {toggleButton}
+
                 <button
                     type="button"
                     className="btn btn-dark btn-block"
