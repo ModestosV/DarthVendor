@@ -217,12 +217,8 @@ class Inventory extends Component {
                                 </BootstrapTable>
                             </div>
                             <UpdateList />
-
-
                         </div>
                     </div>
-
-
 
                 {/* Modal for Modify item */}
                 <ReactModal isOpen={this.state.showModifyModal}
