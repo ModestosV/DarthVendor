@@ -5,6 +5,8 @@ import {Link, withRouter} from 'react-router-dom';
 import {Checkbox} from 'semantic-ui-react'
 import swal from 'sweetalert';
 import './Login.scss';
+import ls from './lightsaber.mp3';
+import breath from './breath.mp3';
 
 
 class Login extends Component {
@@ -20,6 +22,9 @@ class Login extends Component {
             keyStroke: [],
             isAdminLogin: false,
         }
+
+        this.soundLS = new Audio(ls);
+        this.soundBreath = new Audio(breath);
     }
 
     handleUserNameChange(event) {
@@ -30,30 +35,30 @@ class Login extends Component {
         this.setState({password: event.target.value});
     }
 
-    handleToggle(event, data) {        
-        this.setState({isAdminLogin: data.checked});
-
-        if (data.checked) {
-            swal({
-                title: "Darth Vendor Mode",
-                text: "Admin login enabled. Remember, this power is privilege.",
-                icon: "warning",
-                button: "Ok"
-            })
-        } else { 
-            swal({
-                title: "Stormtrooper Mode",
-                text: "Admin login disabled.",
-                icon: "warning",
-                button: "Ok"
-            })  
-        }      
-    }
+    // handleToggle(event, data) {        
+    //     this.setState({isAdminLogin: data.checked});
+        
+    //     if (data.checked) {
+    //         swal({
+    //             title: "Darth Vendor Mode",
+    //             text: "Admin login enabled. Remember, this power is privilege.",
+    //             icon: "warning",
+    //             button: "Ok"
+    //         })
+    //     } else { 
+    //         swal({
+    //             title: "Stormtrooper Mode",
+    //             text: "Admin login disabled.",
+    //             icon: "warning",
+    //             button: "Ok"
+    //         })  
+    //     }      
+    // }
 
     handleLoginForm() {
         const {dispatch, history} = this.props;
-
-        let data = {
+        
+        data = {
             'email': this.state.username,
             'password': this.state.password,
             'isAdmin': false
@@ -127,15 +132,46 @@ class Login extends Component {
         });
     }
 
+    handleCheckboxAdmin(){
+        this.soundLS.play();
+       if(this.state.isAdminLogin){
+           this.soundBreath.pause();
+           this.soundBreath.currentTime = 0;
+           this.setState({isAdminLogin: false});
+           swal({
+            title: "Stormtrooper Mode",
+            text: "Admin login disabled.",
+            icon: "warning",
+            button: "Ok"
+            }); 
+       } else {
+        this.soundBreath.play();
+        this.setState({isAdminLogin: true});
+        swal({
+            title: "Darth Vendor Mode",
+            text: "Admin login enabled. Remember, this power is privilege.",
+            icon: "warning",
+            button: "Ok"
+        });
+       }
+    }
     loginForm(){
         
         let toggleButton = (
-            <div className="d-flex justify-content-end" style={{}}>
-                <label style={{fontWeight: '600', padding: '0 5px 0 5px'}}> Admin </label>
-                <Checkbox 
-                    toggle                     
-                    onClick={(e, d) => this.handleToggle(e, d)}
-                />
+            // <div className="d-flex justify-content-end" style={{}}>
+            //     <label style={{fontWeight: '600', padding: '0 5px 0 5px'}}> Admin </label>
+            //     <Checkbox 
+            //         toggle                     
+            //         onClick={(e, d) => this.handleToggle(e, d)}
+            //     />
+            // </div>
+
+            <div className="lightsaber">
+                <label htmlFor="darth-vader-example"></label>
+                <input type="checkbox" id="darth-vader-example" checked={this.setState.isAdminLogin}
+                onClick={() => this.handleCheckboxAdmin()}/>
+                <div className="switch"></div>
+                <div className="plasma vader"></div>
             </div>
         )
 
@@ -168,7 +204,6 @@ class Login extends Component {
                         onChange={(e) => this.handlePasswordChange(e)}
                     />
                 </div>
-
                 {toggleButton}
 
                 <button
@@ -206,10 +241,22 @@ class Login extends Component {
 
     componentDidMount() {
         document.addEventListener("keydown", (e) =>this.onKeyPressHandler(e), false);
+        document.body.classList.add("body_bg");
+        var movementStrength = 25;
+        var height = movementStrength / $(window).height();
+        var width = movementStrength / $(window).width();
+        $(".body_bg").mousemove((e) => {
+                  var pageX = e.pageX - ($(window).width() / 2);
+                  var pageY = e.pageY - ($(window).height() / 2);
+                  var newvalueX = width * pageX * -1 - 25;
+                  var newvalueY = height * pageY * -1 - 50;
+                  $('.body_bg').css("background-position", newvalueX+"px     "+newvalueY+"px");
+        });
     }
 
     componentWillUnmount() {
         document.removeEventListener("keydown", (e) =>this.onKeyPressHandler(e), false);
+        document.body.classList.remove("body_bg");
     }
 
     render() {
@@ -220,6 +267,9 @@ class Login extends Component {
                         {this.loginForm()}
                     </div>
                 </div>
+                {/* <audio id="audio">
+                    <source src="./lightsaber" type="audio/mpeg"/>
+                </audio>  */}
             </div>
         )
     }
