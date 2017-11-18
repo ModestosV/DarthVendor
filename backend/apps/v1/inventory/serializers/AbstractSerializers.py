@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from backend.utils.database import Database
+from backend.apps.v1.inventory.models.Catalog import Catalog
 
 
 class ItemSpecificationSerializer(serializers.Serializer):
@@ -11,8 +11,12 @@ class ItemSpecificationSerializer(serializers.Serializer):
     weightFormat = serializers.CharField()
     priceFormat = serializers.CharField()
     type = serializers.CharField()
-    quantity = serializers.HiddenField(default='')
+    # quantity = serializers.HiddenField(default='')
+    quantity = serializers.SerializerMethodField()
 
+    def get_quantity(self, itemSpec):
+        """ Get quantity from catalog. """
+        return Catalog.getQuantityOfSpec(itemSpec.modelNumber, itemSpec.type)
 
 
 class AbstractComputerSerializer(ItemSpecificationSerializer):
