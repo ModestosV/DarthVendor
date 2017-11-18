@@ -58,7 +58,7 @@ class Login extends Component {
     handleLoginForm() {
         const {dispatch, history} = this.props;
         
-        data = {
+        let data = {
             'email': this.state.username,
             'password': this.state.password,
             'isAdmin': false
