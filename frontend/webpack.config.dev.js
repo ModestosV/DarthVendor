@@ -32,7 +32,12 @@ module.exports = {
                 loaders: [
                     'style-loader', 'css-loader', 'sass-loader'
                 ]
-            }
+            },
+            {
+                test: /\.mp3$/,
+                loader: 'file-loader',
+                
+             }
         ]
     },
     output: {
