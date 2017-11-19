@@ -97,12 +97,12 @@ class UserMapper:
             return False
 
     @staticmethod
-    def delete(email):
+    def updateActivation(email):
 
         user = UserMapper.findAdmin(email)
         if not user.isAdmin:
             try:
-                UserTDG.delete(email)
+                UserTDG.updateActivation(email)
                 return True
             except Exception as error:
                 print(error)

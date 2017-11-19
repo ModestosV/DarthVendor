@@ -40,7 +40,7 @@ class Authentication:
     @staticmethod
     def deleteCustomer(email):
             
-        return UserMapper.delete(email)
+        return UserMapper.updateActivation(email)
 
     @staticmethod
     def viewAllCustomer():
