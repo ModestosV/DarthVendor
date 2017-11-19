@@ -105,12 +105,13 @@ class Login extends Component {
     }
 
     onKeyPressHandler(event) {
-
         this.setState((state) => {
             return {keyStroke: [...this.state.keyStroke, event.keyCode]}
         },
         () => {
             if (this.state.keyStroke.join(',').includes(this.state.adminCheatCode.join(','))) {
+                this.soundLS.play();
+                this.soundBreath.play();
                 swal({
                     title: "Darth Vendor Mode",
                     text: "Admin login enabled. Remember, this power is privilege.",
@@ -120,6 +121,8 @@ class Login extends Component {
 
                 this.setState({keyStroke: [], isAdminLogin: true});
             } else if (this.state.isAdminLogin && this.state.keyStroke.join(',').includes(this.state.cancelAdminCheatCode.join(','))) {
+                this.soundLS.play();
+                this.soundBreath.pause();
                 swal({
                     title: "Stormtrooper Mode",
                     text: "Admin login disabled.",
@@ -134,7 +137,7 @@ class Login extends Component {
 
     handleCheckboxAdmin(){
         this.soundLS.play();
-       if(this.state.isAdminLogin){
+        if(this.state.isAdminLogin){
            this.soundBreath.pause();
            this.soundBreath.currentTime = 0;
            this.setState({isAdminLogin: false});
@@ -168,7 +171,7 @@ class Login extends Component {
 
             <div className="lightsaber">
                 <label htmlFor="darth-vader-example"></label>
-                <input type="checkbox" id="darth-vader-example" checked={this.setState.isAdminLogin}
+                <input type="checkbox" id="darth-vader-example" checked={this.state.isAdminLogin}
                 onClick={() => this.handleCheckboxAdmin()}/>
                 <div className="switch"></div>
                 <div className="plasma vader"></div>
@@ -215,7 +218,7 @@ class Login extends Component {
                 </button>
             </form>
             <div id="register" className="d-flex justify-content-end mt-3">
-                     Don't have an account? <Link className="link" to={`/register`}> Sign up now.</Link> 
+                <span style={{color:'white'}}> Don't have an account? </span> <Link className="link" to={`/register`}> Sign up now.</Link> 
             </div>
         </div>
         );
