@@ -110,7 +110,7 @@ class UserMapper:
         else:
             return False
 
-    @staticmethod
+    """@staticmethod
     def isLoggedCustomer(email):
 
         user = UserMapper.findCustomer(email)
@@ -126,4 +126,4 @@ class UserMapper:
         if(user.isLoggedIn is 1):
             return True
         else:
-            return False
+            return False"""

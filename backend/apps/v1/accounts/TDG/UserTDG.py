@@ -7,8 +7,8 @@ class UserTDG:
 
         with Database() as cursor:
             query = """
-                INSERT INTO user (email, password, isAdmin, isLoggedIn, username, firstname, lastname, address, phone)
-                VALUES ('{email}', '{password}', 0, 0, '{username}', '{firstname}', '{lastname}',
+                INSERT INTO user (email, password, isAdmin, isActivated, username, firstname, lastname, address, phone)
+                VALUES ('{email}', '{password}', 0, 1, '{username}', '{firstname}', '{lastname}',
                         '{address}', '{phone}');
             """.format(**(customer.__dict__))
 
