@@ -14,7 +14,8 @@ class Home extends Component {
         this.state = {
             items:[],
             errorMsg: null,
-            showModal: false
+            showModal: false,
+            currentRow: ''
         };
 
 
@@ -56,6 +57,7 @@ class Home extends Component {
             const errorMsg = null;
             const items = results.data.map(item => item);
             this.setState({items});
+            this.setState({catalog: items});
             this.setState({errorMsg});
             console.log(items);
         })
@@ -66,13 +68,14 @@ class Home extends Component {
        })
     }
 
-    showSpecs(row) {
-        this.setState({showSpecsModal: true});        
+    showSpecs(row, index) {
+        this.setState({currentRow: index});
+
+        this.setState({showSpecsModal: true});
         this.setState({detailedItem: row}, () => this.getQuantity());
     }
 
     getQuantity() {
-        console.log('duma');
         axios({
             method: 'post',
             url:`${settings.API_ROOT}/getQuantity`,
@@ -114,14 +117,33 @@ class Home extends Component {
     
     }
 
+    nextRow() {
+        let max = this.state.catalog.length - 1;
+        let nextRow = this.state.currentRow + 1;
+        if(nextRow > max){
+            nextRow = 0;
+        }
+        this.setState({currentRow: nextRow});
+        this.setState({detailedItem: this.state.catalog[nextRow]},() => this.getQuantity());
+    }
+
+    previousRow() {
+        let previousRow = this.state.currentRow - 1;
+        if(previousRow < 0){
+            previousRow = this.state.catalog.length - 1;
+        }
+        this.setState({currentRow: previousRow});
+        this.setState({detailedItem: this.state.catalog[previousRow]},() => this.getQuantity());
+    }
+
     render() {
         const self = this;
         function cellFormat(cell, row){
             return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
         }
 
-        function detailsFormat(cell, row) {
-            return <i onClick={() => self.showSpecs(row)} className="fa fa-info-circle fa-5" aria-hidden="true"></i>;
+        function detailsFormat(cell, row, enumObject, index) {
+            return <i onClick={() => self.showSpecs(row, index)} className="fa fa-info-circle fa-5" aria-hidden="true"></i>;
         }
 
         function sortFunc(a, b, order) {
@@ -153,8 +175,12 @@ class Home extends Component {
                     <ReactModal isOpen={this.state.showSpecsModal} 
                             className={{base: 'modify--modal'}}>
                             <div>
-                                <h1 className="float-left">Details</h1>
+                                <h1 className="float-left">
+                                Details                                   
+                                </h1>
                                 <i className="remove icon float-right" onClick={this.closeShowSpecsModal}></i>
+                                <i className="fa fa-arrow-circle-right float-right" aria-hidden="true" onClick={() => this.nextRow()}>Next</i>
+                                <i className="fa fa-arrow-circle-left float-right" aria-hidden="true" onClick={() => this.previousRow()}>Previous</i> 
                             </div>
                             <div className="mt-50">
                                 {this.displayDetails()}
