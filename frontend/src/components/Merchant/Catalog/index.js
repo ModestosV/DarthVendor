@@ -470,6 +470,20 @@ class Catalog extends Component {
             return <i onClick={() => self.showSpecs(row, index)} className="fa fa-info-circle fa-5" aria-hidden="true"></i>;
         }
 
+        function stock(cell, row, enumObject, index){
+            return (
+                <span>
+                    {self.state.catalog[index].name}
+                    {testStock(index)}
+                </span>)
+        }
+
+        function testStock(index){
+            if(self.state.catalog[index].quantity == 0){
+                return <span><br/>(out of stock)</span>
+            }
+        }
+
         return (
 
             <div>
@@ -493,7 +507,7 @@ class Catalog extends Component {
 
                             <BootstrapTable data={this.state.catalog} condensed search scrolling className="catalog--table">
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={detailsFormat}> </TableHeaderColumn>
-                            <TableHeaderColumn dataField="name" dataAlign="center" dataSort={true} >Name</TableHeaderColumn>
+                            <TableHeaderColumn dataField="name" dataAlign="center" width='150px' dataSort={true} dataFormat={stock}>Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
