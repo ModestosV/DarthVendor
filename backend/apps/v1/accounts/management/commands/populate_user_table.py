@@ -34,7 +34,7 @@ users = [
         firstname='client',
         lastname='',
         username='client',
-        email='client1@email.com',
+        email='client1@gmail.com',
         password=make_password('client'),
         isAdmin=0
     ),
@@ -43,7 +43,7 @@ users = [
         firstname='clientii',
         lastname='',
         username='clientii',
-        email='client2@email.com',
+        email='client2@gmail.com',
         password=make_password('client'),
         isAdmin=0
     ),
@@ -52,7 +52,7 @@ users = [
         firstname='clientiii',
         lastname='',
         username='clientiii',
-        email='client3@email.com',
+        email='client3@gmail.com',
         password=make_password('client'),
         isAdmin=0
     )    
