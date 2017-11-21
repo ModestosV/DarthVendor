@@ -9,7 +9,7 @@ class Catalog:
         types = ["MONITOR", "DESKTOP", "TABLET", "LAPTOP"]
         specs = list()
         for specType in types:
-            specs += ItemSpecMapper.findAll({'type': specType})
+            specs += ItemSpecMapper.findAll(specType)
         return specs
 
     def getQuantityOfSpec(modelNumber, type):

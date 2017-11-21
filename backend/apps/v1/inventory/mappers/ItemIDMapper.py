@@ -8,6 +8,9 @@ from backend.apps.v1.inventory.TDGs.MonitorDisplayIDTDG import MonitorDisplayIDT
 from backend.apps.v1.inventory.TDGs.TabletIDTDG import TabletIDTDG
 from backend.apps.v1.inventory.models.ItemID import ItemID
 
+from backend.utils.AOP import intercept
+from backend.apps.v1.inventory.aspects.IdentityMapAspect import IDIdentityMapAspect
+
 
 class ItemIDMapper():
 
@@ -29,6 +32,7 @@ class ItemIDMapper():
         return result
 
     @staticmethod
+    @intercept(IDIdentityMapAspect.update_interceptor)
     def update(itemID):
         if (type(itemID.spec) is Desktop):
             result = DesktopIDTDG.update(itemID)
@@ -44,6 +48,7 @@ class ItemIDMapper():
 
 
     @staticmethod
+    @intercept(IDIdentityMapAspect.delete_interceptor)
     def delete(serialNumber, type):
 
         if (type == "DESKTOP"):
@@ -92,6 +97,7 @@ class ItemIDMapper():
         return result
 
     @staticmethod
+    @intercept(IDIdentityMapAspect.find_interceptor)
     def find(itemSpecification):
 
         itemIDList = list()
@@ -114,6 +120,8 @@ class ItemIDMapper():
 
         return itemIDList
 
+    @staticmethod
+    @intercept(IDIdentityMapAspect.findBySerialNumber_interceptor)
     def findBySerialNumber(serialNumber, itemSpecification):
         if(itemSpecification.type == "DESKTOP"):
             result = DesktopIDTDG.findBySerialNumber(serialNumber)
@@ -127,4 +135,4 @@ class ItemIDMapper():
         elif(itemSpecification.type == "TABLET"):
             result = TabletIDTDG.findBySerialNumber(serialNumber)
 
-        return ItemID(result.get('serialNum'),True if result.get('isLocked') == 1 else False, itemSpecification)
+        return ItemID(result.get('serialNum'), True if result.get('isLocked') == 1 else False, itemSpecification)
