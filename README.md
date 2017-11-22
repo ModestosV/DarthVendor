@@ -110,9 +110,9 @@ The web application is located at http://darthvendor.me/
 
 #### Jenkins
 
-A Jenkins instance exists to pull new changes, build the application and restart the apache server on every commit.
+A Jenkins instance exists to pull new changes, build the application and restart the apache server on every commit automatically.
 
-The Jenkins instance is located at http://165.227.44.65:8080/ or http://jenkins.darthvendor.me/
+The Jenkins instance is located at http://jenkins.darthvendor.me/
 
 
 # Contribution

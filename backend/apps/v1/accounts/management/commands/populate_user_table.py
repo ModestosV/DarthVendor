@@ -13,19 +13,19 @@ users = [
     ),
 
     dict(
-        firstname='admin',
-        lastname='',
-        username='admin',
-        email='admin@darthvendor.me',
+        firstname='admini',
+        lastname='adi',
+        username='admini',
+        email='admin1@gmail.com',
         password=make_password('admin'),
         isAdmin=1
     ),
     
     dict(
-        firstname='constantinos',
-        lastname='constantinides',
-        username='cc',
-        email='cc@cse.concordia.ca',
+        firstname='adminii',
+        lastname='adii',
+        username='adminii',
+        email='admin2@gmail.com',
         password=make_password('admin'),
         isAdmin=1
     ),    
@@ -34,25 +34,25 @@ users = [
         firstname='client',
         lastname='',
         username='client',
-        email='client@email.com',
+        email='client1@gmail.com',
         password=make_password('client'),
         isAdmin=0
     ),
     
     dict(
-        firstname='customer',
+        firstname='clientii',
         lastname='',
-        username='customer',
-        email='customer@email.com',
+        username='clientii',
+        email='client2@gmail.com',
         password=make_password('client'),
         isAdmin=0
     ),
     
     dict(
-        firstname='merchant',
+        firstname='clientiii',
         lastname='',
-        username='merchant',
-        email='merchant@email.com',
+        username='clientiii',
+        email='client3@gmail.com',
         password=make_password('client'),
         isAdmin=0
     )    

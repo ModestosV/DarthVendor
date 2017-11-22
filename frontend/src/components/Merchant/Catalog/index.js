@@ -26,6 +26,7 @@ class Catalog extends Component {
             brandFilter: [],
             quantity: 0,
             processorTypeFilter: [],
+            currentRow: ''
         };
         this.handleOnChange = this.handleOnChange.bind(this);
         this.handleChangeComplete = this.handleChangeComplete.bind(this);
@@ -379,7 +380,9 @@ class Catalog extends Component {
 
     }
 
-    showSpecs(row) {
+    showSpecs(row, index) {
+        this.setState({currentRow: index});
+
         this.setState({showSpecsModal: true});
         this.setState({detailedItem: row}, () => this.getQuantity());
     }
@@ -428,6 +431,25 @@ class Catalog extends Component {
 
     }
 
+    nextRow() {
+        let max = this.state.catalog.length - 1;
+        let nextRow = this.state.currentRow + 1;
+        if(nextRow > max){
+            nextRow = 0;
+        }
+        this.setState({currentRow: nextRow});
+        this.setState({detailedItem: this.state.catalog[nextRow]},() => this.getQuantity());
+    }
+
+    previousRow() {
+        let previousRow = this.state.currentRow - 1;
+        if(previousRow < 0){
+            previousRow = this.state.catalog.length - 1;
+        }
+        this.setState({currentRow: previousRow});
+        this.setState({detailedItem: this.state.catalog[previousRow]},() => this.getQuantity());
+    }
+
     render() {
 
         const self = this;
@@ -444,8 +466,22 @@ class Catalog extends Component {
             return <i onClick={() => self.addToCart(row)} className="fa fa-shopping-cart fa-5" aria-hidden="true"></i>;
         }
 
-        function detailsFormat(cell, row) {
-            return <i onClick={() => self.showSpecs(row)} className="fa fa-info-circle fa-5" aria-hidden="true"></i>;
+        function detailsFormat(cell, row, enumObject, index) {
+            return <i onClick={() => self.showSpecs(row, index)} className="fa fa-info-circle fa-5" aria-hidden="true"></i>;
+        }
+
+        function stock(cell, row, enumObject, index){
+            return (
+                <span>
+                    {self.state.catalog[index].name}
+                    {testStock(index)}
+                </span>)
+        }
+
+        function testStock(index){
+            if(self.state.catalog[index].quantity == 0){
+                return <span><br/>(out of stock)</span>
+            }
         }
 
         return (
@@ -471,7 +507,7 @@ class Catalog extends Component {
 
                             <BootstrapTable data={this.state.catalog} condensed search scrolling className="catalog--table">
                             <TableHeaderColumn dataAlign="center" dataSort={false} width='40px' dataFormat={detailsFormat}> </TableHeaderColumn>
-                            <TableHeaderColumn dataField="name" dataAlign="center" dataSort={true} >Name</TableHeaderColumn>
+                            <TableHeaderColumn dataField="name" dataAlign="center" width='150px' dataSort={true} dataFormat={stock}>Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="modelNumber" dataAlign="center" dataSort={true} >Model Number</TableHeaderColumn>
                             <TableHeaderColumn dataField="brandName" isKey={true} dataAlign="center" dataSort={true} >Brand Name</TableHeaderColumn>
                             <TableHeaderColumn dataField="type" dataAlign="center" dataSort={true} >Type</TableHeaderColumn>
@@ -486,8 +522,12 @@ class Catalog extends Component {
                         <ReactModal isOpen={this.state.showSpecsModal}
                             className={{base: 'modify--modal'}}>
                             <div>
-                                <h1 className="float-left">Details</h1>
+                                <h1 className="float-left">
+                                    Details                                   
+                                </h1>
                                 <i className="remove icon float-right" onClick={this.closeShowSpecsModal}></i>
+                                <i className="fa fa-arrow-circle-right float-right" aria-hidden="true" onClick={() => this.nextRow()}>Next</i>
+                                <i className="fa fa-arrow-circle-left float-right" aria-hidden="true" onClick={() => this.previousRow()}>Previous</i> 
                             </div>
                             <div className="mt-50 container">
                                 {this.displayDetails()}

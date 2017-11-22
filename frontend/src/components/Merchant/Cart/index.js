@@ -100,20 +100,25 @@ class Cart extends Component {
     const self = this;
 
     let cartItems = [];
+    let cartPrice = 0;
     self.state.items.map((item, index) => {
+        cartPrice += parseFloat(item.itemID.itemSpec.price);
+        cartPrice = Math.round(cartPrice * 100) / 100;
         cartItems.push(
           <li key={index}
             className="list-group-item">
             <div className="row">
-              <div className="col-sm-11">
-                {item.itemID.itemSpec.modelNumber}, {item.itemID.itemSpec.name}, {item.itemID.serialNumber}
-              </div>
-              <div className="col-sm-1 text-right">
+            <div className="col-sm-1">
                 <i className="fa fa-times"
                   aria-hidden="true"
                   onClick={() => this.handleDeleteCartItem(item)}>
                 </i>
               </div>
+              <div className="col-sm-11">
+                {item.itemID.itemSpec.modelNumber}, {item.itemID.itemSpec.name}, {item.itemID.serialNumber}
+                <span className="float-right">${item.itemID.itemSpec.price}</span>
+              </div>
+              
             </div>
           </li>
         )
@@ -131,6 +136,7 @@ class Cart extends Component {
                   {cartItems}
                 </ul>
               </div>
+              <span className="float-right">Total:  ${cartPrice}</span>
               <div className="justify-content-md-center">
               {this.state.items.length < 1 &&
                 <div>
