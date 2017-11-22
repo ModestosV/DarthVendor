@@ -10,6 +10,7 @@ class ItemAdminUOW:
         self.dirtySpecs = list()
         self.newItemIDs = list()
         self.deletedItemIDs = list()
+        self.deletedSpecs = list()
 
         # list of item type strings for spec TDGs that are locked by this Unit of Work
         self.lockedSpecTDGs = list()
@@ -102,6 +103,20 @@ class ItemAdminUOW:
             self.deletedItemIDs.append(itemID)
             return True
 
+    def registerDeletedSpec(self, spec):
+
+        if spec.type not in self.lockedSpecTDGs:
+            lockStatus = ItemSpecMapper.lock(spec.type, self)
+
+            if lockStatus:
+                self.lockedSpecTDGs.append(spec.type)
+            else:
+                return False
+        
+        if spec.type in self.lockedSpecTDGs:
+            self.deletedSpecs.append(spec)
+            return True
+
     def commit(self):
 
         for spec in self.newSpecs:
@@ -109,6 +124,9 @@ class ItemAdminUOW:
 
         for spec in self.dirtySpecs:
             ItemSpecMapper.update(spec)
+
+        for spec in self.deletedSpecs:
+            ItemSpecMapper.delete(spec)
 
         for tdgType in self.lockedSpecTDGs:
             ItemSpecMapper.unlock(tdgType, self)

@@ -39,6 +39,10 @@ class ItemAdministration:
         self.uow.registerDeletedItemID(itemID)
         return True
 
+    def deleteSpec(self, itemSpec):
+        self.uow.registerDeletedSpec(itemSpec)
+        return True
+
     def addQuantity(self, modelNumber, specType, quantity):
         spec = ItemSpecMapper.find(modelNumber, specType)
         for i in range(0, int(quantity)):

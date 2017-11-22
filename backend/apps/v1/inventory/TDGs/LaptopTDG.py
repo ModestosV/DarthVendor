@@ -10,7 +10,7 @@ class LaptopTDG:
 
         with Database() as cursor:
             query = """
-                    SELECT * FROM laptop;
+                    SELECT * FROM laptop WHERE modelNumber NOT IN (SELECT modelNumber FROM deleteFlag);
                 """
 
             try:
@@ -96,6 +96,20 @@ class LaptopTDG:
             except Exception as error:
                 print(error)
 
+    @staticmethod
+    def delete(laptop):
+
+        with Database() as cursor:
+            query = """
+                INSERT INTO deleteFlag (modelNumber, type)
+                VALUES ('{modelNumber}', 'laptop');
+            """
+
+            try:
+                cursor.execute(query)
+            except Exception as error:
+                print(error)
+                
     @staticmethod
     def lock(uow):
         if LaptopTDG.owner is None:

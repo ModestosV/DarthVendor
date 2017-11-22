@@ -48,6 +48,22 @@ class ItemSpecMapper():
         return result
 
     @staticmethod
+    def delete(itemspec):
+        if(type(itemspec) is Desktop):
+            result = DesktopTDG.delete(itemspec)
+
+        elif(type(itemspec) is Laptop):
+            result = LaptopTDG.delete(itemspec)
+
+        elif(type(itemspec) is MonitorDisplay):
+            result = MonitorDisplayTDG.delete(itemspec)
+
+        elif(type(itemspec) is Tablet):
+            result = TabletTDG.delete(itemspec)
+
+        return result
+
+    @staticmethod
     def lock(type, uow):
 
         print(type)
