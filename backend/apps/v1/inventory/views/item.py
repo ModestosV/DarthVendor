@@ -120,6 +120,17 @@ class ModifyItemSpecView(APIView):
         user.itemAdministration.modifyItemSpec(item)
         return Response("It Worked")
 
+class DeleteItemSpec(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        user = ObjectSession.sessions[request.session['user']]
+        itemSpec = ItemSpecMapper.find(request.data['modelNumber'], request.data['specType'])
+
+        user.itemAdministration.deleteSpec(itemSpec)
+
+        return Response({}, status=status.HTTP_200_OK)
 
 class AddQuantityView(APIView):
     authentication_classes = ()
