@@ -7,8 +7,8 @@ class UserTDG:
 
         with Database() as cursor:
             query = """
-                INSERT INTO user (email, password, isAdmin, isLoggedIn, username, firstname, lastname, address, phone)
-                VALUES ('{email}', '{password}', 0, 0, '{username}', '{firstname}', '{lastname}',
+                INSERT INTO user (email, password, isAdmin, isActivated, username, firstname, lastname, address, phone)
+                VALUES ('{email}', '{password}', 0, 1, '{username}', '{firstname}', '{lastname}',
                         '{address}', '{phone}');
             """.format(**(customer.__dict__))
 
@@ -24,7 +24,6 @@ class UserTDG:
         with Database() as cursor:
             query = """
                 UPDATE user SET
-                isLoggedIn = {isLoggedIn},
                 timeStamp = '{timeStamp}'
                 WHERE id = {id};
             """.format(**(user.__dict__))
@@ -34,7 +33,7 @@ class UserTDG:
             except Exception as error:
                 print(error)
 
-    @staticmethod
+    """@staticmethod
     def delete(useremail):
 
         with Database() as cursor:
@@ -43,7 +42,19 @@ class UserTDG:
             try:
                 cursor.execute(query)
             except Exception as error:
+                print(error)"""
+
+    @staticmethod
+    def updateActivation(useremail):
+
+        with Database() as cursor:
+            query = "UPDATE user SET isActivated = 0 WHERE email = '{}';".format(useremail)
+
+            try:
+                cursor.execute(query)
+            except Exception as error:
                 print(error)
+
 
     def findUser(useremail):
 
@@ -63,7 +74,7 @@ class UserTDG:
         with Database() as cursor:
 
             try:
-                cursor.execute("SELECT * FROM user;")
+                cursor.execute("SELECT * FROM user WHERE isActivated = 1;")
                 resultSet = cursor.fetchall()
                 return resultSet
             except Exception as error:

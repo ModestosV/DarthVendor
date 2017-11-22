@@ -55,7 +55,7 @@ class UserMapper:
         user.email = row['email']
         user.password = row['password']
         user.isAdmin = False
-        user.isLoggedIn = row['isLoggedIn']
+        user.isActivated = row['isActivated']
         user.timeStamp = row['timeStamp']
         user.username = row['username']
         user.firstname = row['firstname']
@@ -76,7 +76,7 @@ class UserMapper:
         user.email = row['email']
         user.password = row['password']
         user.isAdmin = True if row['isAdmin'] == 1 else False
-        user.isLoggedIn = row['isLoggedIn']
+        user.isActivated = row['isActivated']
         user.timeStamp = row['timeStamp']
         user.username = row['username']
         user.firstname = row['firstname']
@@ -97,33 +97,15 @@ class UserMapper:
             return False
 
     @staticmethod
-    def delete(email):
+    def updateActivation(email):
 
         user = UserMapper.findAdmin(email)
         if not user.isAdmin:
             try:
-                UserTDG.delete(email)
+                UserTDG.updateActivation(email)
                 return True
             except Exception as error:
                 print(error)
                 return False
-        else:
-            return False
-
-    @staticmethod
-    def isLoggedCustomer(email):
-
-        user = UserMapper.findCustomer(email)
-        if(user.isLoggedIn is 1):
-            return True
-        else:
-            return False
-
-    @staticmethod
-    def isLoggedAdmin(email):
-
-        user = UserMapper.findAdmin(email)
-        if(user.isLoggedIn is 1):
-            return True
         else:
             return False

@@ -20,7 +20,7 @@ class Command(BaseCommand):
                     phone varchar(255) DEFAULT '',
                     password varchar(255),
                     isAdmin tinyint(1) DEFAULT 0,
-                    isLoggedIn tinyint(1) DEFAULT 0,
+                    isActivated tinyint(1) DEFAULT 1,
                     timeStamp datetime DEFAULT ''
                 );
             """
