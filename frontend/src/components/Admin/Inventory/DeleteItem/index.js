@@ -40,6 +40,29 @@ class DeleteItem extends Component {
         }
     }
 
+    // add deletions to UOW
+    confirmDeleteSpec() {
+        //create object to post
+        // let data = [];
+        // data.push(this.props.item.modelNumber);
+        // data.push(this.props.item.type);
+        // data.push(this.state.itemToDelete);
+        let data = {
+            modelNumber: this.props.item.modelNumber,
+            specType: this.props.item.type    
+        }
+
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/deleteSpec`,
+            data: data,
+             withCredentials: true
+        }).then(result => {
+            this.props.closeDeleteModal();
+            window.location.reload();
+        });
+    }
+
     // get item to delete
     componentWillMount() {
         // this.setState({item: this.props.item});
@@ -98,6 +121,8 @@ class DeleteItem extends Component {
                 <div className="mb-5">
                     <button  className="ui green button float-right"  onClick={() => {this.confirmDeletion()}}>Confirm</button>
                 </div>
+
+                    <button  className="ui green button float-right"  onClick={() => {this.confirmDeleteSpec()}}>Delete Specification</button>
             </div>
         )
     }
