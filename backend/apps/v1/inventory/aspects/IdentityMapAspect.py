@@ -64,7 +64,7 @@ class IDIdentityMapAspect:
 
         # check if spec is already in identityMap
         if itemSpec.type in IDIdentityMapAspect.identityMaps:
-            if modelNumber in IDIdentityMapAspect.identityMaps[itemSpec.type]:
+            if serialNumber in IDIdentityMapAspect.identityMaps[itemSpec.type]:
                 result = IDIdentityMapAspect.identityMaps[itemSpec.type][serialNumber]
 
         # if it wasnt already read from the db, run regular find, store result and return it
@@ -98,7 +98,7 @@ class IDIdentityMapAspect:
     def delete_interceptor(original_function, serialNumber, type):
         # check if spec is already in identityMap, remove it if it is
 
-        original_function(itemID)
+        result = original_function(serialNumber, type)
 
         if type not in IDIdentityMapAspect.identityMaps:
             IDIdentityMapAspect.identityMaps[type] = {}
