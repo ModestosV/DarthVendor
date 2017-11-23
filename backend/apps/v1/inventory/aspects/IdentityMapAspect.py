@@ -44,7 +44,7 @@ class SpecIdentityMapAspect:
     def update_interceptor(original_function, itemSpec):
         # check if spec is already in identityMap
 
-        original_function(itemSpec)
+        result = original_function(itemSpec)
 
         if itemSpec.type not in SpecIdentityMapAspect.identityMaps:
             SpecIdentityMapAspect.identityMaps[itemSpec.type] = {}
