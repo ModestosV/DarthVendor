@@ -130,7 +130,7 @@ class PurchasedIdentityMapAspect:
         result = None
 
         # check if spec is already in identityMap
-        if modelNumber in IDIdentityMapAspect.identityMap:
+        if serialNumber in PurchasedIdentityMapAspect.identityMap:
             result = PurchasedIdentityMapAspect.identityMap[serialNumber]
 
         # if it wasnt already read from the db, run regular find, store result and return it
@@ -158,10 +158,10 @@ class PurchasedIdentityMapAspect:
     def delete_interceptor(original_function, serialNumber):
         # check if spec is already in identityMap, remove it if it is
 
-        original_function(serialNumber)
+        result = original_function(serialNumber)
 
-        if serialNumber in IDIdentityMapAspect.identityMap:
-            IDIdentityMapAspect.identityMap[serialNumber] = None
+        if serialNumber in PurchasedIdentityMapAspect.identityMap:
+            PurchasedIdentityMapAspect.identityMap[serialNumber] = None
 
         return result
 
@@ -170,7 +170,7 @@ class PurchasedIdentityMapAspect:
 
         result = original_function(purchasedItemID)
 
-        if purchasedItemID.serialNumber in IDIdentityMapAspect.identityMap:
-            IDIdentityMapAspect.identityMap[purchasedItemID.serialNumber] = None
+        if purchasedItemID.serialNumber in PurchasedIdentityMapAspect.identityMap:
+            PurchasedIdentityMapAspect.identityMap[purchasedItemID.serialNumber] = None
 
         return result
