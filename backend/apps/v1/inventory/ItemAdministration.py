@@ -7,6 +7,7 @@ from backend.apps.v1.inventory.mappers.ItemSpecMapper import ItemSpecMapper
 from backend.apps.v1.inventory.mappers.ItemIDMapper import ItemIDMapper
 
 import uuid
+from contracts import contract
 
 
 class ItemAdministration:
@@ -39,6 +40,7 @@ class ItemAdministration:
         self.uow.registerDeletedItemID(itemID)
         return True
 
+    @contract(quantity='int')
     def addQuantity(self, modelNumber, specType, quantity):
         spec = ItemSpecMapper.find(modelNumber, specType)
         for i in range(0, int(quantity)):

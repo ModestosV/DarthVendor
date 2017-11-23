@@ -128,7 +128,7 @@ class AddQuantityView(APIView):
     def post(self, request):
         user = ObjectSession.sessions[request.session['user']]
 
-        quantity = request.data['addQuantity']
+        quantity = int(request.data['addQuantity'])
         modelNumber = request.data['modelNumber']
         type = request.data['type']
 
