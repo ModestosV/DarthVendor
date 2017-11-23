@@ -14,5 +14,7 @@ class Catalog:
 
     def getQuantityOfSpec(modelNumber, type):
         spec = ItemSpecMapper.find(modelNumber, type)
+        if spec is None:
+            return 0
         itemIDs = ItemIDMapper.find(spec)
         return len(itemIDs)

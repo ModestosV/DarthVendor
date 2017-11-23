@@ -47,10 +47,10 @@ class SpecIdentityMapAspect:
         original_function(itemSpec)
 
         if itemSpec.type not in SpecIdentityMapAspect.identityMaps:
-            SpecIdentityMapAspect.identityMaps[type] = {}
+            SpecIdentityMapAspect.identityMaps[itemSpec.type] = {}
 
-        if itemSpec.modelNumber in SpecIdentityMapAspect.identityMaps[type]:
-            SpecIdentityMapAspect.identityMaps[type][itemSpec.modelNumber] = None
+        if itemSpec.modelNumber in SpecIdentityMapAspect.identityMaps[itemSpec.type]:
+            SpecIdentityMapAspect.identityMaps[itemSpec.type][itemSpec.modelNumber] = None
 
         return result
 
