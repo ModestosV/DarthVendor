@@ -4,6 +4,7 @@ from .views.inventory import InventoryView, QuantityView
 from .views.item import AddItemSpecView, InitiateEdit, TerminateEdit, CancelEditView, ModifyItemSpecView, getEditStateView, AddQuantityView
 from .views.itemID import ItemIDsForSpecView, DeleteItemID
 from .views.purchase import CartView, AddToCartView, RemoveFromCartView, ConfirmPurchaseView, GetPurchaseCollection, ReturnItemsView
+from .views.test_inventory import InventoryTestView
 
 
 urlpatterns = [
@@ -23,5 +24,6 @@ urlpatterns = [
     url(r'^confirmPurchase', ConfirmPurchaseView.as_view()),
     url(r'^getPurchaseCollection', GetPurchaseCollection.as_view()),
     url(r'^returnItems', ReturnItemsView.as_view()),
-    url(r'^getQuantity', QuantityView.as_view())
+    url(r'^getQuantity', QuantityView.as_view()),
+    url(r'^test_inventory', InventoryTestView.as_view())
 ]

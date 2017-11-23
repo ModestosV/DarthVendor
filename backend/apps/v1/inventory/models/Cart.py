@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 
 
 class Cart():
-    deltaTime = timedelta(minutes=0, seconds=30)
+    deltaTime = timedelta(minutes=0, seconds=300)
 
     def __init__(self, customer):
         self.customer = customer
