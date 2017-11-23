@@ -55,6 +55,7 @@ class ItemAdministration:
             self.uow.registerNewItemID(itemID)
         return True
 
+    @contract(returns='list|None')
     def getCatalog(self):
         return Catalog.getAllSpecs()
 
