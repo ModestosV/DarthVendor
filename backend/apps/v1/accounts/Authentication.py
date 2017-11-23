@@ -4,10 +4,13 @@ from backend.apps.v1.accounts.mapper.UserMapper import UserMapper
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 import datetime
+from contracts import contract
+
 
 class Authentication:
-
+    
     @staticmethod
+    @contract(returns='bool')
     def register(customer):
 
         if(UserMapper.validEmailToRegister(customer.email)):
@@ -38,11 +41,13 @@ class Authentication:
         return None
 
     @staticmethod
+    @contract(returns='bool')
     def deleteCustomer(email):
             
         return UserMapper.updateActivation(email)
 
     @staticmethod
+    @contract(returns='list|None')
     def viewAllCustomer():
 
         return UserMapper.displayAllCustomer()

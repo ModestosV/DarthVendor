@@ -12,6 +12,9 @@ from backend.apps.v1.inventory.TDGs.LaptopIDTDG import LaptopIDTDG
 from backend.apps.v1.inventory.TDGs.MonitorDisplayIDTDG import MonitorDisplayIDTDG
 from backend.apps.v1.inventory.TDGs.TabletIDTDG import TabletIDTDG
 
+from backend.utils.AOP import intercept
+from backend.apps.v1.inventory.aspects.IdentityMapAspect import SpecIdentityMapAspect
+
 
 class ItemSpecMapper():
 
@@ -32,6 +35,7 @@ class ItemSpecMapper():
         return result
 
     @staticmethod
+    @intercept(SpecIdentityMapAspect.update_interceptor)
     def update(itemspec):
         if(type(itemspec) is Desktop):
             result = DesktopTDG.update(itemspec)
@@ -98,6 +102,7 @@ class ItemSpecMapper():
         return result
 
     @staticmethod
+    @intercept(SpecIdentityMapAspect.find_interceptor)
     def find(modelNumber, specType):
         result = []
 
@@ -120,21 +125,21 @@ class ItemSpecMapper():
             return spec[0]
 
     @staticmethod
-    def findAll(filterlist):
+    def findAll(type):
 
-        if (filterlist['type'] == "DESKTOP"):
+        if (type == "DESKTOP"):
             result = DesktopTDG.findAll()
 
-        elif(filterlist['type'] == "LAPTOP"):
+        elif(type == "LAPTOP"):
             result = LaptopTDG.findAll()
 
-        elif(filterlist['type'] == "TABLET"):
+        elif(type == "TABLET"):
             result = TabletTDG.findAll()
 
-        elif(filterlist['type'] == "MONITOR"):
+        elif(type == "MONITOR"):
             result = MonitorDisplayTDG.findAll()
 
-        itemSpecList = ItemSpecMapper.resultSetToItemSpec(result, filterlist['type'])
+        itemSpecList = ItemSpecMapper.resultSetToItemSpec(result, type)
         return itemSpecList
 
     @staticmethod
