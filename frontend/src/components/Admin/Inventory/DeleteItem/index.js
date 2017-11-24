@@ -18,7 +18,6 @@ class DeleteItem extends Component {
         // data.push(this.props.item.modelNumber);
         // data.push(this.props.item.type);
         // data.push(this.state.itemToDelete);
-        console.log(this.state.itemToDelete);
         let data = {
             modelNumber: this.props.item.modelNumber,
             serialNumber: this.state.itemToDelete,
@@ -38,6 +37,14 @@ class DeleteItem extends Component {
 
 
         }
+    }
+
+    // addspec deletion to UOW
+    confirmSpecDeletion() {
+        console.log(this.props.item.modelNumber)
+        console.log(this.props.item.type)
+
+        //insert axios using the props
     }
 
     // get item to delete
@@ -72,6 +79,9 @@ class DeleteItem extends Component {
         return (
             <div>
                 <div>
+                    <div className="mb-5">
+                        <button  className="ui red button float-right"  onClick={() => {this.confirmSpecDeletion()}}>Delete Specification</button>
+                    </div>
                     <div className="mb-3">
                     Model Number: {this.props.item.modelNumber} <br/>
                     Type: {this.props.item.type}
@@ -96,8 +106,9 @@ class DeleteItem extends Component {
                     </div>
                 </div>
                 <div className="mb-5">
-                    <button  className="ui green button float-right"  onClick={() => {this.confirmDeletion()}}>Confirm</button>
+                    <button  className="ui green button float-right"  onClick={() => {this.confirmDeletion()}}>Delete chosen item</button>
                 </div>
+                
             </div>
         )
     }
