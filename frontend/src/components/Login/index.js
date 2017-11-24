@@ -5,8 +5,6 @@ import {Link, withRouter} from 'react-router-dom';
 import {Checkbox} from 'semantic-ui-react'
 import swal from 'sweetalert';
 import './Login.scss';
-import ls from './lightsaber.mp3';
-import breath from './breath.mp3';
 
 
 class Login extends Component {
@@ -22,9 +20,6 @@ class Login extends Component {
             keyStroke: [],
             isAdminLogin: false,
         }
-
-        this.soundLS = new Audio(ls);
-        this.soundBreath = new Audio(breath);
     }
 
     handleUserNameChange(event) {
@@ -35,25 +30,25 @@ class Login extends Component {
         this.setState({password: event.target.value});
     }
 
-    // handleToggle(event, data) {        
-    //     this.setState({isAdminLogin: data.checked});
+    handleToggle(event, data) {        
+        this.setState({isAdminLogin: data.checked});
         
-    //     if (data.checked) {
-    //         swal({
-    //             title: "Darth Vendor Mode",
-    //             text: "Admin login enabled. Remember, this power is privilege.",
-    //             icon: "warning",
-    //             button: "Ok"
-    //         })
-    //     } else { 
-    //         swal({
-    //             title: "Stormtrooper Mode",
-    //             text: "Admin login disabled.",
-    //             icon: "warning",
-    //             button: "Ok"
-    //         })  
-    //     }      
-    // }
+        if (data.checked) {
+            swal({
+                title: "Darth Vendor Mode",
+                text: "Admin login enabled. Remember, this power is privilege.",
+                icon: "warning",
+                button: "Ok"
+            })
+        } else { 
+            swal({
+                title: "Stormtrooper Mode",
+                text: "Admin login disabled.",
+                icon: "warning",
+                button: "Ok"
+            })  
+        }      
+    }
 
     handleLoginForm() {
         const {dispatch, history} = this.props;
@@ -75,7 +70,6 @@ class Login extends Component {
             withCredentials: true
         })
         .then(response => {
-            // console.log(response.datan);
             localStorage.setItem('activeUser', JSON.stringify(response.data));
 
             if(response.data.isAdmin === true) {
@@ -110,8 +104,7 @@ class Login extends Component {
         },
         () => {
             if (this.state.keyStroke.join(',').includes(this.state.adminCheatCode.join(','))) {
-                this.soundLS.play();
-                this.soundBreath.play();
+                
                 swal({
                     title: "Darth Vendor Mode",
                     text: "Admin login enabled. Remember, this power is privilege.",
@@ -121,8 +114,7 @@ class Login extends Component {
 
                 this.setState({keyStroke: [], isAdminLogin: true});
             } else if (this.state.isAdminLogin && this.state.keyStroke.join(',').includes(this.state.cancelAdminCheatCode.join(','))) {
-                this.soundLS.play();
-                this.soundBreath.pause();
+                
                 swal({
                     title: "Stormtrooper Mode",
                     text: "Admin login disabled.",
@@ -136,10 +128,7 @@ class Login extends Component {
     }
 
     handleCheckboxAdmin(){
-        this.soundLS.play();
         if(this.state.isAdminLogin){
-           this.soundBreath.pause();
-           this.soundBreath.currentTime = 0;
            this.setState({isAdminLogin: false});
            swal({
             title: "Stormtrooper Mode",
@@ -148,7 +137,6 @@ class Login extends Component {
             button: "Ok"
             }); 
        } else {
-        this.soundBreath.play();
         this.setState({isAdminLogin: true});
         swal({
             title: "Darth Vendor Mode",
@@ -161,20 +149,12 @@ class Login extends Component {
     loginForm(){
         
         let toggleButton = (
-            // <div className="d-flex justify-content-end" style={{}}>
-            //     <label style={{fontWeight: '600', padding: '0 5px 0 5px'}}> Admin </label>
-            //     <Checkbox 
-            //         toggle                     
-            //         onClick={(e, d) => this.handleToggle(e, d)}
-            //     />
-            // </div>
-
-            <div className="lightsaber">
-                <label htmlFor="darth-vader-example"></label>
-                <input type="checkbox" id="darth-vader-example" checked={this.state.isAdminLogin}
-                onClick={() => this.handleCheckboxAdmin()}/>
-                <div className="switch"></div>
-                <div className="plasma vader"></div>
+            <div className="d-flex justify-content-end" style={{}}>
+                <label style={{fontWeight: '600', padding: '0 5px 0 5px'}}> Admin </label>
+                <Checkbox 
+                    toggle                     
+                    onClick={(e, d) => this.handleToggle(e, d)}
+                />
             </div>
         )
 
@@ -270,9 +250,6 @@ class Login extends Component {
                         {this.loginForm()}
                     </div>
                 </div>
-                {/* <audio id="audio">
-                    <source src="./lightsaber" type="audio/mpeg"/>
-                </audio>  */}
             </div>
         )
     }
