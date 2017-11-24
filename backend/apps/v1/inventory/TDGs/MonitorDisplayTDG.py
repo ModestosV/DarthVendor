@@ -85,7 +85,7 @@ class MonitorDisplayTDG:
             query = """
                 INSERT INTO deleteFlag (modelNumber, type)
                 VALUES ('{modelNumber}', 'monitor');
-            """
+            """.format(**(monitor.__dict__))
 
             try:
                 cursor.execute(query)

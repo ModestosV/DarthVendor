@@ -18,11 +18,10 @@ class DeleteItem extends Component {
         // data.push(this.props.item.modelNumber);
         // data.push(this.props.item.type);
         // data.push(this.state.itemToDelete);
-        console.log(this.state.itemToDelete);
         let data = {
             modelNumber: this.props.item.modelNumber,
             serialNumber: this.state.itemToDelete,
-            specType: this.props.item.type    
+            specType: this.props.item.type
         }
 
         if(this.state.itemToDelete != ""){
@@ -49,7 +48,7 @@ class DeleteItem extends Component {
         // data.push(this.state.itemToDelete);
         let data = {
             modelNumber: this.props.item.modelNumber,
-            specType: this.props.item.type    
+            specType: this.props.item.type
         }
 
         axios({
@@ -95,6 +94,9 @@ class DeleteItem extends Component {
         return (
             <div>
                 <div>
+                    <div className="mb-5">
+                        <button  className="ui red button float-right"  onClick={() => {this.confirmDeleteSpec()}}>Delete Specification</button>
+                    </div>
                     <div className="mb-3">
                     Model Number: {this.props.item.modelNumber} <br/>
                     Type: {this.props.item.type}
@@ -105,8 +107,8 @@ class DeleteItem extends Component {
                             {
                                 this.state.itemIDs.map((item,index) => {
                                     return(
-                                        <option 
-                                            key={index} 
+                                        <option
+                                            key={index}
                                             value={item.serialNumber}
                                         >
                                             {item.isLocked? "(in a cart) ":""}{item.serialNumber}
@@ -119,10 +121,8 @@ class DeleteItem extends Component {
                     </div>
                 </div>
                 <div className="mb-5">
-                    <button  className="ui green button float-right"  onClick={() => {this.confirmDeletion()}}>Confirm</button>
+                    <button  className="ui green button float-right"  onClick={() => {this.confirmDeletion()}}>Delete chosen item</button>
                 </div>
-
-                    <button  className="ui green button float-right"  onClick={() => {this.confirmDeleteSpec()}}>Delete Specification</button>
             </div>
         )
     }

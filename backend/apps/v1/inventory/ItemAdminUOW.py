@@ -112,7 +112,7 @@ class ItemAdminUOW:
                 self.lockedSpecTDGs.append(spec.type)
             else:
                 return False
-        
+
         if spec.type in self.lockedSpecTDGs:
             self.deletedSpecs.append(spec)
             return True

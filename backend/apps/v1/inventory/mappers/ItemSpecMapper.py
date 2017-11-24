@@ -166,7 +166,7 @@ class ItemSpecMapper():
                     'hardDriveFormat': row.get('hardDriveFormat'),
                     'dx': row.get('dx'),
                     'dy': row.get('dy'),
-                    'dz': row.get('dz'),
+                    'dz': row.get('dz')
                 })
 
             elif(specType == "LAPTOP"):

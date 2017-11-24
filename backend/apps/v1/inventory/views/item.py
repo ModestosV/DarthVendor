@@ -72,8 +72,8 @@ class AddItemSpecView(APIView):
         itemData = request.data
         itemType = itemData["type"]
 
-        # Store quantity to 0 in the DB by default since we are not using it        
-        itemData["quantity"] = 0         
+        # Store quantity to 0 in the DB by default since we are not using it
+        itemData["quantity"] = 0
         item = None
         try:
             if itemType == "Desktop":
@@ -101,8 +101,8 @@ class ModifyItemSpecView(APIView):
         itemData = request.data
         itemType = itemData["type"]
 
-        # Store quantity to 0 in the DB by default since we are not using it        
-        itemData["quantity"] = 0  
+        # Store quantity to 0 in the DB by default since we are not using it
+        itemData["quantity"] = 0
         item = None
         try:
             if itemType == "DESKTOP":
@@ -189,6 +189,8 @@ class getEditStateView(APIView):
                     item = TabletSerializer(item).data
                     serializedDirtyItems.append(item)
 
+            deletedModelNumbers = user.itemAdministration.uow.deletedSpecs
+
             addedItemIDs = user.itemAdministration.uow.newItemIDs
             serializedAddedItemIDs = list()
             for itemID in addedItemIDs:
@@ -203,6 +205,7 @@ class getEditStateView(APIView):
                 'currentlyEditing': True,
                 'newSpecs': serializedNewItems,
                 'dirtySpecs': serializedDirtyItems,
+                'deletedSpecs': deletedModelNumbers,
                 'addedItemIDs': serializedAddedItemIDs,
                 'deletedItemIDs': serializedDeletedItemIDs
             }, status=status.HTTP_200_OK)
