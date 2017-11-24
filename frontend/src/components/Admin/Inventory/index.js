@@ -114,7 +114,7 @@ class Inventory extends Component {
             const items = results.data.map(item => item);
             this.setState({items});
             this.setState({errorMsg});
-            console.log(items);
+            // console.log(items);
         })
         .catch(error => {
          console.log(error);
