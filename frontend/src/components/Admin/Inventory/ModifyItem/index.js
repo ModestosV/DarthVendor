@@ -129,7 +129,7 @@ class ModifyItem extends Component {
     handleHDSizeChange(event) {
         this.handleChange(event);
 
-        if(/^([0-9]\d*(.\d+)?|)$/.test(event.target.value)) {
+        if(/^[0-9]*$/.test(event.target.value)) {
             this.setState({errorHDSize: false});
             this.setState({noError: false});
         }else{
