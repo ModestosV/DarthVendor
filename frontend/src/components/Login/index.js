@@ -198,7 +198,7 @@ class Login extends Component {
                 </button>
             </form>
             <div id="register" className="d-flex justify-content-end mt-3">
-                <span style={{color:'white'}}> Don't have an account? </span> <Link className="link" to={`/register`}> Sign up now.</Link> 
+                <span> Don't have an account? </span> <Link className="link" to={`/register`}> Sign up now.</Link> 
             </div>
         </div>
         );
