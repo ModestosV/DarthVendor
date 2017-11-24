@@ -34,4 +34,7 @@ python3 manage.py create_tablet_table
 echo "Populate Tablet Table"
 python3 manage.py populate_tablet_table
 
+echo "Create DeleteFlag Table"
+python3 manage.py create_deleteFlag_table
+
 echo "Done"

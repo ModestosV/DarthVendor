@@ -10,7 +10,7 @@ class DesktopTDG:
     def findAll():
         with Database() as cursor:
             query = """
-                    SELECT * FROM desktop;
+                    SELECT * FROM desktop WHERE modelNumber NOT IN (SELECT modelNumber FROM deleteFlag);
                 """
 
             try:
@@ -87,6 +87,20 @@ class DesktopTDG:
             try:
                 cursor.execute(query)
 
+            except Exception as error:
+                print(error)
+                
+    @staticmethod
+    def delete(desktop):
+
+        with Database() as cursor:
+            query = """
+                INSERT INTO deleteFlag (modelNumber, type)
+                VALUES ('{modelNumber}', 'desktop');
+            """
+
+            try:
+                cursor.execute(query)
             except Exception as error:
                 print(error)
 

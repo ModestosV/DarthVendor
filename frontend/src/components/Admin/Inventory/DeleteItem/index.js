@@ -21,7 +21,7 @@ class DeleteItem extends Component {
         let data = {
             modelNumber: this.props.item.modelNumber,
             serialNumber: this.state.itemToDelete,
-            specType: this.props.item.type    
+            specType: this.props.item.type
         }
 
         if(this.state.itemToDelete != ""){
@@ -39,12 +39,27 @@ class DeleteItem extends Component {
         }
     }
 
-    // addspec deletion to UOW
-    confirmSpecDeletion() {
-        console.log(this.props.item.modelNumber)
-        console.log(this.props.item.type)
+    // add deletions to UOW
+    confirmDeleteSpec() {
+        //create object to post
+        // let data = [];
+        // data.push(this.props.item.modelNumber);
+        // data.push(this.props.item.type);
+        // data.push(this.state.itemToDelete);
+        let data = {
+            modelNumber: this.props.item.modelNumber,
+            specType: this.props.item.type
+        }
 
-        //insert axios using the props
+        axios({
+            method: 'post',
+            url: `${settings.API_ROOT}/deleteSpec`,
+            data: data,
+             withCredentials: true
+        }).then(result => {
+            this.props.closeDeleteModal();
+            window.location.reload();
+        });
     }
 
     // get item to delete
@@ -80,7 +95,7 @@ class DeleteItem extends Component {
             <div>
                 <div>
                     <div className="mb-5">
-                        <button  className="ui red button float-right"  onClick={() => {this.confirmSpecDeletion()}}>Delete Specification</button>
+                        <button  className="ui red button float-right"  onClick={() => {this.confirmDeleteSpec()}}>Delete Specification</button>
                     </div>
                     <div className="mb-3">
                     Model Number: {this.props.item.modelNumber} <br/>
@@ -92,8 +107,8 @@ class DeleteItem extends Component {
                             {
                                 this.state.itemIDs.map((item,index) => {
                                     return(
-                                        <option 
-                                            key={index} 
+                                        <option
+                                            key={index}
                                             value={item.serialNumber}
                                         >
                                             {item.isLocked? "(in a cart) ":""}{item.serialNumber}
@@ -108,7 +123,6 @@ class DeleteItem extends Component {
                 <div className="mb-5">
                     <button  className="ui green button float-right"  onClick={() => {this.confirmDeletion()}}>Delete chosen item</button>
                 </div>
-                
             </div>
         )
     }

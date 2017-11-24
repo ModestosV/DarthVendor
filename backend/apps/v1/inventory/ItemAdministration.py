@@ -46,6 +46,10 @@ class ItemAdministration:
         self.uow.registerDeletedItemID(itemID)
         return True
 
+    def deleteSpec(self, itemSpec):
+        self.uow.registerDeletedSpec(itemSpec)
+        return True
+        
     @contract(modelNumber='str', specType='str', quantity='int,>0', returns='bool|None')
     def addQuantity(self, modelNumber, specType, quantity):
         spec = ItemSpecMapper.find(modelNumber, specType)

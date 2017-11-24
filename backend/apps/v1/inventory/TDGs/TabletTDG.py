@@ -10,7 +10,7 @@ class TabletTDG:
 
         with Database() as cursor:
             query = """
-                    SELECT * FROM tablet;
+                    SELECT * FROM tablet WHERE modelNumber NOT IN (SELECT modelNumber FROM deleteFlag);
                 """
 
             try:
@@ -93,6 +93,20 @@ class TabletTDG:
             try:
                 cursor.execute(query)
 
+            except Exception as error:
+                print(error)
+
+    @staticmethod
+    def delete(tablet):
+
+        with Database() as cursor:
+            query = """
+                INSERT INTO deleteFlag (modelNumber, type)
+                VALUES ('{modelNumber}', 'tablet');
+            """
+
+            try:
+                cursor.execute(query)
             except Exception as error:
                 print(error)
 

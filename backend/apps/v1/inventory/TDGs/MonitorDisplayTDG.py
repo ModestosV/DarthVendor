@@ -10,7 +10,7 @@ class MonitorDisplayTDG:
 
         with Database() as cursor:
             query = """
-                SELECT * FROM monitorDisplay;
+                SELECT * FROM monitorDisplay WHERE modelNumber NOT IN (SELECT modelNumber FROM deleteFlag);
             """
             try:
                 cursor.execute(query)
@@ -75,6 +75,20 @@ class MonitorDisplayTDG:
             try:
                 cursor.execute(query)
 
+            except Exception as error:
+                print(error)
+
+    @staticmethod
+    def delete(monitor):
+
+        with Database() as cursor:
+            query = """
+                INSERT INTO deleteFlag (modelNumber, type)
+                VALUES ('{modelNumber}', 'monitor');
+            """.format(**(monitor.__dict__))
+
+            try:
+                cursor.execute(query)
             except Exception as error:
                 print(error)
 
