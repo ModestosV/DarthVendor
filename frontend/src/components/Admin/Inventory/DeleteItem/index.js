@@ -95,7 +95,7 @@ class DeleteItem extends Component {
             <div>
                 <div>
                     <div className="mb-5">
-                        <button  className="ui red button float-right"  onClick={() => {this.confirmDeleteSpec()}}>Delete Specification</button>
+                        {/* <button  className="ui red button float-right"  onClick={() => {this.confirmDeleteSpec()}}>Delete Specification</button> */}
                     </div>
                     <div className="mb-3">
                     Model Number: {this.props.item.modelNumber} <br/>
