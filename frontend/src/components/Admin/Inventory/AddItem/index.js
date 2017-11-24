@@ -16,6 +16,7 @@ class AddItem extends Component {
             ramFormat: 'GB',
             hardDriveFormat: 'GB',
             weightFormat: 'lbs',
+            noError: false
         }
 
     }
@@ -421,11 +422,10 @@ class AddItem extends Component {
                         </div>
                         <form id="addItemForm">
                             { this.typeSelect(itemTypes) }
-
                             { this.attributeFields(itemFields) }
 
                             {this.state.noError == true && 
-                                <button className="ui green button disabled float-right mb-5" onClick={() => this.confirmAddItem()}>
+                                <button className="ui green button disabled float-right mb-5">
                                     <i className="fa fa-plus"></i> Add
                                 </button>
                             }

@@ -59,8 +59,10 @@ class ModifyItem extends Component {
 
         if(/^[a-zA-Z0-9]*$/.test(event.target.value)) {
             this.setState({errorModelNumber: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorModelNumber: true});
+            this.setState({noError: true});
         }
     }
 
@@ -69,8 +71,10 @@ class ModifyItem extends Component {
 
         if(/^([0-9]\d*(.\d+)?|)$/.test(event.target.value)) {
             this.setState({errorWeight: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorWeight: true});
+            this.setState({noError: true});
         }
     }
 
@@ -79,8 +83,10 @@ class ModifyItem extends Component {
 
         if(/^([0-9]\d*(.\d+)?|)$/.test(event.target.value)) {
             this.setState({errorPrice: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorPrice: true});
+            this.setState({noError: true});
         }        
     }
 
@@ -89,8 +95,10 @@ class ModifyItem extends Component {
 
         if(/^([0-9]\d*(.\d+)?|)$/.test(event.target.value)) {
             this.setState({errorSize: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorSize: true});
+            this.setState({noError: true});
         }        
     }
 
@@ -99,8 +107,10 @@ class ModifyItem extends Component {
 
         if(/^[0-9]*$/.test(event.target.value)) {
             this.setState({errorRamSize: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorRamSize: true});
+            this.setState({noError: true});
         }          
     }
 
@@ -109,8 +119,10 @@ class ModifyItem extends Component {
 
         if(/^[0-9]*$/.test(event.target.value)) {
             this.setState({errorNumCores: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorNumCores: true});
+            this.setState({noError: true});
         }          
     }
 
@@ -119,8 +131,10 @@ class ModifyItem extends Component {
 
         if(/^([0-9]\d*(.\d+)?|)$/.test(event.target.value)) {
             this.setState({errorHDSize: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorHDSize: true});
+            this.setState({noError: true});
         }          
     }
 
@@ -129,8 +143,10 @@ class ModifyItem extends Component {
 
         if(/^([0-9]\d*(.\d+)?|)$/.test(event.target.value)) {
             this.setState({errorDX: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorDX: true});
+            this.setState({noError: true});
         }          
     }
 
@@ -139,8 +155,10 @@ class ModifyItem extends Component {
 
         if(/^([0-9]\d*(.\d+)?|)$/.test(event.target.value)) {
             this.setState({errorDY: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorDY: true});
+            this.setState({noError: true});
         }          
     }
 
@@ -149,8 +167,10 @@ class ModifyItem extends Component {
 
         if(/^([0-9]\d*(.\d+)?|)$/.test(event.target.value)) {
             this.setState({errorDZ: false});
+            this.setState({noError: false});
         }else{
             this.setState({errorDZ: true});
+            this.setState({noError: true});
         }          
     }
     // display specs of selected item
@@ -227,6 +247,7 @@ class ModifyItem extends Component {
                         if(name === "modelNumber") {
                             input = <input type="text"
                                         className={modelNumber}
+                                        disabled
                                         id={name}
                                         name={name}
                                         onChange={ (e) => this.handleModelNumberChange(e) }
@@ -294,6 +315,14 @@ class ModifyItem extends Component {
                                         name={name}
                                         onChange={ (e) => this.handleDZChange(e) }
                                         placeholder={this.props.item[name]}/>
+                        } else if (name === "type") {
+                            input = <input type="text"
+                                        className="form-control"
+                                        id={name}
+                                        disabled
+                                        name={name}
+                                        onChange={ (e) => this.handleChange(e) }
+                                        placeholder={this.props.item[name]}/>
                         } else {
                             input = <input type="text"
                                         className="form-control"
@@ -353,6 +382,7 @@ class ModifyItem extends Component {
 
     componentWillMount() {
         this.state = this.props.item;
+        this.setState({noError: false});
         console.log(localStorage);
 
         const {dispatch, history} = this.props;
@@ -383,7 +413,15 @@ class ModifyItem extends Component {
                 <hr />
                 { this.displaySpecs() }
                 <div className="mb-5">
-                    <button className="ui green button float-right" onClick={() => {this.confirmModifications()}}>Confirm</button>
+                {console.log(this.state.noError)}
+                   {this.state.noError === true && 
+                        <button className="ui green button disabled float-right">Confirm</button>
+                    }
+
+                    {this.state.noError === false && 
+                        <button className="ui green button float-right" onClick={() => {this.confirmModifications()}}>Confirm</button>
+                    }
+
                 </div>
             </div>
         )
